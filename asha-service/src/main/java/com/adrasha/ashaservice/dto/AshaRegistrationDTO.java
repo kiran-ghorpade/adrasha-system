@@ -5,6 +5,7 @@ import java.util.UUID;
 import com.adrasha.ashaservice.model.Name;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,16 +15,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AshaRegistrationDTO {
 
-	@NotBlank
+	@NotNull
 	private Name name;
+	
+	@NotNull
+	private UUID userId;
 	
 	@NotBlank
 	private String mobileNumber;
 	
-	@NotBlank
+	@NotNull
 	private UUID phcId;
 	
-	@NotBlank
+	@NotNull
 	private UUID address;
 	
 	private long totalFamilies;

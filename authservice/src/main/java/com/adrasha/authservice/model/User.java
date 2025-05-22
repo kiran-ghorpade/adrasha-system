@@ -11,7 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.adrasha.authservice.convertor.UpperCaseConverter;
+import com.adrasha.core.convertor.UpperCaseConverter;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;

@@ -47,7 +47,7 @@ public class UserController {
 			    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserDTO.class))),
 			})
 		public ResponseEntity<ApiResponse<Page<UserDTO>>> getAllUsers(
-			    @PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.ASC)
+			    @PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.DESC)
 				Pageable pageable
 				){
 	

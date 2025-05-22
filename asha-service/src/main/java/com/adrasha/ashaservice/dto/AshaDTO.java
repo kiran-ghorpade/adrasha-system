@@ -6,6 +6,7 @@ import java.util.UUID;
 import com.adrasha.ashaservice.model.Name;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,16 +21,19 @@ public class AshaDTO {
 	
 	private UUID id;
 	
-	@NotBlank
+	@NotNull
 	private Name name;
+	
+	@NotNull
+	private UUID userId;
 	
 	@NotBlank
 	private String mobileNumber;
 	
-	@NotBlank
+	@NotNull
 	private UUID phcId;
 	
-	@NotBlank
+	@NotNull
 	private UUID address;
 	
 	private long totalFamilies;

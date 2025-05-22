@@ -23,11 +23,11 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<ErrorResponse> handleExistingUserException(VaccinationNotFoundException  ex) {
 		
 	    ErrorResponse response = ErrorResponse.builder()
-                .status(HttpStatus.BAD_REQUEST.value())
+                .status(HttpStatus.NOT_FOUND.value())
                 .errorCode(ex.getClass().getName())
                 .message(ex.getMessage())
                 .build();
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 	}
 	
 	// Handler For validation exceptions

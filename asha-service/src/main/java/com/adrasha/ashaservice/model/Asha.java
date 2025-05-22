@@ -13,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -23,10 +24,10 @@ public class Asha {
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 
-	@NotBlank
+	@NotNull
 	private UUID userId;
 	
-	@NotBlank
+	@NotNull
 	@Embedded
 	private Name name;
 
@@ -34,11 +35,11 @@ public class Asha {
 	@Column(unique = true)
 	private String mobileNumber;
 
-	@NotBlank
+	@NotNull
 	private UUID phcId;
 
-	@NotBlank
-	private UUID address;
+//	@NotNull
+//	private UUID address;
 
 	private long totalFamilies;
 
@@ -49,5 +50,8 @@ public class Asha {
 	
 	@UpdateTimestamp
 	private Instant updatedAt;
+	
+//	@Version
+//	private Integer version;
 
 }

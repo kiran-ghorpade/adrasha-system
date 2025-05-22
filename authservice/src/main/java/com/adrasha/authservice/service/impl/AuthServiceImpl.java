@@ -19,7 +19,7 @@ import com.adrasha.authservice.exception.UserNotFoundException;
 import com.adrasha.authservice.model.User;
 import com.adrasha.authservice.service.AuthService;
 import com.adrasha.authservice.service.UserService;
-import com.adrasha.authservice.util.JwtUtil;
+import com.adrasha.core.util.JwtUtil;
 
 @Service
 public class AuthServiceImpl implements AuthService {

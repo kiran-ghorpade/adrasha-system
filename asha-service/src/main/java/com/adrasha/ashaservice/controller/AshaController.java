@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.adrasha.ashaservice.dto.ApiResponse;
 import com.adrasha.ashaservice.dto.AshaDTO;
 import com.adrasha.ashaservice.dto.AshaDetailsDTO;
 import com.adrasha.ashaservice.dto.AshaRegistrationDTO;
@@ -27,12 +26,14 @@ import com.adrasha.ashaservice.exception.AshaAlreadyExistsException;
 import com.adrasha.ashaservice.exception.AshaNotFoundException;
 import com.adrasha.ashaservice.model.Asha;
 import com.adrasha.ashaservice.service.AshaService;
+import com.adrasha.core.dto.ApiResponse;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 
 
 @RestController
-@RequestMapping("/api/famliy")
+@RequestMapping("/asha")
 public class AshaController {
 
 	@Autowired
@@ -43,7 +44,7 @@ public class AshaController {
 
 	@GetMapping
 	public ResponseEntity<ApiResponse<Page<AshaDTO>>> getAllAsha(
-		    @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.ASC)
+		    @PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.DESC)
 			Pageable pageable
 			){
 
@@ -60,12 +61,14 @@ public class AshaController {
 	}
 	
 	@PostMapping
+	@RolesAllowed("ROLE_ASHA")
 	public ResponseEntity<ApiResponse<AshaDTO>> addAsha(@Valid @RequestBody AshaRegistrationDTO request) throws AshaAlreadyExistsException{
 		
 		Asha newAsha = mapper.map(request, Asha.class);
-		newAsha = service.createAsha(newAsha);
 		
-		AshaDTO dto = mapper.map(newAsha, AshaDTO.class);
+		Asha savedAsha= service.createAsha(newAsha);
+		
+		AshaDTO dto = mapper.map(savedAsha, AshaDTO.class);
 		
 		ApiResponse<AshaDTO> apiResponse = ApiResponse.<AshaDTO>builder()
 				.status(HttpStatus.OK.toString())
@@ -94,6 +97,7 @@ public class AshaController {
 	
 
 	@PutMapping("/{id}")
+	@RolesAllowed("ROLE_ASHA")
 	public ResponseEntity<ApiResponse<AshaDTO>> udpateAsha(@PathVariable UUID id, @Valid @RequestBody AshaDTO updatedAsha) throws AshaNotFoundException{
 		
 		Asha asha = mapper.map(updatedAsha, Asha.class);
@@ -110,7 +114,8 @@ public class AshaController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<ApiResponse<AshaDTO>> udpateAsha(@PathVariable UUID id) throws AshaNotFoundException{
+	@RolesAllowed("ROLE_ASHA")
+	public ResponseEntity<ApiResponse<AshaDTO>> deleteAsha(@PathVariable UUID id) throws AshaNotFoundException{
 		
 		Asha asha = service.deleteAsha(id);
 		AshaDTO dto = mapper.map(asha, AshaDTO.class);

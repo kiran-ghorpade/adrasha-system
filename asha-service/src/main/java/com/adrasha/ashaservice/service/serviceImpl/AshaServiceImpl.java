@@ -28,6 +28,8 @@ public class AshaServiceImpl implements AshaService {
 	@Override
 	public Asha getAsha(UUID ashaId) {
 		
+		
+		
 		return ashaRepository.findById(ashaId)
 				.orElseThrow(() -> new AshaNotFoundException("Asha Not Found with id : " + ashaId));
 	}
@@ -38,12 +40,13 @@ public class AshaServiceImpl implements AshaService {
 	  		throw new AshaAlreadyExistsException("Asha with mobileNumber : "+ asha.getMobileNumber()+" already exist.");
 	  	}
 
+	  	System.out.println("Saving new Asha: "+ asha);
 		return ashaRepository.save(asha);
 	}
 
 	@Override
 	public Asha updateAsha(UUID ashaId, Asha updatedAshaDetails) {
-
+		getAsha(ashaId);
 		return ashaRepository.save(updatedAshaDetails);
 	}
 

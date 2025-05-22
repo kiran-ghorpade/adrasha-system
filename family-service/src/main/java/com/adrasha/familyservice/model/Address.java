@@ -2,7 +2,7 @@ package com.adrasha.familyservice.model;
 
 import java.util.UUID;
 
-import com.adrasha.familyservice.convertor.UpperCaseConverter;
+import com.adrasha.core.convertor.UpperCaseConverter;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;

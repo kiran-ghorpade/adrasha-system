@@ -1,20 +1,13 @@
 package com.adrasha.ashaservice.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+
+import com.adrasha.core.config.SecurityConfiguration;
 
 @Configuration
-//@EnableWebSecurity
-public class SecurityConfig {
+@EnableWebSecurity
+public class SecurityConfig extends SecurityConfiguration{
+	
 
-//	@Bean
-//	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//		http.csrf(csrf -> csrf.disable())
-////				.authorizeHttpRequests(auth -> auth.requestMatchers("/api/family/**").permitAll()
-////						.requestMatchers("/api/member/**").permitAll()
-////						.anyRequest().authenticated())
-//				.authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
-//				.httpBasic(Customizer.withDefaults());
-//
-//		return http.build();
-//	}
 }

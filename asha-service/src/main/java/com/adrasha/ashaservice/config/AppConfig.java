@@ -1,17 +1,11 @@
 package com.adrasha.ashaservice.config;
 
-import org.modelmapper.ModelMapper;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
-public class AppConfig {
+import com.adrasha.core.config.AppConfiguration;
 
-	@Bean
-	ModelMapper modelMapper() {
-		ModelMapper mapper = new ModelMapper();
-		mapper.getConfiguration().setSkipNullEnabled(true);
-		
-		return mapper;
-	}
+@Configuration
+public class AppConfig extends AppConfiguration{
+
+
 }

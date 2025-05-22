@@ -10,11 +10,11 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.adrasha.ashaservice.dto.ApiError;
-import com.adrasha.ashaservice.dto.ErrorResponse;
-import com.adrasha.ashaservice.dto.ValidationErrorResponse;
 import com.adrasha.ashaservice.exception.AshaAlreadyExistsException;
 import com.adrasha.ashaservice.exception.AshaNotFoundException;
+import com.adrasha.core.dto.ApiError;
+import com.adrasha.core.dto.ErrorResponse;
+import com.adrasha.core.dto.ValidationErrorResponse;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {

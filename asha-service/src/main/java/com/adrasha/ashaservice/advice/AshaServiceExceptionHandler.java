@@ -1,4 +1,4 @@
-package com.adrasha.pregnancyservice.advice;
+package com.adrasha.ashaservice.advice;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,17 +10,28 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.adrasha.pregnancyservice.dto.ApiError;
-import com.adrasha.pregnancyservice.dto.ErrorResponse;
-import com.adrasha.pregnancyservice.dto.ValidationErrorResponse;
-import com.adrasha.pregnancyservice.exception.PregnancyNotFoundException;
+import com.adrasha.ashaservice.exception.AshaAlreadyExistsException;
+import com.adrasha.ashaservice.exception.AshaNotFoundException;
+import com.adrasha.core.dto.ApiError;
+import com.adrasha.core.dto.ErrorResponse;
+import com.adrasha.core.dto.ValidationErrorResponse;
 
 @ControllerAdvice
-public class GlobalExceptionHandler {
+public class AshaServiceExceptionHandler {
 	
-	// Handler For validation exceptions
-	@ExceptionHandler(PregnancyNotFoundException.class)
-	public ResponseEntity<ErrorResponse> handleExistingUserException(PregnancyNotFoundException  ex) {
+	@ExceptionHandler(AshaNotFoundException.class)
+	public ResponseEntity<ErrorResponse> handleAshaNotFoundException(AshaNotFoundException  ex) {
+		
+	    ErrorResponse response = ErrorResponse.builder()
+                .status(HttpStatus.BAD_REQUEST.value())
+                .errorCode(ex.getClass().getName())
+                .message(ex.getMessage())
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(AshaAlreadyExistsException.class)
+	public ResponseEntity<ErrorResponse> handleExistingAshaException(AshaAlreadyExistsException  ex) {
 		
 	    ErrorResponse response = ErrorResponse.builder()
                 .status(HttpStatus.BAD_REQUEST.value())

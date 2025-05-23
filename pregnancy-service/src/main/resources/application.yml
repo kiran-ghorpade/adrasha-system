@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: adrasha_pregnancy_service
+    name: pregnancy-service
 
   datasource:
     url: jdbc:mysql://localhost:3306/adrasha_pregnancy_db

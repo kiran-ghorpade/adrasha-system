@@ -10,43 +10,78 @@ spring:
 
   cloud:
     gateway:
-      routes:
-        - id: auth-no-filter
+      routes: 
+# Docs Routes
+        - id: auth-docs
           uri: lb://AUTH-SERVICE
           predicates:
-            - Path=/api/v1/auth/**
+          - Path=/auth/v3/api-docs
           filters:
-            - RewritePath=/api/v1/auth/(?<segment>.*), /auth/${segment}
+          - RewritePath=/auth/v3/api-docs, /v3/api-docs
 
-        - id: users-with-filter
+        - id: asha-docs
+          uri: lb://ASHA-SERVICE
+          predicates:
+          - Path=/asha/v3/api-docs
+          filters:
+          - RewritePath=/asha/v3/api-docs, /v3/api-docs
+
+        - id: family-docs
+          uri: lb://FAMILY-SERVICE
+          predicates:
+          - Path=/family/v3/api-docs
+          filters:
+          - RewritePath=/family/v3/api-docs, /v3/api-docs
+
+        - id: vaccination-docs
+          uri: lb://VACCINATION-SERVICE
+          predicates:
+           - Path=/vaccination/v3/api-docs
+          filters:
+           - RewritePath=/vaccination/v3/api-docs, /v3/api-docs
+
+        - id: pregnancy-docs
+          uri: lb://PREGNANCY-SERVICE
+          predicates:
+           - Path=/pregnancy/v3/api-docs
+          filters:
+           - RewritePath=/pregnancy/v3/api-docs, /v3/api-docs
+
+
+# Service Routes
+        - id: auth-route
           uri: lb://AUTH-SERVICE
           predicates:
-            - Path=/api/v1/users/**
+            - Path=/auth/**
+
+        - id: users-route
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/users/**
           filters:
-            - RewritePath=/api/v1/users/(?<segment>.*), /users/${segment}
-            - JwtAuthenticationFilter
+            - JwtGatewayAuthenticationFilter
 
         - id: family-route
           uri: lb://FAMILY-SERVICE
           predicates:
-            - Path=/api/v1/family/**
+            - Path=/family/**
           filters:
-            - RewritePath=/api/v1/family/(?<segment>.*), /family/${segment}
-            - JwtAuthenticationFilter
+            - JwtGatewayAuthenticationFilter
 
-        - id: swagger-auth-service
-          uri: http://localhost:8081
+        - id: asha-route
+          uri: lb://ASHA-SERVICE
           predicates:
-            - Path=/swagger-ui/**
+          - Path=/asha/**
           filters:
-            - RewritePath=/swagger-ui/auth/(?<segment>.*), /swagger-ui/${segment}
+          - JwtGatewayAuthenticationFilter
 
-        - id: api-docs-auth
-          uri: http://localhost:8081
+        - id: pregnancy-route
+          uri: lb://PREGNANCY-SERVICE
           predicates:
-            - Path=/v3/api-docs/auth
+          - Path=/pregnancy/**
           filters:
-            - SetPath=/v3/api-docs
+          - JwtGatewayAuthenticationFilter
+
 
 eureka:
     client:
@@ -62,3 +97,17 @@ management:
     web:
       exposure:
         include: health,info
+
+springdoc:
+  swagger-ui:
+    urls:
+    - name: Auth Service
+      url: /auth/v3/api-docs
+    - name: Asha Service
+      url: /asha/v3/api-docs
+    - name: Family Service
+      url: /family/v3/api-docs
+    - name: Vaccination Service
+      url: /vaccination/v3/api-docs
+    - name: Pregnancy Service
+      url: /pregnancy/v3/api-docs

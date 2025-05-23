@@ -11,11 +11,10 @@
 		<relativePath />
 	</parent>
 
-	<!-- Parent section is optional if this is the top-level project -->
 	<groupId>com.adrasha</groupId>
 	<artifactId>adrasha-parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>pom</packaging> <!-- Use 'pom' packaging type for parent projects -->
+	<packaging>pom</packaging>
 	<name>adrasha-parent</name>
 	<description>Parent for All Services for ADRASHA</description>
 
@@ -38,9 +37,10 @@
 	</dependencyManagement>
 
 	<modules>
-		<!-- Add child modules here -->
-		<module>authservice</module> <!-- Child microservice 1 -->
-		<module>another-service</module> <!-- Child microservice 2 -->
+		<module>auth-service</module> 
+		<module>asha-service</module> 
+		<module>family-service</module>
+		<module>pregnancy-service</module>
 	</modules>
 
 	<dependencies>

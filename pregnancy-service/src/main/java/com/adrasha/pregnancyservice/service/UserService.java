@@ -2,12 +2,10 @@ package com.adrasha.pregnancyservice.service;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.adrasha.core.model.User;
 
-@Service
 @FeignClient("AUTH-SERVICE")
 public interface UserService {
 	

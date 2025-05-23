@@ -13,7 +13,7 @@
 	</parent>
 
 
-	<artifactId>authservice</artifactId>
+	<artifactId>auth-service</artifactId>
 	<name>authservice</name>
 	<description>Authentication Service for ADRASHA</description>
 

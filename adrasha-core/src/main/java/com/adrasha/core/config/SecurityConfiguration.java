@@ -1,6 +1,7 @@
 package com.adrasha.core.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,28 +12,29 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
-	
-	private final String[] ALLOWED_PATHS = {
-			"/v3/api-docs/**",
-			"/api-docs/**",
-			"/swagger-ui/**"
-		};
 
+    @Autowired
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
+    
+    @Autowired
+    private AllowedPathsProvider allowedPathsProvider;
 
-	@Autowired
-    private final JwtAuthenticationFilter jwtAuthenticationFilter=null;
-
-	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-		httpSecurity.csrf(csrf -> csrf.disable())
-				.authorizeHttpRequests(auth -> auth
-						.requestMatchers(ALLOWED_PATHS).permitAll()
-				.anyRequest().authenticated());
-		        
-        httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
-		return httpSecurity.build();
-	}
-
-
+    @Bean
+    @ConditionalOnMissingBean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+     	
+        http.csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+//                		.requestMatchers(
+//                			    allowedPathsProvider.getAllowedPaths()
+//                			        .stream()
+//                			        .map(AntPathRequestMatcher::new)
+//                			        .toArray(RequestMatcher[]::new)
+//                			).permitAll()
+//                		.requestMatchers("/auth/**").permitAll()
+                        .anyRequest().permitAll())
+            	.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+ 
+        return http.build();
+    }
 }

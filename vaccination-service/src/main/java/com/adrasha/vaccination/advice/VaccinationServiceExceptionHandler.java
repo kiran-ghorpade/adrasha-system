@@ -1,4 +1,4 @@
-package com.adrasha.ashaservice.advice;
+package com.adrasha.vaccination.advice;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,35 +10,24 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.adrasha.ashaservice.exception.AshaAlreadyExistsException;
-import com.adrasha.ashaservice.exception.AshaNotFoundException;
-import com.adrasha.core.dto.ApiError;
-import com.adrasha.core.dto.ErrorResponse;
-import com.adrasha.core.dto.ValidationErrorResponse;
+import com.adrasha.vaccination.dto.ApiError;
+import com.adrasha.vaccination.dto.ErrorResponse;
+import com.adrasha.vaccination.dto.ValidationErrorResponse;
+import com.adrasha.vaccination.exception.VaccinationNotFoundException;
 
 @ControllerAdvice
-public class GlobalExceptionHandler {
+public class VaccinationServiceExceptionHandler {
 	
-	@ExceptionHandler(AshaNotFoundException.class)
-	public ResponseEntity<ErrorResponse> handleAshaNotFoundException(AshaNotFoundException  ex) {
+	// Handler For validation exceptions
+	@ExceptionHandler(VaccinationNotFoundException.class)
+	public ResponseEntity<ErrorResponse> handleExistingUserException(VaccinationNotFoundException  ex) {
 		
 	    ErrorResponse response = ErrorResponse.builder()
-                .status(HttpStatus.BAD_REQUEST.value())
+                .status(HttpStatus.NOT_FOUND.value())
                 .errorCode(ex.getClass().getName())
                 .message(ex.getMessage())
                 .build();
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-	}
-	
-	@ExceptionHandler(AshaAlreadyExistsException.class)
-	public ResponseEntity<ErrorResponse> handleExistingAshaException(AshaAlreadyExistsException  ex) {
-		
-	    ErrorResponse response = ErrorResponse.builder()
-                .status(HttpStatus.BAD_REQUEST.value())
-                .errorCode(ex.getClass().getName())
-                .message(ex.getMessage())
-                .build();
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 	}
 	
 	// Handler For validation exceptions

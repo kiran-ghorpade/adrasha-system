@@ -17,15 +17,11 @@ import com.adrasha.core.exception.UserAlreadyExistsException;
 import com.adrasha.core.exception.UserNotFoundException;
 
 import io.jsonwebtoken.JwtException;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(UserAlreadyExistsException.class)
-	@ApiResponses(value = {
-		    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "409", description = "User already exists")
-		})
 	public ResponseEntity<ErrorResponse> handleExistingUserException(UserAlreadyExistsException  ex) {
 		
 	    ErrorResponse response = ErrorResponse.builder()
@@ -37,9 +33,6 @@ public class GlobalExceptionHandler {
 	}
 	
 	@ExceptionHandler(UserNotFoundException.class)
-	@ApiResponses(value = {
-		    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "User Not Found")
-		})
 	public ResponseEntity<ErrorResponse> handleExistingUserException(UserNotFoundException  ex) {
 		
 	    ErrorResponse response = ErrorResponse.builder()
@@ -51,9 +44,6 @@ public class GlobalExceptionHandler {
 	}
 	
 	@ExceptionHandler(JwtException.class)
-	@ApiResponses(value = {
-		    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "JWT Token Invalid")
-		})
 	public ResponseEntity<ErrorResponse> handleExistingUserException(JwtException  ex) {
 		
 	    ErrorResponse response = ErrorResponse.builder()

@@ -1,10 +1,12 @@
 package com.adrasha.familyservice.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 import com.adrasha.core.config.AppConfiguration;
 
 @Configuration
-public class AppConfig extends AppConfiguration{
-
+@Import(AppConfiguration.class)
+public class AppConfig{
+	
 }

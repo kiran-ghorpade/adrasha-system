@@ -20,7 +20,7 @@ import io.jsonwebtoken.JwtException;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @ControllerAdvice
-public class GlobalExceptionHandler {
+public class AuthServiceExceptionHandler {
 	
 	@ExceptionHandler(UserAlreadyExistsException.class)
 	@ApiResponses(value = {

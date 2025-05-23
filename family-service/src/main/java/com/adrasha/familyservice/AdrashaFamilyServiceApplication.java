@@ -8,8 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@ComponentScan(basePackages = "com.adrasha.core")
-@EnableFeignClients(basePackages = "com.adrasha.core.service")
+@EnableFeignClients
 public class AdrashaFamilyServiceApplication {
 
 	public static void main(String[] args) {

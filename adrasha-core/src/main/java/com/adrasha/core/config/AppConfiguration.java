@@ -1,6 +1,7 @@
 package com.adrasha.core.config;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class AppConfiguration {
 	
 	@Bean
+    @ConditionalOnMissingBean
 	ModelMapper getModelMapper() {
 		ModelMapper mapper = new ModelMapper();
 		mapper.getConfiguration().setAmbiguityIgnored(true);
@@ -20,11 +22,13 @@ public class AppConfiguration {
 	}
 	
 	@Bean
+    @ConditionalOnMissingBean
 	protected PasswordEncoder passwordEncoder() {
 		return  new BCryptPasswordEncoder();
 	}
 	
 	@Bean
+    @ConditionalOnMissingBean
 	protected AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception{
 		return configuration.getAuthenticationManager();
 	}

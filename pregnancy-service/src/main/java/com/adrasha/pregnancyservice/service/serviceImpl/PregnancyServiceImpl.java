@@ -6,12 +6,14 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import com.adrasha.pregnancyservice.exception.PregnancyNotFoundException;
 import com.adrasha.pregnancyservice.model.Pregnancy;
 import com.adrasha.pregnancyservice.repository.PregnancyRepository;
 import com.adrasha.pregnancyservice.service.PregnancyService;
 
+@Service
 public class PregnancyServiceImpl implements PregnancyService {
 
 	@Autowired

@@ -1,4 +1,4 @@
-package com.adrasha.familyservice.advice;
+package com.adrasha.pregnancyservice.advice;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,17 +10,17 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.adrasha.familyservice.dto.ApiError;
-import com.adrasha.familyservice.dto.ErrorResponse;
-import com.adrasha.familyservice.dto.ValidationErrorResponse;
-import com.adrasha.familyservice.exception.FamilyNotFoundException;
+import com.adrasha.pregnancyservice.dto.ApiError;
+import com.adrasha.pregnancyservice.dto.ErrorResponse;
+import com.adrasha.pregnancyservice.dto.ValidationErrorResponse;
+import com.adrasha.pregnancyservice.exception.PregnancyNotFoundException;
 
 @ControllerAdvice
-public class GlobalExceptionHandler {
+public class PregnancyServiceExceptionHandler {
 	
 	// Handler For validation exceptions
-	@ExceptionHandler(FamilyNotFoundException.class)
-	public ResponseEntity<ErrorResponse> handleExistingUserException(FamilyNotFoundException  ex) {
+	@ExceptionHandler(PregnancyNotFoundException.class)
+	public ResponseEntity<ErrorResponse> handleExistingUserException(PregnancyNotFoundException  ex) {
 		
 	    ErrorResponse response = ErrorResponse.builder()
                 .status(HttpStatus.BAD_REQUEST.value())

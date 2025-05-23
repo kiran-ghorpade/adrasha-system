@@ -11,11 +11,11 @@ import io.jsonwebtoken.Claims;
 
 
 @Component
-public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAuthenticationFilter.Config> {
+public class JwtGatewayAuthenticationFilter extends AbstractGatewayFilterFactory<JwtGatewayAuthenticationFilter.Config> {
 
     private final JwtUtil jwtUtil;
 
-    public JwtAuthenticationFilter(JwtUtil jwtUtil) {
+    public JwtGatewayAuthenticationFilter(JwtUtil jwtUtil) {
     	super(Config.class);
         this.jwtUtil = jwtUtil;
     }
@@ -26,6 +26,7 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
 	            String authHeader = exchange.getRequest().getHeaders().getFirst("Authorization");
 	            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
 	                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+	                System.out.println(HttpStatus.UNAUTHORIZED);	               
 	                return exchange.getResponse().setComplete();
 	            }
 

@@ -5,12 +5,14 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import com.adrasha.vaccination.exception.VaccineNotFoundException;
 import com.adrasha.vaccination.model.Vaccine;
 import com.adrasha.vaccination.repository.VaccineRepository;
 import com.adrasha.vaccination.service.VaccineService;
 
+@Service
 public class VaccineServiceImpl implements VaccineService {
 
 	@Autowired

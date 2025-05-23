@@ -1,4 +1,4 @@
-package com.adrasha.vaccination.advice;
+package com.adrasha.familyservice.advice;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,24 +10,24 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.adrasha.vaccination.dto.ApiError;
-import com.adrasha.vaccination.dto.ErrorResponse;
-import com.adrasha.vaccination.dto.ValidationErrorResponse;
-import com.adrasha.vaccination.exception.VaccinationNotFoundException;
+import com.adrasha.familyservice.dto.ApiError;
+import com.adrasha.familyservice.dto.ErrorResponse;
+import com.adrasha.familyservice.dto.ValidationErrorResponse;
+import com.adrasha.familyservice.exception.FamilyNotFoundException;
 
 @ControllerAdvice
-public class GlobalExceptionHandler {
+public class FamilyServiceExceptionHandler {
 	
 	// Handler For validation exceptions
-	@ExceptionHandler(VaccinationNotFoundException.class)
-	public ResponseEntity<ErrorResponse> handleExistingUserException(VaccinationNotFoundException  ex) {
+	@ExceptionHandler(FamilyNotFoundException.class)
+	public ResponseEntity<ErrorResponse> handleExistingUserException(FamilyNotFoundException  ex) {
 		
 	    ErrorResponse response = ErrorResponse.builder()
-                .status(HttpStatus.NOT_FOUND.value())
+                .status(HttpStatus.BAD_REQUEST.value())
                 .errorCode(ex.getClass().getName())
                 .message(ex.getMessage())
                 .build();
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 	}
 	
 	// Handler For validation exceptions

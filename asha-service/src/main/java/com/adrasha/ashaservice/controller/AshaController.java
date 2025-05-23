@@ -28,6 +28,10 @@ import com.adrasha.ashaservice.model.Asha;
 import com.adrasha.ashaservice.service.AshaService;
 import com.adrasha.core.dto.ApiResponse;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 
@@ -43,6 +47,10 @@ public class AshaController {
 	private ModelMapper mapper;
 
 	@GetMapping
+    @Operation(summary = "Get all users", description = "Returns a user in pageable")
+	@ApiResponses(value = {
+		    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = AshaDTO.class))),
+		})
 	public ResponseEntity<ApiResponse<Page<AshaDTO>>> getAllAsha(
 		    @PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.DESC)
 			Pageable pageable

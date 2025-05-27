@@ -17,7 +17,7 @@ describe('TokenInterceptor', () => {
   const baseUrl = 'https://foo.bar';
   const user: User = { id: 1, email: 'foo@bar.com' };
 
-  function init(url: string, access_token: string) {
+  function init(url: string, accessToken: string) {
     TestBed.configureTestingModule({
       providers: [
         { provide: LocalStorageService, useClass: MemoryStorageService },
@@ -30,7 +30,7 @@ describe('TokenInterceptor', () => {
     httpMock = TestBed.inject(HttpTestingController);
     http = TestBed.inject(HttpClient);
     router = TestBed.inject(Router);
-    tokenService = TestBed.inject(TokenService).set({ access_token, token_type: 'bearer' });
+    tokenService = TestBed.inject(TokenService).set({ accessToken, tokenType: 'bearer' });
   }
 
   function mockRequest(url: string, body?: any, headers?: any) {

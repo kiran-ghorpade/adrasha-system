@@ -11,11 +11,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.adrasha.core.convertor.UpperCaseConverter;
+import com.adrasha.authservice.convertor.UpperCaseConverter;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -48,7 +50,11 @@ public class User implements UserDetails {
 	
 	@NotBlank(message="{roles.notblank}")
 	@Convert(converter = UpperCaseConverter.class)
-	private String role;
+	private List<String> roles;
+	
+	@Enumerated(EnumType.STRING)
+	@Convert(converter = UpperCaseConverter.class)
+	private AccountStatus status = AccountStatus.PENDING;
 
 	private Instant lastPasswordReset;
 
@@ -61,7 +67,10 @@ public class User implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-	    return List.of(new SimpleGrantedAuthority(this.role));
+	    return this.getRoles()
+	    			.stream()
+	    			.map(SimpleGrantedAuthority::new)
+	    			.toList();
 	}
 
 }

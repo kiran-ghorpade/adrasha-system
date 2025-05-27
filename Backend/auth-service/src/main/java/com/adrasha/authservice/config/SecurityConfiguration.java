@@ -1,4 +1,4 @@
-package com.adrasha.core.config;
+package com.adrasha.authservice.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

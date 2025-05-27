@@ -1,12 +1,15 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '@env/environment';
+import { TokenService } from '@core/services';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  private readonly BASE_URL = 'http://localhost:8080/api';
+  private readonly BASE_URL = environment.apiBaseUrl;
+  private readonly tokenService = inject(TokenService);
 
   constructor(private http: HttpClient) {}
 
@@ -35,10 +38,10 @@ export class ApiService {
   }
 
   private getHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token');
+    const token = this.tokenService.getBearerToken();
     return new HttpHeaders({
       'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {})
+      ...(token ? { Authorization: `${token}` } : {})
     });
   }
 }

@@ -1,4 +1,4 @@
-package com.adrasha.apigateway.util;
+package com.adrasha.authservice.util;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -9,7 +9,8 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.adrasha.apigateway.dto.JwtUser;
+import com.adrasha.authservice.dto.JwtUser;
+import com.adrasha.authservice.model.AccountStatus;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -30,12 +31,15 @@ public class JwtUtil {
 		Map<String, Object> claims = new HashMap<>();
 		claims.put("id", user.getId());
 		claims.put("status", user.getStatus());
-		
 		claims.put("roles", user.getRoles());
 		
-		return Jwts.builder().claims(claims).subject(user.getUsername()).issuedAt(new Date())
+		return Jwts.builder()
+				.claims(claims)
+				.subject(user.getUsername())
+				.issuedAt(new Date())
 				.expiration(new Date(System.currentTimeMillis() + expiration))
-				.signWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes())).compact();
+				.signWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes()))
+				.compact();
 	}
 
 	public Claims extractClaims(String token) {
@@ -63,7 +67,7 @@ public class JwtUtil {
 		String username = claims.getSubject();
 		UUID id = (UUID) claims.get("id");
 		List<String> roles = extractRoles(token);
-		String status = (String) claims.get("status");
+		AccountStatus status = (AccountStatus) claims.get("status");
 		
 		return JwtUser.builder()
 				.id(id)

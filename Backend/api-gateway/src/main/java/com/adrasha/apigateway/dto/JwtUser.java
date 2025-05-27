@@ -1,4 +1,4 @@
-package com.adrasha.core.dto;
+package com.adrasha.apigateway.dto;
 
 import java.util.List;
 import java.util.UUID;

@@ -10,8 +10,9 @@ import { Router, RouterLink } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
 import { AuthService } from '@core/services';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { throwError } from 'rxjs';
+import { ValidationErrorComponent } from '@shared/components/validation-error/validation-error.component';
 
 @Component({
   selector: 'app-login',
@@ -27,20 +28,20 @@ import { throwError } from 'rxjs';
     MatFormFieldModule,
     MatInputModule,
     TranslateModule,
+    ValidationErrorComponent
   ],
 })
 export class LoginComponent {
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
   private readonly auth = inject(AuthService);
-  private readonly translate = inject(TranslateModule);
+  private readonly translate = inject(TranslateService);
 
   isSubmitting = false;
 
   loginForm = this.fb.nonNullable.group({
-    username: ['', [Validators.required]],
-    password: ['', [Validators.required]],
-    rememberMe: [false],
+    username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+    password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]],
   });
 
   get username() {
@@ -51,24 +52,24 @@ export class LoginComponent {
     return this.loginForm.get('password')!;
   }
 
-  get rememberMe() {
-    return this.loginForm.get('rememberMe')!;
-  }
-
   login() {
     this.isSubmitting = true;
 
     this.auth
-      .login(this.username.value, this.password.value, this.rememberMe.value)
+      .login(this.username.value, this.password.value)
       .pipe(filter(authenticated => authenticated))
       .subscribe({
         next: () => {
+          this.isSubmitting = false;
+          this.loginForm.reset();
+
           this.router.navigateByUrl('/');          
         },
         error: (errorRes: HttpErrorResponse) => {
           if (errorRes.status === 400) {
             const form = this.loginForm;
             const errors = errorRes.error.errors;
+
             Object.keys(errors).forEach(key => {
               form.get(key === 'email' ? 'username' : key)?.setErrors({
                 remote: errors[key][0],

@@ -54,7 +54,7 @@ public class UserController {
 			Page<UserDTO> userDTOPage = usersPage.map(user -> mapper.map(user, UserDTO.class));
 			
 			ApiResponse<Page<UserDTO>> apiResponse = ApiResponse.<Page<UserDTO>>builder()
-					.status(HttpStatus.OK.toString())
+					.status(HttpStatus.OK.value())
 					.message("List of Users")
 					.payload(userDTOPage)
 					.build();
@@ -73,7 +73,7 @@ public class UserController {
 			UserDTO dto = mapper.map(user, UserDTO.class);
 			
 			ApiResponse<UserDTO> apiResponse = ApiResponse.<UserDTO>builder()
-					.status(HttpStatus.OK.toString())
+					.status(HttpStatus.OK.value())
 					.message("User Details with id "+ id)
 					.payload(dto)
 					.build();

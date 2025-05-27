@@ -4,6 +4,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { Token, User } from '../models';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,22 +12,23 @@ import { Token, User } from '../models';
 export class LoginService {
   protected readonly http = inject(HttpClient);
   protected readonly translate = inject(TranslateService);
+  protected readonly apiService = inject(ApiService);
 
-  private readonly baseUrl = environment.apiBaseUrl+'/auth';
+  private readonly baseUrl = 'auth';
 
-  login(username: string, password: string, rememberMe = false) {
-    return this.http.post<Token>(`${this.baseUrl}/login`, { username, password, rememberMe });
+  login(username: string, password: string) {
+    return this.apiService.post<Token>(`${this.baseUrl}/login`, { username, password });
   }
 
   refresh(params: Record<string, any>) {
-    return this.http.post<Token>(`${this.baseUrl}/refresh`, params);
+    return this.apiService.post<Token>(`${this.baseUrl}/refresh`, params);
   }
 
   logout() {
-    return this.http.post<any>(`${this.baseUrl}/logout`, {});
+    return this.apiService.post<any>(`${this.baseUrl}/logout`, {});
   }
 
   user() {
-    return this.http.get<User>('/user');
+    return this.apiService.get<User>(`${this.baseUrl}/user`);
   }
 }

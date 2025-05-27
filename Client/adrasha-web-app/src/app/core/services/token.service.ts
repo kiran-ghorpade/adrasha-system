@@ -35,11 +35,11 @@ export class TokenService implements OnDestroy {
     return this.change$.pipe(share());
   }
 
-  refresh() {
-    this.buildRefresh();
+  // refresh() {
+  //   this.buildRefresh();
 
-    return this.refresh$.pipe(share());
-  }
+  //   return this.refresh$.pipe(share());
+  // }
 
   set(token?: Token) {
     this.save(token);
@@ -73,8 +73,8 @@ export class TokenService implements OnDestroy {
     if (!token) {
       this.store.remove(this.key);
     } else {
-      const value = Object.assign({ access_token: '', token_type: 'Bearer' }, token, {
-        exp: token.expires_in ? currentTimestamp() + token.expires_in : null,
+      const value = Object.assign({ accessToken: '', tokenType: 'Bearer' }, token, {
+        exp: token.expiresIn ? currentTimestamp() + token.expiresIn : null,
       });
       this.store.set(this.key, filterObject(value));
     }

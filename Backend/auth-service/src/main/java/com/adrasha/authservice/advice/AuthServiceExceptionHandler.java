@@ -10,11 +10,11 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.adrasha.authservice.dto.ApiError;
-import com.adrasha.authservice.dto.ErrorResponse;
-import com.adrasha.authservice.dto.ValidationErrorResponse;
 import com.adrasha.authservice.exception.UserAlreadyExistsException;
 import com.adrasha.authservice.exception.UserNotFoundException;
+import com.adrasha.core.dto.ApiError;
+import com.adrasha.core.dto.ErrorResponse;
+import com.adrasha.core.dto.ValidationErrorResponse;
 
 import io.jsonwebtoken.JwtException;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

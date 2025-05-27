@@ -1,5 +1,7 @@
 package com.adrasha.authservice.service.impl;
 
+import java.time.Instant;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,8 +11,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.adrasha.authservice.dto.AuthTokenResponse;
 import com.adrasha.authservice.dto.LoginRequest;
-import com.adrasha.authservice.dto.LoginResponse;
 import com.adrasha.authservice.dto.PasswordResetRequest;
 import com.adrasha.authservice.dto.RegistrationRequest;
 import com.adrasha.authservice.dto.UserDTO;
@@ -19,6 +21,7 @@ import com.adrasha.authservice.exception.UserNotFoundException;
 import com.adrasha.authservice.model.User;
 import com.adrasha.authservice.service.AuthService;
 import com.adrasha.authservice.service.UserService;
+import com.adrasha.core.dto.JwtUser;
 import com.adrasha.core.util.JwtUtil;
 
 @Service
@@ -56,7 +59,7 @@ public class AuthServiceImpl implements AuthService {
 	
 
 	@Override
-	public LoginResponse login(LoginRequest loginRequest) throws UserNotFoundException {
+	public AuthTokenResponse login(LoginRequest loginRequest) throws UserNotFoundException {
 		
         
         Authentication authentication = authenticationManager.authenticate(
@@ -65,14 +68,15 @@ public class AuthServiceImpl implements AuthService {
 
             User user = service.getUserByUsername(authentication.getName());
             
-            String token = jwtUtil.generateToken(user.getUsername(), user.getRole());
-
+            JwtUser jwtUser = modelMapper.map(user, JwtUser.class);
             
-        UserDTO dto = modelMapper.map(user, UserDTO.class);
+            String token = jwtUtil.generateToken(jwtUser);
 		
-        return LoginResponse.builder()
-				.user(dto)
-				.token(token)
+        return AuthTokenResponse.builder()
+        		.accessToken(token)
+        		.tokenType("Bearer")
+        		.expiresIn(jwtUtil.getExpiration())
+        		.exp(Instant.now().plusMillis(jwtUtil.getExpiration()))
 				.build();
         }
 
@@ -82,6 +86,17 @@ public class AuthServiceImpl implements AuthService {
 	     
 		User user = service.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());		
 		return modelMapper.map(service.updateUser(user.getId(), user), UserDTO.class);
+	}
+
+
+	@Override
+	public UserDTO getCurrentUser() {
+
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		
+		User user = service.getUserByUsername(username);
+		
+		return modelMapper.map(user, UserDTO.class);
 	}
 	
 }

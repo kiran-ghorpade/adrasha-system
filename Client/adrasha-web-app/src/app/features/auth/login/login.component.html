@@ -9,19 +9,11 @@
         <mat-form-field appearance="outline">
           <mat-label>{{ 'username' | translate }}</mat-label>
           <input matInput placeholder="username" formControlName="username" required />
-          @if (username.invalid) {
-            <mat-error>
-              @if (username.errors?.required) {
-                <span>
-                  {{ 'please_enter' | translate }}
-                  <strong>Username</strong>
-                </span>
-              }
-              @if (username.errors?.remote) {
-                <span>{{ username.errors?.remote }}</span>
-              }
-            </mat-error>
-          }
+          <app-validation-error 
+          [control]="this.loginForm.get('username')"
+          [minLength]="3"
+          [maxLength]="50"
+          />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -33,22 +25,12 @@
             formControlName="password"
             required
           />
-          @if (password.invalid) {
-            <mat-error>
-              @if (password.errors?.required) {
-                <span>
-                  {{ 'please_enter' | translate }}
-                  <strong>Password</strong>
-                </span>
-              }
-              @if (password.errors?.remote) {
-                <span>{{ password.errors?.remote }}</span>
-              }
-            </mat-error>
-          }
+         <app-validation-error 
+         [control]="this.loginForm.get('password')"
+         [minLength]="8"
+         [maxLength]="50"
+         />
         </mat-form-field>
-
-        <mat-checkbox formControlName="rememberMe">{{ 'remember_me' | translate }}</mat-checkbox>
 
         <button
           class="w-full m-y-16"

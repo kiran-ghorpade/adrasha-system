@@ -3,19 +3,20 @@ package com.adrasha.authservice.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.adrasha.authservice.dto.ApiResponse;
+import com.adrasha.authservice.dto.AuthTokenResponse;
 import com.adrasha.authservice.dto.LoginRequest;
-import com.adrasha.authservice.dto.LoginResponse;
 import com.adrasha.authservice.dto.PasswordResetRequest;
 import com.adrasha.authservice.dto.RegistrationRequest;
 import com.adrasha.authservice.dto.UserDTO;
 import com.adrasha.authservice.model.User;
 import com.adrasha.authservice.service.AuthService;
+import com.adrasha.core.dto.ApiResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -42,7 +43,7 @@ public class AuthController {
 		UserDTO createdUser = authService.register(registrationRequest);
 
 		ApiResponse<UserDTO> apiResponse = ApiResponse.<UserDTO>builder()
-				.status(HttpStatus.OK.toString())
+				.status(HttpStatus.OK.value())
 				.message("Registration Successful")
 				.payload(createdUser)
 				.build();
@@ -55,15 +56,15 @@ public class AuthController {
 	@ApiResponses(value = {
 		    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = User.class))),
 		})
-	public ResponseEntity<ApiResponse<LoginResponse>> loginUser(@RequestBody @Valid LoginRequest loginRequest) {
+	public ResponseEntity<ApiResponse<AuthTokenResponse>> loginUser(@RequestBody @Valid LoginRequest loginRequest) {
 
 		
-		LoginResponse loginResponse = authService.login(loginRequest);
+		AuthTokenResponse tokenResponse = authService.login(loginRequest);
 		
-		ApiResponse<LoginResponse> apiResponse = ApiResponse.<LoginResponse>builder()
-				.status(HttpStatus.OK.toString())
+		ApiResponse<AuthTokenResponse> apiResponse = ApiResponse.<AuthTokenResponse>builder()
+				.status(HttpStatus.OK.value())
 				.message("Login Successful")
-				.payload(loginResponse)
+				.payload(tokenResponse)
 				.build();
 		
 		return ResponseEntity.ok(apiResponse);
@@ -76,7 +77,23 @@ public class AuthController {
 		UserDTO dto = authService.resetPassword(passwordResetRequest);
 		
 		ApiResponse<UserDTO> apiResponse = ApiResponse.<UserDTO>builder()
-				.status(HttpStatus.OK.toString())
+				.status(HttpStatus.OK.value())
+				.message("Login Successful")
+				.payload(dto)
+				.build();
+		
+		return ResponseEntity.ok(apiResponse);
+	}
+	
+	
+	@GetMapping("/user")
+	@SecurityRequirement(name="BearerAuthentication")
+	public ResponseEntity<?> resetPassword() {
+		
+		UserDTO dto = authService.getCurrentUser();
+		
+		ApiResponse<UserDTO> apiResponse = ApiResponse.<UserDTO>builder()
+				.status(HttpStatus.OK.value())
 				.message("Login Successful")
 				.payload(dto)
 				.build();

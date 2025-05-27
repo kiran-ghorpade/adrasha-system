@@ -7,14 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.adrasha.core.model.User;
+import com.adrasha.core.dto.JwtUser;
 import com.adrasha.core.util.JwtUtil;
 
 import jakarta.servlet.FilterChain;
@@ -60,20 +59,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         // Extract Claims from it
-        String jwt = authHeader.substring(7);
-        String username = jwtUtil.extractUsername(jwt);
-        String role = jwtUtil.extractRoles(jwt);
+        String jwtToken = authHeader.substring(7);
+        JwtUser user = jwtUtil.extractJwtUser(jwtToken);
 
-        if (username == null || !jwtUtil.isTokenValid(jwt)) {
+        if (user == null || !jwtUtil.isTokenValid(jwtToken)) {
             throw new BadCredentialsException("Invalid or expired token");
         }
 
         // Add Claims to request
         if (SecurityContextHolder.getContext().getAuthentication() == null) {
-            GrantedAuthority authority = new SimpleGrantedAuthority(role);
+            List<SimpleGrantedAuthority> authorities = user.getRoles()
+            								.stream()
+            								.map(SimpleGrantedAuthority::new)
+            								.toList();
 
-            User userPrincipal = new User(null, username, null, role, null, null, null);
-            Authentication authentication = new UsernamePasswordAuthenticationToken(userPrincipal, null, List.of(authority));
+            Authentication authentication = new UsernamePasswordAuthenticationToken(user.getUsername(), null, authorities);
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }

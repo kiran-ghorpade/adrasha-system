@@ -1,8 +1,9 @@
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, catchError, iif, map, merge, of, share, switchMap, tap } from 'rxjs';
-import { filterObject, isEmptyObject } from '@core/utils';
+import { SIDEBAR_MENUS } from '@core/constants';
 import { User } from '@core/models';
 import { LoginService, TokenService } from '@core/services';
+import { isEmptyObject } from '@core/utils';
+import { BehaviorSubject, iif, map, merge, of, share, switchMap, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +14,7 @@ export class AuthService {
 
   private user$ = new BehaviorSubject<User>({});
   private change$ = merge(
-    this.tokenService.change(),
-    this.tokenService.refresh().pipe(switchMap(() => this.refresh()))
+    this.tokenService.change()
   ).pipe(
     switchMap(() => this.assignUser()),
     share()
@@ -32,22 +32,23 @@ export class AuthService {
     return this.tokenService.valid();
   }
 
-  login(username: string, password: string, rememberMe = false) {
-    return this.loginService.login(username, password, rememberMe).pipe(
-      tap(token => this.tokenService.set(token)),
-      map(() => this.check())
+  // This method is used to login called by loginservice.
+  login(username: string, password: string) {
+    return this.loginService.login(username, password).pipe(
+      tap(response => this.tokenService.set(response.payload)),
+      switchMap(() => of(this.check()))
     );
   }
 
-  refresh() {
-    return this.loginService
-      .refresh(filterObject({ refresh_token: this.tokenService.getRefreshToken() }))
-      .pipe(
-        catchError(() => of(undefined)),
-        tap(token => this.tokenService.set(token)),
-        map(() => this.check())
-      );
-  }
+  // refresh() {
+  //   return this.loginService
+  //     .refresh(filterObject({ refresh_token: this.tokenService.getRefreshToken() }))
+  //     .pipe(
+  //       catchError(() => of(undefined)),
+  //       tap(token => this.tokenService.set(token)),
+  //       map(() => this.check())
+  //     );
+  // }
 
   logout() {
     return this.loginService.logout().pipe(
@@ -61,7 +62,7 @@ export class AuthService {
   }
 
   menu() {
-    return iif(() => this.check(), [], of([]));
+    return iif(() => this.check(), SIDEBAR_MENUS.admin, of([]));
   }
 
   private assignUser() {

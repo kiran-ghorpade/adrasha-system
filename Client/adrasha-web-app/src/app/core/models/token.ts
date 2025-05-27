@@ -4,16 +4,16 @@ import { Token } from './interface';
 export abstract class BaseToken {
   constructor(protected attributes: Token) {}
 
-  get access_token() {
-    return this.attributes.access_token;
+  get accessToken() {
+    return this.attributes.accessToken;
   }
 
   get refresh_token() {
     return this.attributes.refresh_token;
   }
 
-  get token_type() {
-    return this.attributes.token_type ?? 'bearer';
+  get tokenType() {
+    return this.attributes.tokenType ?? 'bearer';
   }
 
   get exp() {
@@ -25,8 +25,8 @@ export abstract class BaseToken {
   }
 
   getBearerToken() {
-    return this.access_token
-      ? [capitalize(this.token_type), this.access_token].join(' ').trim()
+    return this.accessToken
+      ? [capitalize(this.tokenType), this.accessToken].join(' ').trim()
       : '';
   }
 
@@ -39,7 +39,7 @@ export abstract class BaseToken {
   }
 
   private hasAccessToken() {
-    return !!this.access_token;
+    return !!this.accessToken;
   }
 
   private isExpired() {
@@ -68,7 +68,7 @@ export class JwtToken extends SimpleToken {
   }
 
   private get payload(): { exp?: number } {
-    if (!this.access_token) {
+    if (!this.accessToken) {
       return {};
     }
 
@@ -76,7 +76,7 @@ export class JwtToken extends SimpleToken {
       return this._payload;
     }
 
-    const [, payload] = this.access_token.split('.');
+    const [, payload] = this.accessToken.split('.');
     const data = JSON.parse(base64.decode(payload));
     if (!data.exp) {
       data.exp = this.attributes.exp;

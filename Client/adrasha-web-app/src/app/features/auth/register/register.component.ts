@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { ValidationErrorComponent } from '@shared/components/validation-error/validation-error.component';
 
 @Component({
   selector: 'app-register',
@@ -28,6 +29,7 @@ import { TranslateModule } from '@ngx-translate/core';
     MatFormFieldModule,
     MatInputModule,
     TranslateModule,
+    ValidationErrorComponent
   ],
 })
 export class RegisterComponent {
@@ -35,9 +37,9 @@ export class RegisterComponent {
 
   registerForm = this.fb.nonNullable.group(
     {
-      username: ['', [Validators.required]],
-      password: ['', [Validators.required]],
-      confirmPassword: ['', [Validators.required]],
+      username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]],
     },
     {
       validators: [this.matchValidator('password', 'confirmPassword')],

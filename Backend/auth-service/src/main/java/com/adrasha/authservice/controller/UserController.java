@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.adrasha.authservice.dto.ApiResponse;
 import com.adrasha.authservice.dto.UserDTO;
 import com.adrasha.authservice.model.User;
 import com.adrasha.authservice.service.UserService;
+import com.adrasha.core.dto.ApiResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -54,7 +54,7 @@ public class UserController {
 			Page<UserDTO> userDTOPage = usersPage.map(user -> mapper.map(user, UserDTO.class));
 			
 			ApiResponse<Page<UserDTO>> apiResponse = ApiResponse.<Page<UserDTO>>builder()
-					.status(HttpStatus.OK.toString())
+					.status(HttpStatus.OK.value())
 					.message("List of Users")
 					.payload(userDTOPage)
 					.build();
@@ -73,7 +73,7 @@ public class UserController {
 			UserDTO dto = mapper.map(user, UserDTO.class);
 			
 			ApiResponse<UserDTO> apiResponse = ApiResponse.<UserDTO>builder()
-					.status(HttpStatus.OK.toString())
+					.status(HttpStatus.OK.value())
 					.message("User Details with id "+ id)
 					.payload(dto)
 					.build();

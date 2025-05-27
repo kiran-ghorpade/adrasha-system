@@ -29,6 +29,6 @@ export class LoginService {
   }
 
   user() {
-    return this.apiService.get<User>('/user');
+    return this.apiService.get<User>(`${this.baseUrl}/user`);
   }
 }

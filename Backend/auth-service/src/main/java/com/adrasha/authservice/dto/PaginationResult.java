@@ -1,4 +1,4 @@
-package com.adrasha.apigateway.dto;
+package com.adrasha.authservice.dto;
 
 import java.util.List;
 

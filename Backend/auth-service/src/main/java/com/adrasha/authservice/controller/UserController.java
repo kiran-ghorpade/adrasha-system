@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.adrasha.authservice.dto.ApiResponse;
 import com.adrasha.authservice.dto.UserDTO;
 import com.adrasha.authservice.model.User;
 import com.adrasha.authservice.service.UserService;
-import com.adrasha.core.dto.ApiResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

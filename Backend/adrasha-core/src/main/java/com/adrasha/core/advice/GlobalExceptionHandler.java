@@ -5,54 +5,15 @@ import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.adrasha.core.dto.ApiError;
-import com.adrasha.core.dto.ErrorResponse;
 import com.adrasha.core.dto.ValidationErrorResponse;
-import com.adrasha.core.exception.UserAlreadyExistsException;
-import com.adrasha.core.exception.UserNotFoundException;
-
-import io.jsonwebtoken.JwtException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-	
-	@ExceptionHandler(UserAlreadyExistsException.class)
-	public ResponseEntity<ErrorResponse> handleExistingUserException(UserAlreadyExistsException  ex) {
-		
-	    ErrorResponse response = ErrorResponse.builder()
-                .status(HttpStatus.CONFLICT.value())
-                .errorCode(HttpStatus.CONFLICT.name())
-                .message(ex.getMessage())
-                .build();
-        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-	}
-	
-	@ExceptionHandler(UserNotFoundException.class)
-	public ResponseEntity<ErrorResponse> handleExistingUserException(UserNotFoundException  ex) {
-		
-	    ErrorResponse response = ErrorResponse.builder()
-                .status(HttpStatus.NOT_FOUND.value())
-                .errorCode(HttpStatus.NOT_FOUND.name())
-                .message(ex.getMessage())
-                .build();
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-	}
-	
-	@ExceptionHandler(JwtException.class)
-	public ResponseEntity<ErrorResponse> handleExistingUserException(JwtException  ex) {
-		
-	    ErrorResponse response = ErrorResponse.builder()
-                .status(HttpStatus.UNAUTHORIZED.value())
-                .errorCode(HttpStatus.UNAUTHORIZED.name())
-                .message(ex.getMessage())
-                .build();
-        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
-	}
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<ValidationErrorResponse> handleValidationException(MethodArgumentNotValidException ex) {
@@ -74,18 +35,6 @@ public class GlobalExceptionHandler {
                 .errors(errors)
                 .build();
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-	}
-	
-	// Handler For validation exceptions
-	@ExceptionHandler(AuthenticationException.class)
-	public ResponseEntity<ErrorResponse> handleAuthExceptions(AuthenticationException ex) {
-	    
-	     ErrorResponse response = ErrorResponse.builder()
-                .status(HttpStatus.UNAUTHORIZED.value())
-                .errorCode(HttpStatus.UNAUTHORIZED.name())
-                .message(ex.getMessage())
-                .build();
-        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
 	}
 	
 //	@ExceptionHandler(Exception.class)

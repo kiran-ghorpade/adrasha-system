@@ -14,6 +14,4 @@ public interface AuthService {
 		
 	public UserDTO resetPassword(PasswordResetRequest passwordResetRequest);
 
-	public UserDTO getCurrentUser();
-
 }

@@ -1,4 +1,4 @@
-package com.adrasha.apigateway.dto;
+package com.adrasha.authservice.dto;
 
 import java.time.Instant;
 
@@ -14,7 +14,7 @@ public class ApiResponse<T> {
 	private Instant timestamp = Instant.now();
 	@Default
 	private boolean success = true;
-	private String status;
+	private int status;
 	@Default
 	private String message = "success";
 	private T payload;

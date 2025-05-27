@@ -1,5 +1,7 @@
 package com.adrasha.authservice.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.adrasha.authservice.dto.ApiResponse;
 import com.adrasha.authservice.dto.AuthTokenResponse;
 import com.adrasha.authservice.dto.LoginRequest;
 import com.adrasha.authservice.dto.PasswordResetRequest;
@@ -16,7 +19,6 @@ import com.adrasha.authservice.dto.RegistrationRequest;
 import com.adrasha.authservice.dto.UserDTO;
 import com.adrasha.authservice.model.User;
 import com.adrasha.authservice.service.AuthService;
-import com.adrasha.core.dto.ApiResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -88,14 +90,12 @@ public class AuthController {
 	
 	@GetMapping("/user")
 	@SecurityRequirement(name="BearerAuthentication")
-	public ResponseEntity<?> resetPassword() {
-		
-		UserDTO dto = authService.getCurrentUser();
-		
-		ApiResponse<UserDTO> apiResponse = ApiResponse.<UserDTO>builder()
+	public ResponseEntity<?> getCurrentUser(Principal principal) {
+				
+		ApiResponse<Principal> apiResponse = ApiResponse.<Principal>builder()
 				.status(HttpStatus.OK.value())
-				.message("Login Successful")
-				.payload(dto)
+				.message("User Details")
+				.payload(principal)
 				.build();
 		
 		return ResponseEntity.ok(apiResponse);

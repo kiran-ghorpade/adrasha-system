@@ -1,4 +1,4 @@
-package com.adrasha.core.config;
+package com.adrasha.authservice.config;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.adrasha.core.dto.JwtUser;
-import com.adrasha.core.util.JwtUtil;
+import com.adrasha.authservice.dto.JwtUser;
+import com.adrasha.authservice.util.JwtUtil;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

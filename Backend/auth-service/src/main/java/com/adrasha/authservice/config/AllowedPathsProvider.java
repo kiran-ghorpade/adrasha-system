@@ -1,4 +1,4 @@
-package com.adrasha.core.config;
+package com.adrasha.authservice.config;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.adrasha.core.config;
+package com.adrasha.authservice.config;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -11,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -24,6 +26,16 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     
     @Value("ThisIsImportantSecret")
     private String internalSecret;
+    
+    @Autowired
+    private AllowedPathsProvider allowedPathsProvider;
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        return allowedPathsProvider.getAllowedPaths().stream()
+            .anyMatch(p -> new AntPathRequestMatcher(p).matches(request));
+    }
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
@@ -33,7 +45,8 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
         if (!internalSecret.equals(secrete)) {
             response.setStatus(HttpStatus.FORBIDDEN.value());
-            filterChain.doFilter(request, response);
+            response.setContentType("application/json");
+            response.getWriter().write("Forbidden: Invalid or missing X-Internal-Secret");
             return;
         }
 

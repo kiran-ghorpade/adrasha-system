@@ -1,4 +1,4 @@
-package com.adrasha.authservice.config;
+package com.adrasha.core.config;
 
 import java.util.List;
 
@@ -11,9 +11,7 @@ public class AllowedPathsProvider {
         return List.of(
             "/v3/api-docs/**",
             "/swagger-ui/**",
-            "/api-docs/**",
-            "/auth/register",
-            "/auth/login"
+            "/api-docs/**"
         );
     }
 }

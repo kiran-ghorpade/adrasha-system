@@ -1,7 +1,6 @@
 package com.adrasha.authservice.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,7 +24,6 @@ public class SecurityConfiguration {
     private AllowedPathsProvider allowedPathsProvider;
 
     @Bean
-    @ConditionalOnMissingBean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
      	
         http.csrf(csrf -> csrf.disable())
@@ -35,7 +33,8 @@ public class SecurityConfiguration {
                 			        .stream()
                 			        .map(AntPathRequestMatcher::new)
                 			        .toArray(RequestMatcher[]::new)
-                			).permitAll())
+                			).permitAll()
+                		.anyRequest().authenticated())
             	.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
             	.exceptionHandling((exceptionHandling) ->
                  		exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint)

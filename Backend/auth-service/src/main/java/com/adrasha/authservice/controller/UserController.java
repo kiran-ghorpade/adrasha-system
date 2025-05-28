@@ -10,6 +10,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.adrasha.authservice.dto.ApiResponse;
+import com.adrasha.authservice.dto.JwtUser;
 import com.adrasha.authservice.dto.UserDTO;
 import com.adrasha.authservice.model.User;
 import com.adrasha.authservice.service.UserService;
@@ -30,6 +33,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
 @SecurityRequirement(name = "BearerAuthentication")
+@Secured({"USER"})
 @RequestMapping("/users")
 public class UserController {
 	
@@ -81,23 +85,23 @@ public class UserController {
 			return ResponseEntity.ok(apiResponse);
 		}
 		
-//		@PostMapping("/{id}")
-//        @Operation(summary = "Create new User", description = "Returns a user object after successful registration")
-//		@ApiResponses(value = {
-//			    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserDTO.class))),
-//			})
-//		public ResponseEntity<ApiResponse<UserDTO>> addUser(@PathVariable UUID id, @RequestBody User user){
-//			
-//			UserDTO dto = mapper.map(user, UserDTO.class);
-//			
-//			ApiResponse<UserDTO> apiResponse = ApiResponse.<UserDTO>builder()
-//					.status(HttpStatus.OK.toString())
-//					.message("User Details with id "+ id)
-//					.payload(dto)
-//					.build();
-//			
-//			return ResponseEntity.ok(apiResponse);
-//		}
+		@GetMapping("/me")
+		public ResponseEntity<?> getCurrentUser(Authentication authentication) {
+					
+			if(authentication == null) {
+				return ResponseEntity.noContent().build();
+			}
+			
+			JwtUser user = (JwtUser) authentication.getPrincipal();
+			
+			ApiResponse<JwtUser> apiResponse = ApiResponse.<JwtUser>builder()
+					.status(HttpStatus.OK.value())
+					.message("User Details")
+					.payload(user)
+					.build();
+			
+			return ResponseEntity.ok(apiResponse);
+		}
 		
 		@DeleteMapping("/{id}")
         @Operation(summary = "Delete User", description = "Returns a user object after successful deletion")

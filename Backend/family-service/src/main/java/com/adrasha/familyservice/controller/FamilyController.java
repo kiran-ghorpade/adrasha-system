@@ -29,7 +29,7 @@ import jakarta.validation.Valid;
 
 
 @RestController
-@RequestMapping("/api/famliy")
+@RequestMapping("/famliy")
 public class FamilyController {
 
 	@Autowired

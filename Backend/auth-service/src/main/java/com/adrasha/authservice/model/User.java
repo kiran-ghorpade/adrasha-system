@@ -22,6 +22,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -48,9 +49,9 @@ public class User implements UserDetails {
 	@Size(min = 8, max = 100, message = "{password.size}")
 	private String password;
 	
-	@NotBlank(message="{roles.notblank}")
+	@NotEmpty(message="{roles.notblank}")
 	@Convert(converter = UpperCaseConverter.class)
-	private List<String> roles;
+	private List<String> roles = List.of("USER");
 	
 	@Enumerated(EnumType.STRING)
 	@Convert(converter = UpperCaseConverter.class)

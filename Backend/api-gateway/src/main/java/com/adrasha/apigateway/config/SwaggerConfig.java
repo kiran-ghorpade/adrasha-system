@@ -16,7 +16,7 @@ public class SwaggerConfig {
 	OpenAPI customOpenAPI() {
 	    
 		return new OpenAPI()
-				.info(new Info().title("ADRASHA Authentication Service"))				
+				.info(new Info().title("ADRASHA API Docs"))				
 				.addSecurityItem(new SecurityRequirement().addList("BearerAuthentication"))
 				.components(new Components().addSecuritySchemes("BearerAuthentication", new SecurityScheme()
 						.name("Authorization")

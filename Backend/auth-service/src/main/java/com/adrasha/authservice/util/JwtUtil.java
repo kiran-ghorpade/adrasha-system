@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -57,7 +58,12 @@ public class JwtUtil {
 	public List<String> extractRoles(String token) {
 		Object roles = extractClaims(token).get("roles");
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.convertValue(roles, new TypeReference<List<String>>() {});
+        
+        List<String> rolesList = Optional.ofNullable(roles)
+        		.map(r-> mapper.convertValue(r, new TypeReference<List<String>>() {}))
+        		.orElse(List.of());
+        
+        return rolesList;
 	}
 
 	public JwtUser extractJwtUser(String token) {
@@ -65,9 +71,9 @@ public class JwtUtil {
 		Claims claims = extractClaims(token);
 		
 		String username = claims.getSubject();
-		UUID id = (UUID) claims.get("id");
+		UUID id = UUID.fromString((String) claims.get("id"));
 		List<String> roles = extractRoles(token);
-		AccountStatus status = (AccountStatus) claims.get("status");
+		AccountStatus status = AccountStatus.valueOf((String) claims.get("status"));
 		
 		return JwtUser.builder()
 				.id(id)

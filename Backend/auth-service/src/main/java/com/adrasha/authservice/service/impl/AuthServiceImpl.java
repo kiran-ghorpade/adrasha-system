@@ -45,7 +45,7 @@ public class AuthServiceImpl implements AuthService {
 	@Override
 	public UserDTO register(RegistrationRequest registrationRequest) throws UserAlreadyExistsException{
 		
-		service.getUserByUsername(registrationRequest.getUsername());		
+//		service.getUserByUsername(registrationRequest.getUsername());		
 		
 		String hashedPassword = passwordEncoder.encode(registrationRequest.getPassword());
 		

@@ -26,7 +26,7 @@ import com.adrasha.familyservice.service.MemberService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/member")
+@RequestMapping("/member")
 public class MemberController {
 	
 	@Autowired

@@ -1,6 +1,6 @@
 package com.adrasha.authservice.dto;
 
-import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 import lombok.AllArgsConstructor;
@@ -14,7 +14,6 @@ public class UserDTO {
 	
 	private UUID id;
 	private String username;
-	private String role;
-	private LocalDateTime lastPasswordReset;
-	private boolean isActive;
+	private List<String> roles;
+	private String status;
 }

@@ -7,6 +7,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.time.Instant;
 
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
@@ -16,9 +17,20 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
                          AuthenticationException authException) throws IOException {
     	
     	authException.printStackTrace();
+    	
+    	response.setContentType("application/json");
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.setContentType("application/json");
-        response.getWriter().write("{\"error\": \"Unauthorized: " + authException.getMessage() + "\"}");
+        String body = String.format("""
+        {
+            "timestamp": "%s",
+            "status": 403,
+            "error": "Forbidden",
+            "message": "%s",
+            "path": "%s"
+        }
+        """, Instant.now(), authException.getMessage(), request.getRequestURI());
+
+        response.getWriter().write(body);
     }
 }

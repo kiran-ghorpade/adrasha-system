@@ -13,8 +13,9 @@ public class ValidationErrorResponse {
 		@Default
 	    private boolean success=false;
 		private int status;
-		private String errorCode;
+		private String error;
 	    private String message;
+	    private String path;
 	    private List<ApiError> errors;
 
 		@Default

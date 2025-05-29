@@ -42,7 +42,7 @@ public class FamilyController {
 //	private ModelMapper mapper;
 
 	@GetMapping
-	public ResponseEntity<ApiResponse<Page<Family>>> getAllFamily(
+	public ResponseEntity<AiResponse<Page<Family>>> getAllFamily(
 		    @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.ASC)
 			Pageable pageable
 			){

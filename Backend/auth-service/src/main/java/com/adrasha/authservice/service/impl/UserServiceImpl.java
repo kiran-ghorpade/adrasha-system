@@ -7,10 +7,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.adrasha.authservice.dto.JwtUser;
 import com.adrasha.authservice.exception.UserNotFoundException;
 import com.adrasha.authservice.model.User;
 import com.adrasha.authservice.repository.UserRepository;
@@ -18,7 +21,6 @@ import com.adrasha.authservice.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService{
-
 
 	@Autowired
 	private UserRepository userRepository;
@@ -62,10 +64,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User getUserByUsername(String username) {
-		User user = userRepository.findByUsername(username)
-				.orElseThrow(()-> new UserNotFoundException(username));
-		return user;
+	public Optional<User> getUserByUsername(String username) {
+		return userRepository.findByUsername(username);
 	}
 
 	@Override
@@ -78,5 +78,13 @@ public class UserServiceImpl implements UserService{
                 .authorities(user.getAuthorities())
                 .build();
     }
+
+	@Override
+	public User getCurrentUser(Authentication authentication) {
+		JwtUser jwtUser = (JwtUser) authentication.getPrincipal();
+		
+		return userRepository.findByUsername(jwtUser.getUsername())
+						.orElseThrow(()-> new BadCredentialsException("User Not Authenticated"));
+	}
 
 }

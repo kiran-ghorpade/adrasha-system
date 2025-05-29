@@ -11,6 +11,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.adrasha.authservice.dto.ApiResponse;
+import com.adrasha.authservice.dto.ErrorResponse;
 import com.adrasha.authservice.dto.JwtUser;
 import com.adrasha.authservice.dto.UserDTO;
 import com.adrasha.authservice.model.User;
@@ -32,9 +34,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
-@SecurityRequirement(name = "BearerAuthentication")
-@Secured({"USER"})
 @RequestMapping("/users")
+@SecurityRequirement(name = "BearerAuthentication")
+@Secured({"USER", "ADMIN"})
+@ApiResponses(value = {
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Success", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class))),
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
+})
 public class UserController {
 	
 		@Autowired
@@ -45,10 +52,7 @@ public class UserController {
 
 		@GetMapping
         @Operation(summary = "Get all users", description = "Returns a user in pageable")
-		@ApiResponses(value = {
-			    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Success", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserDTO.class))),
-			    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json")),
-		})
+		@PreAuthorize("hasRole('ADMIN')")
 		public ResponseEntity<ApiResponse<Page<UserDTO>>> getAllUsers(
 			    @PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.DESC)
 				Pageable pageable
@@ -68,9 +72,7 @@ public class UserController {
 		
 		@GetMapping("/{id}")
         @Operation(summary = "Get a user by ID", description = "Returns a user object based on the provided ID")
-		@ApiResponses(value = {
-			    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserDTO.class))),
-			})
+		@PreAuthorize("hasRole('ADMIN')")
 		public ResponseEntity<ApiResponse<UserDTO>> getUser(@Parameter(description = "ID of the user to retrieve", required = true) @PathVariable UUID id){
 			
 			User user = service.getUser(id);
@@ -86,18 +88,22 @@ public class UserController {
 		}
 		
 		@GetMapping("/me")
-		public ResponseEntity<?> getCurrentUser(Authentication authentication) {
-					
+        @Operation(summary = "Get current logged in user", description = "Returns a user object which is currently logged in.")
+		@PreAuthorize("hasRole('USER')")
+		public ResponseEntity<ApiResponse<JwtUser>> getCurrentUser(Authentication authentication) {
+			
+			User user = service.getCurrentUser(authentication);
+			
 			if(authentication == null) {
 				return ResponseEntity.noContent().build();
 			}
 			
-			JwtUser user = (JwtUser) authentication.getPrincipal();
+			JwtUser dto = mapper.map(user, JwtUser.class);
 			
 			ApiResponse<JwtUser> apiResponse = ApiResponse.<JwtUser>builder()
 					.status(HttpStatus.OK.value())
 					.message("User Details")
-					.payload(user)
+					.payload(dto)
 					.build();
 			
 			return ResponseEntity.ok(apiResponse);
@@ -105,9 +111,6 @@ public class UserController {
 		
 		@DeleteMapping("/{id}")
         @Operation(summary = "Delete User", description = "Returns a user object after successful deletion")
-		@ApiResponses(value = {
-			    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserDTO.class))),
-			})
 		public ResponseEntity<ApiResponse<UserDTO>> deleteUser(@PathVariable UUID id){
 			
 			service.deleteUser(id);

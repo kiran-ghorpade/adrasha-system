@@ -12,8 +12,9 @@ public class ErrorResponse {
 	@Default
     private boolean success= false;
 	private int status;
-	private String errorCode;
+	private String error;
 	private String message;
+	private String path;
 	@Default
     private Instant timestamp = Instant.now();
 }

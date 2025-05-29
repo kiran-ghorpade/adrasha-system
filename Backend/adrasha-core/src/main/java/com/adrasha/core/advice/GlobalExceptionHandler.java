@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.adrasha.core.dto.ApiError;
 import com.adrasha.core.dto.ValidationErrorResponse;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<ValidationErrorResponse> handleValidationException(MethodArgumentNotValidException ex) {
+	public ResponseEntity<ValidationErrorResponse> handleValidationException(MethodArgumentNotValidException ex, HttpServletRequest request) {
 	    // Collecting all validation errors
 	    List<ApiError> errors = ex.getBindingResult()
 	    		.getFieldErrors()
@@ -30,8 +32,9 @@ public class GlobalExceptionHandler {
 	    
 	    ValidationErrorResponse response = ValidationErrorResponse.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
-                .errorCode(HttpStatus.BAD_REQUEST.name())
+                .error(HttpStatus.BAD_REQUEST.getReasonPhrase())
                 .message("Validation failed")
+                .path(request.getRequestURI())
                 .errors(errors)
                 .build();
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);

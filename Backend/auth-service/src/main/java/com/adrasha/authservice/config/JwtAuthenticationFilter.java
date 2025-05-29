@@ -26,63 +26,66 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private final JwtUtil jwtUtil;
-//    private final JwtAuthenticationEntryPoint authenticationEntryPoint;
+	private final JwtUtil jwtUtil;
+	    private final JwtAuthenticationEntryPoint authenticationEntryPoint;
 
-    @Autowired
-    private AllowedPathsProvider allowedPathsProvider;
+	@Autowired
+	private AllowedPathsProvider allowedPathsProvider;
 
-    public JwtAuthenticationFilter(JwtUtil jwtUtil) {
-        this.jwtUtil = jwtUtil;
-//        this.authenticationEntryPoint = authenticationEntryPoint;
-    }
+	public JwtAuthenticationFilter(JwtUtil jwtUtil, JwtAuthenticationEntryPoint authenticationEntryPoint) {
+		this.jwtUtil = jwtUtil;
+		        this.authenticationEntryPoint = authenticationEntryPoint;
+	}
 
-    @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) {
-    	
-        boolean shouldStop = allowedPathsProvider.getAllowedPaths().stream()
-            .anyMatch(p -> new AntPathRequestMatcher(p).matches(request));
-        
-        log.info("Jwt Filter Applied - Request " + request.getRequestURI() + " - Result "+shouldStop);
-        
-        return shouldStop;
-    }
+	@Override
+	protected boolean shouldNotFilter(HttpServletRequest request) {
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
+		boolean shouldStop = allowedPathsProvider.getAllowedPaths().stream()
+				.anyMatch(p -> new AntPathRequestMatcher(p).matches(request));
+
+		log.info("Jwt Filter Applied - Request " + request.getRequestURI() + " - Result "+shouldStop);
+
+		return shouldStop;
+	}
+
+	@Override
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+			FilterChain filterChain) throws ServletException, IOException {
 		log.info("Allowed Path request : "+ request);
 
-        // Get Header from request
-        final String authHeader = request.getHeader("Authorization");
+		// Get Header from request
+		final String authHeader = request.getHeader("Authorization");
 
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+		if (authHeader == null || !authHeader.startsWith("Bearer ")) {
 			log.info("AuthHeader Missing in current request : "+ request);
-            throw new BadCredentialsException("Missing or invalid Authorization header");
-        }
+			 authenticationEntryPoint.commence(request, response, 
+			            new BadCredentialsException("Authorization header not found with 'Bearer <token>"));
+			        return;
+		}
+		
+		// Extract Claims from it
+		String jwtToken = authHeader.substring(7);
+		JwtUser user = jwtUtil.extractJwtUser(jwtToken);
 
-        // Extract Claims from it
-        String jwtToken = authHeader.substring(7);
-        JwtUser user = jwtUtil.extractJwtUser(jwtToken);
+		if (user == null || !jwtUtil.isTokenValid(jwtToken)) {
+			authenticationEntryPoint.commence(request, response,
+		            new BadCredentialsException("Invalid or Expired token"));
+		        return;
+		}
 
-        if (user == null || !jwtUtil.isTokenValid(jwtToken)) {
-        	log.info("Invalid JWT Token : " + jwtToken);
-            throw new BadCredentialsException("Invalid or expired token");
-        }
-                
-        // Add Claims to request
-        if (SecurityContextHolder.getContext().getAuthentication() == null) {
-            List<SimpleGrantedAuthority> authorities = user.getRoles()
-            								.stream()
-            								.map(SimpleGrantedAuthority::new)
-            								.toList();
+		// Add Claims to request
+		if (SecurityContextHolder.getContext().getAuthentication() == null) {
+			List<SimpleGrantedAuthority> authorities = user.getRoles()
+					.stream()
+					.map(SimpleGrantedAuthority::new)
+					.toList();
 
-            Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
+			Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
 
-            log.info("Adding User to Security Context : " + user);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        }
+			log.info("Adding User to Security Context : " + user);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+		}
 
-        filterChain.doFilter(request, response);
-    }
+		filterChain.doFilter(request, response);
+	}
 }

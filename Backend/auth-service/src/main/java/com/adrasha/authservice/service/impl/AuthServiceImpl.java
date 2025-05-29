@@ -1,13 +1,13 @@
 package com.adrasha.authservice.service.impl;
 
 import java.time.Instant;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,66 +26,64 @@ import com.adrasha.authservice.util.JwtUtil;
 
 @Service
 public class AuthServiceImpl implements AuthService {
-	
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
+
 	@Autowired
-    private JwtUtil jwtUtil;
-	
+	private JwtUtil jwtUtil;
+
 	@Autowired
 	private UserService service;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@Autowired
 	private ModelMapper modelMapper;
-	
+
 	@Override
-	public UserDTO register(RegistrationRequest registrationRequest) throws UserAlreadyExistsException{
-		
-//		service.getUserByUsername(registrationRequest.getUsername());		
-		
+	public UserDTO register(Authentication authentication, RegistrationRequest registrationRequest) throws UserAlreadyExistsException {
+
+		Optional<User> existingUser = service.getUserByUsername(registrationRequest.getUsername());
+
+		if (existingUser.isPresent()) {
+			throw new UserAlreadyExistsException("User Already Exists");
+		}
+
 		String hashedPassword = passwordEncoder.encode(registrationRequest.getPassword());
-		
+
 		User user = modelMapper.map(registrationRequest, User.class);
 		user.setPassword(hashedPassword);
-		
+
 		user = service.addUser(user);
-		
+
 		return modelMapper.map(user, UserDTO.class);
 	}
-	
 
 	@Override
 	public AuthTokenResponse login(LoginRequest loginRequest) throws UserNotFoundException {
-		
-        
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
-            );
 
-            User user = service.getUserByUsername(authentication.getName());
-            
-            JwtUser jwtUser = modelMapper.map(user, JwtUser.class);
-            
-            String token = jwtUtil.generateToken(jwtUser);
-		
-        return AuthTokenResponse.builder()
-        		.accessToken(token)
-        		.tokenType("Bearer")
-        		.expiresIn(jwtUtil.getExpiration())
-        		.exp(Instant.now().plusMillis(jwtUtil.getExpiration()))
-				.build();
-        }
+		Authentication authentication = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
+		User user = service.getUserByUsername(authentication.getName())
+				.orElseThrow(() -> new UserNotFoundException(loginRequest.getUsername()));
+
+		JwtUser jwtUser = modelMapper.map(user, JwtUser.class);
+
+		String token = jwtUtil.generateToken(jwtUser);
+
+		return AuthTokenResponse.builder().accessToken(token).tokenType("Bearer").expiresIn(jwtUtil.getExpiration())
+				.exp(Instant.now().plusMillis(jwtUtil.getExpiration())).build();
+	}
 
 	@Override
-	public UserDTO resetPassword(PasswordResetRequest passwordResetRequest) {
-	     
-		User user = service.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());		
+	public UserDTO resetPassword(Authentication authentication, PasswordResetRequest passwordResetRequest) {
+
+		User user = service.getCurrentUser(authentication);
+
 		return modelMapper.map(service.updateUser(user.getId(), user), UserDTO.class);
 	}
-	
+
 }

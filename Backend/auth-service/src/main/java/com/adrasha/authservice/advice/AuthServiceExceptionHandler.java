@@ -11,60 +11,57 @@ import com.adrasha.authservice.exception.UserAlreadyExistsException;
 import com.adrasha.authservice.exception.UserNotFoundException;
 
 import io.jsonwebtoken.JwtException;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
 public class AuthServiceExceptionHandler {
 	
 	@ExceptionHandler(UserAlreadyExistsException.class)
-	@ApiResponses(value = {
-		    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "409", description = "User already exists")
-		})
-	public ResponseEntity<ErrorResponse> handleExistingUserException(UserAlreadyExistsException  ex) {
+	public ResponseEntity<ErrorResponse> handleExistingUserException(UserAlreadyExistsException  ex, HttpServletRequest request) {
 		
 	    ErrorResponse response = ErrorResponse.builder()
                 .status(HttpStatus.CONFLICT.value())
-                .errorCode(HttpStatus.CONFLICT.name())
+                .error(HttpStatus.CONFLICT.getReasonPhrase())
+                .path(request.getRequestURI())
                 .message(ex.getMessage())
                 .build();
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
 	}
 	
 	@ExceptionHandler(UserNotFoundException.class)
-	@ApiResponses(value = {
-		    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "User Not Found")
-		})
-	public ResponseEntity<ErrorResponse> handleExistingUserException(UserNotFoundException  ex) {
+	public ResponseEntity<ErrorResponse> handleExistingUserException(UserNotFoundException  ex, HttpServletRequest request) {
 		
 	    ErrorResponse response = ErrorResponse.builder()
                 .status(HttpStatus.NOT_FOUND.value())
-                .errorCode(HttpStatus.NOT_FOUND.name())
+				.error(HttpStatus.NOT_FOUND.getReasonPhrase())
+                .path(request.getRequestURI())
                 .message(ex.getMessage())
                 .build();
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 	}
 	
 	@ExceptionHandler(JwtException.class)
-	@ApiResponses(value = {
-		    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "JWT Token Invalid")
-		})
-	public ResponseEntity<ErrorResponse> handleExistingUserException(JwtException  ex) {
+	public ResponseEntity<ErrorResponse> handleExistingUserException(JwtException  ex, HttpServletRequest request) {
 		
 	    ErrorResponse response = ErrorResponse.builder()
                 .status(HttpStatus.UNAUTHORIZED.value())
-                .errorCode(HttpStatus.UNAUTHORIZED.name())
+                .error(HttpStatus.UNAUTHORIZED.getReasonPhrase())
+                .path(request.getRequestURI())
+
                 .message(ex.getMessage())
                 .build();
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
 	}
-	
+
 	// Handler For validation exceptions
 	@ExceptionHandler(AuthenticationException.class)
-	public ResponseEntity<ErrorResponse> handleAuthExceptions(AuthenticationException ex) {
+	public ResponseEntity<ErrorResponse> handleAuthExceptions(AuthenticationException ex, HttpServletRequest request) {
 	    
 	     ErrorResponse response = ErrorResponse.builder()
                 .status(HttpStatus.UNAUTHORIZED.value())
-                .errorCode(HttpStatus.UNAUTHORIZED.name())
+                .error(HttpStatus.UNAUTHORIZED.getReasonPhrase())
+                .path(request.getRequestURI())
+
                 .message(ex.getMessage())
                 .build();
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);

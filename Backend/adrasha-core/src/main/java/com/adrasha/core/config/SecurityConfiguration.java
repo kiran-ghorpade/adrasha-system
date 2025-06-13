@@ -9,8 +9,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -35,8 +33,7 @@ public class SecurityConfiguration {
 				.requestMatchers(
 						allowedPathsProvider.getAllowedPaths()
 						.stream()
-						.map(AntPathRequestMatcher::new)
-						.toArray(RequestMatcher[]::new)
+						.toArray(String[]::new)
 						).permitAll()
 				.anyRequest().authenticated())
 		.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)

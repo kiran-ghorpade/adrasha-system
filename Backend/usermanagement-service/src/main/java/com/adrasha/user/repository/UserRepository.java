@@ -1,0 +1,15 @@
+package com.adrasha.user.repository;
+
+import java.util.Optional;
+import java.util.UUID;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.adrasha.user.model.User;
+
+@Repository
+public interface UserRepository extends JpaRepository<User, UUID>{
+
+	Optional<User> findByMobileNumber(String mobileNumber);
+}

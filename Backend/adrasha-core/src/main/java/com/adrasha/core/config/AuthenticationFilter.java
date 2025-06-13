@@ -6,8 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,12 +23,15 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class AuthenticationFilter extends OncePerRequestFilter {
     
-    @Value("ThisIsImportantSecret")
+    @Value("ThisIsMostImportantSecret")
     private String internalSecret;
     
     @Autowired
     private AllowedPathsProvider allowedPathsProvider;
 
+    @Autowired
+    private CustomAccessDeniedHandler accessDeniedHandler;
+    
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         return allowedPathsProvider.getAllowedPaths().stream()
@@ -41,12 +43,10 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-        String secrete = request.getHeader("X-Internal-Secret");
+        String secret = request.getHeader("X-Internal-Secret");
 
-        if (!internalSecret.equals(secrete)) {
-            response.setStatus(HttpStatus.FORBIDDEN.value());
-            response.setContentType("application/json");
-            response.getWriter().write("Forbidden: Invalid or missing X-Internal-Secret");
+        if (!internalSecret.equals(secret)) {
+        	accessDeniedHandler.handle(request, response, new AccessDeniedException("Invalid or missing X-Internal-Secret "));
             return;
         }
 
@@ -55,14 +55,15 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         final String roles = request.getHeader("X-Roles");
 
         if (username == null || roles == null) {
-            throw new BadCredentialsException("Missing or invalid Authorization header");
+            accessDeniedHandler.handle(request, response, new AccessDeniedException("Missing or invalid Authorization header"));
+            return;
         }
 
         // Add Claims to request
         if (SecurityContextHolder.getContext().getAuthentication() == null) {
         	
             List<SimpleGrantedAuthority> authorities =  Arrays.stream(roles.split(","))
-            								.map(SimpleGrantedAuthority::new)
+            								.map(role -> new SimpleGrantedAuthority("ROLE_"+ role.trim()))
             								.toList();
 
             Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);

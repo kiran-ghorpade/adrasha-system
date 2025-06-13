@@ -19,7 +19,7 @@ public class Family {
 	private List<Member> members;
 	
 	@NotNull
-	private Address address;
+	private UUID address;
 	
 	@NotNull
 	private UUID ashaId;

@@ -10,12 +10,39 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.adrasha.core.dto.ApiError;
+import com.adrasha.core.dto.ErrorResponse;
 import com.adrasha.core.dto.ValidationErrorResponse;
+import com.adrasha.core.exception.AlreadyExistsException;
+import com.adrasha.core.exception.NotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+	
+	@ExceptionHandler(NotFoundException.class)
+	public ResponseEntity<ErrorResponse> handleAshaNotFoundException(NotFoundException  ex, HttpServletRequest request) {
+		
+	    ErrorResponse response = ErrorResponse.builder()
+                .status(HttpStatus.NOT_FOUND.value())
+                .error(ex.getClass().getName())
+                .message(ex.getMessage())
+                .path(request.getRequestURI())
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(AlreadyExistsException.class)
+	public ResponseEntity<ErrorResponse> handleExistingAshaException(AlreadyExistsException  ex, HttpServletRequest request) {
+		
+	    ErrorResponse response = ErrorResponse.builder()
+                .status(HttpStatus.CONFLICT.value())
+                .error(ex.getClass().getName())
+                .message(ex.getMessage())
+                .path(request.getRequestURI())
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+	}
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<ValidationErrorResponse> handleValidationException(MethodArgumentNotValidException ex, HttpServletRequest request) {

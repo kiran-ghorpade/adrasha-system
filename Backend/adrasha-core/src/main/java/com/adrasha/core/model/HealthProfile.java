@@ -1,7 +1,6 @@
 package com.adrasha.core.model;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 import lombok.Data;
@@ -24,7 +23,7 @@ public class HealthProfile {
 
     private String chronicConditions;
 
-    private List<Vaccination> vaccinationHistory;
+//    private List<Vaccination> vaccinationHistory;
     
     private LocalDate lastUpdated;
 }

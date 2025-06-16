@@ -16,8 +16,8 @@
 1. Internationalization
 
 ## For Spring Boot App
-1. Build Tool - [Maven](https://maven.apache.org/) / [Gradle](https://gradle.org/)
-1. Type Safety - [Java](https://www.oracle.com/java/) / [Kotlin](https://kotlinlang.org/)
+1. Build Tool - [Maven](https://maven.apache.org/) 
+1. Type Safety - [Java](https://www.oracle.com/java/) 
 1. Application Core - [Spring Boot](https://spring.io/projects/spring-boot)
 1. HTTP Interface - [Spring Web (Spring MVC)](https://spring.io/guides/gs/rest-service/)
 1. Routing - [Spring MVC Annotations](https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc-ann-methods)

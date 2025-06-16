@@ -28,6 +28,7 @@
 1. Api client generator - [Orval](https://orval.dev/)
 1. Global State Management - [React Query/Tanstack Query](https://tanstack.com/query/latest)
 1. Form Handling - [React Form Hook](https://react-hook-form.com/)
+
 1. Validation - [Zod](https://zod.dev/)
 1. Datetime handling - [Day.js](https://day.js.org/)
 1. Icons - [Material Icons](https://mui.com/material-ui/material-icons/)

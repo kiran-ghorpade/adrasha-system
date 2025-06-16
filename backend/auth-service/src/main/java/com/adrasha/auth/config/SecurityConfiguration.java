@@ -36,8 +36,8 @@ public class SecurityConfiguration {
 						allowedPathsProvider.getAllowedPaths()
 						.stream()
 						.toArray(String[]::new)
-						).permitAll())
-//				.anyRequest().authenticated())
+						).permitAll()
+				.anyRequest().authenticated())
 		.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
 		.exceptionHandling((exceptionHandling) ->
 				exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint)

@@ -36,7 +36,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("/auth")
 @ApiResponses(value = {
-	    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Success", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class))),
 	    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ValidationErrorResponse.class))),
 })
 @Tag(name = "UserDetails Management")
@@ -58,7 +57,7 @@ public class UserDetailsController {
 		    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
 	})
 	@SecurityRequirement(name = "BearerAuthentication")
-	@PreAuthorize("hasRole('ROLE_USER')")
+	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> resetPassword(Authentication authentication, @RequestBody PasswordResetRequest passwordResetRequest) {
 
 		JwtUser user = (JwtUser) authentication.getPrincipal();

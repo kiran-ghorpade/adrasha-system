@@ -8,7 +8,7 @@ import org.springframework.security.core.Authentication;
 
 import com.adrasha.user.dto.AddRoleDTO;
 
-@FeignClient("lb:AUTH-SERVICE/auth")
+//@FeignClient("lb:AUTH-SERVICE/auth")
 public interface AuthService {
 
 	ResponseEntity<?> updateRole(AddRoleDTO addRoleDTO);

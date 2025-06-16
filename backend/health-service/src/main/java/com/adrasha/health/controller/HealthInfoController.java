@@ -40,7 +40,6 @@ import jakarta.validation.Valid;
 @RequestMapping("/healthInfo")
 @SecurityRequirement(name = "BearerAuthentication")
 @ApiResponses(value = {
-    @ApiResponse(responseCode = "200", description = "Success", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Response.class))),
     @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
     @ApiResponse(responseCode = "404", description = "Not Found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
@@ -54,26 +53,6 @@ public class HealthInfoController {
 	@Autowired
 	private ModelMapper mapper;
 	
-//	@GetMapping
-//    @Operation(summary = "Get all healthInfo", description = "Returns a healthInfo in pageable")
-//	@PreAuthorize("hasAnyRole('USER','ASHA','ADMIN')")
-//	public ResponseEntity<Response<Page<HealthDTO>>> getAllFamilies(
-//		    @PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.DESC)
-//			Pageable pageable
-//			){
-//
-//		Page<Health> healthPages = healthService.getAllHea(pageable);
-//		Page<HealthDTO> healthDTOPage = healthPages.map(health -> mapper.map(health, HealthDTO.class));
-//		
-//		Response<Page<HealthDTO>> apiResponse = Response.<Page<HealthDTO>>builder()
-//				.status(HttpStatus.OK.value())
-//				.message("List of healthInfo")
-//				.payload(healthDTOPage)
-//				.build();
-//		
-//		return ResponseEntity.ok(apiResponse);
-//	}
-//	
 	@GetMapping("/{id}")
     @Operation(summary = "Get a health by ID", description = "Returns a health object based on the provided ID")
 	@PreAuthorize("hasRole('ASHA')")

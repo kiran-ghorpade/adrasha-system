@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import com.adrasha.auth.model.AccountStatus;
 import com.adrasha.auth.model.Role;
 import com.adrasha.auth.model.User;
 import com.adrasha.auth.repository.UserRepository;
@@ -34,6 +35,7 @@ public class AdminInitializer implements CommandLineRunner {
             admin.setUsername(username);
             admin.setPassword(passwordEncoder.encode(password));
             admin.setRoles(Set.of(Role.USER,Role.ADMIN));
+            admin.setStatus(AccountStatus.APPROVED);
             userRepository.save(admin);
         }
     }

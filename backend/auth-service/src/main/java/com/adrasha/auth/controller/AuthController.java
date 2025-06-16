@@ -26,7 +26,6 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/auth")
 @ApiResponses(value = {
-	    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Success", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiResponse.class))),
 	    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ValidationErrorResponse.class))),
 })
 @Tag(name = "Authentication Management")

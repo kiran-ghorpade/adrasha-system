@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -23,10 +24,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.adrasha.core.dto.ErrorResponse;
+import com.adrasha.core.dto.ExampleMatcherUtils;
 import com.adrasha.core.dto.Response;
-import com.adrasha.family.dto.FamilyDTO;
-import com.adrasha.family.dto.FamilyRegistrationDTO;
-import com.adrasha.family.dto.FamilyResponseDTO;
+import com.adrasha.family.dto.family.FamilyFilterDTO;
+import com.adrasha.family.dto.family.FamilyRegistrationDTO;
+import com.adrasha.family.dto.family.FamilyResponseDTO;
+import com.adrasha.family.dto.family.FamilyUpdateDTO;
 import com.adrasha.family.model.Family;
 import com.adrasha.family.model.Member;
 import com.adrasha.family.service.FamilyRegistrationService;
@@ -67,11 +70,17 @@ public class FamilyController {
     @Operation(summary = "Get all families", description = "Returns a families in pageable")
 	@PreAuthorize("hasAnyRole('USER','ASHA','ADMIN')")
 	public ResponseEntity<Response<Page<FamilyResponseDTO>>> getAllFamilies(
+			FamilyFilterDTO filterDTO,
 		    @PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.DESC)
 			Pageable pageable
 			){
+		
+		Family searchTerms = mapper.map(filterDTO, Family.class);
+		
+		Example<Family> exampleFamily = Example.of(searchTerms, ExampleMatcherUtils.getDefaultMatcher());
 
-		Page<Family> familyPages = familyService.getAllFamilies(pageable);
+		Page<Family> familyPages = familyService.getAllFamilies(exampleFamily, pageable);
+		
 		Page<FamilyResponseDTO> FamilyResponseDTOPage = familyPages.map(family -> mapper.map(family, FamilyResponseDTO.class));
 		
 		Response<Page<FamilyResponseDTO>> apiResponse = Response.<Page<FamilyResponseDTO>>builder()
@@ -100,7 +109,7 @@ public class FamilyController {
 		return ResponseEntity.ok(apiResponse);
 	}
 	
-	@PostMapping
+	@PostMapping("/register")
     @Operation(summary = "Create new Family", description = "Returns created family")
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Response<FamilyResponseDTO>> createFamily(@Valid @RequestBody FamilyRegistrationDTO familyRegistrationDTO){
@@ -131,7 +140,7 @@ public class FamilyController {
 	public ResponseEntity<Response<FamilyResponseDTO>> udpateFamily(
 			@Parameter(description = "ID of the family to be updated", required = true)
 			@PathVariable UUID id,
-			@Valid @RequestBody FamilyDTO updatedFamily
+			@Valid @RequestBody FamilyUpdateDTO updatedFamily
 			){
 		
 		Family family = mapper.map(updatedFamily, Family.class);
@@ -150,7 +159,7 @@ public class FamilyController {
 
 	@DeleteMapping("/{id}")
     @Operation(summary = "Delete Family", description = "This will delete all member data associated with family")
-	public ResponseEntity<Void> deleteRoleRequestOs(@PathVariable UUID id){
+	public ResponseEntity<Void> deleteRoleRequest(@PathVariable UUID id){
 		
 		familyService.deleteFamily(id);
 		

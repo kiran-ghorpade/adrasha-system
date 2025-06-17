@@ -1,20 +1,15 @@
 package com.adrasha.user.service;
 
-import java.util.UUID;
-
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
-import com.adrasha.user.dto.AddRoleDTO;
+import com.adrasha.user.dto.roleRequest.RoleUpdateDTO;
 
-//@FeignClient("lb:AUTH-SERVICE/auth")
+@FeignClient(url = "http://localhost:8081/auth")
 public interface AuthService {
 
-	ResponseEntity<?> updateRole(AddRoleDTO addRoleDTO);
-
-	ResponseEntity<?> deleteCurrentUser(Authentication authentication);
-
-	ResponseEntity<?> deleteUserByAdmin(UUID id);
-
+	@PutMapping("/updateRole")
+	public ResponseEntity<?> updateRole(@RequestBody RoleUpdateDTO addRoleDTO);
 }

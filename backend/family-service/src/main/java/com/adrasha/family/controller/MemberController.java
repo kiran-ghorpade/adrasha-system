@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -23,10 +24,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.adrasha.core.dto.ErrorResponse;
+import com.adrasha.core.dto.ExampleMatcherUtils;
 import com.adrasha.core.dto.Response;
-import com.adrasha.family.dto.MemberDTO;
-import com.adrasha.family.dto.MemberResponseDTO;
-import com.adrasha.family.exception.MemberNotFoundException;
+import com.adrasha.family.dto.member.MemberCreateDTO;
+import com.adrasha.family.dto.member.MemberFilterDTO;
+import com.adrasha.family.dto.member.MemberResponseDTO;
+import com.adrasha.family.dto.member.MemberUpdateDTO;
 import com.adrasha.family.model.Member;
 import com.adrasha.family.service.MemberService;
 
@@ -62,11 +65,17 @@ public class MemberController {
     @Operation(summary = "Get all members", description = "Returns a members in pageable")
 	@PreAuthorize("hasAnyRole('ASHA','ADMIN')")
 	public ResponseEntity<Response<Page<MemberResponseDTO>>> getAllMembers(
+			MemberFilterDTO filterDTO,
 		    @PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.DESC)
 			Pageable pageable
 			){
+		
+		Member searchTerms = mapper.map(filterDTO, Member.class);
 
-		Page<Member> memberPages = memberService.getAllMembers(pageable);
+		Example<Member> exampleMember = Example.of(searchTerms, ExampleMatcherUtils.getDefaultMatcher());
+		
+		Page<Member> memberPages = memberService.getAllMembers(exampleMember, pageable);
+		
 		Page<MemberResponseDTO> MemberResponseDTOPage = memberPages.map(member -> mapper.map(member, MemberResponseDTO.class));
 		
 		Response<Page<MemberResponseDTO>> apiResponse = Response.<Page<MemberResponseDTO>>builder()
@@ -98,7 +107,7 @@ public class MemberController {
 	@PostMapping
     @Operation(summary = "Create new RoleRequest", description = "Returns created role request")
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<Response<MemberResponseDTO>> createFamily(@Valid @RequestBody MemberDTO memberDTO){
+	public ResponseEntity<Response<MemberResponseDTO>> createFamily(@Valid @RequestBody MemberCreateDTO memberDTO){
 		
 		Member member = mapper.map(memberDTO, Member.class);
 		member = memberService.createMember(member);
@@ -124,7 +133,7 @@ public class MemberController {
 	public ResponseEntity<Response<MemberResponseDTO>> udpateMember(
 			@Parameter(description = "ID of the member to be updated", required = true)
 			@PathVariable UUID id,
-			@Valid @RequestBody MemberDTO updatedMember
+			@Valid @RequestBody MemberUpdateDTO updatedMember
 			){
 		
 		Member member = mapper.map(updatedMember, Member.class);
@@ -142,7 +151,7 @@ public class MemberController {
 	
 	@DeleteMapping("/{id}")
     @Operation(summary = "Delete Member", description = "deletes member and return nothing if successful deletion")
-	public ResponseEntity<Void> udpateMember(@PathVariable UUID id) throws MemberNotFoundException{
+	public ResponseEntity<Void> udpateMember(@PathVariable UUID id){
 		
 		memberService.deleteMember(id);
 

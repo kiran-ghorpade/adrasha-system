@@ -5,18 +5,17 @@ import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.adrasha.core.dto.JwtUser;
-import com.adrasha.user.exception.UserAlreadyExistsException;
-import com.adrasha.user.exception.UserNotFoundException;
+import com.adrasha.core.exception.AlreadyExistsException;
+import com.adrasha.core.exception.NotFoundException;
 import com.adrasha.user.model.User;
 import com.adrasha.user.repository.UserRepository;
 import com.adrasha.user.service.UserService;
 
-// TODO : Review class 
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -27,26 +26,25 @@ public class UserServiceImpl implements UserService {
 	private ModelMapper modelMapper;
 
 	@Override
-	public Page<User> getAllUsers(Pageable pageable) {
+	public Page<User> getAllUsers(Example<User> example, Pageable pageable) {
 
-		return userRepository.findAll(pageable);
+		return userRepository.findAll(example, pageable);
 	}
 
 	@Override
 	public User getUser(UUID userId) {
 
 		return userRepository.findById(userId)
-				.orElseThrow(() -> new UserNotFoundException("User Not Found with id : " + userId));
+				.orElseThrow(() -> new NotFoundException("User Not Found with id : " + userId));
 	}
 
 	@Override
 	public User createUser(User user) {
 		
-		
-		Optional<User> existingUser = userRepository.findByMobileNumber(user.getMobileNumber());
+		Optional<User> existingUser = userRepository.findById(user.getId());
 		
 	  	if(existingUser.isPresent()) {
-	  		throw new UserAlreadyExistsException("User with mobileNumber : "+ user.getMobileNumber()+" already exist.");
+	  		throw new AlreadyExistsException("User with id : "+ user.getId()+" already exist.");
 	  	}
 
 		return userRepository.save(user);
@@ -64,13 +62,6 @@ public class UserServiceImpl implements UserService {
 		User user = getUser(userId);
 		userRepository.delete(user);
 		return user;
-	}
-
-	// TODO : Review This Method
-	@Override
-	public User getCurrentUser(JwtUser user) {
-		
-		return getUser(user.getId());
 	}
 
 }

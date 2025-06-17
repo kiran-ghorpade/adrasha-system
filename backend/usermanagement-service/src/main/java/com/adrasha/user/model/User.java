@@ -1,28 +1,23 @@
 package com.adrasha.user.model;
-
-import java.time.Instant;
 import java.util.UUID;
 
+import com.adrasha.core.model.Auditable;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
-public class User {
+public class User extends Auditable{
 
 	@Id
 	private UUID id;
-
-	@Column(unique = true)
-	private String mobileNumber;
 	
-	private Instant lastPasswordReset;
+	private Name name;
 
-	private Instant createdAt;
-
-	private Instant updatedAt;
-
+	private UUID healthCenter;
+	
 }

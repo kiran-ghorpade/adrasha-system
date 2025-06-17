@@ -5,18 +5,17 @@ import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.adrasha.user.exception.RoleRequestNotFoundException;
-import com.adrasha.user.exception.UserAlreadyExistsException;
-import com.adrasha.user.exception.UserNotFoundException;
+import com.adrasha.core.exception.AlreadyExistsException;
+import com.adrasha.core.exception.NotFoundException;
 import com.adrasha.user.model.RoleRequest;
 import com.adrasha.user.repository.RoleRequestRepository;
 import com.adrasha.user.service.RoleRequestService;
 
-// TODO : Review class 
 @Service
 public class RoleRequestServiceImpl implements RoleRequestService {
 
@@ -27,25 +26,25 @@ public class RoleRequestServiceImpl implements RoleRequestService {
 	private ModelMapper modelMapper;
 
 	@Override
-	public Page<RoleRequest> getAllRoleRequest(Pageable pageable) {
+	public Page<RoleRequest> getAllRoleRequest(Example<RoleRequest> example, Pageable pageable) {
 
-		return requestRepository.findAll(pageable);
+		return requestRepository.findAll(example, pageable);
 	}
 
 	@Override
 	public RoleRequest getRoleRequest(UUID roleRequestId) {
 
 		return requestRepository.findById(roleRequestId)
-				.orElseThrow(() -> new UserNotFoundException("RoleRequest Not Found with id : " + roleRequestId));
+				.orElseThrow(() -> new NotFoundException("RoleRequest Not Found with id : " + roleRequestId));
 	}
 
 	@Override
 	public RoleRequest createRoleRequest(RoleRequest request) {
 		
-				Optional<RoleRequest> existingRequest = requestRepository.findByUserId(request.getUserId());
+		Optional<RoleRequest> existingRequest = requestRepository.findByUserId(request.getUserId());
 		
 	  	if(existingRequest.isPresent()) {
-	  		throw new UserAlreadyExistsException("RoleRequest with user id : "+ request.getUserId()+" already exist.");
+	  		throw new AlreadyExistsException("RoleRequest with user id : "+ request.getUserId()+" already exist.");
 	  	}
 
 		return requestRepository.save(request);
@@ -66,10 +65,10 @@ public class RoleRequestServiceImpl implements RoleRequestService {
 	}
 
 	@Override
-	public RoleRequest getRoleRequestByUserId(UUID userId) throws RoleRequestNotFoundException {
+	public RoleRequest getRoleRequestByUserId(UUID userId) throws NotFoundException {
 
 		return requestRepository.findByUserId(userId)
-				.orElseThrow(()-> new RoleRequestNotFoundException("Role request with userid "+ userId +"not found"));
+				.orElseThrow(()-> new NotFoundException("Role request with userid "+ userId +"not found"));
 	}
 
 }

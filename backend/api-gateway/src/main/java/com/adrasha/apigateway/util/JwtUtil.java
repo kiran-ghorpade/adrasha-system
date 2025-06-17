@@ -1,9 +1,6 @@
 package com.adrasha.apigateway.util;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -24,30 +21,6 @@ public class JwtUtil {
 	@Value("uY2ZkX5h3NfFz3h8rPg7vMd0LuJqWmTk")
 	private String SECRET_KEY; 
 
-	@Value("86400000")
-	private long expiration; // a day in milliseconds
-
-	public String generateToken(JwtUser user) {
-		try {
-			Map<String, Object> claims = new HashMap<>();
-			claims.put("id", user.getId());
-			claims.put("status", user.getStatus());
-			claims.put("roles", user.getRoles());
-
-			return Jwts.builder()
-					.claims(claims)
-					.subject(user.getUsername())
-					.issuedAt(new Date())
-					.expiration(new Date(System.currentTimeMillis() + expiration))
-					.signWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes()))
-					.compact();
-
-		}catch(Exception e) {
-			e.printStackTrace();
-			throw new JwtValidationException("Error While generating JWT Token");
-		}
-	}
-
 	public Claims extractClaims(String token) {
 		try {
 			return Jwts.parser()
@@ -61,28 +34,25 @@ public class JwtUtil {
 		}
 	}
 
-	public String extractUsername(String token) {
-		return extractClaims(token).getSubject();
-	}
-
-	public List<String> extractRoles(String token) {
+	public Set<String> extractRoles(String token) {
 		try {
 			Object roles = extractClaims(token).get("roles");
 			ObjectMapper mapper = new ObjectMapper();
-			return mapper.convertValue(roles, new TypeReference<List<String>>() {});
+			return mapper.convertValue(roles, new TypeReference<Set<String>>() {});
 		}catch(Exception e) {
 			e.printStackTrace();
 			throw new JwtValidationException("Error while converting roles");
 		}
 	}
+	
 
 	public JwtUser extractJwtUser(String token) {
 
 		Claims claims = extractClaims(token);
 
-		String username = claims.getSubject();
-		UUID id = (UUID) claims.get("id");
-		List<String> roles = extractRoles(token);
+		UUID id = UUID.fromString(claims.getSubject());
+		String username = (String) claims.get("id");
+		Set<String> roles = extractRoles(token);
 		String status = (String) claims.get("status");
 
 		return JwtUser.builder()
@@ -106,9 +76,5 @@ public class JwtUtil {
 			throw new JwtValidationException("Error During Parsing Jwt Token");
 		}
 	}
-
-	public long getExpiration() {
-
-		return this.expiration;
-	}
+	
 }

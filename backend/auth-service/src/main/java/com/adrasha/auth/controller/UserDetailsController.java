@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,26 +17,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.adrasha.auth.config.AdminInitializer;
-import com.adrasha.auth.dto.AddRoleDTO;
+import com.adrasha.auth.dto.RoleUpdateDTO;
 import com.adrasha.auth.dto.ApiResponse;
 import com.adrasha.auth.dto.JwtUser;
 import com.adrasha.auth.dto.PasswordResetRequest;
 import com.adrasha.auth.dto.UserDTO;
-import com.adrasha.auth.dto.ValidationErrorResponse;
 import com.adrasha.auth.service.AuthService;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/auth")
-@ApiResponses(value = {
-	    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ValidationErrorResponse.class))),
-})
+@SecurityRequirement(name = "BearerAuthentication")
 @Tag(name = "UserDetails Management")
 public class UserDetailsController {
 
@@ -52,11 +44,6 @@ public class UserDetailsController {
     }
 
 	@PostMapping("/resetPassword")
-	@Operation(summary = "Reset Password", description = "Update Current Password with given password")
-	@ApiResponses(value = {
-		    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
-	})
-	@SecurityRequirement(name = "BearerAuthentication")
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> resetPassword(Authentication authentication, @RequestBody PasswordResetRequest passwordResetRequest) {
 
@@ -76,14 +63,8 @@ public class UserDetailsController {
 	}
 
 	@PutMapping("/updateRole")
-	@Operation(summary = "Update Role", description = "Update role with given userId")
-	@ApiResponses(value = {
-		    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
-		    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
-	})
-	@SecurityRequirement(name = "BearerAuthentication")
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<?> updateRole(@RequestBody AddRoleDTO addRoleDTO) {
+	public ResponseEntity<?> updateRole(@RequestBody RoleUpdateDTO addRoleDTO) {
 				
 		UserDTO dto = authService.updateRole(addRoleDTO.getUserId(), addRoleDTO.getRole());
 
@@ -96,13 +77,6 @@ public class UserDetailsController {
 	}
 
 	@DeleteMapping("/users/me")
-	@Operation(summary = "delete security credintials of current logged in user", description = "User will not be able to login again if deleted")
-	@ApiResponses(value = {
-		    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
-		    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
-		    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "User Not Found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
-		})
-	@SecurityRequirement(name = "BearerAuthentication")
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> deleteCurrentUser(Authentication authentication) {
 
@@ -113,13 +87,6 @@ public class UserDetailsController {
 	}
 
 	@DeleteMapping("/users/{id}")
-	@Operation(summary = "delete security credintials of user", description = "Admin Role required. User will not be able to login again if deleted")
-	@ApiResponses(value = {
-		    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
-		    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
-		    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "User Not Found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
-		})
-	@SecurityRequirement(name = "BearerAuthentication")
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> deleteUserByAdmin(@PathVariable UUID id) {
 

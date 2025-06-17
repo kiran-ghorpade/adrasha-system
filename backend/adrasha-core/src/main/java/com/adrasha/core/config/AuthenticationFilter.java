@@ -51,10 +51,10 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         }
 
         // Get Header from request
-        final String username = request.getHeader("X-Username");
+        final String userId = request.getHeader("X-UserId");
         final String roles = request.getHeader("X-Roles");
 
-        if (username == null || roles == null) {
+        if (userId == null || roles == null) {
             accessDeniedHandler.handle(request, response, new AccessDeniedException("Missing or invalid Authorization header"));
             return;
         }
@@ -66,7 +66,8 @@ public class AuthenticationFilter extends OncePerRequestFilter {
             								.map(role -> new SimpleGrantedAuthority("ROLE_"+ role.trim()))
             								.toList();
 
-            Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
+            // principle is userId , if principal changes, please update code in all services
+            Authentication authentication = new UsernamePasswordAuthenticationToken(userId, null, authorities);
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }

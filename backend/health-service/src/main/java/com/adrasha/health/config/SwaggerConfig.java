@@ -25,10 +25,9 @@ public class SwaggerConfig{
 	    
 		return new OpenAPI()
 		        .addServersItem(new Server().url(swaggerGatewayURL))
-				.info(new Info().title("ADRASHA "+applicationName.toUpperCase()+" API Docs"))				
+				.info(new Info().title("ADRASHA "+applicationName.toUpperCase()+" API Docs").version("1.0.0"))				
 				.addSecurityItem(new SecurityRequirement().addList("BearerAuthentication"))
 				.components(new Components().addSecuritySchemes("BearerAuthentication", new SecurityScheme()
-						.name("Authorization")
 						.type(SecurityScheme.Type.HTTP)
 						.scheme("bearer")
 						.bearerFormat("JWT")));

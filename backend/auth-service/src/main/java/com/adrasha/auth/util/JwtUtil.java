@@ -32,14 +32,14 @@ public class JwtUtil {
 	public String generateToken(JwtUser user) {
 		try {
 			Map<String, Object> claims = new HashMap<>();
-			claims.put("id", user.getId());
+			claims.put("id", user.getUsername());
 			claims.put("status", user.getStatus());
 
 			claims.put("roles", user.getRoles());
 
 			return Jwts.builder()
 					.claims(claims)
-					.subject(user.getUsername())
+					.subject(user.getId().toString())
 					.issuedAt(new Date())
 					.expiration(new Date(System.currentTimeMillis() + expiration))
 					.signWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes()))
@@ -83,8 +83,8 @@ public class JwtUtil {
 
 		Claims claims = extractClaims(token);
 
-		String username = claims.getSubject();
-		UUID id = UUID.fromString((String) claims.get("id"));
+		UUID id = UUID.fromString(claims.getSubject());
+		String username = (String) claims.get("id");
 		Set<Role> roles = extractRoles(token);
 		AccountStatus status = AccountStatus.valueOf((String) claims.get("status"));
 

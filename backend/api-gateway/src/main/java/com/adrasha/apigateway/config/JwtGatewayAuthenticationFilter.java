@@ -1,6 +1,6 @@
 package com.adrasha.apigateway.config;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -10,12 +10,10 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 
+import com.adrasha.apigateway.dto.JwtUser;
 import com.adrasha.apigateway.exception.JwtValidationException;
 import com.adrasha.apigateway.util.JwtUtil;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import io.jsonwebtoken.Claims;
 import reactor.core.publisher.Mono;
 
 @Component
@@ -50,19 +48,16 @@ public class JwtGatewayAuthenticationFilter
 	            		return unauthorized(exchange, "Invalid or Expired token");
 	            	}
 
-	            	// Extract Claims and Add to Request
-	            	Claims claims = jwtUtil.extractClaims(token);
+	            	// Extract Claims and Add to Request	            	
+	            	JwtUser user = jwtUtil.extractJwtUser(token);
 
-	            	Object rolesClaim = claims.get("roles");
-
-	            	// extract roles and cast to list
-	            	ObjectMapper mapper = new ObjectMapper();
-	            	List<String> roles = mapper.convertValue(rolesClaim, new TypeReference<List<String>>() {});
-
+	            	Set<String> roles = user.getRoles();
+	            	
 	            	String rolesCSV = String.join(",", roles);
 
 	            	ServerHttpRequest mutatedRequest = exchange.getRequest().mutate()
-	            			.header("X-Username", claims.getSubject())
+	            			.header("X-UserId", user.getId().toString())
+	            			.header("X-Username", user.getUsername())
 	            			.header("X-Roles", rolesCSV)	
 	            			.header("X-Internal-Secret", internalServiceSecret)
 	            			.build();

@@ -14,6 +14,7 @@ import com.adrasha.core.dto.ErrorResponse;
 import com.adrasha.core.dto.ValidationErrorResponse;
 import com.adrasha.core.exception.AlreadyExistsException;
 import com.adrasha.core.exception.NotFoundException;
+import com.adrasha.core.exception.UnAuthorizedException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -21,7 +22,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(NotFoundException.class)
-	public ResponseEntity<ErrorResponse> handleAshaNotFoundException(NotFoundException  ex, HttpServletRequest request) {
+	public ResponseEntity<ErrorResponse> handleNotFoundException(NotFoundException  ex, HttpServletRequest request) {
 		
 	    ErrorResponse response = ErrorResponse.builder()
                 .status(HttpStatus.NOT_FOUND.value())
@@ -32,8 +33,20 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 	}
 	
+	@ExceptionHandler(UnAuthorizedException.class)
+	public ResponseEntity<ErrorResponse> handleUnAuthorizedException(UnAuthorizedException  ex, HttpServletRequest request) {
+		
+	    ErrorResponse response = ErrorResponse.builder()
+                .status(HttpStatus.UNAUTHORIZED.value())
+                .error(ex.getClass().getName())
+                .message(ex.getMessage())
+                .path(request.getRequestURI())
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+	}
+	
 	@ExceptionHandler(AlreadyExistsException.class)
-	public ResponseEntity<ErrorResponse> handleExistingAshaException(AlreadyExistsException  ex, HttpServletRequest request) {
+	public ResponseEntity<ErrorResponse> handleAlreadyExistingException(AlreadyExistsException  ex, HttpServletRequest request) {
 		
 	    ErrorResponse response = ErrorResponse.builder()
                 .status(HttpStatus.CONFLICT.value())
@@ -67,16 +80,16 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 	}
 	
-//	@ExceptionHandler(Exception.class)
-//    public ResponseEntity<ErrorResponse> handleException(Exception ex) {
-//		System.out.println(ex.getStackTrace());
-//		
-//        // Create error response
-//        ErrorResponse response = ErrorResponse.builder()
-//                .status(HttpStatus.INTERNAL_SERVER_ERROR.toString())
-//                .message(ex.getStackTrace().toString())
-//                .build();
-//        
-//        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
+	@ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleException(Exception ex) {
+		System.out.println(ex.getStackTrace());
+		
+        // Create error response
+        ErrorResponse response = ErrorResponse.builder()
+                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .message(ex.getStackTrace().toString())
+                .build();
+        
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

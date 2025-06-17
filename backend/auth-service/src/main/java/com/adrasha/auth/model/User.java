@@ -5,8 +5,8 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.UUID;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -60,11 +60,11 @@ public class User implements UserDetails {
 	@Column(nullable = true)
 	private Instant lastPasswordReset;
 
-	@CreationTimestamp
+	@CreatedDate
 	@Column(updatable = false)
 	private Instant createdAt;
 
-	@UpdateTimestamp
+	@LastModifiedDate
 	private Instant updatedAt;
 
 	@Override

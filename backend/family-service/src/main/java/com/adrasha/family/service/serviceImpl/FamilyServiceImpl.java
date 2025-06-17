@@ -5,12 +5,13 @@ import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.adrasha.family.exception.FamilyAlreadyExistsException;
-import com.adrasha.family.exception.FamilyNotFoundException;
+import com.adrasha.core.exception.AlreadyExistsException;
+import com.adrasha.core.exception.NotFoundException;
 import com.adrasha.family.model.Family;
 import com.adrasha.family.model.Member;
 import com.adrasha.family.repository.FamilyRepository;
@@ -26,16 +27,16 @@ public class FamilyServiceImpl implements FamilyService {
 	private ModelMapper modelMapper;
 
 	@Override
-	public Page<Family> getAllFamilies(Pageable pageable) {
+	public Page<Family> getAllFamilies(Example<Family> example, Pageable pageable) {
 
-		return familyRepository.findAll(pageable);
+		return familyRepository.findAll(example,pageable);
 	}
 
 	@Override
 	public Family getFamily(UUID familyId) {
 
 		return familyRepository.findById(familyId)
-				.orElseThrow(() -> new FamilyNotFoundException("Family Not Found with id : " + familyId));
+				.orElseThrow(() -> new NotFoundException("Family Not Found with id : " + familyId));
 	}
 
 	@Override
@@ -44,7 +45,7 @@ public class FamilyServiceImpl implements FamilyService {
 		Optional<Family> exsistingFamily = familyRepository.findByHeadMember(family.getHeadMember());
 		
 		if(exsistingFamily.isPresent()) {
-			throw new FamilyAlreadyExistsException("Family with headId : "+ family.getHeadMember().getId()+" already present");
+			throw new AlreadyExistsException("Family with headId : "+ family.getHeadMember().getId()+" already present");
 		}
 		
 		return familyRepository.save(family);
@@ -66,7 +67,7 @@ public class FamilyServiceImpl implements FamilyService {
 
 	public Family getFamilyByHead(Member member) {
 		return familyRepository.findByHeadMember(member)
-				.orElseThrow(() -> new FamilyNotFoundException("Family Not Found with Head Member : " + member));
+				.orElseThrow(() -> new NotFoundException("Family Not Found with Head Member : " + member));
 	}
 
 }

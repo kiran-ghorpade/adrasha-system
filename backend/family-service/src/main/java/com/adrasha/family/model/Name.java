@@ -1,6 +1,6 @@
 package com.adrasha.family.model;
 
-import com.adrasha.core.convertor.UpperCaseConverter;
+import com.adrasha.core.utils.UpperCaseConverter;
 
 import jakarta.persistence.Convert;
 import jakarta.persistence.Embeddable;

@@ -2,21 +2,23 @@ package com.adrasha.family.service;
 
 import java.util.UUID;
 
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.adrasha.family.exception.FamilyNotFoundException;
+import com.adrasha.core.exception.AlreadyExistsException;
+import com.adrasha.core.exception.NotFoundException;
 import com.adrasha.family.model.Family;
 
 public interface FamilyService {
 
-    Page<Family> getAllFamilies(Pageable pageable);
+    Page<Family> getAllFamilies(Example<Family> example, Pageable pageable);
     
-    Family getFamily(UUID familyId) throws FamilyNotFoundException;
+    Family getFamily(UUID familyId) throws NotFoundException;
     
-    Family createFamily(Family family) throws FamilyNotFoundException;
+    Family createFamily(Family family) throws AlreadyExistsException;
     
-    Family updateFamily(UUID familyId, Family updatedFamilyDetails) throws FamilyNotFoundException;
+    Family updateFamily(UUID familyId, Family updatedFamilyDetails) throws NotFoundException;
     
-    Family deleteFamily(UUID familyId) throws FamilyNotFoundException;
+    Family deleteFamily(UUID familyId) throws NotFoundException;
 }

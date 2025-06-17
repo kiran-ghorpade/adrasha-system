@@ -1,6 +1,6 @@
 package com.adrasha.apigateway.dto;
 
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import lombok.AllArgsConstructor;
@@ -15,6 +15,6 @@ import lombok.NoArgsConstructor;
 public class JwtUser {
     private UUID id;
     private String username;
-    private List<String> roles;
+    private Set<String> roles;
     private String status;
 }

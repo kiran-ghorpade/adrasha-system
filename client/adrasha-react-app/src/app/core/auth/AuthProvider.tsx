@@ -1,49 +1,36 @@
-import { LoginRequest } from "@core/api/orval/auth-schemas.ts";
-import { User } from "@core/models";
+import { loginUser } from "@core/api";
+import { ApiResponseAuthTokenResponse, JwtUser, LoginRequest } from "@core/api/orval/auth-schemas.ts";
+import { Token } from "@core/models";
 import { tokenService } from "@core/services";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { AuthContext } from "./AuthContext";
 
 export function AuthProvider({children}: {children: React.ReactNode}) {
-    const [user, setUser] = useState<User|null>(null);
-
-    const navigate = useNavigate();
-
-    const fetchUser = async()=>{
-        if(tokenService.isValid()){
-            try{
-                // TODO
-                // const result = await getUser();
-                // setUser(result);
-            } catch{
-                setUser(null);
-            }
-        }
-    };
-
-    useEffect(() => {
-        fetchUser();
-    }
-    , []);
+    const [user, setUser] = useState<JwtUser|undefined>(undefined);
 
     const handleLogin = async (username: string, password: string)=>{
-        const request: LoginRequest = {
+        const data: LoginRequest = {
             username,
             password
         }
-        console.log(request);
         
-        // TODO
-        // const response : ApiResponse = await loginUser(request);
-        // tokenService.set();
-        await fetchUser();
+        const response : ApiResponseAuthTokenResponse = await loginUser(data);
+        
+        const token : Token = {
+            accessToken : response.payload.accessToken,
+            exp : Number(response.payload.exp),
+            expiresIn : response.payload.expiresIn,
+            tokenType : response.payload.tokenType
+        };
+
+        tokenService.set(token);
+        
+        setUser(response.payload?.user);
     }
 
     const handleLogout = ()=>{
         tokenService.set(undefined);
-        setUser(null);
-        navigate("/auth/login");
+        setUser(undefined);
     }
 
 

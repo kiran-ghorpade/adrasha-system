@@ -4,20 +4,19 @@ import java.util.UUID;
 
 import com.adrasha.core.model.Auditable;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@AllArgsConstructor
 @Entity
 public class RoleRequest extends Auditable{
 	
@@ -28,11 +27,12 @@ public class RoleRequest extends Auditable{
 	@Valid
 	private Name name;
 	
-	private String role;
+	@Enumerated(EnumType.STRING)
+	private Role role;
 	
-	@Column(unique = true)
 	private UUID userId;
 	
+	@Enumerated(EnumType.STRING)
 	private RequestStatus status;
 	
 	private UUID healthCenter;

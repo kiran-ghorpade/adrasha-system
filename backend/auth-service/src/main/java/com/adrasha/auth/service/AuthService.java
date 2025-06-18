@@ -3,11 +3,11 @@ package com.adrasha.auth.service;
 import java.util.UUID;
 
 import com.adrasha.auth.dto.AuthTokenResponse;
-import com.adrasha.auth.dto.JwtUser;
 import com.adrasha.auth.dto.LoginRequest;
 import com.adrasha.auth.dto.PasswordResetRequest;
 import com.adrasha.auth.dto.RegistrationRequest;
 import com.adrasha.auth.dto.UserDTO;
+import com.adrasha.auth.dto.core.JwtUser;
 import com.adrasha.auth.exception.UserAlreadyExistsException;
 import com.adrasha.auth.model.Role;
 

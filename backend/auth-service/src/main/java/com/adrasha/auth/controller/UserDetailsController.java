@@ -18,12 +18,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.adrasha.auth.config.AdminInitializer;
 import com.adrasha.auth.dto.RoleUpdateDTO;
-import com.adrasha.auth.dto.ApiResponse;
-import com.adrasha.auth.dto.JwtUser;
 import com.adrasha.auth.dto.PasswordResetRequest;
 import com.adrasha.auth.dto.UserDTO;
+import com.adrasha.auth.dto.core.JwtUser;
+import com.adrasha.auth.dto.core.Response;
+import com.adrasha.auth.dto.swagger.ApiResponseUserDTO;
 import com.adrasha.auth.service.AuthService;
 
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -44,8 +48,9 @@ public class UserDetailsController {
     }
 
 	@PostMapping("/resetPassword")
+	@ApiResponse(content = @Content(schema = @Schema(implementation =  ApiResponseUserDTO.class)))
 	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<?> resetPassword(Authentication authentication, @RequestBody PasswordResetRequest passwordResetRequest) {
+	public Response<UserDTO> resetPassword(Authentication authentication, @RequestBody PasswordResetRequest passwordResetRequest) {
 
 		JwtUser user = (JwtUser) authentication.getPrincipal();
 		System.err.println(authentication.getAuthorities());
@@ -54,31 +59,30 @@ public class UserDetailsController {
 		
 		UserDTO dto = authService.resetPassword(user, passwordResetRequest);
 
-		ApiResponse<UserDTO> apiResponse = ApiResponse.<UserDTO>builder()
+		return Response.<UserDTO>builder()
 				.status(HttpStatus.OK.value())
 				.message("Login Successful")
 				.payload(dto).build();
 
-		return ResponseEntity.ok(apiResponse);
 	}
 
 	@PutMapping("/updateRole")
+	@ApiResponse(content = @Content(schema = @Schema(implementation =  ApiResponseUserDTO.class)))
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<?> updateRole(@RequestBody RoleUpdateDTO addRoleDTO) {
+	public Response<UserDTO> updateRole(@RequestBody RoleUpdateDTO addRoleDTO) {
 				
 		UserDTO dto = authService.updateRole(addRoleDTO.getUserId(), addRoleDTO.getRole());
 
-		ApiResponse<UserDTO> apiResponse = ApiResponse.<UserDTO>builder()
+		return Response.<UserDTO>builder()
 				.status(HttpStatus.OK.value())
 				.message("Roles Updated")
 				.payload(dto).build();
 
-		return ResponseEntity.ok(apiResponse);
 	}
 
 	@DeleteMapping("/users/me")
 	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<?> deleteCurrentUser(Authentication authentication) {
+	public ResponseEntity<Void> deleteCurrentUser(Authentication authentication) {
 
 		JwtUser user = (JwtUser) authentication.getPrincipal();
 		authService.deleteCurrentUser(user);
@@ -88,7 +92,7 @@ public class UserDetailsController {
 
 	@DeleteMapping("/users/{id}")
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<?> deleteUserByAdmin(@PathVariable UUID id) {
+	public ResponseEntity<Void> deleteUserByAdmin(@PathVariable UUID id) {
 
 		authService.deleteUser(id);
 

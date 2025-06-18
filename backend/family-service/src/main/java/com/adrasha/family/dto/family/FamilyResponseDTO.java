@@ -18,8 +18,8 @@ public class FamilyResponseDTO {
 	@NotEmpty
 	private List<Member> members;
 	
-//	@NotNull
-//	private UUID address;
+	@NotNull
+	private UUID address;
 	
 	@NotNull
 	private UUID ashaId;

@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -45,6 +46,18 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
 	}
 	
+	@ExceptionHandler(AuthorizationDeniedException.class)
+	public ResponseEntity<ErrorResponse> handleUnAuthorizedException(AuthorizationDeniedException  ex, HttpServletRequest request) {
+		
+	    ErrorResponse response = ErrorResponse.builder()
+                .status(HttpStatus.FORBIDDEN.value())
+                .error(ex.getClass().getName())
+                .message(ex.getMessage())
+                .path(request.getRequestURI())
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+	}
+	
 	@ExceptionHandler(AlreadyExistsException.class)
 	public ResponseEntity<ErrorResponse> handleAlreadyExistingException(AlreadyExistsException  ex, HttpServletRequest request) {
 		
@@ -81,13 +94,15 @@ public class GlobalExceptionHandler {
 	}
 	
 	@ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleException(Exception ex) {
-		System.out.println(ex.getStackTrace());
+    public ResponseEntity<ErrorResponse> handleException(Exception ex,  HttpServletRequest request) {
+		ex.printStackTrace();
 		
         // Create error response
         ErrorResponse response = ErrorResponse.builder()
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                .message(ex.getStackTrace().toString())
+                .error(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
+                .message(ex.getMessage())
+                .path(request.getRequestURI())
                 .build();
         
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);

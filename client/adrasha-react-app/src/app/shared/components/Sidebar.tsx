@@ -1,3 +1,4 @@
+import { SideMenu } from "@core/constants";
 import {
   Box,
   List,
@@ -8,11 +9,13 @@ import {
   useTheme,
 } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
-import useAppMenu from "../../services/config/useAppMenu";
 
-export default function Sidebar() {
+type SidebarProps = {
+  menuList: SideMenu[];
+};
+
+export default function Sidebar({ menuList }: SidebarProps) {
   const location = useLocation();
-  const menuList = useAppMenu();
   const theme = useTheme();
 
   return (
@@ -42,9 +45,8 @@ export default function Sidebar() {
             {menuList.map((item, index) => (
               <ListItemButton
                 LinkComponent={Link}
-                to={item.to}
                 key={index}
-                selected={location.pathname.includes(item.to)}
+                selected={location.pathname.includes(item.route)}
                 sx={{
                   display: "flex",
                   flexDirection: "column",
@@ -53,13 +55,13 @@ export default function Sidebar() {
                   paddingY: 5,
                   paddingX: 2,
                   "&.Mui-selected": {
-                    backgroundColor: "transparent", // No background for the entire button
+                    backgroundColor: "transparent",
                   },
                   "&.Mui-selected:hover": {
-                    backgroundColor: "transparent", // No background when selected and hovered
+                    backgroundColor: "transparent",
                   },
                   "&:hover": {
-                    backgroundColor: "transparent", // No background for the entire button
+                    backgroundColor: "transparent",
                   },
                 }}
               >
@@ -70,15 +72,15 @@ export default function Sidebar() {
                     alignItems: "center",
                     justifyContent: "center",
                     width: 56,
-                    height: 32, // Make the area around the icon round
-                    borderRadius: 16, // Ensure the icon's background is circular
+                    height: 32,
+                    borderRadius: 16,
                     paddingX: 4,
                     transition: "background-color 0.3s ease, color 0.3s ease",
-                    backgroundColor: location.pathname.includes(item.to)
+                    backgroundColor: location.pathname.includes(item.route)
                       ? theme.palette.secondary.main
-                      : "transparent", // Blue background when selected
+                      : "transparent",
                     "&:hover": {
-                      backgroundColor: theme.palette.secondary.main, // Hover effect with slight blue
+                      backgroundColor: theme.palette.secondary.main,
                     },
                   }}
                 >
@@ -90,17 +92,17 @@ export default function Sidebar() {
                   secondary={item.label}
                   slotProps={{
                     primary: {
-                      // sx: {
-                      fontSize: "0.875rem",
-                      fontWeight: location.pathname.includes(item.to)
-                        ? 700
-                        : 400,
-                      color: location.pathname.includes(item.to)
-                        ? "#1976d2"
-                        : "inherit",
-                      transition:
-                        "color 0.2s ease-in-out, font-weight 0.2s ease-in-out",
-                      // },
+                      sx: {
+                        fontSize: "0.875rem",
+                        fontWeight: location.pathname.includes(item.route)
+                          ? 700
+                          : 400,
+                        color: location.pathname.includes(item.route)
+                          ? "#1976d2"
+                          : "inherit",
+                        transition:
+                          "color 0.2s ease-in-out, font-weight 0.2s ease-in-out",
+                      },
                     },
                   }}
                 />

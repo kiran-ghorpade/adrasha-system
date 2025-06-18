@@ -17,8 +17,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class RoleRequestUpdateDTO {
-	
-	private UUID id;
 
 	@Valid
 	private Name name;

@@ -22,4 +22,5 @@ public class UserResponseDTO {
 
 	private UUID healthCenter;
 	
+	private String adharNumber;
 }

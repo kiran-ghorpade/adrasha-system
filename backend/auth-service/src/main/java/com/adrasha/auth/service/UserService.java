@@ -4,9 +4,9 @@ import java.util.UUID;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import com.adrasha.auth.dto.JwtUser;
 import com.adrasha.auth.dto.PasswordResetRequest;
 import com.adrasha.auth.dto.UserDTO;
+import com.adrasha.auth.dto.core.JwtUser;
 
 public interface UserService extends UserDetailsService{
 

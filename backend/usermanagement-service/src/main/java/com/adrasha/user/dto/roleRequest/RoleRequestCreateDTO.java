@@ -7,7 +7,9 @@ import com.adrasha.user.model.Role;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
+@Data
 public class RoleRequestCreateDTO {
 	
 	@NotNull

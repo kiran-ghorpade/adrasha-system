@@ -1,4 +1,16 @@
-export const SIDEBAR_MENUS = {
+export type SideMenu = {
+  label: string,
+  route: string,
+  icon : string,
+}
+
+export type SideMenuUsers = {
+  user: SideMenu[],
+  asha : SideMenu[],
+  admin : SideMenu[],
+}
+
+export const SIDEBAR_MENUS : SideMenuUsers = {
   user: [
     { label: 'Dashboard', route: '/dashboard', icon: 'dashboard' },
     { label: 'Profile', route: '/profile', icon: 'person' },

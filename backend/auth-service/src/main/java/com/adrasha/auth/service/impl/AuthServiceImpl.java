@@ -16,11 +16,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.adrasha.auth.dto.AuthTokenResponse;
-import com.adrasha.auth.dto.JwtUser;
 import com.adrasha.auth.dto.LoginRequest;
 import com.adrasha.auth.dto.PasswordResetRequest;
 import com.adrasha.auth.dto.RegistrationRequest;
 import com.adrasha.auth.dto.UserDTO;
+import com.adrasha.auth.dto.core.JwtUser;
 import com.adrasha.auth.exception.UserAlreadyExistsException;
 import com.adrasha.auth.exception.UserNotFoundException;
 import com.adrasha.auth.model.Role;
@@ -83,6 +83,7 @@ public class AuthServiceImpl implements AuthService {
 		String token = jwtUtil.generateToken(jwtUser);
 
 		return AuthTokenResponse.builder()
+				.user(jwtUser)
 				.accessToken(token)
 				.tokenType("Bearer")
 				.expiresIn(jwtUtil.getExpiration())

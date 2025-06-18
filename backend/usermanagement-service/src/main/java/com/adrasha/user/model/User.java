@@ -20,4 +20,6 @@ public class User extends Auditable{
 
 	private UUID healthCenter;
 	
+	private String adharNumber;
+	
 }

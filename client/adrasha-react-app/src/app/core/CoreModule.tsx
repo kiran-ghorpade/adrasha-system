@@ -1,11 +1,14 @@
 import { ReactNode, Suspense } from "react";
 
+import { LoadingPage } from "@shared/components";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { RouterProvider } from "react-router-dom";
 import AlertProvider from "./alert/AlertProvider";
 import { AuthProvider } from "./auth";
 import "./config";
+import { queryClient, router } from "./config";
 import { ConfirmationProvider } from "./confirmation/ConfirmationProvider";
 import { ThemeProvider } from "./theme";
-import { LoadingPage } from "@shared/components";
 
 type CoreModuleProps = {
   children: ReactNode;
@@ -13,16 +16,18 @@ type CoreModuleProps = {
 
 export function CoreModule({ children }: CoreModuleProps) {
   return (
-    <ThemeProvider>
+    <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <AlertProvider>
-          <ConfirmationProvider>
-            <Suspense fallback={<LoadingPage />}>
-                {children}
-            </Suspense>
-          </ConfirmationProvider>
-        </AlertProvider>
+        <ThemeProvider>
+          <AlertProvider>
+            <ConfirmationProvider>
+              <RouterProvider router={router}>
+                <Suspense fallback={<LoadingPage />}>{children}</Suspense>
+              </RouterProvider>
+            </ConfirmationProvider>
+          </AlertProvider>
+        </ThemeProvider>
       </AuthProvider>
-    </ThemeProvider>
+    </QueryClientProvider>
   );
 }

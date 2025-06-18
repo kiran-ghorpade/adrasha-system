@@ -10,12 +10,10 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Builder.Default;
 
 @Data
 @Builder
@@ -45,16 +43,16 @@ public class MemberUpdateDTO {
 	private String mobileNumber;
 
 	private boolean maritalStatus;
-
-	@PastOrPresent
-	private Instant marriageDate;
-
-	private UUID spouseId;
-
-	private UUID fatherId;
-
-	private UUID motherId;
-
-	@Default
-	private boolean alive = true;
+//
+//	@PastOrPresent
+//	private Instant marriageDate;
+//
+//	private UUID spouseId;
+//
+//	private UUID fatherId;
+//
+//	private UUID motherId;
+//
+//	@Default
+//	private boolean alive = true;
 }

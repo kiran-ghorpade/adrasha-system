@@ -27,10 +27,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.adrasha.auth.dto.AuthTokenResponse;
-import com.adrasha.auth.dto.JwtUser;
 import com.adrasha.auth.dto.LoginRequest;
 import com.adrasha.auth.dto.RegistrationRequest;
 import com.adrasha.auth.dto.UserDTO;
+import com.adrasha.auth.dto.core.JwtUser;
 import com.adrasha.auth.exception.UserAlreadyExistsException;
 import com.adrasha.auth.exception.UserNotFoundException;
 import com.adrasha.auth.model.User;

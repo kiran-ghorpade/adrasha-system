@@ -1,5 +1,5 @@
+import { useAlert } from "@core/alert";
 import { Alert, Snackbar } from "@mui/material";
-import { useAlert } from "../../services/hooks/useAlert";
 
 export default function AlertSnackBar() {
   const { alert } = useAlert();

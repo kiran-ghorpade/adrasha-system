@@ -14,12 +14,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Builder.Default;
@@ -43,44 +37,39 @@ public class Member {
 	@Enumerated
 	private Gender gender;
 
-	@Past
 	private Instant dateOfBirth;
 
 	private String birthPlace;
 
-	@Size(min = 10, max = 12)
+
 	@Column(unique = true)
 	private String adharNumber;
 
 	@Column(unique = true)
 	private String abhaNumber;
 
-	@Pattern(regexp = "^[6-9]\\d{9}$")
 	private String mobileNumber;
 
 	private boolean maritalStatus;
 
-	@PastOrPresent
-	private Instant marriageDate;
+//	private Instant marriageDate;
+//
+//	@OneToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "spouse_id")
+//	private Member spouse;
+//
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "father_id")
+//	private Member father;
+//
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "mother_id")
+//	private Member mother;
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "spouse_id")
-	private Member spouse;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "father_id")
-	private Member father;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "mother_id")
-	private Member mother;
-
-	@NotNull
 	@Default
 	private boolean alive = true;
 
-	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(nullable = false)
+	@JoinColumn(nullable = true)
 	private Family family;
 }

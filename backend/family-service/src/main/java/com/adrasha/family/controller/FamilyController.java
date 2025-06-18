@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.adrasha.core.dto.ErrorResponse;
 import com.adrasha.core.dto.ExampleMatcherUtils;
 import com.adrasha.core.dto.Response;
 import com.adrasha.family.dto.family.FamilyFilterDTO;
@@ -35,12 +34,7 @@ import com.adrasha.family.model.Member;
 import com.adrasha.family.service.FamilyRegistrationService;
 import com.adrasha.family.service.FamilyService;
 
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -49,11 +43,6 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/families")
 @SecurityRequirement(name = "BearerAuthentication")
-@ApiResponses(value = {
-    @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
-    @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
-    @ApiResponse(responseCode = "404", description = "Not Found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
-})
 @Tag(name = "Family Management")
 public class FamilyController {
 
@@ -67,8 +56,7 @@ public class FamilyController {
 	private ModelMapper mapper;
 	
 	@GetMapping
-    @Operation(summary = "Get all families", description = "Returns a families in pageable")
-	@PreAuthorize("hasAnyRole('USER','ASHA','ADMIN')")
+	@PreAuthorize("hasAnyRole('ASHA','ADMIN')")
 	public ResponseEntity<Response<Page<FamilyResponseDTO>>> getAllFamilies(
 			FamilyFilterDTO filterDTO,
 		    @PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.DESC)
@@ -93,8 +81,7 @@ public class FamilyController {
 	}
 	
 	@GetMapping("/{id}")
-    @Operation(summary = "Get a family by ID", description = "Returns a family object based on the provided ID")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ASHA')")
 	public ResponseEntity<Response<FamilyResponseDTO>> getFamily(@Parameter(description = "ID of the family to retrieve", required = true) @PathVariable UUID id){
 		
 		Family request = familyService.getFamily(id);
@@ -110,8 +97,7 @@ public class FamilyController {
 	}
 	
 	@PostMapping("/register")
-    @Operation(summary = "Create new Family", description = "Returns created family")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ASHA')")
 	public ResponseEntity<Response<FamilyResponseDTO>> createFamily(@Valid @RequestBody FamilyRegistrationDTO familyRegistrationDTO){
 		
 		Family family = mapper.map(familyRegistrationDTO.getFamily(), Family.class);
@@ -135,8 +121,7 @@ public class FamilyController {
 	}
 	
 	@PutMapping("/{id}")
-    @Operation(summary = "Update a family by ID", description = "Returns a updated family based on the provided ID")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ASHA')")
 	public ResponseEntity<Response<FamilyResponseDTO>> udpateFamily(
 			@Parameter(description = "ID of the family to be updated", required = true)
 			@PathVariable UUID id,
@@ -158,7 +143,7 @@ public class FamilyController {
 	
 
 	@DeleteMapping("/{id}")
-    @Operation(summary = "Delete Family", description = "This will delete all member data associated with family")
+	@PreAuthorize("hasRole('ASHA')")
 	public ResponseEntity<Void> deleteRoleRequest(@PathVariable UUID id){
 		
 		familyService.deleteFamily(id);

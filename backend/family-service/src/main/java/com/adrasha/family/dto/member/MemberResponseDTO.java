@@ -21,9 +21,9 @@ public class MemberResponseDTO {
 	private String abhaNumber;
 	private String mobileNumber;
 	private boolean maritalStatus;
-	private Instant marriageDate;
-	private UUID spouseId;
-	private UUID fatherId;
-	private UUID motherId;
-	private boolean alive = true;
+//	private Instant marriageDate;
+//	private UUID spouseId;
+//	private UUID fatherId;
+//	private UUID motherId;
+//	private boolean alive = true;
 }

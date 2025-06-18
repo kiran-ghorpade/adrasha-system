@@ -22,20 +22,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.adrasha.core.dto.ExampleMatcherUtils;
 import com.adrasha.core.dto.Response;
 import com.adrasha.core.exception.UnAuthorizedException;
-import com.adrasha.user.dto.roleRequest.RoleUpdateDTO;
 import com.adrasha.user.dto.roleRequest.RoleRequestCreateDTO;
 import com.adrasha.user.dto.roleRequest.RoleRequestFilterDTO;
 import com.adrasha.user.dto.roleRequest.RoleRequestResponseDTO;
 import com.adrasha.user.dto.roleRequest.RoleRequestUpdateDTO;
+import com.adrasha.user.dto.roleRequest.RoleUpdateDTO;
 import com.adrasha.user.model.RequestStatus;
-import com.adrasha.user.model.Role;
 import com.adrasha.user.model.RoleRequest;
 import com.adrasha.user.model.User;
 import com.adrasha.user.service.AuthService;
@@ -70,7 +68,6 @@ public class RoleRequestController {
 		@PreAuthorize("hasRole('ADMIN')")
 		public ResponseEntity<Response<Page<RoleRequestResponseDTO>>> getAllRoleRequests(
 				
-				@RequestParam(required = false)
 				RoleRequestFilterDTO filterDTO,
 				
 			    @PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.DESC)
@@ -121,7 +118,7 @@ public class RoleRequestController {
 			// if principal change, then please change this code.
 			UUID userId = UUID.fromString(authentication.getPrincipal().toString());
 			
-			RoleRequest request = roleRequestService.getRoleRequest(userId);
+			RoleRequest request = roleRequestService.getRoleRequestByUserId(userId);
 			
 			RoleRequestResponseDTO dto = mapper.map(request, RoleRequestResponseDTO.class);
 			
@@ -139,6 +136,10 @@ public class RoleRequestController {
 		public ResponseEntity<Response<RoleRequestResponseDTO>> createRoleRequest(@Valid @RequestBody RoleRequestCreateDTO requestDTO){
 			
 			RoleRequest request = mapper.map(requestDTO, RoleRequest.class);
+			request.setId(null);
+			request.setUserId(requestDTO.getUserId());
+			request.setStatus(RequestStatus.PENDING);
+			
 			request = roleRequestService.createRoleRequest(request);
 			RoleRequestResponseDTO dto = mapper.map(request, RoleRequestResponseDTO.class);
 			
@@ -157,7 +158,7 @@ public class RoleRequestController {
 		}
 		
 		@PutMapping("/{id}")
-		@PreAuthorize("hasRole('ADMIN')")
+		@PreAuthorize("hasRole('USER')")
 		public ResponseEntity<Response<RoleRequestResponseDTO>> updateRoleRequest(
 				@Parameter(description = "ID of the user to be updated", required = true) 
 				@PathVariable 
@@ -178,6 +179,7 @@ public class RoleRequestController {
 		}
 		
 		@DeleteMapping("/{id}")
+		@PreAuthorize("hasRole('USER')")
 		public ResponseEntity<Void> deleteRoleRequest(@PathVariable UUID id){
 			
 			roleRequestService.deleteRoleRequest(id);
@@ -187,13 +189,13 @@ public class RoleRequestController {
 		
 		@PostMapping("/approve/{id}")
 		@PreAuthorize("hasRole('ADMIN')")
-		public ResponseEntity<Void> approveUserRequest(@PathVariable UUID id, Role requestedRole)
+		public ResponseEntity<Void> approveUserRequest(@PathVariable UUID id)
 		{
 			RoleRequest request = roleRequestService.getRoleRequest(id);
 			
 			HttpStatusCode status = authService.updateRole(RoleUpdateDTO.builder()
 					.userId(id)
-					.role(requestedRole)
+					.role(request.getRole())
 					.build()
 					).getStatusCode();	
 

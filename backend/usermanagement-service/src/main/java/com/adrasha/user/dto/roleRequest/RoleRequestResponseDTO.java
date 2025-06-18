@@ -6,7 +6,6 @@ import com.adrasha.user.model.Name;
 import com.adrasha.user.model.RequestStatus;
 import com.adrasha.user.model.Role;
 
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +19,6 @@ public class RoleRequestResponseDTO {
 
 	private UUID id;
 
-	@Valid
 	private Name name;
 	
 	private Role role;

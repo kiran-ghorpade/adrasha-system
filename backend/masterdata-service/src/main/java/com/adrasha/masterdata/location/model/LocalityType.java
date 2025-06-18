@@ -5,7 +5,7 @@ public enum LocalityType {
 	CITY("City"),
 	VILLAGE("Village"),
 	TOWN("Town"),
-	HAMLET("Hamlet (Vadi/Pada/Vasti)");
+	HAMLET("Hamlet"); //  Vadi/Pada/Vasti
 	
 	private final String displayName;
 

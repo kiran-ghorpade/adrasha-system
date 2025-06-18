@@ -1,5 +1,6 @@
 package com.adrasha.health.model;
 
+import java.util.Set;
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
@@ -20,5 +21,7 @@ public class HealthInfo {
 	
 	private Double Weigth;
 	
-	private boolean haveNCD;	
+	private boolean haveNCD;
+	
+	private Set<String> NCDList;
 }

@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
@@ -31,6 +33,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class User implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
@@ -54,7 +57,7 @@ public class User implements UserDetails {
 	@NotEmpty(message="{roles.notblank}")
 	private Set<Role> roles = Set.of(Role.USER);
 	
-	@Enumerated(EnumType.STRING)
+	@Enumerated
 	private AccountStatus status = AccountStatus.PENDING;
 
 	@Column(nullable = true)

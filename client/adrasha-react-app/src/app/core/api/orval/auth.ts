@@ -15,38 +15,35 @@ import type {
 } from '@tanstack/react-query';
 
 import type {
-  AddRoleDTO,
-  ApiResponse,
-  ErrorResponse,
+  ApiResponseAuthTokenResponse,
+  ApiResponseUserDTO,
   LoginRequest,
   PasswordResetRequest,
   RegistrationRequest,
+  RoleUpdateDTO,
   ValidationErrorResponse
-} from './auth-schemas.ts';
+} from './';
 
 import { customInstance } from '../client';
-/**
- * Update role with given userId
- * @summary Update Role
- */
+import type { ErrorType } from '../client';
 export const updateRole = (
-    addRoleDTO: AddRoleDTO,
+    roleUpdateDTO: RoleUpdateDTO,
  ) => {
       
       
-      return customInstance<ApiResponse>(
+      return customInstance<ApiResponseUserDTO>(
       {url: `/auth/updateRole`, method: 'PUT',
       headers: {'Content-Type': 'application/json', },
-      data: addRoleDTO
+      data: roleUpdateDTO
     },
       );
     }
   
 
 
-export const getUpdateRoleMutationOptions = <TError = ValidationErrorResponse | ErrorResponse,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateRole>>, TError,{data: AddRoleDTO}, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof updateRole>>, TError,{data: AddRoleDTO}, TContext> => {
+export const getUpdateRoleMutationOptions = <TError = ErrorType<ApiResponseUserDTO>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateRole>>, TError,{data: RoleUpdateDTO}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof updateRole>>, TError,{data: RoleUpdateDTO}, TContext> => {
 
 const mutationKey = ['updateRole'];
 const {mutation: mutationOptions} = options ?
@@ -58,7 +55,7 @@ const {mutation: mutationOptions} = options ?
       
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateRole>>, {data: AddRoleDTO}> = (props) => {
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateRole>>, {data: RoleUpdateDTO}> = (props) => {
           const {data} = props ?? {};
 
           return  updateRole(data,)
@@ -70,18 +67,15 @@ const {mutation: mutationOptions} = options ?
   return  { mutationFn, ...mutationOptions }}
 
     export type UpdateRoleMutationResult = NonNullable<Awaited<ReturnType<typeof updateRole>>>
-    export type UpdateRoleMutationBody = AddRoleDTO
-    export type UpdateRoleMutationError = ValidationErrorResponse | ErrorResponse
+    export type UpdateRoleMutationBody = RoleUpdateDTO
+    export type UpdateRoleMutationError = ErrorType<ApiResponseUserDTO>
 
-    /**
- * @summary Update Role
- */
-export const useUpdateRole = <TError = ValidationErrorResponse | ErrorResponse,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateRole>>, TError,{data: AddRoleDTO}, TContext>, }
+    export const useUpdateRole = <TError = ErrorType<ApiResponseUserDTO>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateRole>>, TError,{data: RoleUpdateDTO}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof updateRole>>,
         TError,
-        {data: AddRoleDTO},
+        {data: RoleUpdateDTO},
         TContext
       > => {
 
@@ -90,17 +84,13 @@ export const useUpdateRole = <TError = ValidationErrorResponse | ErrorResponse,
       return useMutation(mutationOptions , queryClient);
     }
     
-/**
- * Update Current Password with given password
- * @summary Reset Password
- */
 export const resetPassword = (
     passwordResetRequest: PasswordResetRequest,
  signal?: AbortSignal
 ) => {
       
       
-      return customInstance<ApiResponse>(
+      return customInstance<ApiResponseUserDTO>(
       {url: `/auth/resetPassword`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: passwordResetRequest, signal
@@ -110,7 +100,7 @@ export const resetPassword = (
   
 
 
-export const getResetPasswordMutationOptions = <TError = ValidationErrorResponse | ErrorResponse,
+export const getResetPasswordMutationOptions = <TError = ErrorType<ApiResponseUserDTO>,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof resetPassword>>, TError,{data: PasswordResetRequest}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof resetPassword>>, TError,{data: PasswordResetRequest}, TContext> => {
 
@@ -137,12 +127,9 @@ const {mutation: mutationOptions} = options ?
 
     export type ResetPasswordMutationResult = NonNullable<Awaited<ReturnType<typeof resetPassword>>>
     export type ResetPasswordMutationBody = PasswordResetRequest
-    export type ResetPasswordMutationError = ValidationErrorResponse | ErrorResponse
+    export type ResetPasswordMutationError = ErrorType<ApiResponseUserDTO>
 
-    /**
- * @summary Reset Password
- */
-export const useResetPassword = <TError = ValidationErrorResponse | ErrorResponse,
+    export const useResetPassword = <TError = ErrorType<ApiResponseUserDTO>,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof resetPassword>>, TError,{data: PasswordResetRequest}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof resetPassword>>,
@@ -166,7 +153,7 @@ export const registerUser = (
 ) => {
       
       
-      return customInstance<ApiResponse>(
+      return customInstance<ApiResponseUserDTO>(
       {url: `/auth/register`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: registrationRequest, signal
@@ -176,7 +163,7 @@ export const registerUser = (
   
 
 
-export const getRegisterUserMutationOptions = <TError = ValidationErrorResponse,
+export const getRegisterUserMutationOptions = <TError = ErrorType<ValidationErrorResponse | ApiResponseUserDTO>,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof registerUser>>, TError,{data: RegistrationRequest}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof registerUser>>, TError,{data: RegistrationRequest}, TContext> => {
 
@@ -203,12 +190,12 @@ const {mutation: mutationOptions} = options ?
 
     export type RegisterUserMutationResult = NonNullable<Awaited<ReturnType<typeof registerUser>>>
     export type RegisterUserMutationBody = RegistrationRequest
-    export type RegisterUserMutationError = ValidationErrorResponse
+    export type RegisterUserMutationError = ErrorType<ValidationErrorResponse | ApiResponseUserDTO>
 
     /**
  * @summary Register New User
  */
-export const useRegisterUser = <TError = ValidationErrorResponse,
+export const useRegisterUser = <TError = ErrorType<ValidationErrorResponse | ApiResponseUserDTO>,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof registerUser>>, TError,{data: RegistrationRequest}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof registerUser>>,
@@ -232,7 +219,7 @@ export const loginUser = (
 ) => {
       
       
-      return customInstance<ApiResponse>(
+      return customInstance<ApiResponseAuthTokenResponse>(
       {url: `/auth/login`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: loginRequest, signal
@@ -242,7 +229,7 @@ export const loginUser = (
   
 
 
-export const getLoginUserMutationOptions = <TError = ValidationErrorResponse,
+export const getLoginUserMutationOptions = <TError = ErrorType<ValidationErrorResponse | ApiResponseAuthTokenResponse>,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof loginUser>>, TError,{data: LoginRequest}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof loginUser>>, TError,{data: LoginRequest}, TContext> => {
 
@@ -269,12 +256,12 @@ const {mutation: mutationOptions} = options ?
 
     export type LoginUserMutationResult = NonNullable<Awaited<ReturnType<typeof loginUser>>>
     export type LoginUserMutationBody = LoginRequest
-    export type LoginUserMutationError = ValidationErrorResponse
+    export type LoginUserMutationError = ErrorType<ValidationErrorResponse | ApiResponseAuthTokenResponse>
 
     /**
  * @summary Login for user
  */
-export const useLoginUser = <TError = ValidationErrorResponse,
+export const useLoginUser = <TError = ErrorType<ValidationErrorResponse | ApiResponseAuthTokenResponse>,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof loginUser>>, TError,{data: LoginRequest}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof loginUser>>,
@@ -288,16 +275,12 @@ export const useLoginUser = <TError = ValidationErrorResponse,
       return useMutation(mutationOptions , queryClient);
     }
     
-/**
- * Admin Role required. User will not be able to login again if deleted
- * @summary delete security credintials of user
- */
 export const deleteUserByAdmin = (
     id: string,
  ) => {
       
       
-      return customInstance<ApiResponse>(
+      return customInstance<void>(
       {url: `/auth/users/${id}`, method: 'DELETE'
     },
       );
@@ -305,7 +288,7 @@ export const deleteUserByAdmin = (
   
 
 
-export const getDeleteUserByAdminMutationOptions = <TError = ValidationErrorResponse | ErrorResponse,
+export const getDeleteUserByAdminMutationOptions = <TError = ErrorType<unknown>,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteUserByAdmin>>, TError,{id: string}, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof deleteUserByAdmin>>, TError,{id: string}, TContext> => {
 
@@ -332,12 +315,9 @@ const {mutation: mutationOptions} = options ?
 
     export type DeleteUserByAdminMutationResult = NonNullable<Awaited<ReturnType<typeof deleteUserByAdmin>>>
     
-    export type DeleteUserByAdminMutationError = ValidationErrorResponse | ErrorResponse
+    export type DeleteUserByAdminMutationError = ErrorType<unknown>
 
-    /**
- * @summary delete security credintials of user
- */
-export const useDeleteUserByAdmin = <TError = ValidationErrorResponse | ErrorResponse,
+    export const useDeleteUserByAdmin = <TError = ErrorType<unknown>,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteUserByAdmin>>, TError,{id: string}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof deleteUserByAdmin>>,
@@ -351,16 +331,12 @@ export const useDeleteUserByAdmin = <TError = ValidationErrorResponse | ErrorRes
       return useMutation(mutationOptions , queryClient);
     }
     
-/**
- * User will not be able to login again if deleted
- * @summary delete security credintials of current logged in user
- */
 export const deleteCurrentUser = (
     
  ) => {
       
       
-      return customInstance<ApiResponse>(
+      return customInstance<void>(
       {url: `/auth/users/me`, method: 'DELETE'
     },
       );
@@ -368,7 +344,7 @@ export const deleteCurrentUser = (
   
 
 
-export const getDeleteCurrentUserMutationOptions = <TError = ValidationErrorResponse | ErrorResponse,
+export const getDeleteCurrentUserMutationOptions = <TError = ErrorType<unknown>,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteCurrentUser>>, TError,void, TContext>, }
 ): UseMutationOptions<Awaited<ReturnType<typeof deleteCurrentUser>>, TError,void, TContext> => {
 
@@ -395,12 +371,9 @@ const {mutation: mutationOptions} = options ?
 
     export type DeleteCurrentUserMutationResult = NonNullable<Awaited<ReturnType<typeof deleteCurrentUser>>>
     
-    export type DeleteCurrentUserMutationError = ValidationErrorResponse | ErrorResponse
+    export type DeleteCurrentUserMutationError = ErrorType<unknown>
 
-    /**
- * @summary delete security credintials of current logged in user
- */
-export const useDeleteCurrentUser = <TError = ValidationErrorResponse | ErrorResponse,
+    export const useDeleteCurrentUser = <TError = ErrorType<unknown>,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteCurrentUser>>, TError,void, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof deleteCurrentUser>>,

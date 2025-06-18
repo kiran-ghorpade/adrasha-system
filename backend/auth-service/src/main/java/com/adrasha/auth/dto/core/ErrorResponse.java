@@ -1,4 +1,4 @@
-package com.adrasha.auth.dto;
+package com.adrasha.auth.dto.core;
 
 import java.time.Instant;
 

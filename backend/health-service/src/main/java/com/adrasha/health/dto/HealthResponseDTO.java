@@ -1,5 +1,6 @@
 package com.adrasha.health.dto;
 
+import java.util.Set;
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
@@ -21,5 +22,7 @@ public class HealthResponseDTO {
 	private Double Weigth;
 	
 	private boolean haveNCD;
+
+	private Set<String> NCDList;
 
 }

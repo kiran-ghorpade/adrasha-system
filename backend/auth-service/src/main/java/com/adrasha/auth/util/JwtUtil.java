@@ -9,7 +9,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.adrasha.auth.dto.JwtUser;
+import com.adrasha.auth.dto.core.JwtUser;
 import com.adrasha.auth.exception.JwtValidationException;
 import com.adrasha.auth.model.AccountStatus;
 import com.adrasha.auth.model.Role;

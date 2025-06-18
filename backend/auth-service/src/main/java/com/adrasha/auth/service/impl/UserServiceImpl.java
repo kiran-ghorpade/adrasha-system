@@ -1,5 +1,6 @@
 package com.adrasha.auth.service.impl;
 
+import java.time.Instant;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
@@ -10,9 +11,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.adrasha.auth.dto.JwtUser;
 import com.adrasha.auth.dto.PasswordResetRequest;
 import com.adrasha.auth.dto.UserDTO;
+import com.adrasha.auth.dto.core.JwtUser;
 import com.adrasha.auth.exception.UserNotFoundException;
 import com.adrasha.auth.model.User;
 import com.adrasha.auth.repository.UserRepository;
@@ -33,6 +34,7 @@ public class UserServiceImpl implements UserService{
 	public UserDTO resetPassword(JwtUser jwtUser, PasswordResetRequest passwordResetRequest) {
 		
 		User user = getUserByUsername(jwtUser.getUsername());
+		user.setLastPasswordReset(Instant.now());
 
 		if(!passwordEncoder.matches(passwordResetRequest.getOldPassword(), user.getPassword())) {
 			throw new BadCredentialsException("Old Password Not Matched.");

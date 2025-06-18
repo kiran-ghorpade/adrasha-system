@@ -6,7 +6,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.adrasha.auth.dto.ErrorResponse;
+import com.adrasha.auth.dto.core.ErrorResponse;
 import com.adrasha.auth.exception.UserAlreadyExistsException;
 import com.adrasha.auth.exception.UserNotFoundException;
 

@@ -30,7 +30,9 @@ import com.adrasha.family.dto.member.MemberCreateDTO;
 import com.adrasha.family.dto.member.MemberFilterDTO;
 import com.adrasha.family.dto.member.MemberResponseDTO;
 import com.adrasha.family.dto.member.MemberUpdateDTO;
+import com.adrasha.family.model.Family;
 import com.adrasha.family.model.Member;
+import com.adrasha.family.service.FamilyService;
 import com.adrasha.family.service.MemberService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -52,11 +54,13 @@ import jakarta.validation.Valid;
     @ApiResponse(responseCode = "404", description = "Not Found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
 })
 @Tag(name = "Member Management")
-@PreAuthorize("hasRole('USER')")
 public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private FamilyService familyService;
 	
 	@Autowired
 	private ModelMapper mapper;
@@ -89,8 +93,8 @@ public class MemberController {
 	
 	@GetMapping("/{id}")
     @Operation(summary = "Get a member by ID", description = "Returns a member based on the provided ID")
-	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<Response<MemberResponseDTO>> getMember(@Parameter(description = "ID of the member to retrieve", required = true) @PathVariable UUID id){
+	@PreAuthorize("hasRole('ASHA')")
+	public ResponseEntity<Response<MemberResponseDTO>> getMember(@PathVariable UUID id){
 		
 		Member member = memberService.getMember(id);
 		MemberResponseDTO dto = mapper.map(member, MemberResponseDTO.class);
@@ -106,10 +110,13 @@ public class MemberController {
 	
 	@PostMapping
     @Operation(summary = "Create new RoleRequest", description = "Returns created role request")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ASHA')")
 	public ResponseEntity<Response<MemberResponseDTO>> createFamily(@Valid @RequestBody MemberCreateDTO memberDTO){
 		
+		Family family = familyService.getFamily(memberDTO.getFamilyId());
 		Member member = mapper.map(memberDTO, Member.class);
+		member.setFamily(family);
+		
 		member = memberService.createMember(member);
 		MemberResponseDTO dto = mapper.map(member, MemberResponseDTO.class);
 		
@@ -129,14 +136,17 @@ public class MemberController {
 
 	@PutMapping("/{id}")
     @Operation(summary = "Update a member by ID", description = "Returns a updated member based on the provided ID")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ASHA')")
 	public ResponseEntity<Response<MemberResponseDTO>> udpateMember(
 			@Parameter(description = "ID of the member to be updated", required = true)
 			@PathVariable UUID id,
 			@Valid @RequestBody MemberUpdateDTO updatedMember
 			){
-		
+		Family family = familyService.getFamily(updatedMember.getFamilyId());
+
 		Member member = mapper.map(updatedMember, Member.class);
+		member.setFamily(family);
+		
 		member = memberService.updateMember(id, member);
 		MemberResponseDTO dto = mapper.map(member, MemberResponseDTO.class);
 		
@@ -150,7 +160,7 @@ public class MemberController {
 	}
 	
 	@DeleteMapping("/{id}")
-    @Operation(summary = "Delete Member", description = "deletes member and return nothing if successful deletion")
+	@PreAuthorize("hasRole('ASHA')")
 	public ResponseEntity<Void> udpateMember(@PathVariable UUID id){
 		
 		memberService.deleteMember(id);

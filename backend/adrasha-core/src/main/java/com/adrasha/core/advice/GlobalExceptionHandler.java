@@ -17,6 +17,7 @@ import com.adrasha.core.exception.AlreadyExistsException;
 import com.adrasha.core.exception.NotFoundException;
 import com.adrasha.core.exception.UnAuthorizedException;
 
+import feign.FeignException;
 import jakarta.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
@@ -63,6 +64,18 @@ public class GlobalExceptionHandler {
 		
 	    ErrorResponse response = ErrorResponse.builder()
                 .status(HttpStatus.CONFLICT.value())
+                .error(ex.getClass().getName())
+                .message(ex.getMessage())
+                .path(request.getRequestURI())
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+	}
+	
+	@ExceptionHandler(FeignException.class)
+	public ResponseEntity<ErrorResponse> handleAlreadyExistingException(FeignException  ex, HttpServletRequest request) {
+		
+	    ErrorResponse response = ErrorResponse.builder()
+                .status(ex.status())
                 .error(ex.getClass().getName())
                 .message(ex.getMessage())
                 .path(request.getRequestURI())

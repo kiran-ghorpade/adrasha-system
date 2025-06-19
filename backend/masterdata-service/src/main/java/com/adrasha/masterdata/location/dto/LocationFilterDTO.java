@@ -1,17 +1,21 @@
 package com.adrasha.masterdata.location.dto;
 
-import java.util.UUID;
-
-import com.adrasha.masterdata.location.model.LocalityType;
+import com.adrasha.masterdata.model.LocalityType;
 
 import lombok.Data;
 
 @Data
 public class LocationFilterDTO {
-
+	
 	private LocalityType type;
 	
 	private String pincode;
-
-	private UUID subdistrict;
+	
+	private String subdistrict;
+	
+	private String district;
+	
+	private String state;
+	
+	private String country;
 }

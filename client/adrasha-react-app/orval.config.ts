@@ -2,7 +2,7 @@ import { defineConfig } from 'orval';
 
 export default defineConfig({
   auth: {
-    input: './openapi/auth.json',
+    input: './openapi/authservice.json',
     output: {
       target: './src/app/core/api/orval/auth.ts', 
       client: 'react-query',                    

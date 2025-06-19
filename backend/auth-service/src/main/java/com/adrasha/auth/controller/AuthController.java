@@ -12,10 +12,7 @@ import com.adrasha.auth.dto.AuthTokenResponse;
 import com.adrasha.auth.dto.LoginRequest;
 import com.adrasha.auth.dto.RegistrationRequest;
 import com.adrasha.auth.dto.UserDTO;
-import com.adrasha.auth.dto.core.Response;
 import com.adrasha.auth.dto.core.ValidationErrorResponse;
-import com.adrasha.auth.dto.swagger.ApiResponseAuthTokenResponse;
-import com.adrasha.auth.dto.swagger.ApiResponseUserDTO;
 import com.adrasha.auth.service.AuthService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -37,34 +34,21 @@ public class AuthController {
 	@Autowired
 	private AuthService authService;
 	
-
 	@PostMapping("/register")
 	@Operation(summary = "Register New User", description = "Returns a user after registration")
-	@ApiResponse(content = @Content(schema = @Schema(implementation =  ApiResponseUserDTO.class)))
-	public ResponseEntity<Response<UserDTO>> registerUser(
+	public ResponseEntity<UserDTO> registerUser(
 			@RequestBody @Valid RegistrationRequest registrationRequest) {
 
 		UserDTO createdUser = authService.register(registrationRequest);
 
-		Response<UserDTO> response = Response.<UserDTO>builder()
-				.status(HttpStatus.OK.value())
-				.message("Registration Successful")
-				.payload(createdUser).build();
-
-		return ResponseEntity.status(HttpStatus.CREATED).body(response);
+		return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
 	}
 
 	@PostMapping("/login")
 	@Operation(summary = "Login for user", description = "Returns a user object after successful login")
-	@ApiResponse(content = @Content(schema = @Schema(implementation =  ApiResponseAuthTokenResponse.class)))
-	public Response<AuthTokenResponse> loginUser(@RequestBody @Valid LoginRequest loginRequest) {
+	public AuthTokenResponse loginUser(@RequestBody @Valid LoginRequest loginRequest) {
 
-		AuthTokenResponse tokenResponse = authService.login(loginRequest);
-
-		return Response.<AuthTokenResponse>builder()
-				.status(HttpStatus.OK.value())
-				.message("Login Successful")
-				.payload(tokenResponse).build();
+		return authService.login(loginRequest);
 
 	}
 

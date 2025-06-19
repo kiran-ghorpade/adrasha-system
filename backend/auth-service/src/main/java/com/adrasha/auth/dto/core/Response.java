@@ -3,18 +3,18 @@ package com.adrasha.auth.dto.core;
 import java.time.Instant;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Builder.Default;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@SuperBuilder
 @Schema
-public class Response<T> {
+public class Response {
 	
 	@Default
 	private Instant timestamp = Instant.now();
@@ -23,6 +23,4 @@ public class Response<T> {
 	private int status;
 	@Default
 	private String message = "success";
-	
-	private T payload;
 }

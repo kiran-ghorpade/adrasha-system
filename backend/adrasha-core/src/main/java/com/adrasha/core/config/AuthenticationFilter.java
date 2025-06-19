@@ -45,7 +45,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
         String secret = request.getHeader("X-Internal-Secret");
 
-        if (!internalSecret.equals(secret)) {
+        if (secret == null || !internalSecret.equals(secret)) {
         	accessDeniedHandler.handle(request, response, new AccessDeniedException("Invalid or missing X-Internal-Secret "));
             return;
         }

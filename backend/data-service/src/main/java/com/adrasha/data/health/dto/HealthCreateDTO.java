@@ -1,0 +1,32 @@
+package com.adrasha.data.health.dto;
+
+import java.time.Instant;
+import java.util.Set;
+import java.util.UUID;
+
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import lombok.Data;
+
+
+@Data
+public class HealthCreateDTO {
+
+	@NotNull
+	private UUID memberId;
+    
+	@NotNull
+	private UUID ashaId;
+	
+	@PastOrPresent
+	private Instant date;
+	
+    private Boolean pregnant;
+	
+	private Double height;
+	
+	private Double weight;
+	
+	private Set<UUID> NCDList;
+
+}

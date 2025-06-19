@@ -59,8 +59,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         // For internal communication
         // Check for internal secret header first 
-        String secretHeader = request.getHeader("X-Internal-Secret");
-        if (secretHeader != null && secretHeader.equals(internalSecret)) {
+        String secret = request.getHeader("X-Internal-Secret");
+
+        if (secret != null && internalSecret.equals(secret)) {
             log.info("Request authenticated using internal secret");
 
             // Setup simple authentication

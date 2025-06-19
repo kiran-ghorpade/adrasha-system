@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class AuthTokenResponse {
+public class AuthTokenResponse{
 
 	private JwtUser user;
     private String accessToken;

@@ -115,7 +115,7 @@ public class AuthServiceImpl implements AuthService {
 	public User getUserByUsername(String username) {
 		
 		return userRepository.findByUsername(username)
-				.orElseThrow(() -> new BadCredentialsException("User Not Authenticated"));
+				.orElseThrow(() -> new BadCredentialsException("User Not Registered"));
 	}
 	
 	public User getUserById(UUID id) {

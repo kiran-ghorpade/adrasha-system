@@ -2,7 +2,7 @@ package com.adrasha.masterdata.healthcenter.dto;
 
 import java.util.UUID;
 
-import com.adrasha.masterdata.model.HealthCenterType;
+import com.adrasha.core.model.HealthCenterType;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -18,4 +18,8 @@ public class HealthCenterUpdateDTO {
 	private HealthCenterType centerType;
 	
 	private UUID locationId;
+	
+	private long totalFamilies;
+	
+	private long totalPopulation;
 }

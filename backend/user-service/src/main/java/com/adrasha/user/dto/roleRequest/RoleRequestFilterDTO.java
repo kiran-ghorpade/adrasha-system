@@ -2,8 +2,8 @@ package com.adrasha.user.dto.roleRequest;
 
 import java.util.UUID;
 
-import com.adrasha.user.model.RequestStatus;
-import com.adrasha.user.model.Role;
+import com.adrasha.core.model.RequestStatus;
+import com.adrasha.core.model.Role;
 
 import lombok.Data;
 

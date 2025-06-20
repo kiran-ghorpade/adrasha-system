@@ -1,4 +1,4 @@
-package com.adrasha.masterdata.ncd.dto;
+package com.adrasha.core.response.dto;
 
 import java.util.UUID;
 

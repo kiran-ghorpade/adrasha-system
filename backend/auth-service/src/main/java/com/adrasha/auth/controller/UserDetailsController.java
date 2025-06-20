@@ -2,6 +2,7 @@ package com.adrasha.auth.controller;
 
 import java.util.UUID;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,6 +37,9 @@ public class UserDetailsController {
 
 	@Autowired
 	private AuthService authService;
+	
+	@Autowired
+	private ModelMapper mapper;
 
     UserDetailsController(AdminInitializer adminInitializer) {
         this.adminInitializer = adminInitializer;
@@ -56,9 +60,10 @@ public class UserDetailsController {
 
 	@PutMapping("/updateRole")
 	@PreAuthorize("hasRole('ADMIN')")
-	public UserDTO updateRole(@RequestBody RoleUpdateDTO addRoleDTO) {
+	public JwtUser updateRole(@RequestBody RoleUpdateDTO addRoleDTO) {
 				
-		return authService.updateRole(addRoleDTO.getUserId(), addRoleDTO.getRole());
+		UserDTO user = authService.updateRole(addRoleDTO.getUserId(), addRoleDTO.getRole());
+		return mapper.map(user, JwtUser.class);
 
 	}
 

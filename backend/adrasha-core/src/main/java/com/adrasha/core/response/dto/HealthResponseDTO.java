@@ -1,4 +1,4 @@
-package com.adrasha.data.health.dto;
+package com.adrasha.core.response.dto;
 
 import java.time.Instant;
 import java.util.Set;

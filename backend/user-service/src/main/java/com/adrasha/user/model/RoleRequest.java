@@ -3,6 +3,9 @@ package com.adrasha.user.model;
 import java.util.UUID;
 
 import com.adrasha.core.model.Auditable;
+import com.adrasha.core.model.Name;
+import com.adrasha.core.model.RequestStatus;
+import com.adrasha.core.model.Role;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

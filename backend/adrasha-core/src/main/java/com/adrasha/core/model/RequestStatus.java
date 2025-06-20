@@ -1,4 +1,4 @@
-package com.adrasha.user.model;
+package com.adrasha.core.model;
 
 public enum RequestStatus {
 

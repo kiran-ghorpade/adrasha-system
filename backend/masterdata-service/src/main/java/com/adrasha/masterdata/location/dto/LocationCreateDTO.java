@@ -1,6 +1,6 @@
 package com.adrasha.masterdata.location.dto;
 
-import com.adrasha.masterdata.model.LocalityType;
+import com.adrasha.core.model.LocalityType;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

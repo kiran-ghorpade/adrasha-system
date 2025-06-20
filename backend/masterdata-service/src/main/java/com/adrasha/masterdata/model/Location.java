@@ -2,6 +2,8 @@ package com.adrasha.masterdata.model;
 
 import java.util.UUID;
 
+import com.adrasha.core.model.LocalityType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

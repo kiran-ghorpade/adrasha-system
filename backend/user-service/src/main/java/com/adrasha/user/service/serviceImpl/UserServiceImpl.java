@@ -1,5 +1,7 @@
 package com.adrasha.user.service.serviceImpl;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -7,7 +9,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.adrasha.core.exception.AlreadyExistsException;
@@ -21,7 +26,7 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private ModelMapper modelMapper;
 
@@ -40,12 +45,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User createUser(User user) {
-		
+
 		Optional<User> existingUser = userRepository.findById(user.getUserId());
-		
-	  	if(existingUser.isPresent()) {
-	  		throw new AlreadyExistsException("User with id : "+ user.getUserId()+" already exist.");
-	  	}
+
+		if (existingUser.isPresent()) {
+			throw new AlreadyExistsException("User with id : " + user.getUserId() + " already exist.");
+		}
 
 		return userRepository.save(user);
 	}
@@ -62,6 +67,31 @@ public class UserServiceImpl implements UserService {
 		User user = getUser(userId);
 		userRepository.delete(user);
 		return user;
+	}
+
+	@Override
+	public Map<String, Integer> getRoleDistribution() {
+
+		Map<String, Integer> roleDistribution = new HashMap<>();
+		Page<User> dataPage;
+
+		int page = 0, size = 100;
+
+		Sort sort = Sort.by(Direction.DESC, "name");
+
+		do {
+			Pageable pageable = PageRequest.of(page, size, sort);
+			dataPage = userRepository.findAll(null, pageable);
+
+			for (User dto : dataPage.getContent()) {
+				for (String role : dto.getRoles()) {
+					roleDistribution.put(role, roleDistribution.getOrDefault(role, 0) + 1);
+				}
+			}
+			page++;
+		} while (dataPage.hasNext());
+
+		return roleDistribution;
 	}
 
 }

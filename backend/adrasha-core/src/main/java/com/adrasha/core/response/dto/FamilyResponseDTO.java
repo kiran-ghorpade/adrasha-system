@@ -1,4 +1,4 @@
-package com.adrasha.data.family.dto;
+package com.adrasha.core.response.dto;
 
 import java.util.UUID;
 

@@ -22,9 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.adrasha.core.dto.ExampleMatcherUtils;
+import com.adrasha.core.response.dto.LocationResponseDTO;
 import com.adrasha.masterdata.location.dto.LocationCreateDTO;
 import com.adrasha.masterdata.location.dto.LocationFilterDTO;
-import com.adrasha.masterdata.location.dto.LocationResponseDTO;
 import com.adrasha.masterdata.location.dto.LocationUpdateDTO;
 import com.adrasha.masterdata.model.Location;
 import com.adrasha.masterdata.service.LocationService;

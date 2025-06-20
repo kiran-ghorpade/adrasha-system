@@ -22,9 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.adrasha.core.dto.ExampleMatcherUtils;
+import com.adrasha.core.response.dto.HealthCenterResponseDTO;
 import com.adrasha.masterdata.healthcenter.dto.HealthCenterCreateDTO;
 import com.adrasha.masterdata.healthcenter.dto.HealthCenterFilterDTO;
-import com.adrasha.masterdata.healthcenter.dto.HealthCenterResponseDTO;
 import com.adrasha.masterdata.healthcenter.dto.HealthCenterUpdateDTO;
 import com.adrasha.masterdata.model.HealthCenter;
 import com.adrasha.masterdata.service.HealthCenterService;

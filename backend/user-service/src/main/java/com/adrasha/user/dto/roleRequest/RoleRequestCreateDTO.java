@@ -2,8 +2,8 @@ package com.adrasha.user.dto.roleRequest;
 
 import java.util.UUID;
 
-import com.adrasha.user.model.Name;
-import com.adrasha.user.model.Role;
+import com.adrasha.core.model.Name;
+import com.adrasha.core.model.Role;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

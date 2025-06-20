@@ -1,8 +1,8 @@
-package com.adrasha.masterdata.location.dto;
+package com.adrasha.core.response.dto;
 
 import java.util.UUID;
 
-import com.adrasha.masterdata.model.LocalityType;
+import com.adrasha.core.model.LocalityType;
 
 import lombok.Data;
 

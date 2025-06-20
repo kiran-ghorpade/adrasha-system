@@ -1,5 +1,6 @@
 package com.adrasha.user.dto.user;
 
+import java.util.Set;
 import java.util.UUID;
 
 import lombok.AllArgsConstructor;
@@ -15,5 +16,8 @@ import lombok.NoArgsConstructor;
 public class UserFilterDTO {
 	
 	private UUID healthCenterId;
+	
+	private Set<String> roles;
+
 	
 }

@@ -1,4 +1,4 @@
-package com.adrasha.masterdata.model;
+package com.adrasha.core.model;
 
 public enum HealthCenterType {
 

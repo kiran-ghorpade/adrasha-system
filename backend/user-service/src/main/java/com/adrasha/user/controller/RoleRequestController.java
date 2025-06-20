@@ -24,13 +24,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.adrasha.core.dto.ExampleMatcherUtils;
+import com.adrasha.core.dto.JwtUser;
 import com.adrasha.core.exception.UnAuthorizedException;
+import com.adrasha.core.model.RequestStatus;
 import com.adrasha.user.dto.roleRequest.RoleRequestCreateDTO;
 import com.adrasha.user.dto.roleRequest.RoleRequestFilterDTO;
 import com.adrasha.user.dto.roleRequest.RoleRequestResponseDTO;
 import com.adrasha.user.dto.roleRequest.RoleRequestUpdateDTO;
 import com.adrasha.user.dto.roleRequest.RoleUpdateDTO;
-import com.adrasha.user.model.RequestStatus;
 import com.adrasha.user.model.RoleRequest;
 import com.adrasha.user.model.User;
 import com.adrasha.user.service.AuthService;
@@ -155,17 +156,18 @@ public class RoleRequestController {
 		{
 			RoleRequest request = roleRequestService.getRoleRequest(id);
 			
-			boolean status = authService.updateRole(RoleUpdateDTO.builder()
+			JwtUser user = authService.updateRole(RoleUpdateDTO.builder()
 					.userId(request.getUserId())
 					.role(request.getRole())
 					.build()
-					).getStatusCode().is2xxSuccessful();	
+					);	
 
-			if(!status) {
+			if(user==null) {
 				return ResponseEntity.internalServerError().build();
 			}
 				
 			User newUser = mapper.map(request, User.class);
+			newUser.setRoles(user.getRoles());
 			userService.createUser(newUser);
 			
 			request.setStatus(RequestStatus.APPROVED);

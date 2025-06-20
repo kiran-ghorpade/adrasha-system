@@ -1,8 +1,8 @@
-package com.adrasha.masterdata.healthcenter.dto;
+package com.adrasha.core.response.dto;
 
 import java.util.UUID;
 
-import com.adrasha.masterdata.model.HealthCenterType;
+import com.adrasha.core.model.HealthCenterType;
 
 import lombok.Data;
 
@@ -16,4 +16,8 @@ public class HealthCenterResponseDTO {
 	private HealthCenterType centerType;
 	
 	private UUID locationId;
+	
+	private long totalFamilies;
+	
+	private long totalPopulation;
 }

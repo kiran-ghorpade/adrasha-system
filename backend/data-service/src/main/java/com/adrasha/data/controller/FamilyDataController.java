@@ -23,9 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.adrasha.core.dto.ExampleMatcherUtils;
+import com.adrasha.core.response.dto.FamilyResponseDTO;
 import com.adrasha.data.family.dto.FamilyFilterDTO;
 import com.adrasha.data.family.dto.FamilyRegistrationDTO;
-import com.adrasha.data.family.dto.FamilyResponseDTO;
 import com.adrasha.data.family.dto.FamilyUpdateDTO;
 import com.adrasha.data.model.Family;
 import com.adrasha.data.model.Member;

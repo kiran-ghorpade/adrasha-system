@@ -2,7 +2,7 @@ package com.adrasha.user.dto.user;
 
 import java.util.UUID;
 
-import com.adrasha.user.model.Name;
+import com.adrasha.core.model.Name;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

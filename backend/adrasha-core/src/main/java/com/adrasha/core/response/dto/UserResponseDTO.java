@@ -1,8 +1,9 @@
-package com.adrasha.user.dto.user;
+package com.adrasha.core.response.dto;
 
+import java.util.Set;
 import java.util.UUID;
 
-import com.adrasha.user.model.Name;
+import com.adrasha.core.model.Name;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,4 +24,7 @@ public class UserResponseDTO {
 	private UUID healthCenterId;
 	
 	private String adharNumber;
+	
+	private Set<String> roles;
+
 }

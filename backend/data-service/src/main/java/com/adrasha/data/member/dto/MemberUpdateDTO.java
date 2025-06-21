@@ -19,7 +19,7 @@ import lombok.Data;
 @Data
 @Builder
 public class MemberUpdateDTO {
-
+	
 	@NotNull
 	private UUID familyId;
 	

@@ -13,10 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.adrasha.analytics.client.MemberDataClient;
+import com.adrasha.analytics.client.UserDataClient;
 import com.adrasha.core.filter.dto.MemberDataFilterDTO;
 import com.adrasha.core.model.AgeGroup;
 import com.adrasha.core.model.Gender;
 import com.adrasha.core.response.dto.MemberDataResponseDTO;
+import com.adrasha.core.response.dto.UserResponseDTO;
 import com.adrasha.core.utils.PaginationUtils;
 
 @Service
@@ -24,20 +26,33 @@ public class MemberAnalyticsService {
 
 	@Autowired
 	private MemberDataClient memberDataClient;
+	
+	@Autowired
+	private UserDataClient userDataClient;
 
 	private long getCount(MemberDataFilterDTO filterDTO) {
 		return memberDataClient.getCount(filterDTO).getOrDefault("count", 0L);
 	}
 	
+	private MemberDataFilterDTO getAshaCriteria() {
+		UserResponseDTO user = userDataClient.getCurrentUserDetails();
+		
+		return MemberDataFilterDTO.builder()
+				.ashaId(user.getId())
+				.build();
+	}
+	
 	public long getTotalMembers() {
-		return this.getCount(null);
+		
+		
+		return this.getCount(this.getAshaCriteria());
 	}
 
 	public double getAverageMembersPerFamily() {
 		long totalMembers = 0;
 		Set<UUID> uniqueFamilyIds = new HashSet<>();
 
-		List<MemberDataResponseDTO> data = PaginationUtils.getAllRecords(memberDataClient::getAll, null, null);
+		List<MemberDataResponseDTO> data = PaginationUtils.getAllRecords(memberDataClient::getAll, this.getAshaCriteria(), null);
 		
 		totalMembers = data.size();
 		
@@ -54,12 +69,16 @@ public class MemberAnalyticsService {
 	}
 
 	public Map<Gender, Long> getGenderDistribution() {
+		
+		UserResponseDTO user = userDataClient.getCurrentUserDetails();
+		
 		Map<Gender, Long> result = new HashMap<>();
 
 		for(Gender gender : Gender.values()) {
 			
 			long count = this.getCount(
 						MemberDataFilterDTO.builder()
+						.ashaId(user.getId())
 						.gender(gender)
 						.build()
 					);
@@ -72,7 +91,7 @@ public class MemberAnalyticsService {
 	
 	public Map<AgeGroup, Long> getAgeDistribution(){
 	
-		return PaginationUtils.getAllRecords(memberDataClient::getAll, null, null)
+		return PaginationUtils.getAllRecords(memberDataClient::getAll, this.getAshaCriteria(), null)
 					.stream()
 					.map(MemberDataResponseDTO::getAge)
 					.filter(Objects::nonNull)

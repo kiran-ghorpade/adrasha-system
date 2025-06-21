@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(name = "masterdata-service" , path = "/masterdata/locations")
+@FeignClient(name = "masterdata-service", contextId = "LocationClient" , path = "/masterdata/locations")
 public interface LocationClient {
 
 	@GetMapping("/{id}")

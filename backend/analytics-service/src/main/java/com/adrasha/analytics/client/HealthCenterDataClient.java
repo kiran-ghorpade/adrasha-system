@@ -4,23 +4,25 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.adrasha.core.filter.dto.HealthCenterFilterDTO;
 import com.adrasha.core.response.dto.HealthCenterResponseDTO;
 
-@FeignClient(name = "masterdata-service", path = "/masterdata/healthCenters")
+@FeignClient(name = "masterdata-service", contextId = "HealthCenterDataClient", path = "/masterdata/healthCenters")
 public interface HealthCenterDataClient {
 	
 	@GetMapping("/{id}")
-	HealthCenterResponseDTO get(UUID id);
+	HealthCenterResponseDTO get(@PathVariable UUID id);
 	
     @GetMapping
-    Page<HealthCenterResponseDTO> getAll(HealthCenterFilterDTO filterDTO, Pageable pageable);
+    Page<HealthCenterResponseDTO> getAll(@SpringQueryMap HealthCenterFilterDTO filterDTO,@SpringQueryMap Pageable pageable);
     
     @GetMapping("/count")
-    Map<String, Long> getCount(HealthCenterFilterDTO filterDTO);
+    Map<String, Long> getCount(@SpringQueryMap HealthCenterFilterDTO filterDTO);
 
 }

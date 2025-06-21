@@ -14,6 +14,7 @@ public class MemberDataResponseDTO {
 	
 	private UUID id;
 	private UUID familyId;
+	private UUID ashaId;
 	private Name name;
 	private Gender gender;
 	private LocalDate dateOfBirth;

@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.adrasha.auth.dto.UserDTO;
 import com.adrasha.auth.exception.UserNotFoundException;
@@ -13,6 +14,7 @@ import com.adrasha.auth.model.User;
 import com.adrasha.auth.repository.UserRepository;
 import com.adrasha.auth.service.RoleService;
 
+@Service
 public class RoleServiceImpl implements RoleService {
 	
 	@Autowired

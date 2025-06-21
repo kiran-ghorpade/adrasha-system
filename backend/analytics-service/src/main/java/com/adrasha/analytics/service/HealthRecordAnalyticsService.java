@@ -13,13 +13,15 @@ import org.springframework.stereotype.Service;
 
 import com.adrasha.analytics.client.HealthRecordClient;
 import com.adrasha.analytics.client.NCDClient;
+import com.adrasha.analytics.client.UserDataClient;
 import com.adrasha.core.filter.dto.HealthRecordFilterDTO;
 import com.adrasha.core.response.dto.HealthRecordResponseDTO;
 import com.adrasha.core.response.dto.NCDResponseDTO;
+import com.adrasha.core.response.dto.UserResponseDTO;
 import com.adrasha.core.utils.PaginationUtils;
 
 @Service
-public class HealthAnalyticsService {
+public class HealthRecordAnalyticsService {
 	
 	@Autowired
 	private HealthRecordClient healthRecordClient;
@@ -27,23 +29,43 @@ public class HealthAnalyticsService {
 	@Autowired
 	private NCDClient ncdClient;
 	
+	@Autowired
+	private UserDataClient userDataClient;
+	
 	private long getCount(HealthRecordFilterDTO filterDTO) {
 		return healthRecordClient.getCount(filterDTO).getOrDefault("count", 0L);
 	}
 	
-	public long getTotalRecords() {
-		return this.getCount(null);
+	private HealthRecordFilterDTO getAshaCriteria() {
+		UserResponseDTO user = userDataClient.getCurrentUserDetails();
+		
+		return HealthRecordFilterDTO.builder()
+				.ashaId(user.getId())
+				.build();
 	}
 	
-	public long getPregnancyCount() {
+	public long getTotalRecords() {
+				
+		return this.getCount(this.getAshaCriteria());
+	}
+	
+	public long getPregnancyCountByAsha() {
+		
+		UserResponseDTO user = userDataClient.getCurrentUserDetails();
+		
 		return this.getLatestRecordsStream()
 				.filter(HealthRecordResponseDTO::getPregnant)
+				.filter(record -> record.getAshaId().equals(user.getId()))
 				.count();
 	}
 	
 	public Stream<HealthRecordResponseDTO> getLatestRecordsStream(){
 		//sorry for this bad code :)
-		List<HealthRecordResponseDTO> records = PaginationUtils.getAllRecords(healthRecordClient::getAll, null, null);
+		List<HealthRecordResponseDTO> records = PaginationUtils.getAllRecords(
+														healthRecordClient::getAll, 
+														this.getAshaCriteria(),
+														null
+												);
 	
 		// latest records
 		return records.stream()

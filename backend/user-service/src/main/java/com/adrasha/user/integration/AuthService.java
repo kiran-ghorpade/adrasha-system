@@ -2,12 +2,14 @@ package com.adrasha.user.integration;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.adrasha.core.dto.JwtUser;
 import com.adrasha.user.client.AuthClient;
 import com.adrasha.user.dto.roleRequest.RoleUpdateDTO;
 import com.adrasha.user.model.RoleRequest;
 
+@Service
 public class AuthService {
 
 	@Autowired

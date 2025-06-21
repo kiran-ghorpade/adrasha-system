@@ -50,7 +50,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/roleRequests")
 @SecurityRequirement(name = "BearerAuthentication")
 @Tag(name = "RoleRequest Management")
-@PreAuthorize("hasRole('USER')")
+@PreAuthorize("hasAnyRole('ADMIN','SYSTEM')")
 public class RoleRequestController {
 	
 		@Autowired
@@ -66,7 +66,6 @@ public class RoleRequestController {
 		private ModelMapper mapper;
 
 		@GetMapping
-		@PreAuthorize("hasRole('ADMIN')")
 		public Page<RoleRequestResponseDTO> getAllRoleRequests(
 				RoleRequestFilterDTO filterDTO,
 			    @PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.DESC)
@@ -96,7 +95,6 @@ public class RoleRequestController {
 
 		
 		@GetMapping("/{id}")
-		@PreAuthorize("hasRole('ADMIN')")
 		public RoleRequestResponseDTO getRoleRequest(@PathVariable UUID id){
 			
 			RoleRequest request = roleRequestService.getRoleRequest(id);
@@ -105,7 +103,7 @@ public class RoleRequestController {
 		}
 		
 		@GetMapping("/me")
-		@PreAuthorize("hasRole('USER')")
+		@PreAuthorize("hasAnyRole('USER', 'SYSTEM')")
 		public RoleRequestResponseDTO getCurrentUserRoleRequest(Authentication authentication) {
 
 			if(authentication == null) {
@@ -142,7 +140,7 @@ public class RoleRequestController {
 		}
 		
 		@PutMapping("/{id}")
-		@PreAuthorize("hasRole('USER')")
+		@PreAuthorize("#id.toString() == authentication.principal.toString()")
 		public RoleRequestResponseDTO updateRoleRequest(
 				@Parameter(description = "ID of the user to be updated", required = true) 
 				@PathVariable 
@@ -156,7 +154,7 @@ public class RoleRequestController {
 		}
 		
 		@DeleteMapping("/{id}")
-		@PreAuthorize("hasRole('USER')")
+		@PreAuthorize("#id.toString() == authentication.principal.toString() or hasAnyRole('ADMIN')")
 		public ResponseEntity<Void> deleteRoleRequest(@PathVariable UUID id){
 			
 			roleRequestService.deleteRoleRequest(id);

@@ -38,6 +38,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/masterdata/healthCenters")
 @SecurityRequirement(name = "BearerAuthentication")
 @Tag(name = "Health Center Management")
+@PreAuthorize("hasAnyRole('USER', 'SYSTEM')")
 public class HealthCenterController{
 
 	@Autowired

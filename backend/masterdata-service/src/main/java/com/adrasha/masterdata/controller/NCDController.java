@@ -38,6 +38,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/masterdata/ncd")
 @SecurityRequirement(name = "BearerAuthentication")
 @Tag(name = "NonCommunicableDisease Management")
+@PreAuthorize("hasAnyRole('USER','SYSTEM')")
 public class NCDController {
 	
 

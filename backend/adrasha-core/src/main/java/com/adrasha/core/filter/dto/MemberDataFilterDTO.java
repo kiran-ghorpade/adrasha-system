@@ -13,6 +13,7 @@ import lombok.Data;
 @Builder
 public class MemberDataFilterDTO {
 	private UUID familyId;
+	private UUID ashaId;
 	private Gender gender;
 	private LocalDate dateOfBirth;
 	private int age;

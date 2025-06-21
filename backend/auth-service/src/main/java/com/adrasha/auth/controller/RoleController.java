@@ -21,6 +21,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/auth")
 @SecurityRequirement(name = "BearerAuthentication")
 @Tag(name = "Role Management (SYSTEM)")
+@PreAuthorize("hasRole('SYSTEM')")
 public class RoleController {
 	
 	@Autowired
@@ -31,7 +32,6 @@ public class RoleController {
 
 	
 	@PutMapping("/roles")
-	@PreAuthorize("hasRole('SYSTEM')")
 	public JwtUser addRole(@RequestBody RoleUpdateDTO addRoleDTO) {
 				
 		UserDTO user = roleService.addRole(addRoleDTO.getUserId(), addRoleDTO.getRole());
@@ -39,7 +39,6 @@ public class RoleController {
 	}
 
 	@DeleteMapping("/roles")
-	@PreAuthorize("hasRole('SYSTEM')")
 	public JwtUser removeRole(@RequestBody RoleUpdateDTO addRoleDTO) {
 				
 		UserDTO user = roleService.removeRole(addRoleDTO.getUserId(), addRoleDTO.getRole());

@@ -27,6 +27,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/auth")
 @SecurityRequirement(name = "BearerAuthentication")
 @Tag(name = "UserDetails Management")
+@PreAuthorize("hasAnyRole('USER')")
 public class UserDetailsController {
 
     @SuppressWarnings("unused")
@@ -41,7 +42,6 @@ public class UserDetailsController {
     }
 
 	@PostMapping("/resetPassword")
-	@PreAuthorize("hasRole('USER')")
 	public UserDTO resetPassword(Authentication authentication, @RequestBody PasswordResetRequest passwordResetRequest) {
 
 		JwtUser user = (JwtUser) authentication.getPrincipal();
@@ -55,7 +55,7 @@ public class UserDetailsController {
 	
 
 	@DeleteMapping("/users/me")
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize("#id.toString() == authentication.principal.toString() and hasAnyRole('USER')")
 	public ResponseEntity<Void> deleteCurrentUser(Authentication authentication) {
 
 		JwtUser user = (JwtUser) authentication.getPrincipal();

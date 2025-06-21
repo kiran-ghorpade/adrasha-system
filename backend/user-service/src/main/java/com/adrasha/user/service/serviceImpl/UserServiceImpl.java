@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import com.adrasha.core.exception.AlreadyExistsException;
 import com.adrasha.core.exception.NotFoundException;
 import com.adrasha.core.model.Role;
+import com.adrasha.user.integration.AuthService;
 import com.adrasha.user.model.User;
 import com.adrasha.user.repository.UserRepository;
 import com.adrasha.user.service.UserService;
@@ -27,6 +28,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private AuthService authService;
 
 	@Autowired
 	private ModelMapper modelMapper;
@@ -62,6 +66,7 @@ public class UserServiceImpl implements UserService {
 		return userRepository.save(user);
 	}
 
+	// TODO : add functionality with authservice
 	@Override
 	public User deleteUser(UUID userId) {
 		User user = getUser(userId);
@@ -103,15 +108,9 @@ public class UserServiceImpl implements UserService {
 		return userRepository.count(example);
 	}
 
-	@Override
-	public void addRoleToUser(UUID id, Role role) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	// TODO : add functionality with authservice
 	@Override
 	public void removeRoleFromUser(UUID id, String role) {
-		// TODO Auto-generated method stub
 		
 	}
 

@@ -15,7 +15,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +24,6 @@ import com.adrasha.core.filter.dto.UserFilterDTO;
 import com.adrasha.core.model.Role;
 import com.adrasha.core.response.dto.UserResponseDTO;
 import com.adrasha.user.dto.user.UserUpdateDTO;
-import com.adrasha.user.model.RoleRequest;
 import com.adrasha.user.model.User;
 import com.adrasha.user.service.UserService;
 
@@ -38,6 +36,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/users")
 @SecurityRequirement(name = "BearerAuthentication")
 @Tag(name = "User Management")
+@PreAuthorize("hasAnyRole('ADMIN', 'SYSTEM')")
 public class UserController {
 	
 		@Autowired
@@ -47,7 +46,6 @@ public class UserController {
 		private ModelMapper mapper;
 
 		@GetMapping
-		@PreAuthorize("hasRole('USER')")
 		public Page<UserResponseDTO> getAllUsers(
 				UserFilterDTO filterDTO,
 			    @PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.DESC)
@@ -83,7 +81,7 @@ public class UserController {
 
 		
 		@GetMapping("/{id}")
-		@PreAuthorize("hasRole('USER')")
+		@PreAuthorize("hasAnyRole('USER','ADMIN','SYSTEM')")
 		public UserResponseDTO getUser(@PathVariable UUID id){
 			
 			User user = userService.getUser(id);
@@ -101,13 +99,15 @@ public class UserController {
 			
 		}
 		
-	    @PostMapping("/{id}/roles")
-	    public ResponseEntity<?> addRole(@PathVariable UUID id, @RequestBody RoleRequest request) {
-	        userService.addRoleToUser(id, request.getRole());
-	        return ResponseEntity.created(null).build();
-	    }
+//	    @PostMapping("/{id}/roles")
+//	    @PreAuthorize("hasAnyRole('SYSTEM')")
+//	    public ResponseEntity<?> addRole(@PathVariable UUID id, @RequestBody RoleRequest request) {
+//	        userService.addRoleToUser(id, request.getRole());
+//	        return ResponseEntity.created(null).build();
+//	    }
 
 	    @DeleteMapping("/{id}/roles/{role}")
+	    @PreAuthorize("#id.toString() == authentication.principal.toString()")
 	    public ResponseEntity<?> removeRole(@PathVariable UUID id, @PathVariable String role) {
 	        userService.removeRoleFromUser(id, role);
 	        return ResponseEntity.noContent().build();

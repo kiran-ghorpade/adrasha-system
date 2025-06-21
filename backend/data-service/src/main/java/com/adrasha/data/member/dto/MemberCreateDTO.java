@@ -20,6 +20,9 @@ public class MemberCreateDTO {
 	@NotNull
 	private UUID familyId;
 	
+	@NotNull
+	private UUID ashaId;
+	
 	@Valid
 	private Name name;
 	

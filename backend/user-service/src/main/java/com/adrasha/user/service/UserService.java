@@ -28,7 +28,5 @@ public interface UserService {
 
 	long getTotalUserCount(Example<User> example);
 
-	void addRoleToUser(UUID id, Role role);
-
 	void removeRoleFromUser(UUID id, String role);
  }

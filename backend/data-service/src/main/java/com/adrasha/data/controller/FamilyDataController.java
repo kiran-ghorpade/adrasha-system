@@ -41,7 +41,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/data/families")
 @SecurityRequirement(name = "BearerAuthentication")
 @Tag(name = "Family Management")
-@PreAuthorize("hasRole('ASHA')")
+@PreAuthorize("hasAnyRole('ASHA', 'SYSTEM')")
 public class FamilyDataController {
 
 	@Autowired

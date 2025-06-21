@@ -36,7 +36,11 @@ public class Member extends Auditable{
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 
+	@Column(nullable = false)
 	private UUID familyId;
+	
+	@Column(nullable = false)
+	private UUID ashaId;
 
 	@Embedded
 	private Name name;

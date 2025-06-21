@@ -38,6 +38,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/masterdata/locations")
 @SecurityRequirement(name = "BearerAuthentication")
 @Tag(name = "Location Management")
+@PreAuthorize("hasAnyRole('USER','SYSTEM')")
 public class LocationController {
 
 

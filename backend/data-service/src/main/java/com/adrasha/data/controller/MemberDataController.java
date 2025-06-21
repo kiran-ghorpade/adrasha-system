@@ -1,6 +1,7 @@
 package com.adrasha.data.controller;
 
 import java.net.URI;
+import java.util.Map;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
@@ -23,9 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.adrasha.core.dto.ExampleMatcherUtils;
-import com.adrasha.core.response.dto.MemberResponseDTO;
+import com.adrasha.core.filter.dto.MemberDataFilterDTO;
+import com.adrasha.core.response.dto.MemberDataResponseDTO;
 import com.adrasha.data.member.dto.MemberCreateDTO;
-import com.adrasha.data.member.dto.MemberFilterDTO;
 import com.adrasha.data.member.dto.MemberUpdateDTO;
 import com.adrasha.data.model.Family;
 import com.adrasha.data.model.Member;
@@ -53,8 +54,8 @@ public class MemberDataController {
 	private ModelMapper mapper;
 
 	@GetMapping
-	public Page<MemberResponseDTO> getAllMembers(
-			MemberFilterDTO filterDTO,
+	public Page<MemberDataResponseDTO> getAllMembers(
+			MemberDataFilterDTO filterDTO,
 		    @PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.DESC)
 			Pageable pageable
 			){
@@ -65,27 +66,37 @@ public class MemberDataController {
 		
 		Page<Member> memberPages = memberService.getAllMembers(exampleMember, pageable);
 		
-		Page<MemberResponseDTO> dto = memberPages.map(member -> mapper.map(member, MemberResponseDTO.class));
+		Page<MemberDataResponseDTO> dto = memberPages.map(member -> mapper.map(member, MemberDataResponseDTO.class));
 	
 		return dto;
 	}
 	
+	@GetMapping("/count")
+	public Map<String, Long> getTotalCount(MemberDataFilterDTO filterDTO) {
+		Member filter = mapper.map(filterDTO, Member.class);
+
+		Example<Member> example = Example.of(filter, ExampleMatcherUtils.getDefaultMatcher());
+
+		long total = memberService.getCount(example);
+		return Map.of("count", total);
+	}
+	
 	@GetMapping("/{id}")
-	public MemberResponseDTO getMember(@PathVariable UUID id){
+	public MemberDataResponseDTO getMember(@PathVariable UUID id){
 		
 		Member member = memberService.getMember(id);
-		return mapper.map(member, MemberResponseDTO.class);
+		return mapper.map(member, MemberDataResponseDTO.class);
 	}
 	
 	@PostMapping
-	public ResponseEntity<MemberResponseDTO> createMember(@Valid @RequestBody MemberCreateDTO memberDTO){
+	public ResponseEntity<MemberDataResponseDTO> createMember(@Valid @RequestBody MemberCreateDTO memberDTO){
 		
 		Family family = familyService.getFamily(memberDTO.getFamilyId());
 		Member member = mapper.map(memberDTO, Member.class);
 		member.setFamilyId(family.getId());
 		
 		member = memberService.createMember(member);
-		MemberResponseDTO dto = mapper.map(member, MemberResponseDTO.class);
+		MemberDataResponseDTO dto = mapper.map(member, MemberDataResponseDTO.class);
 		
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}")
@@ -96,7 +107,7 @@ public class MemberDataController {
 	}
 
 	@PutMapping("/{id}")
-	public MemberResponseDTO udpateMember(
+	public MemberDataResponseDTO udpateMember(
 			@PathVariable UUID id,
 			@Valid @RequestBody MemberUpdateDTO updatedMember
 			){
@@ -105,7 +116,7 @@ public class MemberDataController {
 		member.setFamilyId(family.getId());
 		
 		member = memberService.updateMember(id, member);
-		return mapper.map(member, MemberResponseDTO.class);
+		return mapper.map(member, MemberDataResponseDTO.class);
 
 	}
 	

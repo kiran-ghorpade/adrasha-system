@@ -13,6 +13,8 @@ import com.adrasha.masterdata.model.NCD;
 public interface NCDService{
 	
 	Page<NCD> getAll(Example<NCD> example, Pageable pageable);
+
+	long getCount(Example<NCD> example);
 	
 	NCD get(UUID id) throws NotFoundException;
 	
@@ -21,5 +23,6 @@ public interface NCDService{
 	NCD update(UUID id, NCD entity) throws NotFoundException;
 	
 	void delete(UUID id) throws NotFoundException;
+
 
 }

@@ -14,6 +14,8 @@ import com.adrasha.data.model.Member;
 public interface FamilyDataService {
 
     Page<Family> getAllFamilies(Example<Family> example, Pageable pageable);
+
+    long getCount(Example<Family> example);
     
     Family getFamily(UUID familyId) throws NotFoundException;
     
@@ -22,6 +24,7 @@ public interface FamilyDataService {
     Family updateFamily(UUID familyId, Family updatedFamilyDetails) throws NotFoundException;
     
     Family deleteFamily(UUID familyId) throws NotFoundException;
+
 
 
 }

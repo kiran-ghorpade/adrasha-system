@@ -12,4 +12,6 @@ import com.adrasha.user.model.User;
 public interface UserRepository extends JpaRepository<User, UUID>{
 
 	Optional<User> findByAdharNumber(String adharNumber);
+	
+	
 }

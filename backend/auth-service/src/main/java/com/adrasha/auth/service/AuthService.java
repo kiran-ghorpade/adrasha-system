@@ -9,7 +9,6 @@ import com.adrasha.auth.dto.RegistrationRequest;
 import com.adrasha.auth.dto.UserDTO;
 import com.adrasha.auth.dto.core.JwtUser;
 import com.adrasha.auth.exception.UserAlreadyExistsException;
-import com.adrasha.auth.model.Role;
 
 public interface AuthService {
 
@@ -23,7 +22,5 @@ public interface AuthService {
 	void deleteCurrentUser(JwtUser jwtUser);
 
 	void deleteUser(UUID id);
-
-	UserDTO updateRole(UUID userId, Role role);
 
 }

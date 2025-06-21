@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.adrasha.core.exception.AlreadyExistsException;
 import com.adrasha.core.exception.NotFoundException;
+import com.adrasha.core.model.Role;
 import com.adrasha.user.model.User;
 
 public interface UserService {
@@ -23,5 +24,11 @@ public interface UserService {
     
     User deleteUser(UUID userId) throws NotFoundException;
 
-	Map<String, Integer> getRoleDistribution();
+	Map<Role, Long> getRoleDistribution();
+
+	long getTotalUserCount(Example<User> example);
+
+	void addRoleToUser(UUID id, Role role);
+
+	void removeRoleFromUser(UUID id, String role);
  }

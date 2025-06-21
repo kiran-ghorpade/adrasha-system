@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.adrasha.core.model.Role;
+
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,7 +25,10 @@ public class FeignConfiguration implements RequestInterceptor{
             // Forward gateway-injected headers
             String internalSecret = request.getHeader("X-Internal-Secret");
             String userId = request.getHeader("X-UserId");
-            String roles = request.getHeader("X-Roles");
+            // using system roles from here
+            // String roles = request.getHeader("X-Roles");
+
+            template.header("X-Roles", Role.SYSTEM.name());
 
             if(internalSecret != null) {
             	template.header("X-Internal-Secret", internalSecret);
@@ -33,9 +38,7 @@ public class FeignConfiguration implements RequestInterceptor{
                 template.header("X-UserId", userId);
             }
 
-            if (roles != null) {
-                template.header("X-Roles", roles);
-            }
+
         }
 	}
 }

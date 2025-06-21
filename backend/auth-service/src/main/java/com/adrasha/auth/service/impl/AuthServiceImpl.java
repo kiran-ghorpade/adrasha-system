@@ -2,7 +2,6 @@ package com.adrasha.auth.service.impl;
 
 import java.time.Instant;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
@@ -23,7 +22,6 @@ import com.adrasha.auth.dto.UserDTO;
 import com.adrasha.auth.dto.core.JwtUser;
 import com.adrasha.auth.exception.UserAlreadyExistsException;
 import com.adrasha.auth.exception.UserNotFoundException;
-import com.adrasha.auth.model.Role;
 import com.adrasha.auth.model.User;
 import com.adrasha.auth.repository.UserRepository;
 import com.adrasha.auth.service.AuthService;
@@ -135,18 +133,6 @@ public class AuthServiceImpl implements AuthService {
 
 		User user = getUserById(id);
 		userRepository.delete(user);
-	}
-
-	@Override
-	public UserDTO updateRole(UUID userId, Role role) {
-		User user = getUserById(userId);
-		
-		Set<Role> updatedRoles = user.getRoles();
-		updatedRoles.add(role);
-		
-		user.setRoles(updatedRoles);
-		
-		return modelMapper.map(userRepository.save(user), UserDTO.class);
 	}
 
 }

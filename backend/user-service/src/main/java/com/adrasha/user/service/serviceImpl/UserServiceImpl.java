@@ -2,7 +2,7 @@ package com.adrasha.user.service.serviceImpl;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import com.adrasha.core.exception.AlreadyExistsException;
 import com.adrasha.core.exception.NotFoundException;
+import com.adrasha.core.model.Role;
 import com.adrasha.user.model.User;
 import com.adrasha.user.repository.UserRepository;
 import com.adrasha.user.service.UserService;
@@ -32,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Page<User> getAllUsers(Example<User> example, Pageable pageable) {
-
+		
 		return userRepository.findAll(example, pageable);
 	}
 
@@ -46,9 +47,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User createUser(User user) {
 
-		Optional<User> existingUser = userRepository.findById(user.getUserId());
-
-		if (existingUser.isPresent()) {
+		if(userRepository.existsById(user.getUserId())) {
+			
 			throw new AlreadyExistsException("User with id : " + user.getUserId() + " already exist.");
 		}
 
@@ -70,9 +70,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Map<String, Integer> getRoleDistribution() {
+	public Map<Role, Long> getRoleDistribution() {
 
-		Map<String, Integer> roleDistribution = new HashMap<>();
+		Map<Role, Long> roleDistribution = new HashMap<>();
+		Set<Role> excludedRoles = Set.of(Role.USER, Role.SYSTEM);
 		Page<User> dataPage;
 
 		int page = 0, size = 100;
@@ -84,14 +85,34 @@ public class UserServiceImpl implements UserService {
 			dataPage = userRepository.findAll(null, pageable);
 
 			for (User dto : dataPage.getContent()) {
-				for (String role : dto.getRoles()) {
-					roleDistribution.put(role, roleDistribution.getOrDefault(role, 0) + 1);
+				for (Role role : dto.getRoles()) {
+					if(excludedRoles.contains(role)) continue;
+					
+					Long currentCount = roleDistribution.getOrDefault(role,0L);
+					roleDistribution.put(role, currentCount + 1);
 				}
 			}
 			page++;
 		} while (dataPage.hasNext());
 
 		return roleDistribution;
+	}
+
+	@Override
+	public long getTotalUserCount(Example<User> example) {
+		return userRepository.count(example);
+	}
+
+	@Override
+	public void addRoleToUser(UUID id, Role role) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeRoleFromUser(UUID id, String role) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.adrasha.data.model;
 
-import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.UUID;
 
 import com.adrasha.core.model.Auditable;
@@ -15,6 +16,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Builder.Default;
@@ -42,9 +44,12 @@ public class Member extends Auditable{
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
 
-	private Instant dateOfBirth;
+	private LocalDate dateOfBirth;
 
 	private String birthPlace;
+	
+	@Transient
+	private int age;
 
 	@Column(unique = true)
 	private String adharNumber;
@@ -53,9 +58,12 @@ public class Member extends Auditable{
 
 	private String mobileNumber;
 
-	private boolean maritalStatus;
-
 	@Default
 	private boolean alive = true;
+	
+	
+	public int getAge() {
+		return Period.between(dateOfBirth, LocalDate.now()).getYears();
+	}
 
 }

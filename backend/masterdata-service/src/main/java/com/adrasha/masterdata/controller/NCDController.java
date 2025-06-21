@@ -1,6 +1,7 @@
 package com.adrasha.masterdata.controller;
 
 import java.net.URI;
+import java.util.Map;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
@@ -22,11 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.adrasha.core.dto.ExampleMatcherUtils;
+import com.adrasha.core.filter.dto.NCDFilterDTO;
 import com.adrasha.core.response.dto.NCDResponseDTO;
+import com.adrasha.masterdata.dto.NCDCreateDTO;
+import com.adrasha.masterdata.dto.NCDUpdateDTO;
 import com.adrasha.masterdata.model.NCD;
-import com.adrasha.masterdata.ncd.dto.NCDCreateDTO;
-import com.adrasha.masterdata.ncd.dto.NCDFilterDTO;
-import com.adrasha.masterdata.ncd.dto.NCDUpdateDTO;
 import com.adrasha.masterdata.service.NCDService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -41,7 +42,7 @@ public class NCDController {
 	
 
 	@Autowired
-    private NCDService healthService;
+    private NCDService ncdService;
 
     @Autowired
     private ModelMapper mapper;
@@ -57,14 +58,25 @@ public class NCDController {
 
         Example<NCD> example = Example.of(exampleRecord, ExampleMatcherUtils.getDefaultMatcher());
 
-        Page<NCD> healthPage = healthService.getAll(example, pageable);
+        Page<NCD> healthPage = ncdService.getAll(example, pageable);
 
         return healthPage.map(record -> mapper.map(record, NCDResponseDTO.class));
     }
+    
+	@GetMapping("/count")
+	public Map<String, Long> getCount(NCDFilterDTO filterDTO) {
+		NCD filter = mapper.map(filterDTO, NCD.class);
+
+		Example<NCD> example = Example.of(filter, ExampleMatcherUtils.getDefaultMatcher());
+
+		long total = ncdService.getCount(example);
+		return Map.of("count", total);
+	}
+
 
     @GetMapping("/{id}")
     public NCDResponseDTO getNCD(@PathVariable UUID id) {
-        NCD health = healthService.get(id);
+        NCD health = ncdService.get(id);
         return mapper.map(health, NCDResponseDTO.class);
     }
 
@@ -72,29 +84,29 @@ public class NCDController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<NCDResponseDTO> createNCD(@Valid @RequestBody NCDCreateDTO healthCreateDTO) {
         NCD health = mapper.map(healthCreateDTO, NCD.class);
-        NCD created = healthService.create(health);
+        NCD created = ncdService.create(health);
         NCDResponseDTO dto = mapper.map(created, NCDResponseDTO.class);
 
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+        URI NCD = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(dto.getId())
                 .toUri();
 
-        return ResponseEntity.created(location).body(dto);
+        return ResponseEntity.created(NCD).body(dto);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public NCDResponseDTO updateNCD(@PathVariable UUID id, @Valid @RequestBody NCDUpdateDTO updatedNCD) {
         NCD health = mapper.map(updatedNCD, NCD.class);
-        NCD updated = healthService.update(id, health);
+        NCD updated = ncdService.update(id, health);
         return mapper.map(updated, NCDResponseDTO.class);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteNCD(@PathVariable UUID id) {
-        healthService.delete(id);
+        ncdService.delete(id);
         return ResponseEntity.noContent().build();
     }
 

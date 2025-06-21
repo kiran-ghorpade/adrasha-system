@@ -1,5 +1,6 @@
 package com.adrasha.core.response.dto;
 
+import java.time.Instant;
 import java.util.UUID;
 
 import com.adrasha.core.model.HealthCenterType;
@@ -20,4 +21,8 @@ public class HealthCenterResponseDTO {
 	private long totalFamilies;
 	
 	private long totalPopulation;
+	
+	private Instant createdAt;
+	
+	private Instant updatedAt;
 }

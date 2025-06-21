@@ -11,4 +11,6 @@ import com.adrasha.masterdata.model.Location;
 public interface LocationRepository extends JpaRepository<Location, UUID>{
 
 	Optional<Location> findByPincode(String pincode);
+	
+	boolean existsByPincode(String pincode);
 }

@@ -30,8 +30,12 @@ public class MemberServiceImpl implements MemberDataService {
 	
 	@Override
 	public Page<Member> getAllMembers(Example<Member> example, Pageable pageable) {
-
 		return memberRepository.findAll(example, pageable);
+	}
+	
+	@Override
+	public long getCount(Example<Member> example) {
+		return memberRepository.count(example);
 	}
 
 	@Override
@@ -68,5 +72,4 @@ public class MemberServiceImpl implements MemberDataService {
 		memberRepository.delete(member);
 		return member;
 	}
-
 }

@@ -1,6 +1,7 @@
 package com.adrasha.masterdata.controller;
 
 import java.net.URI;
+import java.util.Map;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
@@ -22,10 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.adrasha.core.dto.ExampleMatcherUtils;
+import com.adrasha.core.filter.dto.LocationFilterDTO;
 import com.adrasha.core.response.dto.LocationResponseDTO;
-import com.adrasha.masterdata.location.dto.LocationCreateDTO;
-import com.adrasha.masterdata.location.dto.LocationFilterDTO;
-import com.adrasha.masterdata.location.dto.LocationUpdateDTO;
+import com.adrasha.masterdata.dto.LocationCreateDTO;
+import com.adrasha.masterdata.dto.LocationUpdateDTO;
 import com.adrasha.masterdata.model.Location;
 import com.adrasha.masterdata.service.LocationService;
 
@@ -41,7 +42,7 @@ public class LocationController {
 
 
 	@Autowired
-    private LocationService healthService;
+    private LocationService locationService;
 
     @Autowired
     private ModelMapper mapper;
@@ -57,14 +58,24 @@ public class LocationController {
 
         Example<Location> example = Example.of(exampleRecord, ExampleMatcherUtils.getDefaultMatcher());
 
-        Page<Location> healthPage = healthService.getAll(example, pageable);
+        Page<Location> healthPage = locationService.getAll(example, pageable);
 
         return healthPage.map(record -> mapper.map(record, LocationResponseDTO.class));
     }
+    
+	@GetMapping("/count")
+	public Map<String, Long> getTotalCount(LocationFilterDTO filterDTO) {
+		Location filter = mapper.map(filterDTO, Location.class);
+
+		Example<Location> example = Example.of(filter, ExampleMatcherUtils.getDefaultMatcher());
+
+		long total = locationService.getCount(example);
+		return Map.of("count", total);
+	}
 
     @GetMapping("/{id}")
     public LocationResponseDTO getLocation(@PathVariable UUID id) {
-        Location health = healthService.get(id);
+        Location health = locationService.get(id);
         return mapper.map(health, LocationResponseDTO.class);
     }
 
@@ -72,7 +83,7 @@ public class LocationController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<LocationResponseDTO> createLocation(@Valid @RequestBody LocationCreateDTO healthCreateDTO) {
         Location health = mapper.map(healthCreateDTO, Location.class);
-        Location created = healthService.create(health);
+        Location created = locationService.create(health);
         LocationResponseDTO dto = mapper.map(created, LocationResponseDTO.class);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -87,14 +98,14 @@ public class LocationController {
     @PreAuthorize("hasRole('ADMIN')")
     public LocationResponseDTO updateLocation(@PathVariable UUID id, @Valid @RequestBody LocationUpdateDTO updatedLocation) {
         Location health = mapper.map(updatedLocation, Location.class);
-        Location updated = healthService.update(id, health);
+        Location updated = locationService.update(id, health);
         return mapper.map(updated, LocationResponseDTO.class);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteLocation(@PathVariable UUID id) {
-        healthService.delete(id);
+        locationService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

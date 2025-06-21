@@ -6,8 +6,9 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import com.adrasha.core.filter.dto.UserFilterDTO;
+import com.adrasha.core.model.Role;
 import com.adrasha.core.response.dto.UserResponseDTO;
 
 @FeignClient(name = "user-service", path = "/users")
@@ -17,9 +18,12 @@ public interface UserDataClient {
 	UserResponseDTO getCurrentUserDetails();
 	
     @GetMapping
-    Page<UserResponseDTO> getAll(@RequestParam Map<String, Object> params, Pageable pageable);
+    Page<UserResponseDTO> getAll(UserFilterDTO filterDTO, Pageable pageable);
     
     @GetMapping("/role-distribution")
-    Map<String, Integer> getRoleDistribution();
+    Map<Role, Long> getRoleDistribution();
+    
+    @GetMapping("/count")
+    Map<String, Long> getCount(UserFilterDTO filterDTO);
 
 }

@@ -1,6 +1,5 @@
 package com.adrasha.masterdata.service.impl;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
@@ -35,6 +34,11 @@ public class NCDServiceImplementation  implements NCDService{
 	}
 
 	@Override
+	public long getCount(Example<NCD> example) {
+		return ncdRepository.count(example);
+	}
+
+	@Override
 	public NCD get(UUID id) throws NotFoundException {
 		return ncdRepository.findById(id)
 				.orElseThrow(() -> new NotFoundException("NonCommunicableDisease Not Found with id : " + id));
@@ -43,9 +47,8 @@ public class NCDServiceImplementation  implements NCDService{
 	@Override
 	@Transactional
 	public NCD create(NCD entity) throws AlreadyExistsException {
-		Optional<NCD> exsistingFamily = ncdRepository.findByName(entity.getName());
 		
-		if(exsistingFamily.isPresent()) {
+		if(ncdRepository.existsByName(entity.getName())) {
 			throw new AlreadyExistsException("NonCommunicableDisease with name : "+ entity.getName()+" already present");
 		}
 		
@@ -65,4 +68,5 @@ public class NCDServiceImplementation  implements NCDService{
 		NCD entity = get(id);
 		ncdRepository.delete(entity);
 	}
+
 }

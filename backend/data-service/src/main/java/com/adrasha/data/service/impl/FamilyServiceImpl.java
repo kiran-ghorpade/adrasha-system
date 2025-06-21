@@ -40,6 +40,11 @@ public class FamilyServiceImpl implements FamilyDataService {
 	}
 
 	@Override
+	public long getCount(Example<Family> example) {
+		return familyRepository.count(example);
+	}
+	
+	@Override
 	public Family getFamily(UUID familyId) {
 
 		return familyRepository.findById(familyId)
@@ -86,7 +91,7 @@ public class FamilyServiceImpl implements FamilyDataService {
 		familyRepository.delete(family);
 		return family;
 	}
-	
+
 
 
 }

@@ -1,6 +1,5 @@
 package com.adrasha.masterdata.service.impl;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
@@ -33,6 +32,11 @@ public class LocationServiceImpl implements LocationService{
 		
 		return locationRepository.findAll(example, pageable);
 	}
+	
+	@Override
+	public long getCount(Example<Location> example) {
+		return locationRepository.count(example);
+	}
 
 	@Override
 	public Location get(UUID id) throws NotFoundException {
@@ -43,9 +47,8 @@ public class LocationServiceImpl implements LocationService{
 	@Override
 	@Transactional
 	public Location create(Location entity) throws AlreadyExistsException {
-		Optional<Location> exsistingFamily = locationRepository.findByPincode(entity.getPincode());
 		
-		if(exsistingFamily.isPresent()) {
+		if(locationRepository.existsByPincode(entity.getPincode())) {
 			throw new AlreadyExistsException("Location with pincode : "+ entity.getPincode()+" already present");
 		}
 		
@@ -65,4 +68,5 @@ public class LocationServiceImpl implements LocationService{
 		Location entity = get(id);
 		locationRepository.delete(entity);
 	}
+
 }

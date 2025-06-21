@@ -10,4 +10,5 @@ import com.adrasha.data.model.Member;
 public interface MemberRepository extends JpaRepository<Member, UUID>{
 
 	boolean existsByAdharNumber(String adharNumber);
+	
 }

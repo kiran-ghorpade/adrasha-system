@@ -14,6 +14,8 @@ public interface HealthRecordService {
 
     Page<HealthRecord> getAllRecords(Example<HealthRecord> example, Pageable pageable);
     
+    long getCount(Example<HealthRecord> example);
+    
     HealthRecord getHealthRecord(UUID HealthRecordId) throws NotFoundException;
     
     HealthRecord createHealthRecord(HealthRecord HealthRecord) throws AlreadyExistsException;

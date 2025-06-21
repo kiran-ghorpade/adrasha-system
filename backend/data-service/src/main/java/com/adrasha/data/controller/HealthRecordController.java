@@ -1,6 +1,7 @@
 package com.adrasha.data.controller;
 
 import java.net.URI;
+import java.util.Map;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
@@ -22,9 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.adrasha.core.dto.ExampleMatcherUtils;
-import com.adrasha.core.response.dto.HealthResponseDTO;
+import com.adrasha.core.filter.dto.HealthRecordFilterDTO;
+import com.adrasha.core.response.dto.HealthRecordResponseDTO;
 import com.adrasha.data.health.dto.HealthCreateDTO;
-import com.adrasha.data.health.dto.HealthFilterDTO;
 import com.adrasha.data.health.dto.HealthUpdateDTO;
 import com.adrasha.data.model.HealthRecord;
 import com.adrasha.data.service.HealthRecordService;
@@ -47,8 +48,8 @@ public class HealthRecordController {
     private ModelMapper mapper;
 
     @GetMapping
-    public Page<HealthResponseDTO> getAllHealthRecords(
-            HealthFilterDTO filterDTO,
+    public Page<HealthRecordResponseDTO> getAllHealthRecords(
+            HealthRecordFilterDTO filterDTO,
             @PageableDefault(page = 0, size = 5, sort = "createdAt") 
     		Pageable pageable
     	) {
@@ -59,20 +60,30 @@ public class HealthRecordController {
 
         Page<HealthRecord> healthPage = healthService.getAllRecords(example, pageable);
 
-        return healthPage.map(record -> mapper.map(record, HealthResponseDTO.class));
+        return healthPage.map(record -> mapper.map(record, HealthRecordResponseDTO.class));
     }
+	
+	@GetMapping("/count")
+	public Map<String, Long> getTotalCount(HealthRecordFilterDTO filterDTO) {
+		HealthRecord filter = mapper.map(filterDTO, HealthRecord.class);
+
+		Example<HealthRecord> example = Example.of(filter, ExampleMatcherUtils.getDefaultMatcher());
+
+		long total = healthService.getCount(example);
+		return Map.of("count", total);
+	}
 
     @GetMapping("/{id}")
-    public HealthResponseDTO getHealthRecord(@PathVariable UUID id) {
+    public HealthRecordResponseDTO getHealthRecord(@PathVariable UUID id) {
         HealthRecord health = healthService.getHealthRecord(id);
-        return mapper.map(health, HealthResponseDTO.class);
+        return mapper.map(health, HealthRecordResponseDTO.class);
     }
 
     @PostMapping
-    public ResponseEntity<HealthResponseDTO> createHealth(@Valid @RequestBody HealthCreateDTO healthCreateDTO) {
+    public ResponseEntity<HealthRecordResponseDTO> createHealth(@Valid @RequestBody HealthCreateDTO healthCreateDTO) {
         HealthRecord health = mapper.map(healthCreateDTO, HealthRecord.class);
         HealthRecord created = healthService.createHealthRecord(health);
-        HealthResponseDTO dto = mapper.map(created, HealthResponseDTO.class);
+        HealthRecordResponseDTO dto = mapper.map(created, HealthRecordResponseDTO.class);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -83,10 +94,10 @@ public class HealthRecordController {
     }
 
     @PutMapping("/{id}")
-    public HealthResponseDTO updateHealthRecord(@PathVariable UUID id, @Valid @RequestBody HealthUpdateDTO updatedHealth) {
+    public HealthRecordResponseDTO updateHealthRecord(@PathVariable UUID id, @Valid @RequestBody HealthUpdateDTO updatedHealth) {
         HealthRecord health = mapper.map(updatedHealth, HealthRecord.class);
         HealthRecord updated = healthService.updateHealthRecord(id, health);
-        return mapper.map(updated, HealthResponseDTO.class);
+        return mapper.map(updated, HealthRecordResponseDTO.class);
     }
 
     @DeleteMapping("/{id}")

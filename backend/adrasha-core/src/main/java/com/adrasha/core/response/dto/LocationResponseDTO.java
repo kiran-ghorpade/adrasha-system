@@ -1,5 +1,6 @@
 package com.adrasha.core.response.dto;
 
+import java.time.Instant;
 import java.util.UUID;
 
 import com.adrasha.core.model.LocalityType;
@@ -24,4 +25,8 @@ public class LocationResponseDTO {
 	private String state;
 	
 	private String country;
+	
+	private Instant createdAt;
+	
+	private Instant updatedAt;
 }

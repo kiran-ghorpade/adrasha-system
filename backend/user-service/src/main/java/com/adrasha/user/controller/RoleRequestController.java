@@ -1,7 +1,10 @@
 package com.adrasha.user.controller;
 
 import java.net.URI;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +29,15 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.adrasha.core.dto.ExampleMatcherUtils;
 import com.adrasha.core.dto.JwtUser;
 import com.adrasha.core.exception.UnAuthorizedException;
+import com.adrasha.core.filter.dto.RoleRequestFilterDTO;
 import com.adrasha.core.model.RequestStatus;
+import com.adrasha.core.model.Role;
+import com.adrasha.core.response.dto.RoleRequestResponseDTO;
 import com.adrasha.user.dto.roleRequest.RoleRequestCreateDTO;
-import com.adrasha.user.dto.roleRequest.RoleRequestFilterDTO;
-import com.adrasha.user.dto.roleRequest.RoleRequestResponseDTO;
 import com.adrasha.user.dto.roleRequest.RoleRequestUpdateDTO;
-import com.adrasha.user.dto.roleRequest.RoleUpdateDTO;
+import com.adrasha.user.integration.AuthService;
 import com.adrasha.user.model.RoleRequest;
 import com.adrasha.user.model.User;
-import com.adrasha.user.service.AuthService;
 import com.adrasha.user.service.RoleRequestService;
 import com.adrasha.user.service.UserService;
 
@@ -80,6 +83,17 @@ public class RoleRequestController {
 		
 			return roleRequestResponseDTOPage;
 		}
+		
+		@GetMapping("/count")
+		public Map<String, Long> getTotalRoleRequests(RoleRequestFilterDTO filterDTO) {
+			RoleRequest filter = mapper.map(filterDTO, RoleRequest.class);
+
+			Example<RoleRequest> example = Example.of(filter, ExampleMatcherUtils.getDefaultMatcher());
+
+			long total = roleRequestService.getTotalRequestCount(example);
+			return Map.of("count", total);
+		}
+
 		
 		@GetMapping("/{id}")
 		@PreAuthorize("hasRole('ADMIN')")
@@ -156,18 +170,15 @@ public class RoleRequestController {
 		{
 			RoleRequest request = roleRequestService.getRoleRequest(id);
 			
-			JwtUser user = authService.updateRole(RoleUpdateDTO.builder()
-					.userId(request.getUserId())
-					.role(request.getRole())
-					.build()
-					);	
-
-			if(user==null) {
-				return ResponseEntity.internalServerError().build();
-			}
-				
+			// auth service call
+			JwtUser user = authService.addRole(request);
+			
+			Set<Role> roles =  user.getRoles().stream()
+									.map(Role::valueOf)
+									.collect(Collectors.toSet());
+			
 			User newUser = mapper.map(request, User.class);
-			newUser.setRoles(user.getRoles());
+			newUser.setRoles(roles);
 			userService.createUser(newUser);
 			
 			request.setStatus(RequestStatus.APPROVED);

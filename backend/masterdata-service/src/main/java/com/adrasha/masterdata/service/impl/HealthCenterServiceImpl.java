@@ -1,6 +1,5 @@
 package com.adrasha.masterdata.service.impl;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
@@ -14,8 +13,8 @@ import com.adrasha.core.exception.AlreadyExistsException;
 import com.adrasha.core.exception.NotFoundException;
 import com.adrasha.masterdata.model.HealthCenter;
 import com.adrasha.masterdata.repository.HealthCenterRepository;
+import com.adrasha.masterdata.repository.LocationRepository;
 import com.adrasha.masterdata.service.HealthCenterService;
-import com.adrasha.masterdata.service.LocationService;
 
 import jakarta.transaction.Transactional;
 
@@ -26,7 +25,7 @@ public class HealthCenterServiceImpl implements HealthCenterService {
 	private HealthCenterRepository healthCenterRepository;
 
 	@Autowired
-	private LocationService locationService;
+	private LocationRepository locationRepository;
 
 	@Autowired
 	private ModelMapper mapper;
@@ -36,6 +35,12 @@ public class HealthCenterServiceImpl implements HealthCenterService {
 
 		return healthCenterRepository.findAll(example, pageable);
 	}
+	
+	@Override
+	public long getCount(Example<HealthCenter> example) {
+		return healthCenterRepository.count(example);
+	}
+
 
 	@Override
 	public HealthCenter get(UUID id) throws NotFoundException {
@@ -48,11 +53,11 @@ public class HealthCenterServiceImpl implements HealthCenterService {
 	public HealthCenter create(HealthCenter entity) throws AlreadyExistsException {
 		
 		//checks if location exists
-		locationService.get(entity.getLocationId());
+		if(!locationRepository.existsById(entity.getLocationId())) {
+			throw new NotFoundException("Location Not Found with Id : "+ entity.getLocationId());
+		}
 
-		Optional<HealthCenter> exsistingFamily = healthCenterRepository.findByName(entity.getName());
-
-		if (exsistingFamily.isPresent()) {
+		if(healthCenterRepository.existsByName(entity.getName())) {
 			throw new AlreadyExistsException("HealthCenter with name : " + entity.getName() + " already present");
 		}
 
@@ -63,7 +68,9 @@ public class HealthCenterServiceImpl implements HealthCenterService {
 	@Transactional
 	public HealthCenter update(UUID id, HealthCenter updatedEntity) throws NotFoundException {
 		//checks if location exists
-		locationService.get(updatedEntity.getLocationId());
+		if(!locationRepository.existsById(updatedEntity.getLocationId())) {
+			throw new NotFoundException("Location Not Found with Id : "+ updatedEntity.getLocationId());
+		}
 		
 		HealthCenter entity = get(id);
 		mapper.map(updatedEntity, entity);

@@ -2,6 +2,8 @@ package com.adrasha.analytics.user.dto;
 
 import java.util.Map;
 
+import com.adrasha.core.model.Role;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,5 +11,5 @@ import lombok.Data;
 @Builder
 public class UserStats {
     private long totalUsers;
-    private Map<String, Integer> roleDistribution;
+    private Map<Role, Long> roleDistribution;
 }

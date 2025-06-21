@@ -1,6 +1,7 @@
 package com.adrasha.masterdata.controller;
 
 import java.net.URI;
+import java.util.Map;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
@@ -22,10 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.adrasha.core.dto.ExampleMatcherUtils;
+import com.adrasha.core.filter.dto.HealthCenterFilterDTO;
 import com.adrasha.core.response.dto.HealthCenterResponseDTO;
-import com.adrasha.masterdata.healthcenter.dto.HealthCenterCreateDTO;
-import com.adrasha.masterdata.healthcenter.dto.HealthCenterFilterDTO;
-import com.adrasha.masterdata.healthcenter.dto.HealthCenterUpdateDTO;
+import com.adrasha.masterdata.dto.HealthCenterCreateDTO;
+import com.adrasha.masterdata.dto.HealthCenterUpdateDTO;
 import com.adrasha.masterdata.model.HealthCenter;
 import com.adrasha.masterdata.service.HealthCenterService;
 
@@ -60,6 +61,17 @@ public class HealthCenterController{
 
         return healthPage.map(record -> mapper.map(record, HealthCenterResponseDTO.class));
     }
+    
+	@GetMapping("/count")
+	public Map<String, Long> getTotalCount(HealthCenterFilterDTO filterDTO) {
+		HealthCenter filter = mapper.map(filterDTO, HealthCenter.class);
+
+		Example<HealthCenter> example = Example.of(filter, ExampleMatcherUtils.getDefaultMatcher());
+
+		long total = healthService.getCount(example);
+		return Map.of("count", total);
+	}
+
 
     @GetMapping("/{id}")
     public HealthCenterResponseDTO getHealthCenter(@PathVariable UUID id) {

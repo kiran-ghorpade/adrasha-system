@@ -13,6 +13,8 @@ import com.adrasha.data.model.Member;
 public interface MemberDataService {
 
     Page<Member> getAllMembers(Example<Member> example, Pageable pageable);
+    
+    long getCount(Example<Member> example);
         
     Member getMember(UUID MemberId) throws NotFoundException;
     

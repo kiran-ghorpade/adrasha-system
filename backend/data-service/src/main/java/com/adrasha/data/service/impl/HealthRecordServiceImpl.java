@@ -32,6 +32,11 @@ public class HealthRecordServiceImpl implements HealthRecordService {
 
 		return healthRecordRepository.findAll(example, pageable);
 	}
+	
+	@Override
+	public long getCount(Example<HealthRecord> example) {
+		return healthRecordRepository.count(example);
+	}
 
 	@Override
 	public HealthRecord getHealthRecord(UUID memberId) {
@@ -46,8 +51,6 @@ public class HealthRecordServiceImpl implements HealthRecordService {
 		if(!memberRepository.existsById(healthRecord.getMemberId())) {
 			throw new NotFoundException("Member Not Found with Id : "+ healthRecord.getMemberId());
 		}
-		
-		
 
 		return healthRecordRepository.save(healthRecord);
 	}
@@ -65,5 +68,4 @@ public class HealthRecordServiceImpl implements HealthRecordService {
 		healthRecordRepository.delete(healthRecord);
 		return healthRecord;
 	}
-
 }

@@ -11,4 +11,6 @@ import com.adrasha.masterdata.model.HealthCenter;
 public interface HealthCenterRepository extends JpaRepository<HealthCenter, UUID> {
 
 	Optional<HealthCenter> findByName(String name);
+
+	boolean existsByName(String name);
 }

@@ -2,7 +2,6 @@ package com.adrasha.auth.controller;
 
 import java.util.UUID;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,14 +10,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.adrasha.auth.config.AdminInitializer;
 import com.adrasha.auth.dto.PasswordResetRequest;
-import com.adrasha.auth.dto.RoleUpdateDTO;
 import com.adrasha.auth.dto.UserDTO;
 import com.adrasha.auth.dto.core.JwtUser;
 import com.adrasha.auth.service.AuthService;
@@ -38,8 +35,6 @@ public class UserDetailsController {
 	@Autowired
 	private AuthService authService;
 	
-	@Autowired
-	private ModelMapper mapper;
 
     UserDetailsController(AdminInitializer adminInitializer) {
         this.adminInitializer = adminInitializer;
@@ -57,15 +52,7 @@ public class UserDetailsController {
 		return authService.resetPassword(user, passwordResetRequest);
 
 	}
-
-	@PutMapping("/updateRole")
-	@PreAuthorize("hasRole('ADMIN')")
-	public JwtUser updateRole(@RequestBody RoleUpdateDTO addRoleDTO) {
-				
-		UserDTO user = authService.updateRole(addRoleDTO.getUserId(), addRoleDTO.getRole());
-		return mapper.map(user, JwtUser.class);
-
-	}
+	
 
 	@DeleteMapping("/users/me")
 	@PreAuthorize("hasRole('USER')")

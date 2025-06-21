@@ -13,6 +13,8 @@ import com.adrasha.masterdata.model.Location;
 public interface LocationService {
 	
 	Page<Location> getAll(Example<Location> example, Pageable pageable);
+
+	long getCount(Example<Location> example);
 	
 	Location get(UUID id) throws NotFoundException;
 	
@@ -21,5 +23,6 @@ public interface LocationService {
 	Location update(UUID id, Location entity) throws NotFoundException;
 	
 	void delete(UUID id) throws NotFoundException;
+
 
 }

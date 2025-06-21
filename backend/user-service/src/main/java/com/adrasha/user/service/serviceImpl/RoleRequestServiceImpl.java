@@ -71,4 +71,9 @@ public class RoleRequestServiceImpl implements RoleRequestService {
 				.orElseThrow(()-> new NotFoundException("Role request with userid "+ userId +"not found"));
 	}
 
+	@Override
+	public long getTotalRequestCount(Example<RoleRequest> example) {
+		return requestRepository.count(example);
+	}
+
 }

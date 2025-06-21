@@ -1,24 +1,43 @@
 package com.adrasha.analytics.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
 
 import com.adrasha.analytics.client.FamilyDataClient;
-import com.adrasha.analytics.family.dto.PovertyStatus;
-import com.adrasha.analytics.family.dto.RegistrationStatus;
-import com.adrasha.core.response.dto.FamilyResponseDTO;
+import com.adrasha.core.filter.dto.FamilyDataFilterDTO;
+import com.adrasha.core.model.PovertyStatus;
 
+@Service
 public class FamilyAnalyticsService {
 	
 	@Autowired
-	private FamilyDataClient dataClient;
+	private FamilyDataClient familyDataClient;
 	
-	public long getTotalRegisteredFamiles() {
-		 Page<FamilyResponseDTO> dataPage = dataClient.getAll(null, null);
-		return dataPage.getTotalElements();
+
+	private long getCount(FamilyDataFilterDTO filterDTO) {
+		return familyDataClient.getCount(filterDTO).getOrDefault("count", 0L);
 	}
 	
-    private double averageMembersPerFamily;
-    private PovertyStatus povertyStats;
-   	private RegistrationStatus registrationStats;
+	public long getTotalFamiliesCount() {
+		return this.getCount(null);
+	}
+	
+	public Map<PovertyStatus, Long> getPovertyStats(){
+		
+		Map<PovertyStatus, Long> result = new HashMap<>();
+
+		for (PovertyStatus status : PovertyStatus.values()) {
+			long count = this.getCount( 
+					 FamilyDataFilterDTO.builder()
+					.povertyStatus(status)
+					.build()
+					);
+			result.put(status, count);
+		}
+
+		return result;
+	}
 }

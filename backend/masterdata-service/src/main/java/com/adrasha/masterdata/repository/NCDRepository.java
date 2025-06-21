@@ -10,5 +10,7 @@ import com.adrasha.masterdata.model.NCD;
 public interface NCDRepository extends JpaRepository<NCD, UUID>{
 	
 	Optional<NCD> findByName(String name);
+	
+	boolean existsByName(String name);
 
 }

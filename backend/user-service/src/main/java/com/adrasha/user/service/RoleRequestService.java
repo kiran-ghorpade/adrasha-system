@@ -23,5 +23,7 @@ public interface RoleRequestService {
 	RoleRequest updateRoleRequest(UUID roleRequesId, RoleRequest updatedRoleRequest) throws NotFoundException;
     
 	RoleRequest deleteRoleRequest(UUID roleRequestId) throws NotFoundException;
+
+	long getTotalRequestCount(Example<RoleRequest> example);
   
 }

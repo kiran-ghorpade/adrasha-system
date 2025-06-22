@@ -19,7 +19,7 @@ public class PaginationUtils {
 		Page<T> currentPage;
 		
 		do {
-            PageRequest pageRequest = PageRequest.of(page, size, sort);
+			PageRequest pageRequest = sort==null ? PageRequest.of(page, size) : PageRequest.of(page, size, sort);
             
 			currentPage = clientCall.apply(filter, pageRequest);
 			

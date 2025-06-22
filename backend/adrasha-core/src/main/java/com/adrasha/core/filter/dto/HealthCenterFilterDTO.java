@@ -13,7 +13,7 @@ public class HealthCenterFilterDTO {
 	
 	private UUID locationId;
 	
-	private long totalFamilies;
+	private Long totalFamilies;
 	
-	private long totalPopulation;
+	private Long totalPopulation;
 }

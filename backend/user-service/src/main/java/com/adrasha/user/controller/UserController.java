@@ -73,13 +73,6 @@ public class UserController {
 			return Map.of("count", total);
 		}
 		
-
-		@GetMapping("/role-distribution")
-		public Map<Role, Long> getRoleDistribution() {
-			return userService.getRoleDistribution();
-		}
-
-		
 		@GetMapping("/{id}")
 		@PreAuthorize("hasAnyRole('USER','ADMIN','SYSTEM')")
 		public UserResponseDTO getUser(@PathVariable UUID id){
@@ -108,7 +101,7 @@ public class UserController {
 
 	    @DeleteMapping("/{id}/roles/{role}")
 	    @PreAuthorize("#id.toString() == authentication.principal.toString()")
-	    public ResponseEntity<?> removeRole(@PathVariable UUID id, @PathVariable String role) {
+	    public ResponseEntity<?> removeRole(@PathVariable UUID id, @PathVariable Role role) {
 	        userService.removeRoleFromUser(id, role);
 	        return ResponseEntity.noContent().build();
 	    }

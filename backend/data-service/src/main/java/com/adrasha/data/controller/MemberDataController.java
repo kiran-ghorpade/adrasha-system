@@ -41,7 +41,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/data/members")
 @SecurityRequirement(name = "BearerAuthentication")
 @Tag(name = "Member Management")
-@PreAuthorize("hasRole('ASHA','SYSTEM')")
+@PreAuthorize("hasAnyRole('ASHA','SYSTEM')")
 public class MemberDataController {
 	
 	@Autowired

@@ -38,7 +38,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/data/healthRecords")
 @SecurityRequirement(name = "BearerAuthentication")
 @Tag(name = "Health Management")
-@PreAuthorize("hasRole('ASHA','SYSTEM')")
+@PreAuthorize("hasAnyRole('ASHA','SYSTEM')")
 public class HealthRecordController {
 
     @Autowired

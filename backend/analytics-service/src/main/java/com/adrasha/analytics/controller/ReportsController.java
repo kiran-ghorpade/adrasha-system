@@ -1,7 +1,5 @@
 package com.adrasha.analytics.controller;
 
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,15 +7,23 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/analytics/reports")
+@RequestMapping("/analytics")
 @SecurityRequirement(name = "BearerAuthentication")
-@Tag(name = "Analytics Report")
-@PreAuthorize("hasRole('ASHA')")
+@Tag(name = "Report Generation")
 public class ReportsController {
 
+//    @Autowired
+//    private ReportService reportService;
+//
+//    @PostMapping("/admin/reports/generate")
+//    @PreAuthorize("hasAnyRole('ADMIN')")
+//    public ResponseEntity<Resource> generateAdminReport(@RequestBody ReportRequestDTO request) {
+//    }
 	
-	@PostMapping
-	public void generateReports() {
-		
-	}
+//    
+//    @PostMapping("/asha/reports/generate")
+//    @PreAuthorize("hasAnyRole('ASHA')")
+//    public ResponseEntity<Resource> generateASHAReport(@RequestBody ReportRequestDTO request) {
+
+//    }
 }

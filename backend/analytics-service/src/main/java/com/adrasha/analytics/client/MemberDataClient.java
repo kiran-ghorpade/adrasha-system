@@ -12,7 +12,7 @@ import com.adrasha.core.filter.dto.MemberDataFilterDTO;
 import com.adrasha.core.response.dto.MemberDataResponseDTO;
 
 
-@FeignClient(name = "data-service", contextId = "MemberDataClient" , path = "/data/Members")
+@FeignClient(name = "data-service", contextId = "MemberDataClient" , path = "/data/members")
 public interface MemberDataClient {
 	
     @GetMapping

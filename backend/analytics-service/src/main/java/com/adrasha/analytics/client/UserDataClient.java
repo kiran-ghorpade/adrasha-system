@@ -9,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.adrasha.core.filter.dto.UserFilterDTO;
-import com.adrasha.core.model.Role;
 import com.adrasha.core.response.dto.UserResponseDTO;
 
 @FeignClient(name = "user-service", contextId = "UserDataClient", path = "/users")
@@ -20,10 +19,7 @@ public interface UserDataClient {
 	
     @GetMapping
     Page<UserResponseDTO> getAll(@SpringQueryMap UserFilterDTO filterDTO,@SpringQueryMap Pageable pageable);
-    
-    @GetMapping("/role-distribution")
-    Map<Role, Long> getRoleDistribution();
-    
+   
     @GetMapping("/count")
     Map<String, Long> getCount(@SpringQueryMap UserFilterDTO filterDTO);
 

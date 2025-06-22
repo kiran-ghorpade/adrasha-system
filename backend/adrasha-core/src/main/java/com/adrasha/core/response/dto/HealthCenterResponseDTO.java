@@ -18,9 +18,9 @@ public class HealthCenterResponseDTO {
 	
 	private UUID locationId;
 	
-	private long totalFamilies;
+	private Long totalFamilies;
 	
-	private long totalPopulation;
+	private Long totalPopulation;
 	
 	private Instant createdAt;
 	

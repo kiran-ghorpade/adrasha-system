@@ -16,7 +16,7 @@ public class MemberDataFilterDTO {
 	private UUID ashaId;
 	private Gender gender;
 	private LocalDate dateOfBirth;
-	private int age;
+	private Integer age;
 	
 	@Default
 	private Boolean alive = true;

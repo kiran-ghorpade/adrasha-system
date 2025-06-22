@@ -1,20 +1,17 @@
 package com.adrasha.user.service.serviceImpl;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.adrasha.core.dto.JwtUser;
 import com.adrasha.core.exception.AlreadyExistsException;
 import com.adrasha.core.exception.NotFoundException;
 import com.adrasha.core.model.Role;
@@ -66,41 +63,14 @@ public class UserServiceImpl implements UserService {
 		return userRepository.save(user);
 	}
 
-	// TODO : add functionality with authservice
 	@Override
 	public User deleteUser(UUID userId) {
 		User user = getUser(userId);
+		
+		authService.deleteUserDetails(userId);
+		
 		userRepository.delete(user);
 		return user;
-	}
-
-	@Override
-	public Map<Role, Long> getRoleDistribution() {
-
-		Map<Role, Long> roleDistribution = new HashMap<>();
-		Set<Role> excludedRoles = Set.of(Role.USER, Role.SYSTEM);
-		Page<User> dataPage;
-
-		int page = 0, size = 100;
-
-		Sort sort = Sort.by(Direction.DESC, "name");
-
-		do {
-			Pageable pageable = PageRequest.of(page, size, sort);
-			dataPage = userRepository.findAll(null, pageable);
-
-			for (User dto : dataPage.getContent()) {
-				for (Role role : dto.getRoles()) {
-					if(excludedRoles.contains(role)) continue;
-					
-					Long currentCount = roleDistribution.getOrDefault(role,0L);
-					roleDistribution.put(role, currentCount + 1);
-				}
-			}
-			page++;
-		} while (dataPage.hasNext());
-
-		return roleDistribution;
 	}
 
 	@Override
@@ -108,10 +78,17 @@ public class UserServiceImpl implements UserService {
 		return userRepository.count(example);
 	}
 
-	// TODO : add functionality with authservice
 	@Override
-	public void removeRoleFromUser(UUID id, String role) {
+	public void removeRoleFromUser(UUID id, Role role) {
+		JwtUser user = authService.removeRole(id,role);
 		
+		Set<Role> roles =  user.getRoles().stream()
+								.map(Role::valueOf)
+								.collect(Collectors.toSet());
+		
+		User updatedUser = modelMapper.map(user, User.class);
+		updatedUser.setRoles(roles);
+		this.updateUser(id, updatedUser);
 	}
 
 }

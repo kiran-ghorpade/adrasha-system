@@ -53,7 +53,7 @@ public class Member extends Auditable{
 	private String birthPlace;
 	
 	@Transient
-	private int age;
+	private Integer age;
 
 	@Column(unique = true)
 	private String adharNumber;
@@ -66,7 +66,7 @@ public class Member extends Auditable{
 	private boolean alive = true;
 	
 	
-	public int getAge() {
+	public Integer getAge() {
 		return Period.between(dateOfBirth, LocalDate.now()).getYears();
 	}
 

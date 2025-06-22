@@ -19,11 +19,11 @@ public class MemberDataResponseDTO {
 	private Gender gender;
 	private LocalDate dateOfBirth;
 	private String birthPlace;
-	private int age;
+	private Integer age;
 	private String adharNumber;
 	private String abhaNumber;
 	private String mobileNumber;
-	private boolean alive = true;
+	private Boolean alive = true;
 	
 	private Instant createdAt;
 	

@@ -1,6 +1,5 @@
 package com.adrasha.user.service;
 
-import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.data.domain.Example;
@@ -24,9 +23,7 @@ public interface UserService {
     
     User deleteUser(UUID userId) throws NotFoundException;
 
-	Map<Role, Long> getRoleDistribution();
-
 	long getTotalUserCount(Example<User> example);
 
-	void removeRoleFromUser(UUID id, String role);
+	void removeRoleFromUser(UUID id, Role role);
  }

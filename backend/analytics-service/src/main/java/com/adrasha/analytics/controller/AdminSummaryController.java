@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @SecurityRequirement(name = "BearerAuthentication")
 @Tag(name = "Analytics Summary")
 @PreAuthorize("hasRole('ADMIN')")
-public class SummaryController {
+public class AdminSummaryController {
 	
 	@Autowired
 	private UserAnalyticsService userAnalyticsService;

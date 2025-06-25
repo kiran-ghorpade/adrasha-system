@@ -1,11 +1,11 @@
 import { Injectable, OnDestroy, inject } from '@angular/core';
 import { BehaviorSubject, Subject, Subscription, share, timer } from 'rxjs';
 
-import { LocalStorageService } from '@shared';
 import { currentTimestamp, filterObject } from '../utils';
 import { Token } from '../models';
 import { BaseToken } from '../models';
-import { TokenFactory } from '.';
+import { LocalStorageService } from '@shared/services';
+// import { TokenFactory } from '.';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +14,7 @@ export class TokenService implements OnDestroy {
   private readonly key = 'alphbetagammadelta';
 
   private readonly store = inject(LocalStorageService);
-  private readonly factory = inject(TokenFactory);
+  // private readonly factory = inject(TokenFactory);
 
   private readonly change$ = new BehaviorSubject<BaseToken | undefined>(undefined);
   private readonly refresh$ = new Subject<BaseToken | undefined>();
@@ -25,7 +25,7 @@ export class TokenService implements OnDestroy {
 
   private get token(): BaseToken | undefined {
     if (!this._token) {
-      this._token = this.factory.create(this.store.get(this.key));
+      // this._token = this.factory.create(this.store.get(this.key));
     }
 
     return this._token;
@@ -59,9 +59,9 @@ export class TokenService implements OnDestroy {
     return this.token?.getBearerToken() ?? '';
   }
 
-  getRefreshToken() {
-    return this.token?.refresh_token;
-  }
+  // getRefreshToken() {
+  //   return this.token?.refresh_token;
+  // }
 
   ngOnDestroy(): void {
     this.clearRefresh();

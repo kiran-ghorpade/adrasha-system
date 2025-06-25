@@ -1,12 +1,12 @@
-const axios = require("axios");
-const fs = require("fs");
-const path = require("path");
+const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
 
-const api_gateway_path = "http://localhost:8080";
+const api_gateway_path = 'http://localhost:8080';
 
 const microserviceList = [
-  { name: "auth-service", path: "/auth/v3/api-docs" },
-  { name: "user-service", path: "/users/v3/api-docs" },
+  { name: 'auth-service', path: '/auth/v3/api-docs' },
+  { name: 'user-service', path: '/users/v3/api-docs' },
 ];
 
 const fetchApiDocs = async () => {
@@ -18,11 +18,13 @@ const fetchApiDocs = async () => {
       const outputpath = path.join(__dirname, `./openAPI/${service.name}.json`);
 
       fs.writeFileSync(outputpath, JSON.stringify(response.data, null, 2));
-      console.log(`fetched API from ${service.name}  successfully.`)
+      console.log(`fetched API from ${service.name}  successfully.`);
     } catch (error) {
-      console.log(`Error while fetching api docs from ${service.name}, update fetch-api-docs to get full error`);
+      console.log(
+        `Error while fetching api docs from ${service.name}, update fetch-api-docs to get full error`
+      );
     }
-  } 
+  }
 };
 
 fetchApiDocs();

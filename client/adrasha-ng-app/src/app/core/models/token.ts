@@ -8,9 +8,9 @@ export abstract class BaseToken {
     return this.attributes.accessToken;
   }
 
-  get refresh_token() {
-    return this.attributes.refresh_token;
-  }
+  // get refresh_token() {
+  //   return this.attributes.refresh_token;
+  // }
 
   get tokenType() {
     return this.attributes.tokenType ?? 'bearer';
@@ -63,9 +63,9 @@ export class JwtToken extends SimpleToken {
     }
   }
 
-  get exp() {
-    return this.payload?.exp;
-  }
+  // get exp() {
+  //   return this.payload?.exp;
+  // }
 
   private get payload(): { exp?: number } {
     if (!this.accessToken) {

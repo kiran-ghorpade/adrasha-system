@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { SIDEBAR_MENUS } from '@core/constants';
+// import { SIDEBAR_MENUS } from '@core/constants';
 import { User } from '@core/models';
 import { LoginService, TokenService } from '@core/services';
 import { isEmptyObject } from '@core/utils';
@@ -35,7 +35,7 @@ export class AuthService {
   // This method is used to login called by loginservice.
   login(username: string, password: string) {
     return this.loginService.login(username, password).pipe(
-      tap(response => this.tokenService.set(response.payload)),
+      tap(response => this.tokenService.set(response)),
       switchMap(() => of(this.check()))
     );
   }
@@ -61,9 +61,9 @@ export class AuthService {
     return this.user$.pipe(share());
   }
 
-  menu() {
-    return iif(() => this.check(), SIDEBAR_MENUS.admin, of([]));
-  }
+  // menu() {
+  //   return iif(() => this.check(), SIDEBAR_MENUS.admin, of([]));
+  // }
 
   private assignUser() {
     if (!this.check()) {

@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
-import { ErrorCodeComponent } from '@shared/components/error-code/error-code.component';
+// import { Component } from '@angular/core';
+// import { ErrorCodeComponent } from '@shared/components/error-code/error-code.component';
 
-@Component({
-  selector: 'app-error-500',
-  template: `
-    <error-code
-      code="500"
-      title="Server went wrong!"
-      message="Just kidding, looks like we have an internal issue, please try refreshing."
-    />
-  `,
-  imports: [ErrorCodeComponent],
-})
-export class Error500Component {}
+// @Component({
+//   selector: 'app-error-500',
+//   template: `
+//     <error-code
+//       code="500"
+//       title="Server went wrong!"
+//       message="Just kidding, looks like we have an internal issue, please try refreshing."
+//     />
+//   `,
+//   imports: [ErrorCodeComponent],
+// })
+// export class Error500Component {}

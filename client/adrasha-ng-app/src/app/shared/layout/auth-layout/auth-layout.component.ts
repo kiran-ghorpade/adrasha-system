@@ -1,11 +1,13 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { Footer } from 'primeng/api';
+import { Toolbar } from 'primeng/toolbar';
 
 @Component({
-  selector: 'app-auth-layout',
+  selector: 'auth-layout',
   templateUrl: './auth-layout.component.html',
   styleUrl: './auth-layout.component.scss',
   encapsulation: ViewEncapsulation.None,
-  imports: [RouterOutlet],
+  imports: [RouterModule],
 })
 export class AuthLayoutComponent {}

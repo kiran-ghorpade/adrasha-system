@@ -1,0 +1,51 @@
+<div class="d-flex w-full h-full">
+  <p-card class="m-auto" style="max-width: 380px">
+    <p-card class="m-b-24">
+      <p-card>👋 {{ 'login_title' | translate }}!</p-card>
+    </p-card>
+
+    <p-card>
+      <form class="form-field-full" [formGroup]="loginForm">
+        <p-card appearance="outline">
+          <p-input>{{ 'username' | translate }}</p-input>
+          <input pInput placeholder="username" formControlName="username" required />
+          <app-validation-error 
+          [control]="this.loginForm.get('username')"
+          [minLength]="3"
+          [maxLength]="50"
+          />
+        </p-card>
+
+        <p-form-field appearance="outline">
+          <p-label>{{ 'password' | translate }}</p-label>
+          <input
+            pInput
+            placeholder="Enter your password"
+            type="password"
+            formControlName="password"
+            required
+          />
+         <app-validation-error 
+         [control]="this.loginForm.get('password')"
+         [minLength]="8"
+         [maxLength]="50"
+         />
+        </p-form-field>
+
+        <button
+          class="w-full m-y-16"
+          p-flat-button
+          [disabled]="loginForm.invalid || isSubmitting"
+          (click)="login()"
+        >
+          {{ 'login' | translate }}
+        </button>
+
+        <div>
+          <span>{{ 'have_no_account' | translate }}?</span>
+          <a routerLink="/auth/register">{{ 'create_one_account' | translate }}</a>
+        </div>
+      </form>
+    </p-card>
+  </p-card>
+</div>

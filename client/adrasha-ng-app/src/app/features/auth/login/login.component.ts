@@ -1,19 +1,13 @@
 import { Component } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
-import { Router } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { IconFieldModule } from 'primeng/iconfield';
-import { IftaLabelModule } from 'primeng/iftalabel';
-import { InputIconModule } from 'primeng/inputicon';
-import { InputTextModule } from 'primeng/inputtext';
-import { PanelModule } from 'primeng/panel';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { AuthLayoutComponent } from '../../../shared/layout/auth-layout/auth-layout.component';
-import { PasswordModule } from 'primeng/password';
-import { TableModule } from 'primeng/table';
-import { CommonModule } from '@angular/common';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { RouterModule } from '@angular/router';
 
 interface LoginData {
   username: string;
@@ -23,45 +17,36 @@ interface LoginData {
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  imports: [TableModule, CommonModule],
+  imports: [ 
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    RouterModule
+  ],
 })
 export class LoginComponent {
-  products!: [
-    {
-      id: '1000';
-      code: 'f230fh0g3';
-      name: 'Bamboo Watch';
-      description: 'Product Description';
-      image: 'bamboo-watch.jpg';
-      price: 65;
-      category: 'Accessories';
-      quantity: 24;
-      inventoryStatus: 'INSTOCK';
-      rating: 5;
-    },
-    {
-      id: '1000';
-      code: 'f230fh0g3';
-      name: 'Bamboo Watch';
-      description: 'Product Description';
-      image: 'bamboo-watch.jpg';
-      price: 65;
-      category: 'Accessories';
-      quantity: 24;
-      inventoryStatus: 'INSTOCK';
-      rating: 5;
-    },
-    {
-      id: '1000';
-      code: 'f230fh0g3';
-      name: 'Bamboo Watch';
-      description: 'Product Description';
-      image: 'bamboo-watch.jpg';
-      price: 65;
-      category: 'Accessories';
-      quantity: 24;
-      inventoryStatus: 'INSTOCK';
-      rating: 5;
+
+  form = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(8),
+    ]),
+  });
+  isLoading = false;
+  isError = false; 
+
+  onSubmit() {
+    if (this.form.valid) {
+      console.log(this.form.value);
     }
-  ];
+  }
+
+  login(){
+    // this.isLoading = !this.isLoading;
+    
+  }
 }

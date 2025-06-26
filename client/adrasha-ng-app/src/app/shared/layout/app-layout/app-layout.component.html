@@ -1,0 +1,18 @@
+<div id="main-container" class="h-dvh w-full flex justify-start overflow-hidden">
+  <div id="sidebar">
+    <app-bottom-navbar />
+    <app-side-navbar />
+  </div>
+  <div
+    id="secondary-container"
+    class="w-full flex flex-col md:px-5 md:pb-2 gap-1"
+  >
+    <app-top-appbar />
+    <div
+      id="page-content"
+      class="h-full w-full shadow-md overflow-y-scroll rounded-md p-1"
+    >
+      <router-outlet />
+    </div>
+  </div>
+</div>

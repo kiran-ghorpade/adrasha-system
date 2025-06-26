@@ -1,13 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Footer } from 'primeng/api';
-import { Toolbar } from 'primeng/toolbar';
+import {MatToolbarModule} from '@angular/material/toolbar'
 
 @Component({
   selector: 'auth-layout',
   templateUrl: './auth-layout.component.html',
-  styleUrl: './auth-layout.component.scss',
   encapsulation: ViewEncapsulation.None,
-  imports: [RouterModule],
+  imports: [RouterModule, MatToolbarModule],
 })
 export class AuthLayoutComponent {}

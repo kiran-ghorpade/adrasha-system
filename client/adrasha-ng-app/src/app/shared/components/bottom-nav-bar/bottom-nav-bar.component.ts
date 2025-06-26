@@ -1,18 +1,13 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  OnInit,
-  signal,
-  Signal,
-  WritableSignal,
-} from '@angular/core';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { Menu, MenuService } from '@core/services/menu.service';
-import { MatIconButton } from '@angular/material/button';
+
 
 const menuList: Menu[] = [
   {
@@ -43,10 +38,8 @@ const menuList: Menu[] = [
 ];
 
 @Component({
-  selector: 'app-side-navbar',
-  templateUrl: './sidebar.component.html',
-  standalone: true,
-  imports: [
+  selector: 'app-bottom-navbar',
+    imports: [
     MatSidenavModule,
     MatCardModule,
     MatListModule,
@@ -54,8 +47,9 @@ const menuList: Menu[] = [
     RouterModule,
     CommonModule,
   ],
+  templateUrl: './bottom-nav-bar.component.html',
 })
-export class SideNavBar implements OnInit {
+export class BottomNavBarComponent {
   menuList: Menu[] = menuList;
 
   constructor(private menuService: MenuService) {}

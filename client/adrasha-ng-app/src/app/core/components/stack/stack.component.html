@@ -1,0 +1,12 @@
+<div
+  [ngClass]="{
+    'flex': true,
+    'flex-col': direction === 'column',
+    'flex-row': direction === 'row',
+    'space-y-': direction === 'column' && spacing,
+    'space-x-': direction === 'row' && spacing
+  }"
+  [ngStyle]="{ gap: spacing + 'rem' }"
+>
+  <ng-content></ng-content>
+</div>

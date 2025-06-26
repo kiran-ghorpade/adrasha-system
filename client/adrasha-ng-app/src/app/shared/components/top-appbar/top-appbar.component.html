@@ -1,0 +1,35 @@
+<div class="flex justify-between items-center p-4">
+  <!-- LOGO -->
+  <app-logo />
+
+  <!-- Search Box (Replace with your search component) -->
+  <app-searchbar />
+
+  <!-- Profile Avatar -->
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="menu"
+    matTooltip="Open settings"
+    class="rounded-none shadow-md"
+  >
+    <mat-icon>account_circle</mat-icon>
+  </button>
+
+  <!-- User Menu -->
+  <mat-menu #menu="matMenu" [overlapTrigger]="false">
+    @for(setting of settings; track setting.label){
+      <button
+        mat-menu-item
+        (click)="router.navigate([setting.toLink])"
+      >
+        <mat-icon>{{ setting.icon }}</mat-icon>
+        <span>{{ setting.label }}</span>
+      </button>
+    }
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>
+</div>

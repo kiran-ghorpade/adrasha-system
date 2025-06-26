@@ -1,20 +1,14 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { LoginComponent } from '@features/auth/login/login.component';
-import { PrimeNG } from 'primeng/config';
+import { NotFoundComponent } from "./shared/widgets/not-found/not-found.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterModule, CommonModule, LoginComponent],
-  standalone:true,
+  imports: [
+    RouterModule,
+    NotFoundComponent
+],
+  standalone: true,
   templateUrl: './app.component.html',
 })
-export class AppComponent implements OnInit{
-
-  constructor(private primeng:PrimeNG){}
-
-  ngOnInit(): void {
-     this.primeng.ripple.set(true);
-  }
-}
+export class AppComponent {}

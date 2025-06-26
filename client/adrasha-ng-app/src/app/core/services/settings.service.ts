@@ -1,7 +1,7 @@
 import { Direction } from '@angular/cdk/bidi';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { DOCUMENT } from '@angular/common';
-import { Injectable, inject } from '@angular/core';
+
+import { Injectable, inject, DOCUMENT } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { enUS, Locale } from 'date-fns/locale';
 import { AppDirectionality, LocalStorageService } from '@shared';

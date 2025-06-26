@@ -4,16 +4,13 @@ import {
   ChangeDetectionStrategy,
   Component,
   Input,
-  ViewEncapsulation,
-  inject,
+  ViewEncapsulation
 } from '@angular/core';
 import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { NgxPermissionsModule } from 'ngx-permissions';
 
-import { MenuService } from '@core/services';
 import { NavAccordionItemDirective } from './nav-accordion-item.directive';
 import { NavAccordionToggleDirective } from './nav-accordion-toggle.directive';
 import { NavAccordionDirective } from './nav-accordion.directive';
@@ -30,7 +27,6 @@ import { NavAccordionDirective } from './nav-accordion.directive';
     NgTemplateOutlet,
     RouterLink,
     RouterLinkActive,
-    NgxPermissionsModule,
     MatIconModule,
     MatRippleModule,
     TranslateModule,
@@ -53,9 +49,9 @@ export class SidemenuComponent {
   // The ripple effect makes page flashing on mobile
   @Input() ripple = false;
 
-  private readonly menu = inject(MenuService);
+  // private readonly menu = inject(MenuService);
 
-  menu$ = this.menu.getAll();
+  // menu$ = this.menu.getAll();
 
-  buildRoute = this.menu.buildRoute;
+  // buildRoute = this.menu.buildRoute;
 }

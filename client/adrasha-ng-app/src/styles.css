@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+
+.mat-drawer, .mat-sidenav, .mat-menu {
+  display: block !important;  /* Prevent Angular Material from applying flexbox styles that could conflict */
+}
+
+/* Reset body and html padding/margins if Angular Material adds unexpected margin */
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 100% !important;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+@tailwind utilities;

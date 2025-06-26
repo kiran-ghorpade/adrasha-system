@@ -3,7 +3,6 @@ import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from 
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
-import { providePrimeNG } from 'primeng/config';
 import { routes } from './app.routes';
 
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
@@ -14,7 +13,6 @@ import {
   tokenInterceptor,
 } from '@core/interceptors';
 import { environment } from '@env/environment';
-import { Noir } from '@theme/noir';
 
 // Http interceptor providers in outside-in order
 const interceptors = [

@@ -1,0 +1,33 @@
+<div id="registryPage" class="w-full h-full flex flex-col items-center gap-">
+  <div class="flex flex-col gap-5 p-2">
+    <button matButton="filled" [routerLink]="'family/registration'">
+      Add New Family
+    </button>
+    <mat-form-field [appearance]="'outline'" [floatLabel]="'always'">
+      <input matInput placeholder="Search head member" />
+    </mat-form-field>
+  </div>
+
+  <app-paper [elevation]="3" class="w-full md:w-1/2 h-1/2">
+    <div class="h-[] overflow-auto">
+      <mat-action-list>
+        @for (family of users; track $index) {
+        <a mat-list-item [routerLink]="`family/${family.id}`">
+          <div matListItemAvatar class="flex items-center justify-center">
+            <mat-icon>person</mat-icon>
+          </div>
+          <h3 matListItemTitle>{{family.name}}</h3>
+          <p matListItemLine>Age : {{family.age}}</p>
+        </a>
+        }
+      </mat-action-list>
+    </div>
+    <mat-paginator
+      [length]="100"
+      [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+  </app-paper>
+</div>

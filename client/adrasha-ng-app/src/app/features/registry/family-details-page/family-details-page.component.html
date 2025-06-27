@@ -1,0 +1,55 @@
+<div class="h-full grid grid-cols-12 md:gap-3">
+  <div class="col-span-12 md:col-span-8">
+    <div class="flex flex-col gap-2 w-full h-full">
+      <div class="">
+        <app-top-toolbar title="Family Details">
+          <mat-action-list>
+            <a matIconButton>
+              <mat-icon>more_vert</mat-icon>
+            </a>
+          </mat-action-list>
+        </app-top-toolbar>
+      </div>
+      <div class="">
+        <app-paper>
+          <!-- <h4 class="text-lg font-normal text-center">Ramesh Ghorpade</h4> -->
+          <div class="flex justify-around">
+            <mat-list>
+              <app-data-label
+                name="familyId"
+                value="13122"
+                icon="shower"
+              ></app-data-label>
+            </mat-list>
+            <mat-list>
+              <app-data-label
+                name="familyId"
+                value="13122"
+                icon="shower"
+              ></app-data-label>
+            </mat-list>
+          </div>
+        </app-paper>
+      </div>
+    </div>
+  </div>
+  <div class="col-span-12 md:col-span-4">
+    <app-paper class="h-full">
+      <div class="flex justify-center">
+        <a matButton="filled" [routerLink]="`/registry/memberRegistration`"
+          >Add New Member
+        </a>
+      </div>
+
+      <mat-action-list>
+        <a mat-list-item [routerLink]="`/registry/member/1`">
+          <div matListItemAvatar class="flex items-center justify-center">
+            <mat-icon>person</mat-icon>
+          </div>
+          <h3 matListItemTitle>Member Name</h3>
+          <p matListItemLine>Age : 35</p>
+        </a>
+      </mat-action-list>
+    </app-paper>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 // import { MatAvatarModule } from '@angular/material/avatar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
@@ -7,8 +7,9 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
-import { AppLogoComponent } from "../../widgets/logo.component";
-import { SearchbarComponent } from "../searchbar/searchbar.component";
+import { AppLogoComponent } from '../../widgets/logo.component';
+import { SearchbarComponent } from '../searchbar/searchbar.component';
+import { CommonModule } from '@angular/common';
 // import { AuthenticationService } from 'src/app/services/authentication.service'; // import your auth service
 
 @Component({
@@ -22,8 +23,9 @@ import { SearchbarComponent } from "../searchbar/searchbar.component";
     MatTooltipModule,
     MatListModule,
     AppLogoComponent,
-    SearchbarComponent
-],
+    CommonModule,
+    
+  ],
 })
 export class TopAppBarComponent implements OnInit {
   anchorElUser: any = null;
@@ -33,11 +35,14 @@ export class TopAppBarComponent implements OnInit {
   ];
 
   constructor(
-    public router: Router
-  ) // private authService: AuthenticationService
-  {}
+    public router: Router // private authService: AuthenticationService
+  ) {}
 
   ngOnInit(): void {}
+
+  isDashboard() {
+    return this.router.url === '/dashboard';
+  }
 
   handleOpenUserMenu(event: any) {
     this.anchorElUser = event.target;

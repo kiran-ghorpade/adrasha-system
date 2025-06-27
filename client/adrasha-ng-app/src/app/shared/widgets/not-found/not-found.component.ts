@@ -9,5 +9,5 @@ import { StackComponent } from '../../../core/components/stack/stack.component';
 })
 export class NotFoundComponent {
   @Input() title: string = 'Title';
-  @Input() msg: string = 'Not Found what you are looking for';
+  @Input() msg: string = 'Something went wrong';
 }

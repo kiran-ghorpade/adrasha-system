@@ -25,6 +25,5 @@ export class BackButtonComponent {
     } else {
       this.router.navigate([this.path]);
     }
-    console.log(window.history.length);
   }
 }

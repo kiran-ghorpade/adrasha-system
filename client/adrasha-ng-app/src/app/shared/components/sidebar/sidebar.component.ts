@@ -1,18 +1,14 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
-  OnInit,
-  signal,
-  Signal,
-  WritableSignal,
+  OnInit
 } from '@angular/core';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterModule } from '@angular/router';
 import { Menu, MenuService } from '@core/services/menu.service';
-import { MatIconButton } from '@angular/material/button';
 
 const menuList: Menu[] = [
   {

@@ -4,9 +4,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
-import { RouterModule } from '@angular/router';
-import { PaperComponent } from '@core/components/paper/paper.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-registry-page',
@@ -14,7 +13,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatButtonModule,
     MatInputModule,
     MatIconModule,
-    PaperComponent,
     MatCardModule,
     MatListModule,
     RouterModule,
@@ -28,6 +26,10 @@ export class RegistryPageComponent {
     { id: 2, name: 'Sita Verma', age: 28 },
     { id: 3, name: 'John Doe', age: 40 },
     { id: 4, name: 'Ayesha Khan', age: 31 },
+    { id: 5, name: 'Michael Smith', age: 45 },
+    { id: 5, name: 'Michael Smith', age: 45 },
+    { id: 5, name: 'Michael Smith', age: 45 },
+    { id: 5, name: 'Michael Smith', age: 45 },
     { id: 5, name: 'Michael Smith', age: 45 },
   ];
 }

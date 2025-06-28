@@ -1,4 +1,7 @@
-<div id="main-container" class="h-dvh w-full flex justify-start overflow-hidden">
+<div
+  id="main-container"
+  class="h-dvh w-full flex justify-start overflow-hidden"
+>
   <div id="sidebar">
     <app-side-navbar />
     <app-bottom-navbar />
@@ -9,8 +12,8 @@
   >
     <app-top-appbar />
     <div
-      id="page-content"
-      class="h-full shadow-md overflow-scroll mb-14 md:m-0 rounded-md md:p-5"
+      class="h-full overflow-scroll mb-14 md:m-0 rounded-md md:p-2"
+      style="box-shadow: var(--mat-sys-level3)"
     >
       <router-outlet />
     </div>

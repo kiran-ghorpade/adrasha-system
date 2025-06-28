@@ -1,27 +1,27 @@
 import { Component, input } from '@angular/core';
-import { PaperComponent } from '../../../core/components/paper/paper.component';
-import { BackButtonComponent } from '../back-button/back-button.component';
 import { MatIconModule } from '@angular/material/icon';
+import { BackButtonComponent } from '../back-button/back-button.component';
 
 @Component({
   selector: 'app-top-toolbar',
-  imports: [PaperComponent, BackButtonComponent, MatIconModule],
+  imports: [BackButtonComponent, MatIconModule],
   template: `
-    <app-paper>
-      <div class="flex w-full h-[64px] items-center justify-between gap-4 md:px-2">
-        @if(icon() === ''){
-        <app-back-button />
-        }@else{
-        <mat-icon class="p-4">{{ icon() }}</mat-icon>
-        }
-        <div class="flex-auto">
-          <span class="font-medium text-xl">{{ title() }}</span>
-        </div>
-        <div class="flex justify-end mx-5">
-          <ng-content></ng-content>
-        </div>
+    <div
+      class="flex h-[48px] items-center justify-between gap-4 md:px-2 py-1"
+      style=" box-shadow: var(--mat-sys-level1)"
+    >
+      @if(icon() === ''){
+      <app-back-button />
+      }@else{
+      <mat-icon class="p-4">{{ icon() }}</mat-icon>
+      }
+      <div class="flex-auto">
+        <span class="font-medium text-xl">{{ title() }}</span>
       </div>
-    </app-paper>
+      <div class="flex justify-end mx-5">
+        <ng-content></ng-content>
+      </div>
+    </div>
   `,
 })
 export class TopToolBar {

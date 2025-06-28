@@ -24,6 +24,7 @@
     "@angular/platform-browser-dynamic": "^20.0.4",
     "@angular/router": "^20.0.4",
     "@ngx-translate/core": "^16.0.4",
+    "@tailwindcss/postcss": "^4.1.11",
     "base64-js": "^1.5.1",
     "chart.js": "^4.5.0",
     "rxjs": "~7.8.0",

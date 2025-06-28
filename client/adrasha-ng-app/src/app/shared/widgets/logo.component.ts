@@ -4,10 +4,10 @@ import { MatChipsModule } from '@angular/material/chips';
 @Component({
   selector: 'app-logo',
   template: `
-      <mat-chip class="shadow-md">
-        <img matChipAvatar src="/images/adrasha_logo.ico" class="w-6 h-6 ml-3" />
-        <h3 class="font-normal hidden md:block">ADRASHA</h3>
-      </mat-chip>
+    <mat-chip style=" box-shadow: var(--mat-sys-level3)">
+      <img matChipAvatar src="/images/adrasha_logo.ico" class="w-6 h-6 ml-3" />
+      <h3 class="font-normal hidden md:block">ADRASHA</h3>
+    </mat-chip>
   `,
   styles: `
   ::ng-deep .mat-mdc-standard-chip .mdc-evolution-chip__action--primary::before {

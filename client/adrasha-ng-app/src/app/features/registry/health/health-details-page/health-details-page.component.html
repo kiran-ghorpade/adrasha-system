@@ -1,0 +1,79 @@
+<div class="h-full grid grid-cols-12 gap-3">
+  <div class="col-span-12 md:col-span-9">
+    <div class="flex flex-col gap-2 w-full h-full">
+      <div class="">
+        <app-top-toolbar title="Health Details">
+          <mat-action-list>
+            <a matIconButton>
+              <mat-icon>more_vert</mat-icon>
+            </a>
+          </mat-action-list>
+        </app-top-toolbar>
+      </div>
+      <div class="" style="box-shadow: var(--mat-sys-level1)">
+        <!-- <h4 class="text-lg font-normal text-center">Ramesh Ghorpade</h4> -->
+        <div matSubheader>Current Health Status</div>
+        <div class="flex justify-around">
+          <mat-list>
+            <app-data-label
+              name="familyId"
+              value="13122"
+              icon="shower"
+            ></app-data-label>
+            <app-data-label
+              name="familyId"
+              value="13122"
+              icon="shower"
+            ></app-data-label>
+            <app-data-label
+              name="familyId"
+              value="13122"
+              icon="shower"
+            ></app-data-label>
+            <app-data-label
+              name="familyId"
+              value="13122"
+              icon="shower"
+            ></app-data-label>
+          </mat-list>
+          <mat-list>
+            <app-data-label
+              name="familyId"
+              value="13122"
+              icon="shower"
+            ></app-data-label>
+            <app-data-label
+              name="familyId"
+              value="13122"
+              icon="shower"
+            ></app-data-label>
+            <app-data-label
+              name="familyId"
+              value="13122"
+              icon="shower"
+            ></app-data-label>
+            <app-data-label
+              name="familyId"
+              value="13122"
+              icon="shower"
+            ></app-data-label>
+          </mat-list>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-span-12 md:col-span-3 p-2">
+    <div class="h-full flex flex-col gap-3 justify-center">
+      <button matFab extended [routerLink]="'family/health/records/new'">
+        <mat-icon>add</mat-icon>
+        Add New Health Record
+      </button>
+      <a matButton="elevated" [routerLink]="`/registry/member/1`"
+        >View Member Profile
+      </a>
+      <a matButton="elevated" [routerLink]="`/registry/health/records`"
+        >View Past Health Records
+      </a>
+    </div>
+  </div>
+</div>

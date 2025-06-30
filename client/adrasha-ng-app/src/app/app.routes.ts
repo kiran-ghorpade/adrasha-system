@@ -19,13 +19,32 @@ export const routes: Routes = [
       import('@features/auth/auth.routes').then((route) => route.authRoutes),
   },
   {
+    path: 'dashboard',
+    title: 'Dashboard',
+    component: AppLayout,
+    loadChildren: () =>
+      import('@features/dashboard/dashboard.routes').then(
+        (route) => route.dashboardRoutes
+      ),
+  },
+  {
     path: 'registry',
     title: 'Registry',
     component: AppLayout,
     loadChildren: () =>
-      import('@features/registry/registry.routes').then((route) => route.registryRoutes),
+      import('@features/registry/registry.routes').then(
+        (route) => route.registryRoutes
+      ),
   },
-  { path: 'dashboard', component: AppLayout },
+  {
+    path: 'search',
+    title: 'Search',
+    component: AppLayout,
+    loadChildren: () =>
+      import('@features/search/search.routes').then(
+        (route) => route.searchPageRoutes
+      ),
+  },
   {
     path: '**',
     title: 'Not Found',

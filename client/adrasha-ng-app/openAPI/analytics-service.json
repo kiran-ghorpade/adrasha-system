@@ -1,0 +1,206 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "ADRASHA ANALYTICS-SERVICE API Docs",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080"
+    }
+  ],
+  "security": [
+    {
+      "BearerAuthentication": []
+    }
+  ],
+  "paths": {
+    "/analytics/user/stats": {
+      "get": {
+        "tags": [
+          "Analytics Summary"
+        ],
+        "operationId": "getUserStats",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserStats"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      }
+    },
+    "/analytics/member/stats": {
+      "get": {
+        "tags": [
+          "Analytics Summary"
+        ],
+        "operationId": "getMemberStats",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberStats"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      }
+    },
+    "/analytics/masterdata/stats": {
+      "get": {
+        "tags": [
+          "Analytics Summary"
+        ],
+        "operationId": "getMasterDataStats",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MasterdataStats"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      }
+    },
+    "/analytics/family/stats": {
+      "get": {
+        "tags": [
+          "Analytics Summary"
+        ],
+        "operationId": "getFamilyStats",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FamilyStats"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserStats": {
+        "type": "object",
+        "properties": {
+          "totalUsers": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "roleDistribution": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        }
+      },
+      "MemberStats": {
+        "type": "object",
+        "properties": {
+          "totalMembers": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "averageMembersPerFamily": {
+            "type": "number",
+            "format": "double"
+          },
+          "genderDistribution": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          "ageDistribution": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        }
+      },
+      "MasterdataStats": {
+        "type": "object",
+        "properties": {
+          "totalLocations": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalHealthCenters": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalNCD": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "FamilyStats": {
+        "type": "object",
+        "properties": {
+          "totalFamilies": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "povertyStats": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuthentication": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

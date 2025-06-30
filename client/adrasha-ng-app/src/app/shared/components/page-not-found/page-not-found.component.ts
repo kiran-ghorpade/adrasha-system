@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { NotFoundComponent } from '../../widgets/not-found.component';
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterModule } from '@angular/router';
-import { BackButtonComponent } from '../back-button/back-button.component';
+import { NotFoundComponent } from '../../widgets/not-found.component';
 
 @Component({
   selector: 'app-page-not-found',

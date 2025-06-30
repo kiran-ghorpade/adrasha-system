@@ -13,7 +13,10 @@
       <div class="">
         <!-- <h4 class="text-lg font-normal text-center">Ramesh Ghorpade</h4> -->
         <div
-          style="box-shadow: var(--mat-sys-level1)"
+          style="
+            box-shadow: var(--mat-sys-level1);
+            background-color: var(--mat-sys-surface);
+          "
           class="flex justify-around"
         >
           <mat-list>
@@ -35,12 +38,18 @@
     </div>
   </div>
   <div class="col-span-12 md:col-span-4">
-    <div class="flex flex-col p-2 gap-5" style="box-shadow: var(--mat-sys-level1)">
+    <div
+      class="flex flex-col p-2 gap-5"
+      style="
+        box-shadow: var(--mat-sys-level1);
+        background-color: var(--mat-sys-surface);
+      "
+    >
       <div class="flex justify-center">
-       <button matFab extended [routerLink]="'/registry/member/register'">
-        <mat-icon>add</mat-icon>
-        Add New Member
-      </button>
+        <button matFab extended [routerLink]="'/registry/member/register'">
+          <mat-icon>add</mat-icon>
+          Add New Member
+        </button>
       </div>
 
       <mat-action-list>

@@ -1,0 +1,1302 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "ADRASHA DATA-SERVICE API Docs",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080"
+    }
+  ],
+  "security": [
+    {
+      "BearerAuthentication": []
+    }
+  ],
+  "paths": {
+    "/data/members/{id}": {
+      "get": {
+        "tags": [
+          "Member Management"
+        ],
+        "operationId": "getMember",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberDataResponseDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Member Management"
+        ],
+        "operationId": "udpateMember",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemberUpdateDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberDataResponseDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Member Management"
+        ],
+        "operationId": "deleteMember",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      }
+    },
+    "/data/healthRecords/{id}": {
+      "get": {
+        "tags": [
+          "Health Management"
+        ],
+        "operationId": "getHealthRecord",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthRecordResponseDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Health Management"
+        ],
+        "operationId": "updateHealthRecord",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HealthUpdateDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthRecordResponseDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Health Management"
+        ],
+        "operationId": "deleteHealthRecord",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      }
+    },
+    "/data/families/{id}": {
+      "get": {
+        "tags": [
+          "Family Management"
+        ],
+        "operationId": "getFamily",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FamilyDataResponseDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Family Management"
+        ],
+        "operationId": "udpateFamily",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FamilyUpdateDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FamilyDataResponseDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Family Management"
+        ],
+        "operationId": "deleteFamily",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      }
+    },
+    "/data/members": {
+      "get": {
+        "tags": [
+          "Member Management"
+        ],
+        "operationId": "getAllMembers",
+        "parameters": [
+          {
+            "name": "filterDTO",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/MemberDataFilterDTO"
+            }
+          },
+          {
+            "name": "pageable",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Pageable"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedModelMemberDataResponseDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Member Management"
+        ],
+        "operationId": "createMember",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemberCreateDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberDataResponseDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      }
+    },
+    "/data/healthRecords": {
+      "get": {
+        "tags": [
+          "Health Management"
+        ],
+        "operationId": "getAllHealthRecords",
+        "parameters": [
+          {
+            "name": "filterDTO",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/HealthRecordFilterDTO"
+            }
+          },
+          {
+            "name": "pageable",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Pageable"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedModelHealthRecordResponseDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Health Management"
+        ],
+        "operationId": "createHealth",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HealthCreateDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthRecordResponseDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      }
+    },
+    "/data/families": {
+      "get": {
+        "tags": [
+          "Family Management"
+        ],
+        "operationId": "getAllFamilies",
+        "parameters": [
+          {
+            "name": "filterDTO",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/FamilyDataFilterDTO"
+            }
+          },
+          {
+            "name": "pageable",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Pageable"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedModelFamilyDataResponseDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Family Management"
+        ],
+        "operationId": "createFamily",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FamilyRegistrationDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FamilyDataResponseDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      }
+    },
+    "/data/members/count": {
+      "get": {
+        "tags": [
+          "Member Management"
+        ],
+        "operationId": "getTotalCount",
+        "parameters": [
+          {
+            "name": "filterDTO",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/MemberDataFilterDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "integer",
+                    "format": "int64"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      }
+    },
+    "/data/healthRecords/count": {
+      "get": {
+        "tags": [
+          "Health Management"
+        ],
+        "operationId": "getTotalCount_1",
+        "parameters": [
+          {
+            "name": "filterDTO",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/HealthRecordFilterDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "integer",
+                    "format": "int64"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      }
+    },
+    "/data/families/count": {
+      "get": {
+        "tags": [
+          "Family Management"
+        ],
+        "operationId": "getTotalCount_2",
+        "parameters": [
+          {
+            "name": "filterDTO",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/FamilyDataFilterDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "integer",
+                    "format": "int64"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "MemberUpdateDTO": {
+        "type": "object",
+        "properties": {
+          "familyId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "$ref": "#/components/schemas/Name"
+          },
+          "gender": {
+            "type": "string",
+            "enum": [
+              "MALE",
+              "FEMALE",
+              "OTHER"
+            ]
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date"
+          },
+          "birthPlace": {
+            "type": "string"
+          },
+          "adharNumber": {
+            "type": "string",
+            "maxLength": 12,
+            "minLength": 10
+          },
+          "abhaNumber": {
+            "type": "string"
+          },
+          "mobileNumber": {
+            "type": "string",
+            "pattern": "^[6-9]\\d{9}$"
+          },
+          "alive": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "adharNumber",
+          "familyId",
+          "gender"
+        ]
+      },
+      "Name": {
+        "type": "object",
+        "properties": {
+          "firstname": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 2
+          },
+          "middlename": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 2
+          },
+          "lastname": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 2
+          }
+        },
+        "required": [
+          "firstname",
+          "lastname"
+        ]
+      },
+      "MemberDataResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "familyId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ashaId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "$ref": "#/components/schemas/Name"
+          },
+          "gender": {
+            "type": "string",
+            "enum": [
+              "MALE",
+              "FEMALE",
+              "OTHER"
+            ]
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date"
+          },
+          "birthPlace": {
+            "type": "string"
+          },
+          "age": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "adharNumber": {
+            "type": "string"
+          },
+          "abhaNumber": {
+            "type": "string"
+          },
+          "mobileNumber": {
+            "type": "string"
+          },
+          "alive": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "HealthUpdateDTO": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "pregnant": {
+            "type": "boolean"
+          },
+          "height": {
+            "type": "number",
+            "format": "double"
+          },
+          "weight": {
+            "type": "number",
+            "format": "double"
+          },
+          "ncdlist": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "uniqueItems": true
+          }
+        }
+      },
+      "HealthRecordResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "memberId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ashaId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "pregnant": {
+            "type": "boolean"
+          },
+          "height": {
+            "type": "number",
+            "format": "double"
+          },
+          "weight": {
+            "type": "number",
+            "format": "double"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ncdlist": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "uniqueItems": true
+          }
+        }
+      },
+      "FamilyUpdateDTO": {
+        "type": "object",
+        "properties": {
+          "headMemberId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "locationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ashaId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "povertyStatus": {
+            "type": "string",
+            "enum": [
+              "APL",
+              "BPL"
+            ]
+          }
+        },
+        "required": [
+          "ashaId",
+          "headMemberId",
+          "locationId"
+        ]
+      },
+      "FamilyDataResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "headMemberId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "locationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ashaId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "povertyStatus": {
+            "type": "string",
+            "enum": [
+              "APL",
+              "BPL"
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "MemberCreateDTO": {
+        "type": "object",
+        "properties": {
+          "familyId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ashaId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "$ref": "#/components/schemas/Name"
+          },
+          "gender": {
+            "type": "string",
+            "enum": [
+              "MALE",
+              "FEMALE",
+              "OTHER"
+            ]
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date"
+          },
+          "birthPlace": {
+            "type": "string"
+          },
+          "adharNumber": {
+            "type": "string",
+            "maxLength": 12,
+            "minLength": 10
+          },
+          "abhaNumber": {
+            "type": "string"
+          },
+          "mobileNumber": {
+            "type": "string",
+            "pattern": "^[6-9]\\d{9}$"
+          }
+        },
+        "required": [
+          "adharNumber",
+          "ashaId",
+          "familyId",
+          "gender"
+        ]
+      },
+      "HealthCreateDTO": {
+        "type": "object",
+        "properties": {
+          "memberId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ashaId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "pregnant": {
+            "type": "boolean"
+          },
+          "height": {
+            "type": "number",
+            "format": "double"
+          },
+          "weight": {
+            "type": "number",
+            "format": "double"
+          },
+          "ncdlist": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "ashaId",
+          "memberId"
+        ]
+      },
+      "FamilyCreateDTO": {
+        "type": "object",
+        "properties": {
+          "locationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ashaId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "povertyStatus": {
+            "type": "string",
+            "enum": [
+              "APL",
+              "BPL"
+            ]
+          }
+        },
+        "required": [
+          "ashaId",
+          "locationId",
+          "povertyStatus"
+        ]
+      },
+      "FamilyRegistrationDTO": {
+        "type": "object",
+        "properties": {
+          "family": {
+            "$ref": "#/components/schemas/FamilyCreateDTO"
+          },
+          "headMember": {
+            "$ref": "#/components/schemas/HeadMemberDTO"
+          }
+        }
+      },
+      "HeadMemberDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/Name"
+          },
+          "gender": {
+            "type": "string",
+            "enum": [
+              "MALE",
+              "FEMALE",
+              "OTHER"
+            ]
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "birthPlace": {
+            "type": "string"
+          },
+          "adharNumber": {
+            "type": "string",
+            "maxLength": 12,
+            "minLength": 10
+          },
+          "abhaNumber": {
+            "type": "string"
+          },
+          "mobileNumber": {
+            "type": "string",
+            "pattern": "^[6-9]\\d{9}$"
+          },
+          "maritalStatus": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "adharNumber",
+          "gender"
+        ]
+      },
+      "MemberDataFilterDTO": {
+        "type": "object",
+        "properties": {
+          "familyId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ashaId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "gender": {
+            "type": "string",
+            "enum": [
+              "MALE",
+              "FEMALE",
+              "OTHER"
+            ]
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date"
+          },
+          "age": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "alive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Pageable": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1
+          },
+          "sort": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "PageMetadata": {
+        "type": "object",
+        "properties": {
+          "size": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "number": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "PagedModelMemberDataResponseDTO": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MemberDataResponseDTO"
+            }
+          },
+          "page": {
+            "$ref": "#/components/schemas/PageMetadata"
+          }
+        }
+      },
+      "HealthRecordFilterDTO": {
+        "type": "object",
+        "properties": {
+          "memberId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ashaId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "pregnant": {
+            "type": "boolean"
+          },
+          "height": {
+            "type": "number",
+            "format": "double"
+          },
+          "weight": {
+            "type": "number",
+            "format": "double"
+          },
+          "ncdlist": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "uniqueItems": true
+          }
+        }
+      },
+      "PagedModelHealthRecordResponseDTO": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HealthRecordResponseDTO"
+            }
+          },
+          "page": {
+            "$ref": "#/components/schemas/PageMetadata"
+          }
+        }
+      },
+      "FamilyDataFilterDTO": {
+        "type": "object",
+        "properties": {
+          "locationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ashaId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "povertyStatus": {
+            "type": "string",
+            "enum": [
+              "APL",
+              "BPL"
+            ]
+          }
+        }
+      },
+      "PagedModelFamilyDataResponseDTO": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyDataResponseDTO"
+            }
+          },
+          "page": {
+            "$ref": "#/components/schemas/PageMetadata"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuthentication": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

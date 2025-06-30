@@ -18,30 +18,10 @@ body {
 }
 
 // surfaces
-.paper-0 {
-  box-shadow: var(--mat-sys-level0)
+.paper {
+  box-shadow: var(--mat-sys-level1);
+  background-color: var(--mat-sys-surface);
 }
-
-.paper-1 {
-  box-shadow: var(--mat-sys-level1)
-}
-
-.paper-2 {
-  box-shadow: var(--mat-sys-level2)
-}
-
-.paper-3 {
-  box-shadow: var(--mat-sys-level3)
-}
-
-.paper-4 {
-  box-shadow: var(--mat-sys-level4)
-}
-
-.paper-5 {
-  box-shadow: var(--mat-sys-level5)
-}
-
 
 // typography
 /* Body Typography */

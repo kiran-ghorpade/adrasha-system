@@ -1,4 +1,22 @@
-<!-- 
-<div class="content">
-  <router-outlet/>
-</div> -->
+<div class="h-full w-full bg-ed-500 grid grid-rows-12">
+  <div class="row-span-3 p-3 flex gap-3 justify-between bg-ble-800">
+    <h1>Hello, ASHA</h1>
+    <div class="flex gap-3">
+      <app-data-card-label
+        [value]="`${currentTime().toDateString()}`"
+        [label]="`Current Date`"
+      />
+      <app-data-card-label
+        [value]="`${currentTime().toLocaleTimeString()}`"
+        [label]="`Current Time`"
+      />
+    </div>
+  </div>
+  <div class="row-span-5 bg-violet-800 flex ">
+    <app-data-card-label [value]="`500`" [label]="`Total Families`" />
+    <app-data-card-label [value]="`1000`" [label]="`Total Population`" />
+  </div>
+  <div class="row-span-5 bg-green-800">
+    <canvas id="healthRecordsHistoryChart"></canvas>
+  </div>
+</div>

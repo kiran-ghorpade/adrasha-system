@@ -1096,7 +1096,7 @@
           },
           "dateOfBirth": {
             "type": "string",
-            "format": "date-time"
+            "format": "date"
           },
           "birthPlace": {
             "type": "string"
@@ -1112,9 +1112,6 @@
           "mobileNumber": {
             "type": "string",
             "pattern": "^[6-9]\\d{9}$"
-          },
-          "maritalStatus": {
-            "type": "boolean"
           }
         },
         "required": [

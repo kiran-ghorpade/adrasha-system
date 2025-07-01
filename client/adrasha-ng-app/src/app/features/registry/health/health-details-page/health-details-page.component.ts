@@ -7,7 +7,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { DataLabelComponent } from '@shared/components/data-label/data-label.component';
-import { TopToolBar } from '../../../../shared/components/top-toolbar/top-toolbar.component';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 
 @Component({
   selector: 'app-health-details-page',
@@ -20,7 +20,7 @@ import { TopToolBar } from '../../../../shared/components/top-toolbar/top-toolba
     DataLabelComponent,
     RouterModule,
     CommonModule,
-    TopToolBar,
+    PageHeaderComponent,
   ],
   templateUrl: './health-details-page.component.html',
 })

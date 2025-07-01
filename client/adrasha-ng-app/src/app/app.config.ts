@@ -1,5 +1,9 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
+import {
+  provideRouter,
+  withComponentInputBinding,
+  withInMemoryScrolling,
+} from '@angular/router';
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
@@ -13,29 +17,28 @@ import {
   tokenInterceptor,
 } from '@core/interceptors';
 import { environment } from '@env/environment';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 // Http interceptor providers in outside-in order
-const interceptors = [
-  noopInterceptor,
-  baseUrlInterceptor,
-  tokenInterceptor,
-];
-
-
+const interceptors = [noopInterceptor, baseUrlInterceptor, tokenInterceptor];
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideZoneChangeDetection({ eventCoalescing: true }),
-     { provide: BASE_URL, useValue: environment.baseUrl },
-        // provideAppInitializer(() => inject(TranslateLangService).load()),
-        // provideAppInitializer(() => inject(StartupService).load()),
-        provideAnimationsAsync(),
-        provideHttpClient(withInterceptors(interceptors)),
-        provideRouter(
-          routes,
-          withInMemoryScrolling({ scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' }),
-          withComponentInputBinding()
-        ),
+    { provide: BASE_URL, useValue: environment.baseUrl },
+    // provideAppInitializer(() => inject(TranslateLangService).load()),
+    // provideAppInitializer(() => inject(StartupService).load()),
+    provideAnimationsAsync(),
+    provideHttpClient(withInterceptors(interceptors)),
+    provideRouter(
+      routes,
+      withInMemoryScrolling({
+        scrollPositionRestoration: 'enabled',
+        anchorScrolling: 'enabled',
+      }),
+      withComponentInputBinding()
+    ),
+    provideCharts(withDefaultRegisterables()),
   ],
 };

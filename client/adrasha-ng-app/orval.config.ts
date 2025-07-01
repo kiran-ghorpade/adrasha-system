@@ -10,7 +10,7 @@ export default defineConfig({
     },
     output: {
       target: 'src/app/core/api/auth-service',
-      schemas: 'src/app/core/model/auth-service',
+      schemas:  'src/app/core/model/auth-service',
       client: 'angular',
       mock: true,
       mode: 'tags-split',

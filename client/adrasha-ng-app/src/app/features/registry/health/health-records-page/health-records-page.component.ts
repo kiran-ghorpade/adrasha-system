@@ -11,7 +11,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterModule } from '@angular/router';
-import { TopToolBar } from '../../../../shared/components/top-toolbar/top-toolbar.component';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 
 @Component({
   selector: 'app-health-records-page',
@@ -23,7 +23,7 @@ import { TopToolBar } from '../../../../shared/components/top-toolbar/top-toolba
     MatButtonModule,
     RouterModule,
     CommonModule,
-    TopToolBar,
+    PageHeaderComponent,
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,

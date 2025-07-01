@@ -20,5 +20,4 @@ export interface HeadMemberDTO {
   abhaNumber?: string;
   /** @pattern ^[6-9]\d{9}$ */
   mobileNumber?: string;
-  maritalStatus?: boolean;
 }

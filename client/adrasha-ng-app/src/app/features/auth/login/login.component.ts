@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthenticationManagementService } from '@core/api/auth-service/authentication-management/authentication-management.service';
 
 interface LoginData {
@@ -18,17 +18,18 @@ interface LoginData {
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  imports: [ 
+  imports: [
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    RouterModule
+    RouterModule,
   ],
 })
 export class LoginComponent {
+  router = inject(Router);
 
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -38,10 +39,9 @@ export class LoginComponent {
     ]),
   });
   isLoading = false;
-  isError = false; 
+  isError = false;
 
-
-  constructor(private authservice : AuthenticationManagementService){}
+  constructor(private authservice: AuthenticationManagementService) {}
 
   onSubmit() {
     if (this.form.valid) {
@@ -49,8 +49,8 @@ export class LoginComponent {
     }
   }
 
-  login(){
+  login() {
     // this.isLoading = !this.isLoading;
-    
+    this.router.navigateByUrl('/dashboard', { replaceUrl: true });
   }
 }

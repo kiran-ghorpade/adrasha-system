@@ -1,48 +1,169 @@
 <div class="flex flex-col gap-5">
-  <app-top-toolbar title="Add New Member" />
-  <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
-    <mat-step [stepControl]="firstFormGroup">
-      <form [formGroup]="firstFormGroup">
-        <ng-template matStepLabel>Fill Family Info</ng-template>
-        <mat-form-field>
-          <mat-label>Name</mat-label>
-          <input
-            matInput
-            placeholder="Last name, First name"
-            formControlName="firstCtrl"
-            required
-          />
+  <app-top-toolbar [title]="'Add New Member'" />
+
+  <mat-stepper orientation="vertical" [linear]="false" #stepper>
+    <mat-step [stepControl]="basicInfo">
+      <form [formGroup]="basicInfo">
+        <ng-template matStepLabel>Fill Basic Info</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="firstname" required />
+          <mat-error
+            *ngIf="
+              basicInfo.controls.firstname.invalid &&
+              basicInfo.controls.firstname.touched
+            "
+          >
+            First name is required
+          </mat-error>
         </mat-form-field>
-        <div>
-          <button matButton matStepperNext>Next</button>
-        </div>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Middle Name</mat-label>
+          <input matInput formControlName="middlename" required />
+          <mat-error
+            *ngIf="
+              basicInfo.controls.middlename.invalid &&
+              basicInfo.controls.middlename.touched
+            "
+          >
+            Middle name is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="lastname" required />
+          <mat-error
+            *ngIf="
+              basicInfo.controls.lastname.invalid &&
+              basicInfo.controls.lastname.touched
+            "
+          >
+            Last name is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Gender</mat-label>
+          <mat-select formControlName="gender" required>
+            @for(gender of genderList(); track gender.code){
+            <mat-option [value]="`gender.code`">
+              {{ gender.label }}
+            </mat-option>
+            }
+          </mat-select>
+          <mat-error
+            *ngIf="
+              basicInfo.controls.gender.invalid &&
+              basicInfo.controls.gender.touched
+            "
+          >
+            Gender is required
+          </mat-error>
+        </mat-form-field>
+
+        <button mat-button matStepperNext [disabled]="basicInfo.invalid">
+          Next
+        </button>
       </form>
     </mat-step>
-    <mat-step [stepControl]="secondFormGroup">
-      <form [formGroup]="secondFormGroup">
-        <ng-template matStepLabel>Fill Head Member Info</ng-template>
-        <mat-form-field>
-          <mat-label>Address</mat-label>
-          <input
-            matInput
-            formControlName="secondCtrl"
-            placeholder="Ex. 1 Main St, New York, NY"
-            required
-          />
+
+    <mat-step [stepControl]="birthDetails">
+      <form [formGroup]="birthDetails">
+        <ng-template matStepLabel>Fill Birth Details</ng-template>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Date of Birth</mat-label>
+          <input matInput type="date" formControlName="dateOfBirth" required />
+          <mat-error
+            *ngIf="
+              birthDetails.controls.dateOfBirth.invalid &&
+              birthDetails.controls.dateOfBirth.touched
+            "
+          >
+            Date of Birth is required
+          </mat-error>
         </mat-form-field>
-        <div>
-          <button matButton matStepperPrevious>Back</button>
-          <button matButton matStepperNext>Next</button>
-        </div>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Birth Place</mat-label>
+          <input matInput formControlName="birthPlace" />
+        </mat-form-field>
+
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext [disabled]="birthDetails.invalid">
+          Next
+        </button>
       </form>
     </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
-      <p>You are now done.</p>
-      <div>
-        <button matButton matStepperPrevious>Back</button>
-        <button matButton (click)="stepper.reset()">Reset</button>
-      </div>
+
+    <mat-step [stepControl]="governmentId">
+      <form [formGroup]="governmentId">
+        <ng-template matStepLabel>Government ID</ng-template>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Adhar Number</mat-label>
+          <input
+            matInput
+            formControlName="adharNumber"
+            maxlength="12"
+            minlength="12"
+            required
+          />
+          <mat-error
+            *ngIf="
+              governmentId.controls.adharNumber.invalid &&
+              governmentId.controls.adharNumber.touched
+            "
+          >
+            Adhar Number must be 12 digits
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>ABHA Number</mat-label>
+          <input matInput formControlName="abhaNumber" />
+        </mat-form-field>
+
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext [disabled]="governmentId.invalid">
+          Next
+        </button>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="contactInfo">
+      <form [formGroup]="contactInfo">
+        <ng-template matStepLabel>Contact Info</ng-template>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Mobile Number</mat-label>
+          <input
+            matInput
+            formControlName="mobileNumber"
+            maxlength="10"
+            minlength="10"
+          />
+          <mat-error
+            *ngIf="
+              contactInfo.controls.mobileNumber.invalid &&
+              contactInfo.controls.mobileNumber.touched
+            "
+          >
+            Invalid mobile number
+          </mat-error>
+        </mat-form-field>
+
+        <button mat-button matStepperPrevious>Back</button>
+        <button
+          mat-button
+          (click)="onSubmit()"
+          [disabled]="memberFormGroup.invalid"
+        >
+          Submit
+        </button>
+      </form>
     </mat-step>
   </mat-stepper>
 </div>

@@ -46,9 +46,18 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'role-request',
+    title: 'Role Request',
+    component: AuthLayoutComponent,
+    loadChildren: () =>
+      import('@features/role-request/role-request.routes').then(
+        (route) => route.roleRequestRoutes
+      ),
+  },
+  {
     path: '**',
     title: 'Not Found',
-    component: AuthLayoutComponent,
+    // component: AuthLayoutComponent,
     children: [{ path: '', component: PageNotFoundComponent }],
   },
 ];

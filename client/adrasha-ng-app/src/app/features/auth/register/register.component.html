@@ -1,53 +1,34 @@
-<!-- <div class="d-flex w-full h-full">
-  <mat-card class="m-auto" style="max-width: 380px">
-    <mat-card-header class="m-b-24">
-      <mat-card-title>
-        {{ 'register_welcome' | translate }},
-        <br />
-        {{ 'register_title' | translate }}
-      </mat-card-title>
-    </mat-card-header>
+<div class="flex flex-col gap-3 items-center w-72">
+  <div class="w-full text-center px-5">
+    <h3 class="font-normal">Register</h3>
+  </div>
 
-    <mat-card-content>
-      <form class="form-field-full" [formGroup]="registerForm">
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'username' | translate }}</mat-label>
-          <input matInput formControlName="username" required />
-          <app-validation-error
-            [control]="this.registerForm.get('username')"
-            [minLength]="3"
-            [maxLength]="50"
-          />
-        </mat-form-field>
+  <form [formGroup]="registerForm" class="flex justify-center items-center w-full flex-col gap-3">
+    <mat-form-field class="w-full">
+      <mat-label>Username</mat-label>
+      <input matInput required [disabled]="false" />
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" required [disabled]="false" />
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Confirm Password</mat-label>
+      <input matInput type="password" required [disabled]="false" />
+    </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'password' | translate }}</mat-label>
-          <input matInput type="password" formControlName="password" required />
-          <app-validation-error
-            [control]="this.registerForm.get('password')"
-            [minLength]="8"
-            [maxLength]="50"
-          />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'confirm_password' | translate }}</mat-label>
-          <input matInput type="password" formControlName="confirmPassword" required />
-          <app-validation-error
-            [control]="this.registerForm.get('confirmPassword')"
-            [minLength]="8"
-            [maxLength]="50"
-            componentName="password"
-          />
-        </mat-form-field>
-
-        <button class="w-full m-y-16" mat-flat-button>{{ 'register' | translate }}</button>
-
-        <div>
-          <span>{{ 'have_an_account' | translate }}?</span>
-          <a routerLink="/auth/login">{{ 'login' | translate }}</a>
-        </div>
-      </form>
-    </mat-card-content>
-  </mat-card>
-</div> -->
+    <button
+      matButton="filled"
+      class="w-full"
+      (click)="register()"
+      [disabled]="false"
+    >
+      @if (false) {
+      <mat-spinner diameter="20"></mat-spinner>
+      }@else { Register }
+    </button>
+    <button matButton="text" class="w-full" routerLink="/auth/login">
+      Back to login
+    </button>
+  </form>
+</div>

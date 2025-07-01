@@ -1,6 +1,6 @@
 package com.adrasha.data.family.dto;
 
-import java.time.Instant;
+import java.time.LocalDate;
 
 import com.adrasha.core.model.Gender;
 import com.adrasha.core.model.Name;
@@ -23,7 +23,7 @@ public class HeadMemberDTO {
 	private Gender gender;
 
 	@Past
-	private Instant dateOfBirth;
+	private LocalDate dateOfBirth;
 
 	private String birthPlace;
 
@@ -35,7 +35,5 @@ public class HeadMemberDTO {
 
 	@Pattern(regexp = "^[6-9]\\d{9}$")
 	private String mobileNumber;
-
-	private boolean maritalStatus;
 
 }

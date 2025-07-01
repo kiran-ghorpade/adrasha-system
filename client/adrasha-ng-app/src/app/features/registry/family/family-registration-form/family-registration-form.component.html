@@ -1,35 +1,93 @@
 <div class="flex flex-col gap-5">
   <app-top-toolbar title="Add New Family" />
   <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
-    <mat-step [stepControl]="firstFormGroup">
-      <form [formGroup]="firstFormGroup">
+    <mat-step [stepControl]="familyFormGroup">
+      <form [formGroup]="familyFormGroup">
         <ng-template matStepLabel>Fill Family Info</ng-template>
         <mat-form-field>
-          <mat-label>Name</mat-label>
-          <input
-            matInput
-            placeholder="Last name, First name"
-            formControlName="firstCtrl"
-            required
-          />
+          <mat-label>Select Poverty Status</mat-label>
+          <mat-select>
+            @for (povertyStatus of povertyStatusList(); track povertyStatus.code)
+            {
+            <mat-option [value]="`${povertyStatus.code}`">{{
+              povertyStatus.label
+            }}</mat-option>
+            }
+          </mat-select>
         </mat-form-field>
         <div>
           <button matButton matStepperNext>Next</button>
         </div>
       </form>
     </mat-step>
-    <mat-step [stepControl]="secondFormGroup">
-      <form [formGroup]="secondFormGroup">
+
+    <mat-step [stepControl]="headMemberFormGroup">
+      <form [formGroup]="headMemberFormGroup">
         <ng-template matStepLabel>Fill Head Member Info</ng-template>
-        <mat-form-field>
-          <mat-label>Address</mat-label>
-          <input
-            matInput
-            formControlName="secondCtrl"
-            placeholder="Ex. 1 Main St, New York, NY"
-            required
-          />
-        </mat-form-field>
+        <div class="flex gap-3">
+          <mat-form-field>
+            <mat-label>Firstname</mat-label>
+            <input matInput formControlName="firstname" required />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Middlename</mat-label>
+            <input matInput formControlName="middlename" required />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Lastname</mat-label>
+            <input matInput formControlName="lastname" required />
+          </mat-form-field>
+        </div>
+        <div class="flex gap-3">
+          <mat-form-field>
+            <mat-label>Gender</mat-label>
+            <mat-select required>
+              @for (gender of genderList(); track gender.code) {
+              <mat-option [value]="`${gender.code}`">{{
+                gender.label
+              }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Date of Birth</mat-label>
+            <input
+              matInput
+              type="date"
+              formControlName="dateOfBirth"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Birth Place</mat-label>
+            <input matInput formControlName="birthPlace" />
+          </mat-form-field>
+        </div>
+
+        <div>
+          <button matButton matStepperPrevious>Back</button>
+          <button matButton matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="headMemberFormGroup">
+      <form [formGroup]="headMemberFormGroup">
+        <ng-template matStepLabel>Fill Head Member Adhar Number</ng-template>
+        <div class="flex gap-3">
+          <mat-form-field>
+            <mat-label>Adhar Number</mat-label>
+            <input matInput formControlName="adharNumber" required />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Abha Number</mat-label>
+            <input matInput formControlName="abhaNumber" />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Mobile Number</mat-label>
+            <input matInput formControlName="mobileNumber" />
+          </mat-form-field>
+        </div>
+
         <div>
           <button matButton matStepperPrevious>Back</button>
           <button matButton matStepperNext>Next</button>
@@ -42,6 +100,7 @@
       <div>
         <button matButton matStepperPrevious>Back</button>
         <button matButton (click)="stepper.reset()">Reset</button>
+        <button matButton="filled">Submit</button>
       </div>
     </mat-step>
   </mat-stepper>

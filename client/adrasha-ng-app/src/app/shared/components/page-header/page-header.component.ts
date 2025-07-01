@@ -1,40 +1,27 @@
-// import {
-//   Component,
-//   Input,
-//   OnInit,
-//   ViewEncapsulation,
-//   booleanAttribute,
-//   inject,
-// } from '@angular/core';
-// import { Router } from '@angular/router';
-// import { TranslateModule } from '@ngx-translate/core';
+import { Component, input } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { BackButtonComponent } from '../back-button/back-button.component';
 
-// import { MenuService } from '@core/services';
-// import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
-
-// @Component({
-//   selector: 'page-header',
-//   templateUrl: './page-header.component.html',
-//   styleUrl: './page-header.component.scss',
-//   host: {
-//     class: 'matero-page-header',
-//   },
-//   encapsulation: ViewEncapsulation.None,
-//   imports: [BreadcrumbComponent, TranslateModule],
-// })
-// export class PageHeaderComponent implements OnInit {
-//   private readonly router = inject(Router);
-//   private readonly menu = inject(MenuService);
-
-//   @Input() title = '';
-//   @Input() subtitle = '';
-//   @Input() nav: string[] = [];
-//   @Input({ transform: booleanAttribute }) hideBreadcrumb = false;
-
-//   ngOnInit() {
-//     const routes = this.router.url.slice(1).split('/');
-//     const menuLevel = this.menu.getLevel(routes);
-
-//     this.title = this.title || menuLevel[menuLevel.length - 1];
-//   }
-// }
+@Component({
+  selector: 'app-top-toolbar',
+  imports: [BackButtonComponent, MatIconModule],
+  template: `
+    <div class="flex h-[48px] items-center justify-between gap-4 md:px-2 py-1 paper">
+      @if(icon() === ''){
+      <app-back-button />
+      }@else{
+      <mat-icon class="p-4">{{ icon() }}</mat-icon>
+      }
+      <div class="flex-auto">
+        <span class="font-medium text-xl">{{ title() }}</span>
+      </div>
+      <div class="flex justify-end mx-5">
+        <ng-content></ng-content>
+      </div>
+    </div>
+  `,
+})
+export class PageHeaderComponent {
+  icon = input('');
+  title = input('Title');
+}

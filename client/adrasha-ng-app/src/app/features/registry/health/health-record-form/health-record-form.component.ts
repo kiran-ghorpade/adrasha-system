@@ -11,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { TopToolBar } from '../../../../shared/components/top-toolbar/top-toolbar.component';
+import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 
 @Component({
   selector: 'app-health-record-form',
@@ -24,7 +24,7 @@ import { TopToolBar } from '../../../../shared/components/top-toolbar/top-toolba
     MatToolbarModule,
     FormsModule,
     ReactiveFormsModule,
-    TopToolBar,
+    PageHeaderComponent,
   ],
   templateUrl: './health-record-form.component.html',
 })

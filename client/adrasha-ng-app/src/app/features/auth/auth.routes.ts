@@ -3,6 +3,6 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 
 export const authRoutes: Route[] = [
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'login', title: 'Login', component: LoginComponent },
+  { path: 'register', title: 'Registration', component: RegisterComponent },
 ];

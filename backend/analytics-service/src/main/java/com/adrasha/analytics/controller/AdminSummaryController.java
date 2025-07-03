@@ -14,7 +14,6 @@ import com.adrasha.analytics.service.MasterDataAnalyticsService;
 import com.adrasha.analytics.service.UserAnalyticsService;
 import com.adrasha.core.dto.ErrorResponse;
 import com.adrasha.core.model.Role;
-import com.adrasha.core.page.dto.FamilyPageResponseDTO;
 
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -26,7 +25,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("/analytics")
 @SecurityRequirement(name = "BearerAuthentication")
-@Tag(name = "Analytics Summary")
+@Tag(name = "Analytics")
 @ApiResponses({
 		@ApiResponse(responseCode = "401", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
 		@ApiResponse(responseCode = "403", content = @Content(schema = @Schema(implementation = ErrorResponse.class))) })
@@ -40,7 +39,7 @@ public class AdminSummaryController {
 	private MasterDataAnalyticsService masterDataAnalyticsService;
 
 	@GetMapping("/user/stats")
-	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = FamilyPageResponseDTO.class)))
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = UserStats.class)))
 	public UserStats getUserStats() {
 		Map<Role, Long> roleDistribution = userAnalyticsService.getRoleDistribution();
 		long totalUsers = userAnalyticsService.getTotalUsers();
@@ -49,7 +48,7 @@ public class AdminSummaryController {
 	}
 
 	@GetMapping("/masterdata/stats")
-	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = FamilyPageResponseDTO.class)))
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = MasterdataStats.class)))
 	public MasterdataStats getMasterDataStats() {
 		long totalHealthCenters = masterDataAnalyticsService.getHealthCenterCount();
 		long totalLocations = masterDataAnalyticsService.getLocationCount();

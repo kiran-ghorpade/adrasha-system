@@ -18,7 +18,7 @@
     "/auth/roles": {
       "put": {
         "tags": [
-          "Role Management (SYSTEM)"
+          "Roles"
         ],
         "operationId": "addRole",
         "requestBody": {
@@ -91,7 +91,7 @@
       },
       "delete": {
         "tags": [
-          "Role Management (SYSTEM)"
+          "Roles"
         ],
         "operationId": "removeRole",
         "requestBody": {
@@ -166,7 +166,7 @@
     "/auth/resetPassword": {
       "post": {
         "tags": [
-          "UserDetails Management"
+          "Authentication"
         ],
         "operationId": "resetPassword",
         "requestBody": {
@@ -241,7 +241,7 @@
     "/auth/register": {
       "post": {
         "tags": [
-          "Authentication Management"
+          "Authentication"
         ],
         "operationId": "registerUser",
         "requestBody": {
@@ -291,7 +291,7 @@
     "/auth/login": {
       "post": {
         "tags": [
-          "Authentication Management"
+          "Authentication"
         ],
         "operationId": "loginUser",
         "requestBody": {
@@ -331,7 +331,7 @@
     "/auth/users/{id}": {
       "delete": {
         "tags": [
-          "UserDetails Management"
+          "Authentication"
         ],
         "operationId": "deleteUser",
         "parameters": [
@@ -390,7 +390,7 @@
     "/auth/users/me": {
       "delete": {
         "tags": [
-          "UserDetails Management"
+          "Authentication"
         ],
         "operationId": "deleteCurrentUser",
         "responses": {

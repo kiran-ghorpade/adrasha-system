@@ -32,7 +32,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("/auth")
 @SecurityRequirement(name = "BearerAuthentication")
-@Tag(name = "UserDetails Management")
+@Tag(name = "Authentication")
 @ApiResponses({
 	@ApiResponse(responseCode = "401", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),	
 	@ApiResponse(responseCode = "403", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))

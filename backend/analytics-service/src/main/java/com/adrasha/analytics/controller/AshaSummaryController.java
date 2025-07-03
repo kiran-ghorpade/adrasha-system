@@ -16,7 +16,6 @@ import com.adrasha.core.dto.ErrorResponse;
 import com.adrasha.core.model.AgeGroup;
 import com.adrasha.core.model.Gender;
 import com.adrasha.core.model.PovertyStatus;
-import com.adrasha.core.page.dto.FamilyPageResponseDTO;
 
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -28,7 +27,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("/analytics")
 @SecurityRequirement(name = "BearerAuthentication")
-@Tag(name = "Analytics Summary")
+@Tag(name = "Analytics")
 @ApiResponses({
 		@ApiResponse(responseCode = "401", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
 		@ApiResponse(responseCode = "403", content = @Content(schema = @Schema(implementation = ErrorResponse.class))) })
@@ -42,7 +41,7 @@ public class AshaSummaryController {
 	private FamilyAnalyticsService familyAnalyticsService;
 
 	@GetMapping("/family/stats")
-	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = FamilyPageResponseDTO.class)))
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = FamilyStats.class)))
 	public FamilyStats getFamilyStats() {
 		long totalMembers = familyAnalyticsService.getTotalFamiliesCountByAsha();
 		Map<PovertyStatus, Long> povertyStats = familyAnalyticsService.getPovertyStats();
@@ -51,7 +50,7 @@ public class AshaSummaryController {
 	}
 
 	@GetMapping("/member/stats")
-	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = FamilyPageResponseDTO.class)))
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = MemberStats.class)))
 	public MemberStats getMemberStats() {
 		long totalMembers = memberAnalyticsService.getTotalMembers();
 		double avgMembers = memberAnalyticsService.getAverageMembersPerFamily();

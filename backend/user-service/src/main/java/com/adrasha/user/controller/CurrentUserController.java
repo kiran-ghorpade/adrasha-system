@@ -25,7 +25,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("/users/me")
 @SecurityRequirement(name = "BearerAuthentication")
-@Tag(name = "User Management")
+@Tag(name = "User")
 public class CurrentUserController {
 
 	@Autowired

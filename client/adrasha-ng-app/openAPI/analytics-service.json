@@ -18,7 +18,7 @@
     "/analytics/user/stats": {
       "get": {
         "tags": [
-          "Analytics Summary"
+          "Analytics"
         ],
         "operationId": "getUserStats",
         "responses": {
@@ -27,7 +27,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/FamilyPageResponseDTO"
+                  "$ref": "#/components/schemas/UserStats"
                 }
               }
             }
@@ -63,7 +63,7 @@
     "/analytics/member/stats": {
       "get": {
         "tags": [
-          "Analytics Summary"
+          "Analytics"
         ],
         "operationId": "getMemberStats",
         "responses": {
@@ -72,7 +72,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/FamilyPageResponseDTO"
+                  "$ref": "#/components/schemas/MemberStats"
                 }
               }
             }
@@ -108,7 +108,7 @@
     "/analytics/masterdata/stats": {
       "get": {
         "tags": [
-          "Analytics Summary"
+          "Analytics"
         ],
         "operationId": "getMasterDataStats",
         "responses": {
@@ -117,7 +117,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/FamilyPageResponseDTO"
+                  "$ref": "#/components/schemas/MasterdataStats"
                 }
               }
             }
@@ -153,7 +153,7 @@
     "/analytics/family/stats": {
       "get": {
         "tags": [
-          "Analytics Summary"
+          "Analytics"
         ],
         "operationId": "getFamilyStats",
         "responses": {
@@ -162,7 +162,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/FamilyPageResponseDTO"
+                  "$ref": "#/components/schemas/FamilyStats"
                 }
               }
             }
@@ -223,125 +223,79 @@
           }
         }
       },
-      "FamilyDataResponseDTO": {
+      "UserStats": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
+          "totalUsers": {
+            "type": "integer",
+            "format": "int64"
           },
-          "headMemberId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "locationId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "ashaId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "povertyStatus": {
-            "type": "string",
-            "enum": [
-              "APL",
-              "BPL"
-            ]
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time"
+          "roleDistribution": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         }
       },
-      "FamilyPageResponseDTO": {
+      "MemberStats": {
         "type": "object",
         "properties": {
-          "content": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FamilyDataResponseDTO"
+          "totalMembers": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "averageMembersPerFamily": {
+            "type": "number",
+            "format": "double"
+          },
+          "genderDistribution": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "format": "int64"
             }
           },
-          "pageable": {
-            "$ref": "#/components/schemas/PageableObject"
-          },
-          "totalPages": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "totalElements": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "last": {
-            "type": "boolean"
-          },
-          "first": {
-            "type": "boolean"
-          },
-          "size": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "number": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "sort": {
-            "$ref": "#/components/schemas/SortObject"
-          },
-          "numberOfElements": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "empty": {
-            "type": "boolean"
+          "ageDistribution": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         }
       },
-      "PageableObject": {
+      "MasterdataStats": {
         "type": "object",
         "properties": {
-          "paged": {
-            "type": "boolean"
-          },
-          "pageNumber": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "pageSize": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "unpaged": {
-            "type": "boolean"
-          },
-          "offset": {
+          "totalLocations": {
             "type": "integer",
             "format": "int64"
           },
-          "sort": {
-            "$ref": "#/components/schemas/SortObject"
+          "totalHealthCenters": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalNCD": {
+            "type": "integer",
+            "format": "int64"
           }
         }
       },
-      "SortObject": {
+      "FamilyStats": {
         "type": "object",
         "properties": {
-          "sorted": {
-            "type": "boolean"
+          "totalFamilies": {
+            "type": "integer",
+            "format": "int64"
           },
-          "unsorted": {
-            "type": "boolean"
-          },
-          "empty": {
-            "type": "boolean"
+          "povertyStats": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         }
       }

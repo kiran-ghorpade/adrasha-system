@@ -24,7 +24,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("/masterdata")
 @SecurityRequirement(name = "BearerAuthentication")
-@Tag(name = "Static Data")
+@Tag(name = "StaticData")
 public class StaticDataController {
 	
 	@GetMapping("/request-statuses")

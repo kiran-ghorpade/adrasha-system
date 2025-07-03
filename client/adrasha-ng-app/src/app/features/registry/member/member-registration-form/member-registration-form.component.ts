@@ -10,13 +10,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
-import { StaticDataService } from '@core/api/masterdata-service/static-data/static-data.service';
-import { StaticDataDTO } from '@core/model/masterdata-service';
-import { MemberCreateDTO } from '@core/model/data-service';
-import { MatSelectModule } from '@angular/material/select';
+import { StaticDataService } from '@core/api/static-data/static-data.service';
+import { MemberCreateDTO, StaticDataDTO } from '@core/model';
+import { PageHeaderComponent, ValidationErrorComponent } from '@shared/components';
 
 @Component({
   selector: 'app-member-registration-form',
@@ -31,7 +30,8 @@ import { MatSelectModule } from '@angular/material/select';
     FormsModule,
     ReactiveFormsModule,
     PageHeaderComponent,
-  ],
+    ValidationErrorComponent
+],
   templateUrl: './member-registration-form.component.html',
 })
 export class MemberRegistrationFormComponent implements OnInit {
@@ -42,10 +42,10 @@ export class MemberRegistrationFormComponent implements OnInit {
   genderList = signal<StaticDataDTO[]>([]);
 
   // forms
-  memberFormGroup: FormGroup;
+  memberForm: FormGroup;
 
   constructor() {
-    this.memberFormGroup = this.formBuilder.group({
+    this.memberForm = this.formBuilder.group({
       basicInfo: this.formBuilder.group({
         firstname: ['', Validators.required],
         middlename: ['', Validators.required],
@@ -83,7 +83,7 @@ export class MemberRegistrationFormComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.memberFormGroup.valid) {
+    if (this.memberForm.valid) {
       const { firstname, middlename, lastname, gender } = this.basicInfo.value;
 
       const { dateOfBirth, birthPlace } = this.birthDetails.value;
@@ -107,23 +107,23 @@ export class MemberRegistrationFormComponent implements OnInit {
       console.log('Submitting family data:', formData);
       // TODO: submit to backend
     } else {
-      this.memberFormGroup.markAllAsTouched();
+      this.memberForm.markAllAsTouched();
     }
   }
 
   get basicInfo() {
-    return this.memberFormGroup.get('basicInfo') as FormGroup;
+    return this.memberForm.get('basicInfo') as FormGroup;
   }
 
   get birthDetails() {
-    return this.memberFormGroup.get('birthDetails') as FormGroup;
+    return this.memberForm.get('birthDetails') as FormGroup;
   }
 
   get governmentId() {
-    return this.memberFormGroup.get('governmentId') as FormGroup;
+    return this.memberForm.get('governmentId') as FormGroup;
   }
 
   get contactInfo() {
-    return this.memberFormGroup.get('contactInfo') as FormGroup;
+    return this.memberForm.get('contactInfo') as FormGroup;
   }
 }

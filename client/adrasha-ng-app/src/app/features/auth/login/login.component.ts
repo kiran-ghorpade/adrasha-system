@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router, RouterModule } from '@angular/router';
-import { AuthenticationManagementService } from '@core/api/auth-service/authentication-management/authentication-management.service';
+import { AuthenticationService } from '@core/api/authentication/authentication.service';
 
 interface LoginData {
   username: string;
@@ -41,7 +41,7 @@ export class LoginComponent {
   isLoading = false;
   isError = false;
 
-  constructor(private authservice: AuthenticationManagementService) {}
+  constructor(private authservice: AuthenticationService) {}
 
   onSubmit() {
     if (this.form.valid) {

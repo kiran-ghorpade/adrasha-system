@@ -44,7 +44,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/masterdata/ncd")
 @SecurityRequirement(name = "BearerAuthentication")
-@Tag(name = "NonCommunicableDisease Management")
+@Tag(name = "NCD")
 @ApiResponses({
 	@ApiResponse(responseCode = "401", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),	
 	@ApiResponse(responseCode = "403", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))

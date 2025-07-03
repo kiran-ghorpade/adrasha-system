@@ -44,7 +44,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/masterdata/healthCenters")
 @SecurityRequirement(name = "BearerAuthentication")
-@Tag(name = "Health Center Management")
+@Tag(name = "HealthCenter")
 @ApiResponses({
 	@ApiResponse(responseCode = "401", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),	
 	@ApiResponse(responseCode = "403", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))

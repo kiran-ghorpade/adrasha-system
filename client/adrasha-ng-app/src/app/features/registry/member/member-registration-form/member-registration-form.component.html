@@ -8,14 +8,13 @@
         <mat-form-field appearance="fill">
           <mat-label>First Name</mat-label>
           <input matInput formControlName="firstname" required />
-          <mat-error
-            *ngIf="
-              basicInfo.controls.firstname.invalid &&
-              basicInfo.controls.firstname.touched
-            "
+          <app-validation-error
+            [control]="this.memberForm.get('firstname')"
+            [minLength]="3"
+            [maxLength]="50"
           >
             First name is required
-          </mat-error>
+          </app-validation-error>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
@@ -159,7 +158,7 @@
         <button
           mat-button
           (click)="onSubmit()"
-          [disabled]="memberFormGroup.invalid"
+          [disabled]="memberForm.invalid"
         >
           Submit
         </button>

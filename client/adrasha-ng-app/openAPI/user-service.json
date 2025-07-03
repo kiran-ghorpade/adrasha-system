@@ -18,7 +18,7 @@
     "/users/{id}": {
       "get": {
         "tags": [
-          "User Management"
+          "User"
         ],
         "operationId": "getUser",
         "parameters": [
@@ -82,7 +82,7 @@
       },
       "put": {
         "tags": [
-          "User Management"
+          "User"
         ],
         "operationId": "udpatedUser",
         "parameters": [
@@ -165,7 +165,7 @@
       },
       "delete": {
         "tags": [
-          "User Management"
+          "User"
         ],
         "operationId": "deleteUser",
         "parameters": [
@@ -224,7 +224,7 @@
     "/roleRequests/{id}": {
       "get": {
         "tags": [
-          "RoleRequest Management"
+          "RoleRequest"
         ],
         "operationId": "getRoleRequest",
         "parameters": [
@@ -288,7 +288,7 @@
       },
       "put": {
         "tags": [
-          "RoleRequest Management"
+          "RoleRequest"
         ],
         "operationId": "updateRoleRequest",
         "parameters": [
@@ -373,7 +373,7 @@
       },
       "delete": {
         "tags": [
-          "RoleRequest Management"
+          "RoleRequest"
         ],
         "operationId": "deleteRoleRequest",
         "parameters": [
@@ -432,7 +432,7 @@
     "/roleRequests/reject/{id}": {
       "put": {
         "tags": [
-          "RoleRequest Management"
+          "RoleRequest"
         ],
         "operationId": "rejectUserRequest",
         "parameters": [
@@ -491,7 +491,7 @@
     "/roleRequests/approve/{id}": {
       "put": {
         "tags": [
-          "RoleRequest Management"
+          "RoleRequest"
         ],
         "operationId": "approveUserRequest",
         "parameters": [
@@ -550,7 +550,7 @@
     "/roleRequests": {
       "get": {
         "tags": [
-          "RoleRequest Management"
+          "RoleRequest"
         ],
         "operationId": "getAllRoleRequests",
         "parameters": [
@@ -621,7 +621,7 @@
       },
       "post": {
         "tags": [
-          "RoleRequest Management"
+          "RoleRequest"
         ],
         "operationId": "createRoleRequest",
         "requestBody": {
@@ -696,7 +696,7 @@
     "/users": {
       "get": {
         "tags": [
-          "User Management"
+          "User"
         ],
         "operationId": "getAllUsers",
         "parameters": [
@@ -769,7 +769,7 @@
     "/users/me": {
       "get": {
         "tags": [
-          "User Management"
+          "User"
         ],
         "operationId": "getCurrentUser",
         "responses": {
@@ -824,7 +824,7 @@
     "/users/count": {
       "get": {
         "tags": [
-          "User Management"
+          "User"
         ],
         "operationId": "getTotalUsers",
         "parameters": [
@@ -889,7 +889,7 @@
     "/roleRequests/me": {
       "get": {
         "tags": [
-          "RoleRequest Management"
+          "RoleRequest"
         ],
         "operationId": "getCurrentUserRoleRequest",
         "responses": {
@@ -944,7 +944,7 @@
     "/roleRequests/count": {
       "get": {
         "tags": [
-          "RoleRequest Management"
+          "RoleRequest"
         ],
         "operationId": "getTotalRoleRequests",
         "parameters": [
@@ -1009,7 +1009,7 @@
     "/users/{id}/roles/{role}": {
       "delete": {
         "tags": [
-          "User Management"
+          "User"
         ],
         "operationId": "removeRole",
         "parameters": [

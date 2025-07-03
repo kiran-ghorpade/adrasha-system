@@ -18,7 +18,7 @@
     "/masterdata/ncd/{id}": {
       "get": {
         "tags": [
-          "NonCommunicableDisease Management"
+          "NCD"
         ],
         "operationId": "getNCD",
         "parameters": [
@@ -82,7 +82,7 @@
       },
       "put": {
         "tags": [
-          "NonCommunicableDisease Management"
+          "NCD"
         ],
         "operationId": "updateNCD",
         "parameters": [
@@ -166,7 +166,7 @@
       },
       "delete": {
         "tags": [
-          "NonCommunicableDisease Management"
+          "NCD"
         ],
         "operationId": "deleteNCD",
         "parameters": [
@@ -225,7 +225,7 @@
     "/masterdata/locations/{id}": {
       "get": {
         "tags": [
-          "Location Management"
+          "Location"
         ],
         "operationId": "getLocation",
         "parameters": [
@@ -289,7 +289,7 @@
       },
       "put": {
         "tags": [
-          "Location Management"
+          "Location"
         ],
         "operationId": "updateLocation",
         "parameters": [
@@ -373,7 +373,7 @@
       },
       "delete": {
         "tags": [
-          "Location Management"
+          "Location"
         ],
         "operationId": "deleteLocation",
         "parameters": [
@@ -432,7 +432,7 @@
     "/masterdata/healthCenters/{id}": {
       "get": {
         "tags": [
-          "Health Center Management"
+          "HealthCenter"
         ],
         "operationId": "getHealthCenter",
         "parameters": [
@@ -496,7 +496,7 @@
       },
       "put": {
         "tags": [
-          "Health Center Management"
+          "HealthCenter"
         ],
         "operationId": "updateHealthCenter",
         "parameters": [
@@ -580,7 +580,7 @@
       },
       "delete": {
         "tags": [
-          "Health Center Management"
+          "HealthCenter"
         ],
         "operationId": "deleteHealthCenter",
         "parameters": [
@@ -639,7 +639,7 @@
     "/masterdata/ncd": {
       "get": {
         "tags": [
-          "NonCommunicableDisease Management"
+          "NCD"
         ],
         "operationId": "getAllNCD",
         "parameters": [
@@ -710,7 +710,7 @@
       },
       "post": {
         "tags": [
-          "NonCommunicableDisease Management"
+          "NCD"
         ],
         "operationId": "createNCD",
         "requestBody": {
@@ -785,7 +785,7 @@
     "/masterdata/locations": {
       "get": {
         "tags": [
-          "Location Management"
+          "Location"
         ],
         "operationId": "getAllLocations",
         "parameters": [
@@ -856,7 +856,7 @@
       },
       "post": {
         "tags": [
-          "Location Management"
+          "Location"
         ],
         "operationId": "createLocation",
         "requestBody": {
@@ -931,7 +931,7 @@
     "/masterdata/healthCenters": {
       "get": {
         "tags": [
-          "Health Center Management"
+          "HealthCenter"
         ],
         "operationId": "getAllHealthCenters",
         "parameters": [
@@ -1002,7 +1002,7 @@
       },
       "post": {
         "tags": [
-          "Health Center Management"
+          "HealthCenter"
         ],
         "operationId": "createHealthCenter",
         "requestBody": {
@@ -1077,7 +1077,7 @@
     "/masterdata/roles": {
       "get": {
         "tags": [
-          "Static Data"
+          "StaticData"
         ],
         "operationId": "getRoles",
         "responses": {
@@ -1105,7 +1105,7 @@
     "/masterdata/request-statuses": {
       "get": {
         "tags": [
-          "Static Data"
+          "StaticData"
         ],
         "operationId": "getRequestStatus",
         "responses": {
@@ -1133,7 +1133,7 @@
     "/masterdata/poverty-statuses": {
       "get": {
         "tags": [
-          "Static Data"
+          "StaticData"
         ],
         "operationId": "getPovertyStatuses",
         "responses": {
@@ -1161,7 +1161,7 @@
     "/masterdata/ncd/count": {
       "get": {
         "tags": [
-          "NonCommunicableDisease Management"
+          "NCD"
         ],
         "operationId": "getCount",
         "parameters": [
@@ -1226,7 +1226,7 @@
     "/masterdata/locations/count": {
       "get": {
         "tags": [
-          "Location Management"
+          "Location"
         ],
         "operationId": "getTotalCount",
         "parameters": [
@@ -1291,7 +1291,7 @@
     "/masterdata/location-types": {
       "get": {
         "tags": [
-          "Static Data"
+          "StaticData"
         ],
         "operationId": "getLocationTypes",
         "responses": {
@@ -1319,7 +1319,7 @@
     "/masterdata/healthCenters/count": {
       "get": {
         "tags": [
-          "Health Center Management"
+          "HealthCenter"
         ],
         "operationId": "getTotalCount_1",
         "parameters": [
@@ -1384,7 +1384,7 @@
     "/masterdata/health-center-types": {
       "get": {
         "tags": [
-          "Static Data"
+          "StaticData"
         ],
         "operationId": "getHealthCenterTypes",
         "responses": {
@@ -1412,7 +1412,7 @@
     "/masterdata/genders": {
       "get": {
         "tags": [
-          "Static Data"
+          "StaticData"
         ],
         "operationId": "getGenders",
         "responses": {
@@ -1440,7 +1440,7 @@
     "/masterdata/age-groups": {
       "get": {
         "tags": [
-          "Static Data"
+          "StaticData"
         ],
         "operationId": "getAgeGroups",
         "responses": {

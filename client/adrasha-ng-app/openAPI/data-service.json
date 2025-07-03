@@ -18,7 +18,7 @@
     "/data/members/{id}": {
       "get": {
         "tags": [
-          "Member Management"
+          "MemberData"
         ],
         "operationId": "getMember",
         "parameters": [
@@ -82,7 +82,7 @@
       },
       "put": {
         "tags": [
-          "Member Management"
+          "MemberData"
         ],
         "operationId": "udpateMember",
         "parameters": [
@@ -166,7 +166,7 @@
       },
       "delete": {
         "tags": [
-          "Member Management"
+          "MemberData"
         ],
         "operationId": "deleteMember",
         "parameters": [
@@ -225,7 +225,7 @@
     "/data/healthRecords/{id}": {
       "get": {
         "tags": [
-          "Health Management"
+          "HealthRecord"
         ],
         "operationId": "getHealthRecord",
         "parameters": [
@@ -289,7 +289,7 @@
       },
       "put": {
         "tags": [
-          "Health Management"
+          "HealthRecord"
         ],
         "operationId": "updateHealthRecord",
         "parameters": [
@@ -373,7 +373,7 @@
       },
       "delete": {
         "tags": [
-          "Health Management"
+          "HealthRecord"
         ],
         "operationId": "deleteHealthRecord",
         "parameters": [
@@ -432,7 +432,7 @@
     "/data/families/{id}": {
       "get": {
         "tags": [
-          "Family Management"
+          "FamilyData"
         ],
         "operationId": "getFamily",
         "parameters": [
@@ -496,7 +496,7 @@
       },
       "put": {
         "tags": [
-          "Family Management"
+          "FamilyData"
         ],
         "operationId": "updateFamily",
         "parameters": [
@@ -580,7 +580,7 @@
       },
       "delete": {
         "tags": [
-          "Family Management"
+          "FamilyData"
         ],
         "operationId": "deleteFamily",
         "parameters": [
@@ -639,7 +639,7 @@
     "/data/members": {
       "get": {
         "tags": [
-          "Member Management"
+          "MemberData"
         ],
         "operationId": "getAllMembers",
         "parameters": [
@@ -710,7 +710,7 @@
       },
       "post": {
         "tags": [
-          "Member Management"
+          "MemberData"
         ],
         "operationId": "createMember",
         "requestBody": {
@@ -785,7 +785,7 @@
     "/data/healthRecords": {
       "get": {
         "tags": [
-          "Health Management"
+          "HealthRecord"
         ],
         "operationId": "getAllHealthRecords",
         "parameters": [
@@ -856,7 +856,7 @@
       },
       "post": {
         "tags": [
-          "Health Management"
+          "HealthRecord"
         ],
         "operationId": "createHealth",
         "requestBody": {
@@ -931,7 +931,7 @@
     "/data/families": {
       "get": {
         "tags": [
-          "Family Management"
+          "FamilyData"
         ],
         "operationId": "getAllFamilies",
         "parameters": [
@@ -1002,7 +1002,7 @@
       },
       "post": {
         "tags": [
-          "Family Management"
+          "FamilyData"
         ],
         "operationId": "createFamily",
         "requestBody": {
@@ -1077,7 +1077,7 @@
     "/data/members/count": {
       "get": {
         "tags": [
-          "Member Management"
+          "MemberData"
         ],
         "operationId": "getTotalCount",
         "parameters": [
@@ -1142,7 +1142,7 @@
     "/data/healthRecords/count": {
       "get": {
         "tags": [
-          "Health Management"
+          "HealthRecord"
         ],
         "operationId": "getTotalCount_1",
         "parameters": [
@@ -1207,7 +1207,7 @@
     "/data/families/count": {
       "get": {
         "tags": [
-          "Family Management"
+          "FamilyData"
         ],
         "operationId": "getTotalCount_2",
         "parameters": [

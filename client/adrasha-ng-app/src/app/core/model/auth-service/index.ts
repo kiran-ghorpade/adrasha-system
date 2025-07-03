@@ -6,6 +6,8 @@
  */
 
 export * from './apiError';
+export * from './authTokenResponse';
+export * from './errorResponse';
 export * from './jwtUser';
 export * from './jwtUserRolesItem';
 export * from './jwtUserStatus';
@@ -15,4 +17,5 @@ export * from './registrationRequest';
 export * from './roleUpdateDTO';
 export * from './roleUpdateDTORole';
 export * from './userDTO';
+export * from './userDTOStatus';
 export * from './validationErrorResponse';

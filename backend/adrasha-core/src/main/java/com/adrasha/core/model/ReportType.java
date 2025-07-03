@@ -1,5 +1,8 @@
 package com.adrasha.core.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema
 public enum ReportType {
 	
 	AGE_WISE_REPORT("Age Wise Report"),

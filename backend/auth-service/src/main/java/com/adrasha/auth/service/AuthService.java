@@ -9,13 +9,14 @@ import com.adrasha.auth.dto.RegistrationRequest;
 import com.adrasha.auth.dto.UserDTO;
 import com.adrasha.auth.dto.core.JwtUser;
 import com.adrasha.auth.exception.UserAlreadyExistsException;
+import com.adrasha.auth.exception.UserNotFoundException;
 
 public interface AuthService {
 
 	UserDTO register(RegistrationRequest registrationRequest)
 			throws UserAlreadyExistsException;
 			
-	AuthTokenResponse login(LoginRequest loginRequest);
+	AuthTokenResponse login(LoginRequest loginRequest) throws UserNotFoundException;
 
 	UserDTO resetPassword(JwtUser jwtUser, PasswordResetRequest passwordResetRequest);
 

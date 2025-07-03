@@ -51,7 +51,7 @@ public class AuthServiceImpl implements AuthService {
 		Optional<User> existingUser = userRepository.findByUsername(registrationRequest.getUsername());
 
 		if (existingUser.isPresent()) {
-			throw new UserAlreadyExistsException("User Already Exists");
+			throw new UserAlreadyExistsException("error.auth.user.alreadyExists");
 		}
 
 		String hashedPassword = passwordEncoder.encode(registrationRequest.getPassword());
@@ -95,11 +95,11 @@ public class AuthServiceImpl implements AuthService {
 		User user = getUserByUsername(jwtUser.getUsername());
 
 		if (!passwordEncoder.matches(passwordResetRequest.getOldPassword(), user.getPassword())) {
-			throw new BadCredentialsException("Old Password Not Matched.");
+			throw new BadCredentialsException("error.auth.mismatchPassword");
 		}
 
 		if (passwordEncoder.matches(passwordResetRequest.getNewPassword(), user.getPassword())) {
-			throw new IllegalArgumentException("New password must be different from the current password.");
+			throw new IllegalArgumentException("error.auth.samePassword");
 		}
 
 		String hashedPassword = passwordEncoder.encode(passwordResetRequest.getNewPassword());
@@ -113,12 +113,12 @@ public class AuthServiceImpl implements AuthService {
 	public User getUserByUsername(String username) {
 		
 		return userRepository.findByUsername(username)
-				.orElseThrow(() -> new BadCredentialsException("User Not Registered"));
+				.orElseThrow(() -> new BadCredentialsException("error.auth.notRegistered"));
 	}
 	
 	public User getUserById(UUID id) {
 		return userRepository.findById(id)
-				.orElseThrow(() -> new UserNotFoundException("User Not Found"));
+				.orElseThrow(() -> new UserNotFoundException("error.auth.notFound"));
 	}
 
 	@Override

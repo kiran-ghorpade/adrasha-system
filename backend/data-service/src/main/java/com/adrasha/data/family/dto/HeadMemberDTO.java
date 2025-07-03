@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import com.adrasha.core.model.Gender;
 import com.adrasha.core.model.Name;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
@@ -15,6 +16,7 @@ import lombok.Data;
 
 @Data
 @Builder
+@Schema
 public class HeadMemberDTO {
 
 	private Name name;

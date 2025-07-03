@@ -45,7 +45,7 @@ public class HealthCenterServiceImpl implements HealthCenterService {
 	@Override
 	public HealthCenter get(UUID id) throws NotFoundException {
 		return healthCenterRepository.findById(id)
-				.orElseThrow(() -> new NotFoundException("HealthCenter Not Found with id : " + id));
+				.orElseThrow(() -> new NotFoundException("error.healthCenter.notFound"));
 	}
 
 	@Override
@@ -54,11 +54,11 @@ public class HealthCenterServiceImpl implements HealthCenterService {
 		
 		//checks if location exists
 		if(!locationRepository.existsById(entity.getLocationId())) {
-			throw new NotFoundException("Location Not Found with Id : "+ entity.getLocationId());
+			throw new NotFoundException("error.location.notFound");
 		}
 
 		if(healthCenterRepository.existsByName(entity.getName())) {
-			throw new AlreadyExistsException("HealthCenter with name : " + entity.getName() + " already present");
+			throw new AlreadyExistsException("error.healthCenter.notFound");
 		}
 
 		return healthCenterRepository.save(entity);
@@ -69,7 +69,7 @@ public class HealthCenterServiceImpl implements HealthCenterService {
 	public HealthCenter update(UUID id, HealthCenter updatedEntity) throws NotFoundException {
 		//checks if location exists
 		if(!locationRepository.existsById(updatedEntity.getLocationId())) {
-			throw new NotFoundException("Location Not Found with Id : "+ updatedEntity.getLocationId());
+			throw new NotFoundException("error.location.notFound");
 		}
 		
 		HealthCenter entity = get(id);

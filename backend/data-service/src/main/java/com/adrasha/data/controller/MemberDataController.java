@@ -23,8 +23,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.adrasha.core.dto.ErrorResponse;
 import com.adrasha.core.dto.ExampleMatcherUtils;
+import com.adrasha.core.dto.ValidationErrorResponse;
 import com.adrasha.core.filter.dto.MemberDataFilterDTO;
+import com.adrasha.core.page.dto.MemberDataPageResponseDTO;
 import com.adrasha.core.response.dto.MemberDataResponseDTO;
 import com.adrasha.data.member.dto.MemberCreateDTO;
 import com.adrasha.data.member.dto.MemberUpdateDTO;
@@ -33,6 +36,10 @@ import com.adrasha.data.model.Member;
 import com.adrasha.data.service.FamilyDataService;
 import com.adrasha.data.service.MemberDataService;
 
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -41,6 +48,10 @@ import jakarta.validation.Valid;
 @RequestMapping("/data/members")
 @SecurityRequirement(name = "BearerAuthentication")
 @Tag(name = "Member Management")
+@ApiResponses({
+	@ApiResponse(responseCode = "401", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),	
+	@ApiResponse(responseCode = "403", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+})
 @PreAuthorize("hasAnyRole('ASHA','SYSTEM')")
 public class MemberDataController {
 	
@@ -54,6 +65,8 @@ public class MemberDataController {
 	private ModelMapper mapper;
 
 	@GetMapping
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = MemberDataPageResponseDTO.class)))
+	@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
 	public Page<MemberDataResponseDTO> getAllMembers(
 			MemberDataFilterDTO filterDTO,
 		    @PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.DESC)
@@ -72,6 +85,8 @@ public class MemberDataController {
 	}
 	
 	@GetMapping("/count")
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Map.class)))
+	@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
 	public Map<String, Long> getTotalCount(MemberDataFilterDTO filterDTO) {
 		Member filter = mapper.map(filterDTO, Member.class);
 
@@ -82,6 +97,8 @@ public class MemberDataController {
 	}
 	
 	@GetMapping("/{id}")
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = MemberDataResponseDTO.class)))
+	@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 	public MemberDataResponseDTO getMember(@PathVariable UUID id){
 		
 		Member member = memberService.getMember(id);
@@ -89,6 +106,9 @@ public class MemberDataController {
 	}
 	
 	@PostMapping
+	@ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = MemberDataResponseDTO.class)))
+	@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
+	@ApiResponse(responseCode = "409", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 	public ResponseEntity<MemberDataResponseDTO> createMember(@Valid @RequestBody MemberCreateDTO memberDTO){
 		
 		Family family = familyService.getFamily(memberDTO.getFamilyId());
@@ -107,6 +127,9 @@ public class MemberDataController {
 	}
 
 	@PutMapping("/{id}")
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = MemberDataResponseDTO.class)))
+	@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
+	@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 	public MemberDataResponseDTO udpateMember(
 			@PathVariable UUID id,
 			@Valid @RequestBody MemberUpdateDTO updatedMember
@@ -121,6 +144,8 @@ public class MemberDataController {
 	}
 	
 	@DeleteMapping("/{id}")
+	@ApiResponse(responseCode = "204", content = @Content())
+	@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 	public ResponseEntity<Void> deleteMember(@PathVariable UUID id){
 		
 		memberService.deleteMember(id);

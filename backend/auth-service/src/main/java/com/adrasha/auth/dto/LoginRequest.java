@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
+@Schema
 public class LoginRequest {
 	
 	@Schema(example = "admin")

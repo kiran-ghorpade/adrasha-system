@@ -26,7 +26,7 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public UserDTO addRole(UUID userId, Role role) {
 		User user = userRepository.findById(userId)
-				.orElseThrow(() -> new UserNotFoundException("User Not Found"));
+				.orElseThrow(() -> new UserNotFoundException("error.auth.user.notFound"));
 		
 		Set<Role> updatedRoles = user.getRoles();
 		updatedRoles.add(role);
@@ -39,7 +39,7 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public UserDTO removeRole(UUID userId, Role role) {
 		User user = userRepository.findById(userId)
-				.orElseThrow(() -> new UserNotFoundException("User Not Found"));
+				.orElseThrow(() -> new UserNotFoundException("error.auth.user.notFound"));
 		
 		Set<Role> updatedRoles = user.getRoles();
 		updatedRoles.remove(role);

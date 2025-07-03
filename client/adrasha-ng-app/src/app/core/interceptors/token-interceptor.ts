@@ -3,21 +3,10 @@ import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { TokenService } from '@core/services';
 import { catchError, tap, throwError } from 'rxjs';
-import { BASE_URL, hasHttpScheme } from './base-url-interceptor';
 
 export function tokenInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) {
   const router = inject(Router);
-  const baseUrl = inject(BASE_URL, { optional: true });
   const tokenService = inject(TokenService);
-
-  const includeBaseUrl = (url: string) => {
-    if (!baseUrl) {
-      return false;
-    }
-    return new RegExp(`^${baseUrl.replace(/\/$/, '')}`, 'i').test(url);
-  };
-
-  const shouldAppendToken = (url: string) => !hasHttpScheme(url) || includeBaseUrl(url);
 
   const handler = () => {
     if (req.url.includes('/auth/logout')) {
@@ -29,7 +18,7 @@ export function tokenInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn)
     }
   };
 
-  if (tokenService.valid() && shouldAppendToken(req.url)) {
+  if (tokenService.valid()) {
     return next(
       req.clone({
         headers: req.headers.append('Authorization', tokenService.getBearerToken()),

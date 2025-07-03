@@ -7,6 +7,7 @@ import java.util.UUID;
 import com.adrasha.core.model.Name;
 import com.adrasha.core.model.Role;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Schema
 public class UserResponseDTO {
 	
 	private UUID id;

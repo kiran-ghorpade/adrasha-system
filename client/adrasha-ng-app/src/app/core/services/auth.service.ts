@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
+import { JwtUser } from '@core/model/auth-service';
 // import { SIDEBAR_MENUS } from '@core/constants';
-import { User } from '@core/models';
 import { LoginService, TokenService } from '@core/services';
 import { isEmptyObject } from '@core/utils';
 import { BehaviorSubject, iif, map, merge, of, share, switchMap, tap } from 'rxjs';
@@ -12,7 +12,7 @@ export class AuthService {
   private readonly loginService = inject(LoginService);
   private readonly tokenService = inject(TokenService);
 
-  private user$ = new BehaviorSubject<User>({});
+  private user$ = new BehaviorSubject<login>({});
   private change$ = merge(
     this.tokenService.change()
   ).pipe(

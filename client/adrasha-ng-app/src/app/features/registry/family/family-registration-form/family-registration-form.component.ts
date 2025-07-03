@@ -12,11 +12,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { StaticDataService } from '@core/api/masterdata-service/static-data/static-data.service';
+
+import { StaticDataService } from '@core/api/static-data/static-data.service';
 import {
-  FamilyCreateDTO,
-  FamilyRegistrationDTO,
-  HeadMemberDTO,
+  FamilyRegistrationDTO
 } from '@core/model/data-service';
 import { StaticDataDTO } from '@core/model/masterdata-service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
@@ -73,12 +72,16 @@ export class FamilyRegistrationFormComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.masterDataService.getPovertyStatuses().subscribe((list) => {
-      this.povertyStatusList.set(list);
-    });
-    this.masterDataService.getGenders().subscribe((genders) => {
-      this.genderList.set(genders);
-    });
+    this.masterDataService
+      .getPovertyStatuses()
+      .subscribe((list) => {
+        this.povertyStatusList.set(list);
+      });
+    this.masterDataService
+      .getGenders()
+      .subscribe((genders) => {
+        this.genderList.set(genders);
+      });
   }
 
   onSubmit() {
@@ -115,7 +118,7 @@ export class FamilyRegistrationFormComponent implements OnInit {
           mobileNumber,
         },
       };
-      
+
       console.log('Submitting family data:', formData);
       // TODO: send data to backend here
     } else {

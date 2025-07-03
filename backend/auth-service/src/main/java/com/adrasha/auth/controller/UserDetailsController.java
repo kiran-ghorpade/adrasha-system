@@ -17,9 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.adrasha.auth.config.AdminInitializer;
 import com.adrasha.auth.dto.PasswordResetRequest;
 import com.adrasha.auth.dto.UserDTO;
+import com.adrasha.auth.dto.core.ErrorResponse;
 import com.adrasha.auth.dto.core.JwtUser;
+import com.adrasha.auth.dto.core.ValidationErrorResponse;
 import com.adrasha.auth.service.AuthService;
 
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -27,6 +33,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/auth")
 @SecurityRequirement(name = "BearerAuthentication")
 @Tag(name = "UserDetails Management")
+@ApiResponses({
+	@ApiResponse(responseCode = "401", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),	
+	@ApiResponse(responseCode = "403", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+})
 @PreAuthorize("hasAnyRole('USER')")
 public class UserDetailsController {
 
@@ -42,6 +52,9 @@ public class UserDetailsController {
     }
 
 	@PostMapping("/resetPassword")
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = UserDTO.class)))
+	@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
+	@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 	public UserDTO resetPassword(Authentication authentication, @RequestBody PasswordResetRequest passwordResetRequest) {
 
 		JwtUser user = (JwtUser) authentication.getPrincipal();
@@ -55,6 +68,8 @@ public class UserDetailsController {
 	
 
 	@DeleteMapping("/users/me")
+	@ApiResponse(responseCode = "204", content = @Content())
+	@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 	@PreAuthorize("#id.toString() == authentication.principal.toString() and hasAnyRole('USER')")
 	public ResponseEntity<Void> deleteCurrentUser(Authentication authentication) {
 
@@ -65,6 +80,8 @@ public class UserDetailsController {
 	}
 
 	@DeleteMapping("/users/{id}")
+	@ApiResponse(responseCode = "204", content = @Content())
+	@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 	@PreAuthorize("hasAnyRole('ADMIN','SYSTEM')")
 	public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
 

@@ -23,7 +23,7 @@ public class RemoteDataService {
 		boolean status = userClient.getUser(userId).getStatusCode().is2xxSuccessful();
 		
 		if(!status) {
-			throw new NotFoundException("Asha Not Found with id : "+ userId);
+			throw new NotFoundException("error.user.notFound");
 		}
 	
 	}
@@ -32,7 +32,7 @@ public class RemoteDataService {
 		boolean status = locationClient.getLocation(locationId).getStatusCode().is2xxSuccessful();
 		
 		if(!status) {
-			throw new NotFoundException("Location Not Found with id : "+ locationId);
+			throw new NotFoundException("error.location.notFound");
 		}
 	}
 }

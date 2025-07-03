@@ -20,6 +20,7 @@ import com.adrasha.masterdata.dto.StaticDataDTO;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+
 @RestController
 @RequestMapping("/masterdata")
 @SecurityRequirement(name = "BearerAuthentication")

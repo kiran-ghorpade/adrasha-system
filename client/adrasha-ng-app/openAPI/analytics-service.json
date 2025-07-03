@@ -27,7 +27,27 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserStats"
+                  "$ref": "#/components/schemas/FamilyPageResponseDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -52,7 +72,27 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/MemberStats"
+                  "$ref": "#/components/schemas/FamilyPageResponseDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -77,7 +117,27 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/MasterdataStats"
+                  "$ref": "#/components/schemas/FamilyPageResponseDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -102,7 +162,27 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/FamilyStats"
+                  "$ref": "#/components/schemas/FamilyPageResponseDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -118,79 +198,150 @@
   },
   "components": {
     "schemas": {
-      "UserStats": {
+      "ErrorResponse": {
         "type": "object",
         "properties": {
-          "totalUsers": {
-            "type": "integer",
-            "format": "int64"
+          "success": {
+            "type": "boolean"
           },
-          "roleDistribution": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "integer",
-              "format": "int64"
-            }
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
-      "MemberStats": {
+      "FamilyDataResponseDTO": {
         "type": "object",
         "properties": {
-          "totalMembers": {
-            "type": "integer",
-            "format": "int64"
+          "id": {
+            "type": "string",
+            "format": "uuid"
           },
-          "averageMembersPerFamily": {
-            "type": "number",
-            "format": "double"
+          "headMemberId": {
+            "type": "string",
+            "format": "uuid"
           },
-          "genderDistribution": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "integer",
-              "format": "int64"
-            }
+          "locationId": {
+            "type": "string",
+            "format": "uuid"
           },
-          "ageDistribution": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "integer",
-              "format": "int64"
-            }
+          "ashaId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "povertyStatus": {
+            "type": "string",
+            "enum": [
+              "APL",
+              "BPL"
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
-      "MasterdataStats": {
+      "FamilyPageResponseDTO": {
         "type": "object",
         "properties": {
-          "totalLocations": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FamilyDataResponseDTO"
+            }
+          },
+          "pageable": {
+            "$ref": "#/components/schemas/PageableObject"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
             "type": "integer",
             "format": "int64"
           },
-          "totalHealthCenters": {
-            "type": "integer",
-            "format": "int64"
+          "last": {
+            "type": "boolean"
           },
-          "totalNCD": {
+          "first": {
+            "type": "boolean"
+          },
+          "size": {
             "type": "integer",
-            "format": "int64"
+            "format": "int32"
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sort": {
+            "$ref": "#/components/schemas/SortObject"
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "empty": {
+            "type": "boolean"
           }
         }
       },
-      "FamilyStats": {
+      "PageableObject": {
         "type": "object",
         "properties": {
-          "totalFamilies": {
+          "paged": {
+            "type": "boolean"
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unpaged": {
+            "type": "boolean"
+          },
+          "offset": {
             "type": "integer",
             "format": "int64"
           },
-          "povertyStats": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "integer",
-              "format": "int64"
-            }
+          "sort": {
+            "$ref": "#/components/schemas/SortObject"
+          }
+        }
+      },
+      "SortObject": {
+        "type": "object",
+        "properties": {
+          "sorted": {
+            "type": "boolean"
+          },
+          "unsorted": {
+            "type": "boolean"
+          },
+          "empty": {
+            "type": "boolean"
           }
         }
       }

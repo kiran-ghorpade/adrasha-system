@@ -42,18 +42,18 @@ public class MemberServiceImpl implements MemberDataService {
 	public Member getMember(UUID memberId) {
 
 		return memberRepository.findById(memberId)
-				.orElseThrow(() -> new NotFoundException("Member Not Found with id : " + memberId));
+				.orElseThrow(() -> new NotFoundException("error.member.notFound"));
 	}
 
 	@Override
 	public Member createMember(Member member) {
 		
 		if(!familyRepository.existsById(member.getFamilyId())) {
-			throw new NotFoundException("Family Not Found with id : "+ member.getFamilyId());
+			throw new NotFoundException("error.family.notFound");
 		}
 		
 		if(memberRepository.existsByAdharNumber(member.getAdharNumber())) {
-			throw new AlreadyExistsException("Member with adharId : "+ member.getAdharNumber()+" already present");
+			throw new AlreadyExistsException("error.member.alreadyExists");
 		}
 		
 		return memberRepository.save(member);

@@ -26,12 +26,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.adrasha.core.dto.ErrorResponse;
 import com.adrasha.core.dto.ExampleMatcherUtils;
 import com.adrasha.core.dto.JwtUser;
+import com.adrasha.core.dto.ValidationErrorResponse;
 import com.adrasha.core.exception.UnAuthorizedException;
 import com.adrasha.core.filter.dto.RoleRequestFilterDTO;
 import com.adrasha.core.model.RequestStatus;
 import com.adrasha.core.model.Role;
+import com.adrasha.core.page.dto.RoleRequestPageResponseDTO;
 import com.adrasha.core.response.dto.RoleRequestResponseDTO;
 import com.adrasha.user.dto.roleRequest.RoleRequestCreateDTO;
 import com.adrasha.user.dto.roleRequest.RoleRequestUpdateDTO;
@@ -42,6 +45,10 @@ import com.adrasha.user.service.RoleRequestService;
 import com.adrasha.user.service.UserService;
 
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -50,6 +57,10 @@ import jakarta.validation.Valid;
 @RequestMapping("/roleRequests")
 @SecurityRequirement(name = "BearerAuthentication")
 @Tag(name = "RoleRequest Management")
+@ApiResponses({
+	@ApiResponse(responseCode = "401", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),	
+	@ApiResponse(responseCode = "403", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+})
 @PreAuthorize("hasAnyRole('ADMIN','SYSTEM')")
 public class RoleRequestController {
 	
@@ -66,6 +77,8 @@ public class RoleRequestController {
 		private ModelMapper mapper;
 
 		@GetMapping
+		@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = RoleRequestPageResponseDTO.class)))
+		@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
 		public Page<RoleRequestResponseDTO> getAllRoleRequests(
 				RoleRequestFilterDTO filterDTO,
 			    @PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.DESC)
@@ -84,6 +97,8 @@ public class RoleRequestController {
 		}
 		
 		@GetMapping("/count")
+		@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Map.class)))
+		@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
 		public Map<String, Long> getTotalRoleRequests(RoleRequestFilterDTO filterDTO) {
 			RoleRequest filter = mapper.map(filterDTO, RoleRequest.class);
 
@@ -95,6 +110,8 @@ public class RoleRequestController {
 
 		
 		@GetMapping("/{id}")
+		@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = RoleRequestResponseDTO.class)))
+		@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 		public RoleRequestResponseDTO getRoleRequest(@PathVariable UUID id){
 			
 			RoleRequest request = roleRequestService.getRoleRequest(id);
@@ -103,6 +120,8 @@ public class RoleRequestController {
 		}
 		
 		@GetMapping("/me")
+		@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = RoleRequestResponseDTO.class)))
+		@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 		@PreAuthorize("hasAnyRole('USER', 'SYSTEM')")
 		public RoleRequestResponseDTO getCurrentUserRoleRequest(Authentication authentication) {
 
@@ -120,6 +139,9 @@ public class RoleRequestController {
 		}
 		
 		@PostMapping
+		@ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = RoleRequestResponseDTO.class)))
+		@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
+		@ApiResponse(responseCode = "409", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 		@PreAuthorize("hasRole('USER')")
 		public ResponseEntity<RoleRequestResponseDTO> createRoleRequest(@Valid @RequestBody RoleRequestCreateDTO requestDTO){
 			
@@ -140,6 +162,9 @@ public class RoleRequestController {
 		}
 		
 		@PutMapping("/{id}")
+		@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = RoleRequestResponseDTO.class)))
+		@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
+		@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 		@PreAuthorize("#id.toString() == authentication.principal.toString()")
 		public RoleRequestResponseDTO updateRoleRequest(
 				@Parameter(description = "ID of the user to be updated", required = true) 
@@ -154,6 +179,8 @@ public class RoleRequestController {
 		}
 		
 		@DeleteMapping("/{id}")
+		@ApiResponse(responseCode = "204", content = @Content())
+		@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 		@PreAuthorize("#id.toString() == authentication.principal.toString() or hasAnyRole('ADMIN')")
 		public ResponseEntity<Void> deleteRoleRequest(@PathVariable UUID id){
 			
@@ -163,6 +190,8 @@ public class RoleRequestController {
 		}
 		
 		@PutMapping("/approve/{id}")
+		@ApiResponse(responseCode = "200", content = @Content())
+		@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 		@PreAuthorize("hasRole('ADMIN')")
 		public ResponseEntity<Void> approveUserRequest(@PathVariable UUID id)
 		{
@@ -187,6 +216,8 @@ public class RoleRequestController {
 		}
 		
 		@PutMapping("/reject/{id}")
+		@ApiResponse(responseCode = "200", content = @Content())
+		@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 		@PreAuthorize("hasRole('ADMIN')")
 		public ResponseEntity<Void> rejectUserRequest(@PathVariable UUID id)
 		{

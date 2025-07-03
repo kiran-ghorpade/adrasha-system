@@ -5,9 +5,11 @@ import java.util.UUID;
 
 import com.adrasha.core.model.LocalityType;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
+@Schema
 public class LocationResponseDTO {
 	
 	private UUID id;

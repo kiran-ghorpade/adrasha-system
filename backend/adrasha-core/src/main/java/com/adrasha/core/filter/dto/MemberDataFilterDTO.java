@@ -5,12 +5,14 @@ import java.util.UUID;
 
 import com.adrasha.core.model.Gender;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Builder.Default;
 import lombok.Data;
 
 @Data
 @Builder
+@Schema
 public class MemberDataFilterDTO {
 	private UUID familyId;
 	private UUID ashaId;

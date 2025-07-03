@@ -10,11 +10,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.adrasha.core.dto.ErrorResponse;
 import com.adrasha.core.exception.UnAuthorizedException;
 import com.adrasha.core.response.dto.UserResponseDTO;
 import com.adrasha.user.model.User;
 import com.adrasha.user.service.UserService;
 
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -31,6 +35,10 @@ public class CurrentUserController {
 	private ModelMapper mapper;
 
 	@GetMapping
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = UserResponseDTO.class)))
+	@ApiResponse(responseCode = "401", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+	@ApiResponse(responseCode = "403", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+	@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 	@PreAuthorize("hasAnyRole('USER','SYSTEM')")
 	public UserResponseDTO getCurrentUser(Authentication authentication) {
 

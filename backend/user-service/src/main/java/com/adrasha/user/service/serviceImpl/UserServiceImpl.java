@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 	public User getUser(UUID userId) {
 
 		return userRepository.findById(userId)
-				.orElseThrow(() -> new NotFoundException("User Not Found with id : " + userId));
+				.orElseThrow(() -> new NotFoundException("error.user.notFound"));
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
 		if(userRepository.existsById(user.getUserId())) {
 			
-			throw new AlreadyExistsException("User with id : " + user.getUserId() + " already exist.");
+			throw new AlreadyExistsException("error.user.alreadyExists");
 		}
 
 		return userRepository.save(user);

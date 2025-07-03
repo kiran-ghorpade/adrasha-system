@@ -4,10 +4,11 @@
  * ADRASHA AUTH-SERVICE API Docs
  * OpenAPI spec version: 1.0.0
  */
+import type { UserDTOStatus } from './userDTOStatus';
 
 export interface UserDTO {
   id?: string;
   username?: string;
   roles?: string[];
-  status?: string;
+  status?: UserDTOStatus;
 }

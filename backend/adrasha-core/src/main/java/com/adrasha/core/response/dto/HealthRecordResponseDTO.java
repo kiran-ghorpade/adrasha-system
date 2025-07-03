@@ -4,10 +4,12 @@ import java.time.Instant;
 import java.util.Set;
 import java.util.UUID;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 
 @Data
+@Schema
 public class HealthRecordResponseDTO {
 	
 	private UUID id;

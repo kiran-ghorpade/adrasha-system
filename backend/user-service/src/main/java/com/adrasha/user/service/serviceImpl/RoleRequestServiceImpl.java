@@ -35,7 +35,7 @@ public class RoleRequestServiceImpl implements RoleRequestService {
 	public RoleRequest getRoleRequest(UUID roleRequestId) {
 
 		return requestRepository.findById(roleRequestId)
-				.orElseThrow(() -> new NotFoundException("RoleRequest Not Found with id : " + roleRequestId));
+				.orElseThrow(() -> new NotFoundException("error.roleRequest.notFound"));
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class RoleRequestServiceImpl implements RoleRequestService {
 		Optional<RoleRequest> existingRequest = requestRepository.findByUserId(request.getUserId());
 		
 	  	if(existingRequest.isPresent()) {
-	  		throw new AlreadyExistsException("RoleRequest with user id : "+ request.getUserId()+" already exist.");
+	  		throw new AlreadyExistsException("error.roleRequest.alreadyExists");
 	  	}
 
 		return requestRepository.save(request);
@@ -68,7 +68,7 @@ public class RoleRequestServiceImpl implements RoleRequestService {
 	public RoleRequest getRoleRequestByUserId(UUID userId) throws NotFoundException {
 
 		return requestRepository.findByUserId(userId)
-				.orElseThrow(()-> new NotFoundException("Role request with userid "+ userId +"not found"));
+				.orElseThrow(()-> new NotFoundException("error.roleRequest.notFound"));
 	}
 
 	@Override

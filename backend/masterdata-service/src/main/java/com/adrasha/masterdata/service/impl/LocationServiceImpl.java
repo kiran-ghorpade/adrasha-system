@@ -25,7 +25,7 @@ public class LocationServiceImpl implements LocationService{
 	private LocationRepository locationRepository;
 	
 	@Autowired
-	private ModelMapper mapper;
+	private ModelMapper mapper;	
 
 	@Override
 	public Page<Location> getAll(Example<Location> example, Pageable pageable) {
@@ -41,7 +41,7 @@ public class LocationServiceImpl implements LocationService{
 	@Override
 	public Location get(UUID id) throws NotFoundException {
 		return locationRepository.findById(id)
-				.orElseThrow(() -> new NotFoundException("Location Not Found with id : " + id));
+				.orElseThrow(() -> new NotFoundException("error.location.notFound"));
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class LocationServiceImpl implements LocationService{
 	public Location create(Location entity) throws AlreadyExistsException {
 		
 		if(locationRepository.existsByPincode(entity.getPincode())) {
-			throw new AlreadyExistsException("Location with pincode : "+ entity.getPincode()+" already present");
+			throw new AlreadyExistsException("error.location.alreadyExists");
 		}
 		
 		return locationRepository.save(entity);

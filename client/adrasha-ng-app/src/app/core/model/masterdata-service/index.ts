@@ -5,6 +5,8 @@
  * OpenAPI spec version: 1.0.0
  */
 
+export * from './apiError';
+export * from './errorResponse';
 export * from './getAllHealthCentersParams';
 export * from './getAllLocationsParams';
 export * from './getAllNCDParams';
@@ -18,6 +20,7 @@ export * from './healthCenterCreateDTO';
 export * from './healthCenterCreateDTOCenterType';
 export * from './healthCenterFilterDTO';
 export * from './healthCenterFilterDTOCenterType';
+export * from './healthCenterPageResponseDTO';
 export * from './healthCenterResponseDTO';
 export * from './healthCenterResponseDTOCenterType';
 export * from './healthCenterUpdateDTO';
@@ -26,17 +29,22 @@ export * from './locationCreateDTO';
 export * from './locationCreateDTOType';
 export * from './locationFilterDTO';
 export * from './locationFilterDTOType';
+export * from './locationPageResponseDTO';
 export * from './locationResponseDTO';
 export * from './locationResponseDTOType';
 export * from './locationUpdateDTO';
 export * from './locationUpdateDTOType';
 export * from './nCDCreateDTO';
 export * from './nCDFilterDTO';
+export * from './nCDPageResponseDTO';
 export * from './nCDResponseDTO';
 export * from './nCDUpdateDTO';
 export * from './pageMetadata';
 export * from './pageable';
+export * from './pageableObject';
 export * from './pagedModelHealthCenterResponseDTO';
 export * from './pagedModelLocationResponseDTO';
 export * from './pagedModelNCDResponseDTO';
+export * from './sortObject';
 export * from './staticDataDTO';
+export * from './validationErrorResponse';

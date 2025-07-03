@@ -12,32 +12,29 @@ import com.adrasha.auth.dto.AuthTokenResponse;
 import com.adrasha.auth.dto.LoginRequest;
 import com.adrasha.auth.dto.RegistrationRequest;
 import com.adrasha.auth.dto.UserDTO;
+import com.adrasha.auth.dto.core.ErrorResponse;
 import com.adrasha.auth.dto.core.ValidationErrorResponse;
 import com.adrasha.auth.service.AuthService;
 
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")
-@ApiResponses(value = {
-	    @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ValidationErrorResponse.class))),
-})
 @Tag(name = "Authentication Management")
 public class AuthController {
 
 	@Autowired
 	private AuthService authService;
-	
+
 	@PostMapping("/register")
-	@Operation(summary = "Register New User", description = "Returns a user after registration")
-	public ResponseEntity<UserDTO> registerUser(
-			@RequestBody @Valid RegistrationRequest registrationRequest) {
+	@ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = UserDTO.class)))
+	@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
+	@ApiResponse(responseCode = "409", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+	public ResponseEntity<UserDTO> registerUser(@RequestBody @Valid RegistrationRequest registrationRequest) {
 
 		UserDTO createdUser = authService.register(registrationRequest);
 
@@ -45,12 +42,12 @@ public class AuthController {
 	}
 
 	@PostMapping("/login")
-	@Operation(summary = "Login for user", description = "Returns a user object after successful login")
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = AuthTokenResponse.class)))
+	@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 	public AuthTokenResponse loginUser(@RequestBody @Valid LoginRequest loginRequest) {
 
 		return authService.login(loginRequest);
 
 	}
 
-	
 }

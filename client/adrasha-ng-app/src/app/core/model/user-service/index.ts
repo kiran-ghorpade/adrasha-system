@@ -5,6 +5,8 @@
  * OpenAPI spec version: 1.0.0
  */
 
+export * from './apiError';
+export * from './errorResponse';
 export * from './getAllRoleRequestsParams';
 export * from './getAllUsersParams';
 export * from './getTotalRoleRequests200';
@@ -14,6 +16,7 @@ export * from './getTotalUsersParams';
 export * from './name';
 export * from './pageMetadata';
 export * from './pageable';
+export * from './pageableObject';
 export * from './pagedModelRoleRequestResponseDTO';
 export * from './pagedModelUserResponseDTO';
 export * from './removeRole200';
@@ -22,12 +25,16 @@ export * from './roleRequestCreateDTORole';
 export * from './roleRequestFilterDTO';
 export * from './roleRequestFilterDTORole';
 export * from './roleRequestFilterDTOStatus';
+export * from './roleRequestPageResponseDTO';
 export * from './roleRequestResponseDTO';
 export * from './roleRequestResponseDTORole';
 export * from './roleRequestResponseDTOStatus';
 export * from './roleRequestUpdateDTO';
 export * from './roleRequestUpdateDTORole';
+export * from './sortObject';
 export * from './userFilterDTO';
+export * from './userPageResponseDTO';
 export * from './userResponseDTO';
 export * from './userResponseDTORolesItem';
 export * from './userUpdateDTO';
+export * from './validationErrorResponse';

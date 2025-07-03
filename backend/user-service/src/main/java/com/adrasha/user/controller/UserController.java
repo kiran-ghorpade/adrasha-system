@@ -19,15 +19,22 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.adrasha.core.dto.ErrorResponse;
 import com.adrasha.core.dto.ExampleMatcherUtils;
+import com.adrasha.core.dto.ValidationErrorResponse;
 import com.adrasha.core.filter.dto.UserFilterDTO;
 import com.adrasha.core.model.Role;
+import com.adrasha.core.page.dto.UserPageResponseDTO;
 import com.adrasha.core.response.dto.UserResponseDTO;
 import com.adrasha.user.dto.user.UserUpdateDTO;
 import com.adrasha.user.model.User;
 import com.adrasha.user.service.UserService;
 
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -36,6 +43,10 @@ import jakarta.validation.Valid;
 @RequestMapping("/users")
 @SecurityRequirement(name = "BearerAuthentication")
 @Tag(name = "User Management")
+@ApiResponses({
+	@ApiResponse(responseCode = "401", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),	
+	@ApiResponse(responseCode = "403", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+})
 @PreAuthorize("hasAnyRole('ADMIN', 'SYSTEM')")
 public class UserController {
 	
@@ -46,6 +57,8 @@ public class UserController {
 		private ModelMapper mapper;
 
 		@GetMapping
+		@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = UserPageResponseDTO.class)))
+		@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
 		public Page<UserResponseDTO> getAllUsers(
 				UserFilterDTO filterDTO,
 			    @PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.DESC)
@@ -64,6 +77,8 @@ public class UserController {
 		}
 		
 		@GetMapping("/count")
+		@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Map.class)))
+		@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
 		public Map<String, Long> getTotalUsers(UserFilterDTO filterDTO) {
 			User filter = mapper.map(filterDTO, User.class);
 
@@ -74,6 +89,8 @@ public class UserController {
 		}
 		
 		@GetMapping("/{id}")
+		@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = UserResponseDTO.class)))
+		@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))	
 		@PreAuthorize("hasAnyRole('USER','ADMIN','SYSTEM')")
 		public UserResponseDTO getUser(@PathVariable UUID id){
 			
@@ -83,6 +100,9 @@ public class UserController {
 		}
 	
 		@PutMapping("/{id}")
+		@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = UserResponseDTO.class)))
+		@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
+		@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 		@PreAuthorize("#id.toString() == authentication.principal.toString()")
 		public UserResponseDTO udpatedUser(@PathVariable UUID id, @Valid @RequestBody UserUpdateDTO updatedUser){
 			
@@ -100,6 +120,8 @@ public class UserController {
 //	    }
 
 	    @DeleteMapping("/{id}/roles/{role}")
+		@ApiResponse(responseCode = "204", content = @Content())
+		@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 	    @PreAuthorize("#id.toString() == authentication.principal.toString()")
 	    public ResponseEntity<?> removeRole(@PathVariable UUID id, @PathVariable Role role) {
 	        userService.removeRoleFromUser(id, role);
@@ -107,6 +129,8 @@ public class UserController {
 	    }
 
 		@DeleteMapping("/{id}")
+		@ApiResponse(responseCode = "204", content = @Content())
+		@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 		@PreAuthorize("hasRole('ADMIN')")
 		public ResponseEntity<Void> deleteUser(@PathVariable UUID id){
 			

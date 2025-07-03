@@ -1,7 +1,6 @@
 import { HttpErrorResponse, HttpHandlerFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { catchError, throwError } from 'rxjs';
 
 export enum STATUS {
@@ -13,7 +12,6 @@ export enum STATUS {
 
 export function errorInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) {
   const router = inject(Router);
-  const toast = inject(ToastrService);
   
   const errorPages = [STATUS.FORBIDDEN, STATUS.NOT_FOUND, STATUS.INTERNAL_SERVER_ERROR];
 
@@ -35,7 +33,7 @@ export function errorInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn)
         });
       } else {
         console.error('ERROR', error);
-        toast.error(getMessage(error));
+        alert(getMessage(error));
         if (error.status === STATUS.UNAUTHORIZED) {
           router.navigateByUrl('/auth/login');
         }

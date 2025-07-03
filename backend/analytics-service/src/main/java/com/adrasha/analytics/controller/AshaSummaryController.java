@@ -12,10 +12,16 @@ import com.adrasha.analytics.dto.FamilyStats;
 import com.adrasha.analytics.dto.MemberStats;
 import com.adrasha.analytics.service.FamilyAnalyticsService;
 import com.adrasha.analytics.service.MemberAnalyticsService;
+import com.adrasha.core.dto.ErrorResponse;
 import com.adrasha.core.model.AgeGroup;
 import com.adrasha.core.model.Gender;
 import com.adrasha.core.model.PovertyStatus;
+import com.adrasha.core.page.dto.FamilyPageResponseDTO;
 
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -23,39 +29,36 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/analytics")
 @SecurityRequirement(name = "BearerAuthentication")
 @Tag(name = "Analytics Summary")
+@ApiResponses({
+		@ApiResponse(responseCode = "401", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+		@ApiResponse(responseCode = "403", content = @Content(schema = @Schema(implementation = ErrorResponse.class))) })
 @PreAuthorize("hasRole('ASHA')")
 public class AshaSummaryController {
-	
+
 	@Autowired
 	private MemberAnalyticsService memberAnalyticsService;
-	
+
 	@Autowired
 	private FamilyAnalyticsService familyAnalyticsService;
-	
 
-    @GetMapping("/family/stats")
-    public FamilyStats getFamilyStats() {
-    	long totalMembers = familyAnalyticsService.getTotalFamiliesCountByAsha();
-    	Map<PovertyStatus, Long> povertyStats = familyAnalyticsService.getPovertyStats();
-    	
-		return FamilyStats.builder()
-				.totalFamilies(totalMembers)
-				.povertyStats(povertyStats)
-				.build();
-    }
-    
-    @GetMapping("/member/stats")
-    public MemberStats getMemberStats() {
-    	long totalMembers = memberAnalyticsService.getTotalMembers();
-    	double avgMembers = memberAnalyticsService.getAverageMembersPerFamily();
-    	Map<Gender, Long> genderDistribution = memberAnalyticsService.getGenderDistribution();
-        Map<AgeGroup, Long>  ageDistribution =  memberAnalyticsService.getAgeDistribution();
-    	
-		return MemberStats.builder()
-				.totalMembers(totalMembers)
-				.averageMembersPerFamily(avgMembers)
-				.genderDistribution(genderDistribution)
-				.ageDistribution(ageDistribution)
-				.build();
-    }
+	@GetMapping("/family/stats")
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = FamilyPageResponseDTO.class)))
+	public FamilyStats getFamilyStats() {
+		long totalMembers = familyAnalyticsService.getTotalFamiliesCountByAsha();
+		Map<PovertyStatus, Long> povertyStats = familyAnalyticsService.getPovertyStats();
+
+		return FamilyStats.builder().totalFamilies(totalMembers).povertyStats(povertyStats).build();
+	}
+
+	@GetMapping("/member/stats")
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = FamilyPageResponseDTO.class)))
+	public MemberStats getMemberStats() {
+		long totalMembers = memberAnalyticsService.getTotalMembers();
+		double avgMembers = memberAnalyticsService.getAverageMembersPerFamily();
+		Map<Gender, Long> genderDistribution = memberAnalyticsService.getGenderDistribution();
+		Map<AgeGroup, Long> ageDistribution = memberAnalyticsService.getAgeDistribution();
+
+		return MemberStats.builder().totalMembers(totalMembers).averageMembersPerFamily(avgMembers)
+				.genderDistribution(genderDistribution).ageDistribution(ageDistribution).build();
+	}
 }

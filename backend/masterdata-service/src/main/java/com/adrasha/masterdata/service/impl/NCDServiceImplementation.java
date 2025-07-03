@@ -41,7 +41,7 @@ public class NCDServiceImplementation  implements NCDService{
 	@Override
 	public NCD get(UUID id) throws NotFoundException {
 		return ncdRepository.findById(id)
-				.orElseThrow(() -> new NotFoundException("NonCommunicableDisease Not Found with id : " + id));
+				.orElseThrow(() -> new NotFoundException("error.NCD.notFound"));
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class NCDServiceImplementation  implements NCDService{
 	public NCD create(NCD entity) throws AlreadyExistsException {
 		
 		if(ncdRepository.existsByName(entity.getName())) {
-			throw new AlreadyExistsException("NonCommunicableDisease with name : "+ entity.getName()+" already present");
+			throw new AlreadyExistsException("error.NCD.alreadyExists");
 		}
 		
 		return ncdRepository.save(entity);

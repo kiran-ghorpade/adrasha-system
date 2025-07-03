@@ -42,14 +42,14 @@ public class HealthRecordServiceImpl implements HealthRecordService {
 	public HealthRecord getHealthRecord(UUID memberId) {
 
 		return healthRecordRepository.findByMemberId(memberId)
-				.orElseThrow(() -> new NotFoundException("HealthRecord Not Found with id : " + memberId));
+				.orElseThrow(() -> new NotFoundException("error.healthRecord.notFound"));
 	}
 
 	@Override
 	public HealthRecord createHealthRecord(HealthRecord healthRecord) {
 		
 		if(!memberRepository.existsById(healthRecord.getMemberId())) {
-			throw new NotFoundException("Member Not Found with Id : "+ healthRecord.getMemberId());
+			throw new NotFoundException("error.healthRecord.notFound");
 		}
 
 		return healthRecordRepository.save(healthRecord);

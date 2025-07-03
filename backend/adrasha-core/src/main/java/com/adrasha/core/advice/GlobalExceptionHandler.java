@@ -72,7 +72,7 @@ public class GlobalExceptionHandler {
 	}
 	
 	@ExceptionHandler(FeignException.class)
-	public ResponseEntity<ErrorResponse> handleAlreadyExistingException(FeignException  ex, HttpServletRequest request) {
+	public ResponseEntity<ErrorResponse> handleFeignException(FeignException  ex, HttpServletRequest request) {
 		
 	    ErrorResponse response = ErrorResponse.builder()
                 .status(ex.status())
@@ -80,7 +80,7 @@ public class GlobalExceptionHandler {
                 .message(ex.getMessage())
                 .path(request.getRequestURI())
                 .build();
-        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+        return new ResponseEntity<>(response, HttpStatus.valueOf(ex.status()));
 	}
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)

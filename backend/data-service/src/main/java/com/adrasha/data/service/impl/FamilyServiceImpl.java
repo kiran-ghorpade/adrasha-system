@@ -48,7 +48,7 @@ public class FamilyServiceImpl implements FamilyDataService {
 	public Family getFamily(UUID familyId) {
 
 		return familyRepository.findById(familyId)
-				.orElseThrow(() -> new NotFoundException("Family Not Found with id : " + familyId));
+				.orElseThrow(() -> new NotFoundException("error.family.notFound"));
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class FamilyServiceImpl implements FamilyDataService {
 		modelMapper.map(updatedFamilyDetails, family);
 		
 		if(!memberRepository.existsById(family.getHeadMemberId())){
-			throw new NotFoundException("Member Not Found with id : "+ family.getHeadMemberId());
+			throw new NotFoundException("error.headMember.notFound");
 		}
 		
 		remoteDataService.verifyUserExist(updatedFamilyDetails.getAshaId());

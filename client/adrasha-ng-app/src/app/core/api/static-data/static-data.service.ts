@@ -25,7 +25,7 @@ import {
 
 import type {
   StaticDataDTO
-} from '../../model';
+} from '../../model/masterdataService';
 
 
 

@@ -30,7 +30,7 @@ import type {
   HealthCenterPageResponseDTO,
   HealthCenterResponseDTO,
   HealthCenterUpdateDTO
-} from '../../model';
+} from '../../model/masterdataService';
 
 
 

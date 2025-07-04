@@ -4,11 +4,12 @@
  * ADRASHA AUTH-SERVICE API Docs
  * OpenAPI spec version: 1.0.0
  */
+import { JwtUserRolesItem } from './jwtUserRolesItem';
 import type { UserDTOStatus } from './userDTOStatus';
 
 export interface UserDTO {
   id?: string;
   username?: string;
-  roles?: string[];
+  roles?: JwtUserRolesItem[];
   status?: UserDTOStatus;
 }

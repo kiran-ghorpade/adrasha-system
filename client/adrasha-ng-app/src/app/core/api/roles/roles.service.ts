@@ -26,7 +26,7 @@ import {
 import type {
   RoleUpdateDTO,
   UserDTO
-} from '../../model';
+} from '../../model/authService';
 
 
 

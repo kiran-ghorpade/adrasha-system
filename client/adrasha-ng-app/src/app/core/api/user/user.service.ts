@@ -29,7 +29,7 @@ import type {
   UserPageResponseDTO,
   UserResponseDTO,
   UserUpdateDTO
-} from '../../model';
+} from '../../model/userService';
 
 
 

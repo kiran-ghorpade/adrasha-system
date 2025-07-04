@@ -28,7 +28,7 @@ import type {
   MasterdataStats,
   MemberStats,
   UserStats
-} from '../../model';
+} from '../../model/analyticsService';
 
 
 

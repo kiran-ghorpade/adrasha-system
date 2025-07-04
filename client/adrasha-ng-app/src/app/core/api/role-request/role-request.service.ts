@@ -30,7 +30,7 @@ import type {
   RoleRequestPageResponseDTO,
   RoleRequestResponseDTO,
   RoleRequestUpdateDTO
-} from '../../model';
+} from '../../model/userService';
 
 
 

@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 
-import { environment } from '@env/environment';
+import { AuthenticationService } from '@core/api/authentication/authentication.service';
+import { LoginRequest } from '@core/model/authService';
 import { TranslateService } from '@ngx-translate/core';
-import { Token, User } from '../models';
-import { AuthenticationManagementService } from '@core/api/authentication-management/authentication-management.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,23 +11,20 @@ import { AuthenticationManagementService } from '@core/api/authentication-manage
 export class LoginService {
   protected readonly http = inject(HttpClient);
   protected readonly translate = inject(TranslateService);
-  protected readonly auth = inject(AuthenticationManagementService);
+  protected readonly auth = inject(AuthenticationService);
 
   private readonly baseUrl = 'auth';
 
-  login(username: string, password: string) {
-    return this.auth.post<Token>(`${this.baseUrl}/login`, { username, password });
+
+  login(loginRequest: LoginRequest) {
+    return this.auth.loginUser(loginRequest);
   }
 
-  refresh(params: Record<string, any>) {
-    return this.auth.post<Token>(`${this.baseUrl}/refresh`, params);
-  }
+  // refresh(params: Record<string, any>) {
+  //   return this.auth.post<Token>(`${this.baseUrl}/refresh`, params);
+  // }
 
-  logout() {
-    return this.auth.post<any>(`${this.baseUrl}/logout`, {});
-  }
-
-  user() {
-    return this.auth.get<User>(`${this.baseUrl}/user`);
-  }
+  // logout() {
+  //   return this.auth.post<any>(`${this.baseUrl}/logout`, {});
+  // }
 }

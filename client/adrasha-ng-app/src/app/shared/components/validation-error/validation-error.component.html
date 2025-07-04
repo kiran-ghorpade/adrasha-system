@@ -13,7 +13,7 @@
 
   @if (control.hasError('maxlength')) {
     <mat-error>
-      <span>{{ 'validation.max_length' | translate: { number: maxLength } }}</span>
+      <span>{{ 'validation.max_length' | translate: { number: control.getError('maxlength')?.requiredLength} }}</span>
     </mat-error>
   }
 

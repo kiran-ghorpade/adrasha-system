@@ -30,7 +30,7 @@ import type {
   LocationPageResponseDTO,
   LocationResponseDTO,
   LocationUpdateDTO
-} from '../../model';
+} from '../../model/masterdataService';
 
 
 

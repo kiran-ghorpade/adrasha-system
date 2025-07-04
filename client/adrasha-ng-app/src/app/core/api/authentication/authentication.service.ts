@@ -29,7 +29,7 @@ import type {
   PasswordResetRequest,
   RegistrationRequest,
   UserDTO
-} from '../../model';
+} from '../../model/authService';
 
 
 

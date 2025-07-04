@@ -30,7 +30,7 @@ import type {
   MemberDataPageResponseDTO,
   MemberDataResponseDTO,
   MemberUpdateDTO
-} from '../../model';
+} from '../../model/dataService';
 
 
 

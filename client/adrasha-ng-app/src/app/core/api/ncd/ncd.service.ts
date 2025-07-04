@@ -30,7 +30,7 @@ import type {
   NCDPageResponseDTO,
   NCDResponseDTO,
   NCDUpdateDTO
-} from '../../model';
+} from '../../model/masterdataService';
 
 
 

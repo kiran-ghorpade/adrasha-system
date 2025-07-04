@@ -1,101 +1,83 @@
-import { Injectable, OnDestroy, inject } from '@angular/core';
-import { BehaviorSubject, Subject, Subscription, share, timer } from 'rxjs';
-
-import { currentTimestamp, filterObject } from '../utils';
-import { Token } from '../models';
-import { BaseToken } from '../models';
+import { inject, Injectable } from '@angular/core';
+import { Token } from '@core/model/Token';
+import { capitalize, currentTimestamp } from '@core/utils';
 import { LocalStorageService } from '@shared/services';
-// import { TokenFactory } from '.';
 
+/**
+ * Service for managing authentication tokens in local storage.
+ * Provides methods to get, set, validate, and clear the token.
+ */
 @Injectable({
   providedIn: 'root',
 })
-export class TokenService implements OnDestroy {
-  private readonly key = 'alphbetagammadelta';
+export class TokenService {
+  private readonly TOKEN_KEY = 'alphabetagamma';
 
   private readonly store = inject(LocalStorageService);
-  // private readonly factory = inject(TokenFactory);
 
-  private readonly change$ = new BehaviorSubject<BaseToken | undefined>(undefined);
-  private readonly refresh$ = new Subject<BaseToken | undefined>();
+  private _token?: Token;
 
-  private timer$?: Subscription;
+  // Getters
+  get accessToken() {
+    return this._token?.accessToken;
+  }
 
-  private _token?: BaseToken;
+  get tokenType() {
+    return this._token?.tokenType ?? 'bearer';
+  }
 
-  private get token(): BaseToken | undefined {
+  get expiresIn() {
+    return this._token?.expiresIn;
+  }
+
+  private get token(): Token | undefined {
     if (!this._token) {
-      // this._token = this.factory.create(this.store.get(this.key));
+      this._token = this.store.get(this.TOKEN_KEY);
     }
 
     return this._token;
   }
 
-  change() {
-    return this.change$.pipe(share());
+  // methods
+  get(): Token | undefined {
+    return this.token;
   }
-
-  // refresh() {
-  //   this.buildRefresh();
-
-  //   return this.refresh$.pipe(share());
-  // }
 
   set(token?: Token) {
-    this.save(token);
+    if (token) {
+      const expiresAt = Date.now() + (token.expiresIn ?? 0) * 1000;
+      const value = {
+        ...token,
+        expiresIn: expiresAt,
+      };
 
-    return this;
+      this.store.set(this.TOKEN_KEY, value);
+    } else {
+      this.clear();
+    }
   }
 
-  clear() {
-    this.save();
+  valid(): boolean {
+    return this.hasAccessToken() && !this.isExpired();
   }
 
-  valid() {
-    return this.token?.valid() ?? false;
+  private hasAccessToken() {
+    return !!this.accessToken;
+  }
+
+  private isExpired() {
+    return (
+      this.expiresIn !== undefined && this.expiresIn - currentTimestamp() <= 0
+    );
   }
 
   getBearerToken() {
-    return this.token?.getBearerToken() ?? '';
+    return this._token?.accessToken
+      ? [capitalize(this.tokenType), this._token.accessToken].join(' ').trim()
+      : '';
   }
 
-  // getRefreshToken() {
-  //   return this.token?.refresh_token;
-  // }
-
-  ngOnDestroy(): void {
-    this.clearRefresh();
-  }
-
-  private save(token?: Token) {
-    this._token = undefined;
-
-    if (!token) {
-      this.store.remove(this.key);
-    } else {
-      const value = Object.assign({ accessToken: '', tokenType: 'Bearer' }, token, {
-        exp: token.expiresIn ? currentTimestamp() + token.expiresIn : null,
-      });
-      this.store.set(this.key, filterObject(value));
-    }
-
-    this.change$.next(this.token);
-    this.buildRefresh();
-  }
-
-  private buildRefresh() {
-    this.clearRefresh();
-
-    if (this.token?.needRefresh()) {
-      this.timer$ = timer(this.token.getRefreshTime() * 1000).subscribe(() => {
-        this.refresh$.next(this.token);
-      });
-    }
-  }
-
-  private clearRefresh() {
-    if (this.timer$ && !this.timer$.closed) {
-      this.timer$.unsubscribe();
-    }
+  clear() {
+    this.store.remove(this.TOKEN_KEY);
   }
 }

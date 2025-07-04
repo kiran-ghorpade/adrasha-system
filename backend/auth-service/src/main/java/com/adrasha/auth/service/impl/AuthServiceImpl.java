@@ -79,9 +79,11 @@ public class AuthServiceImpl implements AuthService {
 		JwtUser jwtUser = modelMapper.map(user, JwtUser.class);
 
 		String token = jwtUtil.generateToken(jwtUser);
+		
+		UserDTO userDTO = modelMapper.map(user, UserDTO.class);	
 
 		return AuthTokenResponse.builder()
-				.user(jwtUser)
+				.user(userDTO)
 				.accessToken(token)
 				.tokenType("Bearer")
 				.expiresIn(jwtUtil.getExpiration())

@@ -30,7 +30,7 @@ import type {
   HealthRecordPageResponseDTO,
   HealthRecordResponseDTO,
   HealthUpdateDTO
-} from '../../model';
+} from '../../model/dataService';
 
 
 

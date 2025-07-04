@@ -12,13 +12,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatToolbarModule } from '@angular/material/toolbar';
-
 import { StaticDataService } from '@core/api/static-data/static-data.service';
-import {
-  FamilyRegistrationDTO
-} from '@core/model/data-service';
-import { StaticDataDTO } from '@core/model/masterdata-service';
-import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
+import { FamilyRegistrationDTO } from '@core/model/dataService';
+import { StaticDataDTO } from '@core/model/masterdataService';
+import { PageHeaderComponent } from '@shared/components';
 
 @Component({
   selector: 'app-family-registration-form',

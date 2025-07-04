@@ -30,7 +30,7 @@ import type {
   FamilyUpdateDTO,
   GetAllFamiliesParams,
   GetTotalCount2Params
-} from '../../model';
+} from '../../model/dataService';
 
 
 

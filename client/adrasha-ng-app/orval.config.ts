@@ -10,7 +10,7 @@ export default defineConfig({
     },
     output: {
       target: 'src/app/core/api',
-      schemas: 'src/app/core/model',
+      schemas: 'src/app/core/model/authService',
       client: 'angular',
       mode: 'tags-split',
       baseUrl: baseApiUrl,
@@ -22,7 +22,7 @@ export default defineConfig({
     },
     output: {
       target: 'src/app/core/api',
-      schemas: 'src/app/core/model',
+      schemas: 'src/app/core/model/userService',
       client: 'angular',
       mode: 'tags-split',
       baseUrl: baseApiUrl,
@@ -34,7 +34,7 @@ export default defineConfig({
     },
     output: {
       target: 'src/app/core/api',
-      schemas: 'src/app/core/model',
+      schemas: 'src/app/core/model/dataService',
       client: 'angular',
       mode: 'tags-split',
       baseUrl: baseApiUrl,
@@ -46,7 +46,7 @@ export default defineConfig({
     },
     output: {
       target: 'src/app/core/api',
-      schemas: 'src/app/core/model',
+      schemas: 'src/app/core/model/masterdataService',
       client: 'angular',
       mode: 'tags-split',
       baseUrl: baseApiUrl,
@@ -58,7 +58,7 @@ export default defineConfig({
     },
     output: {
       target: 'src/app/core/api',
-      schemas: 'src/app/core/model',
+      schemas: 'src/app/core/model/analyticsService',
       client: 'angular',
       mode: 'tags-split',
       baseUrl: baseApiUrl,

@@ -9,28 +9,25 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 import { routes } from './app.routes';
 
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import {
-  BASE_URL,
-  baseUrlInterceptor,
-  noopInterceptor,
-  tokenInterceptor,
-} from '@core/interceptors';
-import { environment } from '@env/environment';
+  HttpClient,
+  provideHttpClient,
+  withInterceptors,
+} from '@angular/common/http';
+import { noopInterceptor, tokenInterceptor } from '@core/interceptors';
+import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 // Http interceptor providers in outside-in order
-const interceptors = [noopInterceptor, baseUrlInterceptor, tokenInterceptor];
+const interceptors = [noopInterceptor, tokenInterceptor];
+
+const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (
+  http: HttpClient
+) => new TranslateHttpLoader(http, './i18n/', '.json');
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes),
-    provideZoneChangeDetection({ eventCoalescing: true }),
-    { provide: BASE_URL, useValue: environment.baseUrl },
-    // provideAppInitializer(() => inject(TranslateLangService).load()),
-    // provideAppInitializer(() => inject(StartupService).load()),
-    provideAnimationsAsync(),
-    provideHttpClient(withInterceptors(interceptors)),
     provideRouter(
       routes,
       withInMemoryScrolling({
@@ -39,6 +36,16 @@ export const appConfig: ApplicationConfig = {
       }),
       withComponentInputBinding()
     ),
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideTranslateService({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: httpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
+    provideAnimationsAsync(),
+    provideHttpClient(withInterceptors(interceptors)),
     provideCharts(withDefaultRegisterables()),
   ],
 };

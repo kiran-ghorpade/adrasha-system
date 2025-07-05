@@ -16,7 +16,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { StaticDataService } from '@core/api/static-data/static-data.service';
 import { MemberCreateDTO } from '@core/model/dataService';
 import { StaticDataDTO } from '@core/model/masterdataService';
-import { PageHeaderComponent, ValidationErrorComponent } from '@shared/components';
+import { PageHeaderComponent } from '@shared/components';
+import { ValidationErrorComponent } from "../../../../shared/components/validation-error/validation-error.component";
 
 @Component({
   selector: 'app-member-registration-form',
@@ -30,8 +31,8 @@ import { PageHeaderComponent, ValidationErrorComponent } from '@shared/component
     MatToolbarModule,
     FormsModule,
     ReactiveFormsModule,
-    // PageHeaderComponent,
-    // ValidationErrorComponent
+    PageHeaderComponent,
+    ValidationErrorComponent
 ],
   templateUrl: './member-registration-form.component.html',
 })

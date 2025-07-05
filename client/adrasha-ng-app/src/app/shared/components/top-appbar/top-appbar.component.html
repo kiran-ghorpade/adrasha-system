@@ -1,10 +1,11 @@
-<div class=" flex justify-between items-center p-4">
+<div class="flex justify-between items-center p-4">
   <!-- LOGO -->
   <app-logo />
 
   <!-- Search Box (Replace with your search component) -->
   <!-- <app-searchbar /> -->
 
+  @if (loggedIn()) {
   <!-- Profile Avatar -->
   <button
     matIconButton
@@ -29,4 +30,5 @@
       <span>Logout</span>
     </button>
   </mat-menu>
+  }
 </div>

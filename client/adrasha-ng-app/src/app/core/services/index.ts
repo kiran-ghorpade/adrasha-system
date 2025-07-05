@@ -1,6 +1,5 @@
 // export * from './api.service';
 export * from './auth.service';
-export * from './login.service';
 // export * from './token-factory.service';
 export * from './token.service';
 // export * from './settings.service';

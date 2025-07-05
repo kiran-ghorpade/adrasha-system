@@ -78,10 +78,14 @@ export class LoginComponent {
       .login(loginRequest)
       .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
-        next: () => {
-          this.alertService.showAlert('Login Successfull', 'success');
-          this.loginForm.reset();
-          this.router.navigateByUrl('/dashboard', { replaceUrl: true });
+        next: (result) => {
+          if (result) {
+            const translatedMsg =
+              this.translateService.instant('login.success');
+            this.alertService.showAlert(translatedMsg, 'success');
+            this.loginForm.reset();
+            this.router.navigateByUrl('/dashboard', { replaceUrl: true });
+          }
         },
         error: (err) => {
           if (err.status === 400 && err.error.errors) {
@@ -93,7 +97,7 @@ export class LoginComponent {
             });
           } else {
             const translatedMsg = this.translateService.instant('login.failed');
-            this.alertService.showAlert(translatedMsg);
+            this.alertService.showAlert(translatedMsg, 'error');
           }
         },
       });

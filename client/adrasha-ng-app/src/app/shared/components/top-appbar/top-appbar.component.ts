@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 // import { MatAvatarModule } from '@angular/material/avatar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { AppLogoComponent } from '../../widgets/logo.component';
 import { SearchbarComponent } from '../searchbar/searchbar.component';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '@core/services';
 // import { AuthenticationService } from 'src/app/services/authentication.service'; // import your auth service
 
 @Component({
@@ -24,21 +25,27 @@ import { CommonModule } from '@angular/common';
     MatListModule,
     AppLogoComponent,
     CommonModule,
-    
   ],
 })
 export class TopAppBarComponent implements OnInit {
+  private readonly authService = inject(AuthService);
+  readonly router = inject(Router);
+
+  loggedIn = signal(false);
+
   anchorElUser: any = null;
   settings = [
     { label: 'Profile', toLink: '/profile', icon: 'person' },
     { label: 'Settings', toLink: '/settings', icon: 'settings' },
   ];
 
-  constructor(
-    public router: Router // private authService: AuthenticationService
-  ) {}
-
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authService.isLoggedIn$.subscribe((status) => {
+      this.loggedIn.set(status);
+      console.log(this.loggedIn());
+      
+    });
+  }
 
   isDashboard() {
     return this.router.url === '/dashboard';
@@ -53,7 +60,7 @@ export class TopAppBarComponent implements OnInit {
   }
 
   logout() {
-    // this.authService.logout();
+    this.authService.logout();
     this.router.navigate(['/auth/login']);
   }
 }

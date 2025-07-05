@@ -3,7 +3,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { BackButtonComponent } from '../back-button/back-button.component';
 
 @Component({
-  selector: 'app-top-toolbar',
+  selector: 'app-page-header',
   imports: [BackButtonComponent, MatIconModule],
   template: `
     <div class="flex h-[48px] items-center justify-between gap-4 md:px-2 py-1 paper">

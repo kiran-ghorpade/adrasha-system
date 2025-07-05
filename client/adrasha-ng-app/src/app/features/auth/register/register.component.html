@@ -1,34 +1,43 @@
 <div class="flex flex-col gap-3 items-center w-72">
   <div class="w-full text-center px-5">
-    <h3 class="font-normal">Register</h3>
+    <h3 class="font-normal">{{ "registration.title" | translate }}</h3>
   </div>
 
-  <form [formGroup]="registerForm" class="flex justify-center items-center w-full flex-col gap-3">
+  <form
+    [formGroup]="registerForm"
+    (ngSubmit)="register()"
+    novalidate
+    class="flex justify-center items-center w-full flex-col gap-3"
+  >
     <mat-form-field class="w-full">
-      <mat-label>Username</mat-label>
-      <input matInput required [disabled]="false" />
+      <mat-label>{{ "registration.username" | translate }}</mat-label>
+      <input type="text" matInput required formControlName="username" />
+      <app-validation-error [control]="this.registerForm.controls.username" />
     </mat-form-field>
     <mat-form-field class="w-full">
-      <mat-label>Password</mat-label>
-      <input matInput type="password" required [disabled]="false" />
+      <mat-label>{{ "registration.password" | translate }}</mat-label>
+      <input matInput type="password" required formControlName="password" />
+      <app-validation-error [control]="this.registerForm.controls.password" />
     </mat-form-field>
     <mat-form-field class="w-full">
-      <mat-label>Confirm Password</mat-label>
-      <input matInput type="password" required [disabled]="false" />
+      <mat-label>{{ "registration.confirmPassword" | translate }}</mat-label>
+      <input matInput type="password" required formControlName="confirmPassword">
+      <app-validation-error [control]="this.registerForm.controls.confirmPassword" componentName="password"/>
     </mat-form-field>
 
     <button
       matButton="filled"
       class="w-full"
-      (click)="register()"
-      [disabled]="false"
+      [disabled]="isLoading() || registerForm.invalid"
     >
-      @if (false) {
+      @if (isLoading()) {
       <mat-spinner diameter="20"></mat-spinner>
-      }@else { Register }
+      } @else {
+      {{ "registration.submitButton" | translate }}
+      }
     </button>
     <button matButton="text" class="w-full" routerLink="/auth/login">
-      Back to login
+      {{ "registration.backtToLogin" | translate }}
     </button>
   </form>
 </div>

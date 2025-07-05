@@ -5,16 +5,27 @@
     "password": "Password",
     "submitButton": "Login",
     "newRegistration": "New Registration",
-    "failed":"Login Failed"
+    "success": "Login successful",
+    "failed": "Login failed"
+  },
+  "registration": {
+    "title": "User Registration",
+    "username": "Username",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "submitButton": "Register",
+    "backtToLogin": "Back to Login",
+    "success": "Registration successful",
+    "failed": "Registration failed"
   },
   "validation": {
     "required": "This field is required.",
-    "min_length": "Minimum length is {{number}} characters.",
-    "max_length": "Maximum length is {{number}} characters.",
+    "minLength": "Minimum length is {{minLength}} characters.",
+    "maxLength": "Maximum length is {{maxLength}} characters.",
     "pattern": "The input format is invalid.",
     "email": "Please enter a valid email address.",
-    "min": "Minimum value allowed is {{number}}.",
-    "max": "Maximum value allowed is {{number}}.",
-    "inconsistent": "The value is inconsistent with {{value}}."
+    "min": "Minimum value allowed is {{minValue}}.",
+    "max": "Maximum value allowed is {{maxValue}}.",
+    "inconsistent": "The value is inconsistent with {{fieldName}}."
   }
 }

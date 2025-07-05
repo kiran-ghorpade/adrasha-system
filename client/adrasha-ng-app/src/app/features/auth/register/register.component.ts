@@ -16,8 +16,9 @@ import { Router, RouterModule } from '@angular/router';
 import { RegistrationRequest } from '@core/model/authService';
 import { AuthService } from '@core/services';
 import { AlertService } from '@core/services/alert.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs';
+import { ValidationErrorComponent } from '../../../shared/components/validation-error/validation-error.component';
 
 @Component({
   selector: 'app-register',
@@ -32,8 +33,8 @@ import { finalize } from 'rxjs';
     MatInputModule,
     MatProgressSpinnerModule,
     RouterModule,
-    // TranslateModule,
-    // ValidationErrorComponent,
+    ValidationErrorComponent,
+    TranslatePipe,
   ],
 })
 export class RegisterComponent {
@@ -84,26 +85,20 @@ export class RegisterComponent {
     };
 
     this.authService
-      .login(registrationRequest)
+      .register(registrationRequest)
       .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
         next: () => {
-          this.alertService.showAlert('Login Successfull', 'success');
+          const translatedMsg = this.translateService.instant('registration.success')
+          this.alertService.showAlert(translatedMsg, 'success');
           this.registerForm.reset();
-          this.router.navigateByUrl('/dashboard', { replaceUrl: true });
+          this.router.navigateByUrl('/auth/login', { replaceUrl: true });
         },
         error: (err) => {
-          if (err.status === 400 && err.error.errors) {
-            Object.entries(err.error.errors).forEach(([field, message]) => {
-              const control = this.registerForm.get(field);
-              if (control) {
-                control.setErrors({ serverError: message });
-              }
-            });
-          } else {
-            const translatedMsg = this.translateService.instant('login.failed');
-            this.alertService.showAlert(translatedMsg);
-          }
+          const translatedMsg = this.translateService.instant(
+            'registration.failed'
+          );
+          this.alertService.showAlert(translatedMsg, 'error');
         },
       });
   }

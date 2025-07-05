@@ -58,17 +58,13 @@ export class TokenService {
   }
 
   valid(): boolean {
-    return this.hasAccessToken() && !this.isExpired();
+    const token = this.get();
+    return !!token && !this.isExpired();
   }
 
-  private hasAccessToken() {
-    return !!this.accessToken;
-  }
-
-  private isExpired() {
-    return (
-      this.expiresIn !== undefined && this.expiresIn - currentTimestamp() <= 0
-    );
+  private isExpired(): boolean {
+    const expiry = this.expiresIn;
+    return !expiry || expiry <= Date.now();
   }
 
   getBearerToken() {

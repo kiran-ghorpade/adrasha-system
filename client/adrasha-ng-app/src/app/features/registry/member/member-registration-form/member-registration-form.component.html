@@ -1,18 +1,14 @@
-<!-- <div class="flex flex-col gap-5">
-  <app-top-toolbar [title]="'Add New Member'" />
+<div class="flex flex-col gap-5">
+  <app-page-header [title]="'Add New Member'" />
 
   <mat-stepper orientation="vertical" [linear]="false" #stepper>
     <mat-step [stepControl]="basicInfo">
-      <form [formGroup]="basicInfo">
+      <form [formGroup]="basicInfo" class="flex flex-col md:flex-row gap-2">
         <ng-template matStepLabel>Fill Basic Info</ng-template>
         <mat-form-field appearance="fill">
           <mat-label>First Name</mat-label>
           <input matInput formControlName="firstname" required />
-          <app-validation-error
-            [control]="this.memberForm.get('firstname')"
-            [minLength]="3"
-            [maxLength]="50"
-          >
+          <app-validation-error [control]="this.memberForm.get('firstname')">
             First name is required
           </app-validation-error>
         </mat-form-field>
@@ -155,14 +151,10 @@
         </mat-form-field>
 
         <button mat-button matStepperPrevious>Back</button>
-        <button
-          mat-button
-          (click)="onSubmit()"
-          [disabled]="memberForm.invalid"
-        >
+        <button mat-button (click)="onSubmit()" [disabled]="memberForm.invalid">
           Submit
         </button>
       </form>
     </mat-step>
   </mat-stepper>
-</div> -->
+</div>

@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartType, Ticks } from 'chart.js';
 import { DataCardLabelComponent } from '@shared/components';
+import { DashboardHeaderComponent } from "../../../../shared/components/dashboard-header/dashboard-header.component";
 
 
 @Component({
@@ -19,7 +20,8 @@ import { DataCardLabelComponent } from '@shared/components';
     DataCardLabelComponent,
     BaseChartDirective,
     CommonModule,
-  ],
+    DashboardHeaderComponent
+],
   templateUrl: './asha-dashboard.component.html',
 })
 export class AshaDashboardComponent {

@@ -7,12 +7,17 @@ import { NotFoundComponent } from '../../widgets/not-found.component';
 @Component({
   selector: 'app-page-not-found',
   imports: [CommonModule, NotFoundComponent, MatButtonModule, RouterModule],
-  template: `<app-not-found>
-    <button matButton="filled" (click)="goBack()">Go Back</button>
-    <button matButton="tonal" routerLink="/dashboard">
-      Go Back to Dashboard
-    </button>
-  </app-not-found> `,
+  template: ` <div
+    id="secondary-container"
+    class="h-[100vh] w-full flex justify-center items-center"
+  >
+    <app-not-found>
+      <button matButton="filled" (click)="goBack()">Go Back</button>
+      <button matButton="tonal" routerLink="/dashboard">
+        Go Back to Dashboard
+      </button>
+    </app-not-found>
+  </div>`,
 })
 export class PageNotFoundComponent {
   constructor(private router: Router) {}

@@ -1,20 +1,7 @@
 <div class="h-full w-full grid md:grid-rows-12 grid-cols-12 gap-2">
   <!-- Greetings -->
-  <div class="row-span-2 col-span-12 md:col-span-6 p-3 md:order-none order-1">
-    <h1>Hello, ASHA</h1>
-    <p>Welcome back.</p>
-  </div>
-  <div class="row-span-2 col-span-6 md:col-span-3 md:order-none order-2">
-    <app-data-card-label
-      [value]="`${currentTime().toDateString()}`"
-      [label]="`Current Date`"
-    />
-  </div>
-  <div class="row-span-2 col-span-6 md:col-span-3 md:order-none order-3">
-    <app-data-card-label
-      [value]="`${currentTime().toLocaleTimeString()}`"
-      [label]="`Current Time`"
-    />
+  <div class="row-span-2 col-span-12 p-3 md:order-none order-1">
+    <app-dashboard-header greetings="Hello, Asha"/>
   </div>
 
   <!-- Values -->

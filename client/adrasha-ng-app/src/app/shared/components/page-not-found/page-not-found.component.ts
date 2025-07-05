@@ -6,16 +6,15 @@ import { NotFoundComponent } from '../../widgets/not-found.component';
 
 @Component({
   selector: 'app-page-not-found',
-  imports: [
-    CommonModule,
-    NotFoundComponent,
-    MatButtonModule,
-    RouterModule,
-  ],
-  templateUrl: './page-not-found.component.html',
+  imports: [CommonModule, NotFoundComponent, MatButtonModule, RouterModule],
+  template: `<app-not-found>
+    <button matButton="filled" (click)="goBack()">Go Back</button>
+    <button matButton="tonal" routerLink="/dashboard">
+      Go Back to Dashboard
+    </button>
+  </app-not-found> `,
 })
 export class PageNotFoundComponent {
-
   constructor(private router: Router) {}
 
   goBack() {

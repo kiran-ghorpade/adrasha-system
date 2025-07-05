@@ -18,6 +18,7 @@ import {
   TranslatePipe,
   TranslateService,
 } from '@ngx-translate/core';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -49,7 +50,7 @@ export class LoginComponent {
   readonly loginForm = this.fb.nonNullable.group({
     username: this.fb.nonNullable.control(
       { value: '', disabled: this.isLoading() },
-      [Validators.required]
+      [Validators.required, Validators.minLength(3)]
     ),
     password: this.fb.nonNullable.control(
       { value: '', disabled: this.isLoading() },
@@ -73,28 +74,28 @@ export class LoginComponent {
       password,
     };
 
-    this.authService.login(loginRequest).subscribe({
-      next: () => {
-        this.alertService.showAlert('Login Successfull', 'success');
-        this.loginForm.reset();
-        this.router.navigateByUrl('/dashboard', { replaceUrl: true });
-      },
-      error: (err) => {
-        if (err.status === 400 && err.error.errors) {
-          Object.entries(err.error.errors).forEach(([field, message]) => {
-            const control = this.loginForm.get(field);
-            if (control) {
-              control.setErrors({ serverError: message });
-            }
-          });
-        } else {
-          const translatedMsg = this.translateService.instant('login.failed');
-          this.alertService.showAlert(translatedMsg);
-        }
-      },
-      complete: () => {
-        this.isLoading.set(false);
-      },
-    });
+    this.authService
+      .login(loginRequest)
+      .pipe(finalize(() => this.isLoading.set(false)))
+      .subscribe({
+        next: () => {
+          this.alertService.showAlert('Login Successfull', 'success');
+          this.loginForm.reset();
+          this.router.navigateByUrl('/dashboard', { replaceUrl: true });
+        },
+        error: (err) => {
+          if (err.status === 400 && err.error.errors) {
+            Object.entries(err.error.errors).forEach(([field, message]) => {
+              const control = this.loginForm.get(field);
+              if (control) {
+                control.setErrors({ serverError: message });
+              }
+            });
+          } else {
+            const translatedMsg = this.translateService.instant('login.failed');
+            this.alertService.showAlert(translatedMsg);
+          }
+        },
+      });
   }
 }

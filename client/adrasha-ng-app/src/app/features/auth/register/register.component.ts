@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -12,7 +12,12 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { RegistrationRequest } from '@core/model/authService';
+import { AuthService } from '@core/services';
+import { AlertService } from '@core/services/alert.service';
+import { TranslateService } from '@ngx-translate/core';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -26,46 +31,82 @@ import { RouterModule } from '@angular/router';
     MatFormFieldModule,
     MatInputModule,
     MatProgressSpinnerModule,
-    RouterModule
+    RouterModule,
     // TranslateModule,
     // ValidationErrorComponent,
   ],
 })
 export class RegisterComponent {
-  private readonly fb = inject(FormBuilder);
-  registerForm = this.fb.nonNullable.group(
+  private readonly router = inject(Router);
+  private readonly authService = inject(AuthService);
+  private readonly alertService = inject(AlertService);
+  private readonly translateService = inject(TranslateService);
+
+  fb = new FormBuilder();
+
+  readonly isLoading = signal(false);
+  readonly isError = signal(false);
+
+  readonly registerForm = this.fb.nonNullable.group(
     {
-      username: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(50),
-        ],
-      ],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(8),
-          Validators.maxLength(50),
-        ],
-      ],
-      confirmPassword: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(8),
-          Validators.maxLength(50),
-        ],
-      ],
+      username: this.fb.nonNullable.control(
+        { value: '', disabled: this.isLoading() },
+        [Validators.required, Validators.minLength(3)]
+      ),
+      password: this.fb.nonNullable.control(
+        { value: '', disabled: this.isLoading() },
+        [Validators.required, Validators.minLength(8)]
+      ),
+      confirmPassword: this.fb.nonNullable.control(
+        { value: '', disabled: this.isLoading() },
+        [Validators.required, Validators.minLength(8)]
+      ),
     },
     {
       validators: [this.matchValidator('password', 'confirmPassword')],
     }
   );
 
-  register(){}
+  register() {
+    if (this.registerForm.invalid) {
+      this.registerForm.markAllAsTouched();
+      return;
+    }
+
+    this.isLoading.set(true);
+    this.isError.set(false);
+
+    const { username, password } = this.registerForm.getRawValue();
+
+    const registrationRequest: RegistrationRequest = {
+      username,
+      password,
+    };
+
+    this.authService
+      .login(registrationRequest)
+      .pipe(finalize(() => this.isLoading.set(false)))
+      .subscribe({
+        next: () => {
+          this.alertService.showAlert('Login Successfull', 'success');
+          this.registerForm.reset();
+          this.router.navigateByUrl('/dashboard', { replaceUrl: true });
+        },
+        error: (err) => {
+          if (err.status === 400 && err.error.errors) {
+            Object.entries(err.error.errors).forEach(([field, message]) => {
+              const control = this.registerForm.get(field);
+              if (control) {
+                control.setErrors({ serverError: message });
+              }
+            });
+          } else {
+            const translatedMsg = this.translateService.instant('login.failed');
+            this.alertService.showAlert(translatedMsg);
+          }
+        },
+      });
+  }
 
   matchValidator(source: string, target: string) {
     return (control: AbstractControl) => {

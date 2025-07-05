@@ -7,7 +7,7 @@
 
   @if (control.hasError('minlength')) {
     <mat-error>
-      <span>{{ 'validation.min_length' | translate: { number: minLength } }}</span>
+      <span>{{ 'validation.min_length' | translate: { number: control.getError('minlength')?.requiredLength} }}</span>
     </mat-error>
   }
 
@@ -31,13 +31,13 @@
 
   @if (control.hasError('min')) {
     <mat-error>
-      <span>{{ 'validation.min' | translate: { number: min } }}</span>
+      <span>{{ 'validation.min' | translate: { number: control.getError('min')?.requiredLength } }}</span>
     </mat-error>
   }
 
   @if (control.hasError('max')) {
     <mat-error>
-      <span>{{ 'validation.max' | translate: { number: max } }}</span>
+      <span>{{ 'validation.max' | translate: { number: control.getError('max')?.requiredLength } }}</span>
     </mat-error>
   }
 

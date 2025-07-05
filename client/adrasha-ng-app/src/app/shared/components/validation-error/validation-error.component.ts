@@ -10,9 +10,5 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class ValidationErrorComponent {
   @Input() control!: AbstractControl | null;
-  @Input() minLength?: number;
-  @Input() maxLength?: number;
-  @Input() min?: number;
-  @Input() max?: number;
   @Input() componentName?: string;
 }

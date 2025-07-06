@@ -1,162 +1,104 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  NgZone,
-  OnDestroy,
-  OnInit,
-  inject,
-} from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatGridListModule } from '@angular/material/grid-list';
+import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { MatTableModule } from '@angular/material/table';
-import { MatTabsModule } from '@angular/material/tabs';
-import { RouterLink } from '@angular/router';
-import { SettingsService } from '@core/services';
-import { MtxAlertModule } from '@ng-matero/extensions/alert';
-import { MtxProgressModule } from '@ng-matero/extensions/progress';
-import { Subscription } from 'rxjs';
-import { DashboardService } from '../../services/dashboard.service';
-import ApexCharts from 'apexcharts';
+import { RouterModule } from '@angular/router';
+import { DataCardLabelComponent } from '@shared/components';
+import { ChartConfiguration, ChartType } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
 
 @Component({
   selector: 'app-admin-dashboard',
-  templateUrl: './admin-dashboard.component.html',
-  styleUrl: './admin-dashboard.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
-    RouterLink,
-    MatButtonModule,
+    RouterModule,
     MatCardModule,
-    MatChipsModule
-    ,
+    MatIconModule,
     MatListModule,
-    MatGridListModule,
-    MatTableModule,
-    MatTabsModule,
-    MtxProgressModule,
-    MtxAlertModule,
-  ],
+    DataCardLabelComponent,
+    BaseChartDirective,
+    CommonModule,
+],
+  templateUrl: './admin-dashboard.component.html',
 })
-export class AdminDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
-
-    private readonly ngZone = inject(NgZone);
-  private readonly settings = inject(SettingsService);
-  private readonly dashboardSrv = inject(DashboardService);
-
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = this.dashboardSrv.getData();
-
-  messages = this.dashboardSrv.getMessages();
-
-  charts = this.dashboardSrv.getCharts();
-  chart1?: ApexCharts;
-  chart2?: ApexCharts;
-
-  stats = this.dashboardSrv.getStats();
-
-  notifySubscription = Subscription.EMPTY;
-
-  isShowAlert = true;
-
-  introducingItems = [
-    {
-      name: 'Acrodata GUI',
-      description: 'A JSON powered GUI for configurable panels.',
-      link: 'https://github.com/acrodata/gui',
-    },
-    {
-      name: 'Code Editor',
-      description: 'The CodeMirror 6 wrapper for Angular.',
-      link: 'https://github.com/acrodata/code-editor',
-    },
-    {
-      name: 'Watermark',
-      description: 'A watermark component that can prevent deletion.',
-      link: 'https://github.com/acrodata/watermark',
-    },
-    {
-      name: 'RnD Dialog',
-      description: 'Resizable and draggable dialog based on CDK dialog.',
-      link: 'https://github.com/acrodata/rnd-dialog',
-    },
-  ];
-
-  introducingItem = this.introducingItems[this.getRandom(0, 3)];
-
+export class AdminDashboardComponent implements OnInit {
+  
+  @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
+  
   ngOnInit() {
-    this.notifySubscription = this.settings.notify.subscribe(opts => {
-      console.log(opts);
-
-      this.updateCharts();
-    });
   }
 
-  ngAfterViewInit() {
-    this.ngZone.runOutsideAngular(() => this.initCharts());
-  }
-
-  ngOnDestroy() {
-    this.chart1?.destroy();
-    this.chart2?.destroy();
-
-    this.notifySubscription.unsubscribe();
-  }
-
-  initCharts() {
-    this.chart1 = new ApexCharts(document.querySelector('#chart1'), this.charts[0]);
-    this.chart1?.render();
-    this.chart2 = new ApexCharts(document.querySelector('#chart2'), this.charts[1]);
-    this.chart2?.render();
-
-    this.updateCharts();
-  }
-
-  updateCharts() {
-    const isDark = this.settings.getThemeColor() == 'dark';
-
-    this.chart1?.updateOptions({
-      chart: {
-        foreColor: isDark ? '#ccc' : '#333',
+  lineChartType: ChartType = 'line';
+  lineChartData: ChartConfiguration['data'] = {
+    labels: Array.from({ length: 30 }, (_, i) => `Day ${i + 1}`),
+    datasets: [
+      {
+        label: 'Health Records Added',
+        data: Array.from(
+          { length: 30 },
+          () => Math.floor(Math.random() * 50) + 5
+        ),
+        borderColor: '#3b82f6',
+        backgroundColor: 'rgba(59, 130, 246, 0.2)',
+        pointBackgroundColor: '#3b82f6',
+        fill: true,
+        tension: 0.4,
       },
-      tooltip: {
-        theme: isDark ? 'dark' : 'light',
-      },
-      grid: {
-        borderColor: isDark ? '#5a5a5a' : '#e1e1e1',
-      },
-    });
+    ],
+  };
 
-    this.chart2?.updateOptions({
-      chart: {
-        foreColor: isDark ? '#ccc' : '#333',
+  lineChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: {
+      mode: 'index',
+      intersect: false,
+    },
+    plugins: {
+      legend: { display: true },
+    },
+    scales: {
+      x: {},
+      y: {
+        beginAtZero: true,
+        ticks: {
+          callback: (value) => `${value}`,
+        },
       },
-      plotOptions: {
-        radar: {
-          polygons: {
-            strokeColors: isDark ? '#5a5a5a' : '#e1e1e1',
-            connectorColors: isDark ? '#5a5a5a' : '#e1e1e1',
-            fill: {
-              colors: isDark ? ['#2c2c2c', '#222'] : ['#f2f2f2', '#fff'],
-            },
-          },
+    },
+  };
+
+  chartType: ChartType = 'doughnut';
+
+  chartData: ChartConfiguration['data'] = {
+    labels: ['Male', 'Female', 'Other'],
+    datasets: [
+      {
+        data: [45, 50, 5], // Example percentages or counts
+        backgroundColor: ['#3b82f6', '#ec4899', '#a78bfa'],
+        hoverBackgroundColor: ['#2563eb', '#db2777', '#7c3aed'],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  chartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: {
+          color: '#374151',
+          font: { size: 14 },
         },
       },
       tooltip: {
-        theme: isDark ? 'dark' : 'light',
+        callbacks: {
+          label: (ctx) => `${ctx.label}: ${ctx.parsed} %`,
+        },
       },
-    });
-  }
+    },
+  };
 
-  onAlertDismiss() {
-    this.isShowAlert = false;
-  }
-
-  getRandom(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
 }

@@ -1,2 +1,2 @@
 export * from './dashboard.routes';
-export * from './dashboard/dashboard.component';
+export * from '../dashboard/dashboard/dashboard.component';

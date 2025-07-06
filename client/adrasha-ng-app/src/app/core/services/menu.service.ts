@@ -1,46 +1,37 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, share } from 'rxjs';
-
-export interface Menu {
-  label: string; // background color
-  icon: string;
-  to:string;
-}
-
+import { inject, Injectable } from '@angular/core';
+import { Menu, SIDEBAR_MENUS } from '@core/constants';
+import { UserResponseDTORolesItem } from '@core/model/userService';
+import { BehaviorSubject, map, Observable, of } from 'rxjs';
+import { AuthService } from '.';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MenuService {
-  private readonly menu$ = new BehaviorSubject<Menu[]>([]);
+  private readonly authService = inject(AuthService);
 
-  /** Get all the menu data. */
-  getAll() {
-    return this.menu$.asObservable();
+  private menuList: Menu[] = [];
+
+  constructor() {
+    this.authService
+      .user()
+      .pipe(map((user) => user?.roles))
+      .subscribe((roles) => {
+        this.getMenuList(roles);
+      });
   }
 
-  /** Observe the change of menu data. */
-  change() {
-    return this.menu$.pipe(share());
+  private getMenuList(roles: string[] = []) {
+    if (roles?.includes(UserResponseDTORolesItem.ADMIN)) {
+      this.menuList = SIDEBAR_MENUS.admin;
+    } else if (roles?.includes(UserResponseDTORolesItem.ASHA)) {
+      this.menuList = SIDEBAR_MENUS.asha;
+    } else {
+      this.menuList = SIDEBAR_MENUS.admin;
+    }
   }
 
-  /** Initialize the menu data. */
-  set(menu: Menu[]) {
-    // this.menu$.next(menu);
-    // return this.menu$.asObservable();
-
-    // return menuList;
-  }
-
-  /** Add one item to the menu data. */
-  add(menu: Menu) {
-    const tmpMenu = this.menu$.value;
-    tmpMenu.push(menu);
-    this.menu$.next(tmpMenu);
-  }
-
-  /** Reset the menu data. */
-  reset() {
-    this.menu$.next([]);
+  menu(): Observable<Menu[]> {
+    return of(this.menuList);
   }
 }

@@ -5,10 +5,10 @@
     style="box-shadow: var(--mat-sys-level3)"
     class="w-[56px] p-[20px] flex flex-col justify-center items-center rounded-md"
   >
-    @for(menu of menuList ; track menu.label){
+    @for(menu of menuList() ; track menu.label){
     <div
       class="my-[4px] h-[56px] w-[56px] transition-all duration-300"
-      [routerLink]="menu.to"
+      [routerLink]="menu.route"
     >
       <div
         class="h-[32px] md:flex flex-col items-center justify-center transition-colors duration-300 rounded-2xl"

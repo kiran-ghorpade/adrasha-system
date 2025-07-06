@@ -140,14 +140,7 @@
             maxlength="10"
             minlength="10"
           />
-          <mat-error
-            *ngIf="
-              contactInfo.controls.mobileNumber.invalid &&
-              contactInfo.controls.mobileNumber.touched
-            "
-          >
-            Invalid mobile number
-          </mat-error>
+          <!-- <app-validation-error [control]="memberForm.controls.contactInfo.controls.mobileNumber> -->
         </mat-form-field>
 
         <button mat-button matStepperPrevious>Back</button>

@@ -1,33 +1,48 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { inject, Injectable } from '@angular/core';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
+import { UserDTO } from '@core/model/authService';
+import { UserResponseDTORolesItem } from '@core/model/userService';
 import { AuthService } from '@core/services';
+import { map, Observable, of, switchMap, take } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class RoleGuard implements CanActivate {
-  /**
-   * RoleGuard checks if the user has the required roles to access a route.
-   * If the user does not have the required roles, they are redirected to an access denied page.
-   */
-  constructor(
-    private auth: AuthService,
-    private router: Router
-  ) {}
+  private auth = inject(AuthService);
+  private router = inject(Router);
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const expectedRoles = route.data['roles'] as string[] | undefined;
-    let userRoles: string[] = [];
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean> {
+    const expectedRoles = route.data['roles'] as UserResponseDTORolesItem[] | undefined;
 
-    const user = this.auth.user();
-    
-    if (user && 'roles' in user) {
-      userRoles = (user as any).roles || [];
-    }
+    return this.auth.user().pipe(
+      take(1),
+      map((user: UserDTO | null) => {
+        if (user) {
+          const userRoles = user.roles || [];
 
-    const hasRole = expectedRoles?.some(role => userRoles.includes(role));
-    if (!hasRole) {
-      this.router.navigate(['/access-denied']);
-      return false;
-    }
-    return true;
+          const hasRole = expectedRoles?.some((role) =>
+            userRoles.includes(role)
+          );
+
+          return hasRole;
+        }
+
+        return false;
+      }),
+      switchMap((hasRole) => {
+        if (!hasRole) {
+          this.router.navigate(['/notFound']);
+          return of(false);
+        }
+        return of(true);
+      })
+    );
   }
 }

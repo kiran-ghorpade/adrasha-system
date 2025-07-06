@@ -118,7 +118,7 @@ export class HealthCenterService {
     return this.http.get<TData>(
       `http://localhost:8080/masterdata/healthCenters`,{
     ...options,
-        params: {...params, ...options?.params},}
+        ...params, ...options?.params }
     );
   }
  createHealthCenter<TData = HealthCenterResponseDTO>(
@@ -151,7 +151,7 @@ export class HealthCenterService {
     return this.http.get<TData>(
       `http://localhost:8080/masterdata/healthCenters/count`,{
     ...options,
-        params: {...params, ...options?.params},}
+        ...params, ...options?.params }
     );
   }
 };

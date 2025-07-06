@@ -118,7 +118,7 @@ export class HealthRecordService {
     return this.http.get<TData>(
       `http://localhost:8080/data/healthRecords`,{
     ...options,
-        params: {...params, ...options?.params},}
+        ...params, ...options?.params }
     );
   }
  createHealth<TData = HealthRecordResponseDTO>(
@@ -151,7 +151,7 @@ export class HealthRecordService {
     return this.http.get<TData>(
       `http://localhost:8080/data/healthRecords/count`,{
     ...options,
-        params: {...params, ...options?.params},}
+        ...params, ...options?.params }
     );
   }
 };

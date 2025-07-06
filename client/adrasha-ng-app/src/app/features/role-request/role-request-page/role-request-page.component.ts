@@ -5,16 +5,28 @@ import { DataCardLabelComponent } from '../../../shared/components/data-card-lab
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-role-request-page',
   imports: [
     MatTableModule,
-    MatButtonModule,
-    MatIconModule,
     RouterModule,
     DataCardLabelComponent,
-    DashboardHeaderComponent,
+    MatButtonModule,
+    MatStepperModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatToolbarModule,
+    FormsModule,
+    ReactiveFormsModule,
+    PageHeaderComponent,
   ],
   templateUrl: './role-request-page.component.html',
 })

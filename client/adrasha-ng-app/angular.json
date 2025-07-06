@@ -93,6 +93,7 @@
   "schematics": {
     "@schematics/angular:component": {
       "type": "component",
+      "style": "none",
       "skipTests": true
     },
     "@schematics/angular:directive": {

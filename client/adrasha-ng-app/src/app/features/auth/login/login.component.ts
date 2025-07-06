@@ -78,7 +78,7 @@ export class LoginComponent {
       .login(loginRequest)
       .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
-        next: (result) => {
+        next: (result) => {          
           if (result) {
             const translatedMsg =
               this.translateService.instant('login.success');

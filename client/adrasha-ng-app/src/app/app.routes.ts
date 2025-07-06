@@ -1,12 +1,8 @@
 import { Routes } from '@angular/router';
-import { authRoutes } from '@features/auth';
-import { LoginComponent } from '@features/auth/login/login.component';
+import { AuthGuard } from '@core/guards';
+import { RoleGuard } from '@core/guards/role.guard';
+import { UserResponseDTORolesItem } from '@core/model/userService';
 import { PageNotFoundComponent } from '@shared/components/page-not-found/page-not-found.component';
-// import { Error403Component } from '@core/errors/403.component';
-// import { Error404Component } from '@core/errors/404.component';
-// import { Error500Component } from '@core/errors/500.component';
-// import { RegisterComponent } from '@features/auth/register/register.component';
-// import { AdminLayoutComponent } from '@shared/layout/admin-layout/admin-layout.component';
 import { AppLayout } from '@shared/layout/app-layout/app-layout.component';
 import { AuthLayoutComponent } from '@shared/layout/auth-layout/auth-layout.component';
 import { BlankLayoutComponent } from '@shared/layout/blank-layout/blank-layout.component';
@@ -22,6 +18,10 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     title: 'Dashboard',
+    // canActivate: [AuthGuard, RoleGuard],
+    data: {
+      roles: [UserResponseDTORolesItem.ADMIN, UserResponseDTORolesItem.ASHA],
+    },
     component: AppLayout,
     loadChildren: () =>
       import('@features/dashboard/dashboard.routes').then(
@@ -49,10 +49,19 @@ export const routes: Routes = [
   {
     path: 'role-request',
     title: 'Role Request',
-    component: BlankLayoutComponent,
+    component: AppLayout,
     loadChildren: () =>
       import('@features/role-request/role-request.routes').then(
         (route) => route.roleRequestRoutes
+      ),
+  },
+  {
+    path: 'masterdata',
+    title: 'Masterdata',
+    component: AppLayout,
+    loadChildren: () =>
+      import('@features/masterdata/masterdata.routes').then(
+        (route) => route.masterdataRoutes
       ),
   },
   {

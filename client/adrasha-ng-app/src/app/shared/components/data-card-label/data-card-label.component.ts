@@ -4,18 +4,19 @@ import { Component, input } from '@angular/core';
   selector: 'app-data-card-label',
   imports: [],
   template: ` <div
-    class="paper flex flex-col items-center gap-2 p-4 md:p-7 rounded-md"
+    class="paper flex flex-col items-center justify-center gap-2 p-4 md:p-7 rounded-md"
   >
-    <div style="font: var(--mat-sys-headline-medium);">{{value()}}</div>
+    <div class="text-center" style="font: var(--mat-sys-headline-medium);">
+      {{ value() }}
+    </div>
     <div
       style="font: var(--mat-sys-label-large); color: var(--mat-sys-outline);"
     >
-      {{label()}}
+      {{ label() }}
     </div>
   </div>`,
 })
 export class DataCardLabelComponent {
   value = input('Value');
   label = input('Label');
-
 }

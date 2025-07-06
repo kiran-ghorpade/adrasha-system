@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal, ViewChild, WritableSignal } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  ViewChild,
+  WritableSignal,
+} from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -7,8 +14,9 @@ import { RouterModule } from '@angular/router';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartType, Ticks } from 'chart.js';
 import { DataCardLabelComponent } from '@shared/components';
-import { DashboardHeaderComponent } from "../../../../shared/components/dashboard-header/dashboard-header.component";
-
+import { DashboardHeaderComponent } from '../../../../shared/components/dashboard-header/dashboard-header.component';
+import { AnalyticsService } from '@core/api/analytics/analytics.service';
+import { FamilyStats, MemberStats } from '@core/model/analyticsService';
 
 @Component({
   selector: 'app-asha-dashboard',
@@ -20,14 +28,36 @@ import { DashboardHeaderComponent } from "../../../../shared/components/dashboar
     DataCardLabelComponent,
     BaseChartDirective,
     CommonModule,
-    DashboardHeaderComponent
-],
+  ],
   templateUrl: './asha-dashboard.component.html',
 })
-export class AshaDashboardComponent {
+export class AshaDashboardComponent implements OnInit {
+  private readonly analyticsService = inject(AnalyticsService);
+
   currentTime: WritableSignal<Date> = signal(new Date());
+  familyStats = signal<FamilyStats>({
+    totalFamilies: 0,
+    povertyStats: {
+      APL: 8000,
+      BPL: 2000,
+    },
+  });
+
+  memberStats = signal<MemberStats>({
+    totalMembers: 0,
+  });
 
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
+
+  ngOnInit(): void {
+    this.analyticsService.getFamilyStats().subscribe((stats) => {
+      this.familyStats.set(stats);
+    });
+
+    this.analyticsService.getMemberStats().subscribe((stats) => {
+      this.memberStats.set(stats);
+    });
+  }
 
   lineChartType: ChartType = 'line';
   lineChartData: ChartConfiguration['data'] = {
@@ -101,10 +131,4 @@ export class AshaDashboardComponent {
       },
     },
   };
-
-  ngOnInit() {
-    setInterval(() => {
-      this.currentTime.set(new Date());
-    }, 1000); // Update every second
-  }
 }

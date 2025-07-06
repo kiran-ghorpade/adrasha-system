@@ -1,27 +1,24 @@
-<div
-  class="w-full md:hidden shrink-0 "
->
+<div class="w-full md:hidden shrink-0">
   <div
-    id="surface-container"
-    style=" box-shadow: var(--mat-sys-level3)"
+    style="box-shadow: var(--mat-sys-level3)"
     class="w-full bottom-0 fixed md:hidden flex justify-center items-center bg-white"
   >
-    @for(menu of menuList ; track menu.label){
+    @for(menu of menuList() ; track menu.label){
     <div
       class="my-[6px] w-[112px] flex flex-col justify-center items-center transition-all duration-300"
-      [routerLink]="menu.to"
+      [routerLink]="menu.route"
     >
       <div
-        id="secondary-container"
         [ngClass]="{
-          'bg-blue-700': false,
           'hover:bg-blue-300 rounded-md': true
         }"
+        [routerLinkActive]="'bg-blue-500 text-white'"
         class="h-[32px] w-[56px] my-[4px] flex items-center justify-center transition-colors duration-300 rounded-2xl"
       >
-        <mat-icon id="on-surface-variant" class="w-[24px] h-[24px] text-gray-500">{{
-          menu.icon
-        }}</mat-icon>
+        <mat-icon
+          class="w-[24px] h-[24px]"
+          >{{ menu.icon }}</mat-icon
+        >
       </div>
       <div id="label" class="font-light text-xs text-center">
         {{ menu.label }}

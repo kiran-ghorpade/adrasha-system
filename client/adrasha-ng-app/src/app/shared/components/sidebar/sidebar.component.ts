@@ -1,42 +1,17 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
-  OnInit
+  inject,
+  OnInit,
+  signal
 } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterModule } from '@angular/router';
-import { Menu, MenuService } from '@core/services/menu.service';
-
-const menuList: Menu[] = [
-  {
-    label: 'Dashboard',
-    icon: 'dashboard',
-    to: '/dashboard',
-  },
-  {
-    label: 'Registry',
-    icon: 'app_registration',
-    to: '/registry',
-  },
-  {
-    label: 'Search',
-    icon: 'search',
-    to: '/search',
-  },
-  {
-    label: 'Analytics',
-    icon: 'show_chart',
-    to: '/anaytics',
-  },
-  {
-    label: 'Reports',
-    icon: 'picture_as_pdf',
-    to: '/reports',
-  },
-];
+import { Menu } from '@core/constants';
+import { MenuService } from '@core/services/menu.service';
 
 @Component({
   selector: 'app-side-navbar',
@@ -52,11 +27,13 @@ const menuList: Menu[] = [
   ],
 })
 export class SideNavBar implements OnInit {
-  menuList: Menu[] = menuList;
+  private readonly menuService = inject(MenuService);
 
-  constructor(private menuService: MenuService) {}
+  menuList = signal<Menu[]>([]);
 
   ngOnInit() {
-    // this.menuList.set(menuList);
+    this.menuService.menu().subscribe((menu) => {
+      this.menuList.set(menu);
+    });
   }
 }

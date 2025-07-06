@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { AuthenticationService } from '@core/api/authentication/authentication.service';
+import { SIDEBAR_MENUS } from '@core/constants';
 import {
   AuthTokenResponse,
   LoginRequest,
@@ -13,6 +14,7 @@ import { TokenService } from '@core/services';
 import {
   BehaviorSubject,
   catchError,
+  iif,
   Observable,
   of,
   share,
@@ -85,20 +87,4 @@ export class AuthService {
   user(): Observable<UserDTO | null> {
     return this.currentUser$.pipe(share());
   }
-
-  // logout() {
-  //   return this.authenticationService.logout().pipe(
-  //     tap(() => this.tokenService.clear()),
-  //     map(() => !this.check()),
-  //     tap(() => this.currentUser$.next(null)),
-  //     catchError((error) => {
-  //       console.error('AuthService error:', error);
-  //       return of(false);
-  //     })
-  //   );
-  // }
-
-  // menu() {
-  //   return iif(() => this.check(), SIDEBAR_MENUS.admin, of([]));
-  // }
 }

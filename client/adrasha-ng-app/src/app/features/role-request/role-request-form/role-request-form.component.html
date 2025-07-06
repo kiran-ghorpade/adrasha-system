@@ -1,0 +1,84 @@
+<div class="flex flex-col gap-5">
+  <app-page-header title="New Role Request" />
+  <mat-stepper orientation="vertical" [linear]="true" #stepper>
+    <!-- First Step -->
+    <mat-step [stepControl]="roleRequestForm.controls.name">
+      <form [formGroup]="roleRequestForm.controls.name">
+        <ng-template matStepLabel>Fill Name</ng-template>
+        <mat-form-field class="w-full">
+          <mat-label>{{ "name.password" | translate }}</mat-label>
+          <input matInput required formControlName="firstname" />
+          <app-validation-error
+            [control]="this.roleRequestForm.controls.name.controls.firstname"
+          />
+        </mat-form-field>
+        <mat-form-field class="w-full">
+          <mat-label>{{ "name.password" | translate }}</mat-label>
+          <input matInput required formControlName="firstname" />
+          <app-validation-error
+            [control]="this.roleRequestForm.controls.name.controls.midlename"
+          />
+        </mat-form-field>
+        <mat-form-field class="w-full">
+          <mat-label>{{ "name.password" | translate }}</mat-label>
+          <input matInput required formControlName="firstname" />
+          <app-validation-error
+            [control]="this.roleRequestForm.controls.name.controls.lastname"
+          />
+        </mat-form-field>
+        <div>
+          <button matButton matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <!-- Second Step -->
+    <mat-step [stepControl]="roleRequestForm">
+      <form [formGroup]="roleRequestForm">
+        <ng-template matStepLabel>Choose Role</ng-template>
+        <mat-form-field>
+          <mat-label>Select Role</mat-label>
+          <mat-select>
+            @for (role of roles(); track
+            role.code) {
+            <mat-option [value]="`${role.code}`">{{
+              role.label
+            }}</mat-option>
+            }
+          </mat-select> </mat-form-field
+        >
+        <div>
+          <button matButton matStepperPrevious>Back</button>
+          <button matButton matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <!-- Third Step -->
+    <mat-step [stepControl]="roleRequestForm">
+      <form [formGroup]="roleRequestForm">
+        <ng-template matStepLabel>Choose HealthCenter</ng-template>
+        <mat-form-field>
+          <mat-label>HealthCenter</mat-label>
+          <input
+            matInput
+            placeholder="Last name, First name"
+            formControlName="name"
+            required
+          />
+        </mat-form-field>
+        <div>
+          <button matButton matStepperPrevious>Back</button>
+          <button matButton matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <!-- Last Step -->
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You are now done.</p>
+      <div>
+        <button matButton matStepperPrevious>Back</button>
+        <button matButton (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</div>

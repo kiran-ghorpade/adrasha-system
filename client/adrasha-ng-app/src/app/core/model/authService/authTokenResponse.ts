@@ -5,10 +5,9 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { JwtUser } from './jwtUser';
-import { UserDTO } from './userDTO';
 
 export interface AuthTokenResponse {
-  user?: UserDTO;
+  user?: JwtUser;
   accessToken?: string;
   tokenType?: string;
   expiresIn?: number;

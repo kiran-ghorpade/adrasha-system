@@ -1,10 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,7 +10,12 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { StaticDataService } from '@core/api/static-data/static-data.service';
 import { FamilyRegistrationDTO } from '@core/model/dataService';
 import { StaticDataDTO } from '@core/model/masterdataService';
+import { AuthService } from '@core/services';
+import { TranslatePipe } from '@ngx-translate/core';
 import { PageHeaderComponent } from '@shared/components';
+import { FamilyFormFactoryService } from './family-form-factory.service';
+import { FamilyRegistrationService } from './family-registration.service';
+import { ValidationErrorComponent } from "../../../../shared/components/validation-error/validation-error.component";
 
 @Component({
   selector: 'app-family-registration-form',
@@ -29,106 +29,92 @@ import { PageHeaderComponent } from '@shared/components';
     MatIconModule,
     MatToolbarModule,
     PageHeaderComponent,
+    TranslatePipe,
     ReactiveFormsModule,
-  ],
+    ValidationErrorComponent
+],
   templateUrl: './family-registration-form.component.html',
 })
 export class FamilyRegistrationFormComponent implements OnInit {
-  isLinear = false;
-  private formBuilder = inject(FormBuilder);
-  private masterDataService = inject(StaticDataService);
+  private readonly authService = inject(AuthService);
+  private readonly familyFormFactory = inject(FamilyFormFactoryService);
+  private readonly staticDataService = inject(StaticDataService);
+  private readonly familyRegistrationService = inject(
+    FamilyRegistrationService
+  );
 
-  // default static data
+  // default static data and states
+  readonly isLoading = signal(false);
   povertyStatusList = signal<StaticDataDTO[]>([]);
   genderList = signal<StaticDataDTO[]>([]);
-
-  // form groups
-  formGroup = this.formBuilder.group({
-    familyFormGroup: this.formBuilder.group({
-      povertyStatus: ['APL', Validators.required],
-    }),
-    headMemberFormGroup: this.formBuilder.group({
-      firstname: ['', Validators.required],
-      middlename: ['', Validators.required],
-      lastname: ['', Validators.required],
-      gender: ['', Validators.required],
-      dateOfBirth: ['', Validators.required],
-      birthPlace: [''],
-      adharNumber: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(12),
-          Validators.maxLength(12),
-        ],
-      ],
-      abhaNumber: [''],
-      mobileNumber: ['', [Validators.pattern(/^[6-9]\d{9}$/)]],
-      maritalStatus: ['true', Validators.required],
-    }),
-  });
+  userId = signal('');
 
   ngOnInit() {
-    this.masterDataService
-      .getPovertyStatuses()
-      .subscribe((list) => {
-        this.povertyStatusList.set(list);
-      });
-    this.masterDataService
-      .getGenders()
-      .subscribe((genders) => {
-        this.genderList.set(genders);
-      });
+    this.loadStaticData();
+    this.loadUserData();
+  }
+
+  formGroup = this.familyFormFactory.createForm(this.isLoading());
+
+  public get familyFormGroup() {
+    return this.formGroup.controls.familyFormGroup;
+  }
+
+  public get headMemberPersonalDetailsGroup() {
+    return this.formGroup.controls.headMemberPersonalDetailsGroup;
+  }
+
+  public get headMemberOtherDetailsGroup() {
+    return this.formGroup.controls.headMemberOtherDetailsGroup;
   }
 
   onSubmit() {
-    if (this.formGroup.valid) {
-      const { povertyStatus } = this.familyFormGroup.value;
+    if (this.formGroup.invalid) {
+      this.formGroup.markAllAsTouched();
+      return;
+    }
+    const formData = this.prepareFormData();
+    this.familyRegistrationService.submitForm(formData, this.userId());
+  }
 
-      const {
-        firstname,
-        middlename,
-        lastname,
+  // Helper Methods
+  private loadStaticData() {
+    this.staticDataService
+      .getPovertyStatuses()
+      .subscribe((list) => this.povertyStatusList.set(list));
+    this.staticDataService
+      .getGenders()
+      .subscribe((genders) => this.genderList.set(genders));
+  }
+
+  private loadUserData() {
+    this.authService.user().subscribe((user) => {
+      this.userId.set(user?.id || '');
+    });
+  }
+
+  public prepareFormData(): FamilyRegistrationDTO {
+    const { povertyStatus } = this.familyFormGroup.getRawValue();
+    const { firstname, middlename, lastname, gender, dateOfBirth, birthPlace } =
+      this.headMemberPersonalDetailsGroup.getRawValue();
+
+    const { adharNumber, mobileNumber } =
+      this.headMemberOtherDetailsGroup.getRawValue();
+
+    return {
+      family: {
+        ashaId: this.userId(),
+        locationId: '',
+        povertyStatus,
+      },
+      headMember: {
+        name: { firstname, middlename, lastname },
         gender,
         dateOfBirth,
         birthPlace,
         adharNumber,
         mobileNumber,
-      } = this.headMemberFormGroup.value;
-
-      const formData: FamilyRegistrationDTO = {
-        family: {
-          ashaId: 'TODO',
-          locationId: 'TODO',
-          povertyStatus,
-        },
-        headMember: {
-          name: {
-            firstname,
-            middlename,
-            lastname,
-          },
-          gender,
-          dateOfBirth,
-          birthPlace,
-          adharNumber,
-          mobileNumber,
-        },
-      };
-
-      console.log('Submitting family data:', formData);
-      // TODO: send data to backend here
-    } else {
-      this.formGroup.markAllAsTouched();
-      this.headMemberFormGroup.markAllAsTouched();
-    }
-  }
-
-  public get familyFormGroup(): FormGroup {
-    return this.formGroup.get('familyFormGroup') as FormGroup;
-  }
-
-  public get headMemberFormGroup(): FormGroup {
-    return this.formGroup.get('headMemberFormGroup') as FormGroup;
+      },
+    };
   }
 }

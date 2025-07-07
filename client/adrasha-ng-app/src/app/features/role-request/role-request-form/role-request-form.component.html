@@ -1,83 +1,163 @@
 <div class="flex flex-col gap-5">
-  <app-page-header title="New Role Request" />
+  <app-page-header
+    title="{{ 'roleReqeust.addroleReqeustTitle' | translate }}"
+  />
   <mat-stepper orientation="vertical" [linear]="true" #stepper>
-    <!-- First Step -->
-    <mat-step [stepControl]="roleRequestForm.controls.name">
-      <form [formGroup]="roleRequestForm.controls.name">
-        <ng-template matStepLabel>Fill Name</ng-template>
-        <mat-form-field class="w-full">
-          <mat-label>{{ "name.password" | translate }}</mat-label>
-          <input matInput required formControlName="firstname" />
-          <app-validation-error
-            [control]="this.roleRequestForm.controls.name.controls.firstname"
-          />
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>{{ "name.password" | translate }}</mat-label>
-          <input matInput required formControlName="firstname" />
-          <app-validation-error
-            [control]="this.roleRequestForm.controls.name.controls.midlename"
-          />
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>{{ "name.password" | translate }}</mat-label>
-          <input matInput required formControlName="firstname" />
-          <app-validation-error
-            [control]="this.roleRequestForm.controls.name.controls.lastname"
-          />
-        </mat-form-field>
-        <div>
-          <button matButton matStepperNext>Next</button>
+    <!-- Personal Details -->
+    <mat-step [stepControl]="personalDetails">
+      <form [formGroup]="personalDetails">
+        <ng-template matStepLabel>{{
+          "roleReqeust.step1Title" | translate
+        }}</ng-template>
+        <div class="flex gap-3 flex-wrap md:w-2/3">
+          <mat-form-field>
+            <mat-label>{{
+              "roleReqeust.firstnameLabel" | translate
+            }}</mat-label>
+            <input matInput formControlName="firstname" required />
+            <app-validation-error
+              [control]="personalDetails.controls.firstname"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{
+              "roleReqeust.middlenameLabel" | translate
+            }}</mat-label>
+            <input matInput formControlName="middlename" required />
+            <app-validation-error
+              [control]="personalDetails.controls.middlename"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{ "roleReqeust.lastnameLabel" | translate }}</mat-label>
+            <input matInput formControlName="lastname" required />
+            <app-validation-error
+              [control]="personalDetails.controls.lastname"
+            />
+          </mat-form-field>
         </div>
-      </form>
-    </mat-step>
-    <!-- Second Step -->
-    <mat-step [stepControl]="roleRequestForm">
-      <form [formGroup]="roleRequestForm">
-        <ng-template matStepLabel>Choose Role</ng-template>
-        <mat-form-field>
-          <mat-label>Select Role</mat-label>
-          <mat-select>
-            @for (role of roles(); track
-            role.code) {
-            <mat-option [value]="`${role.code}`">{{
-              role.label
-            }}</mat-option>
-            }
-          </mat-select> </mat-form-field
-        >
         <div>
           <button matButton matStepperPrevious>Back</button>
           <button matButton matStepperNext>Next</button>
         </div>
       </form>
     </mat-step>
-    <!-- Third Step -->
-    <mat-step [stepControl]="roleRequestForm">
-      <form [formGroup]="roleRequestForm">
-        <ng-template matStepLabel>Choose HealthCenter</ng-template>
-        <mat-form-field>
-          <mat-label>HealthCenter</mat-label>
-          <input
-            matInput
-            placeholder="Last name, First name"
-            formControlName="name"
-            required
-          />
-        </mat-form-field>
+
+    <!-- Role Details -->
+    <mat-step [stepControl]="roleDetails">
+      <form [formGroup]="roleDetails">
+        <ng-template matStepLabel>{{
+          "roleReqeust.step2Title" | translate
+        }}</ng-template>
+        <div class="flex gap-3 flex-wrap md:w-2/3">
+          <mat-form-field>
+            <mat-label>{{ "roleReqeust.roleLabel" | translate }}</mat-label>
+            <mat-select required>
+              @for (role of roleList(); track role.code) {
+              <mat-option [value]="`${role.code}`">{{
+                role.label
+              }}</mat-option>
+              }
+            </mat-select>
+            <app-validation-error [control]="roleDetails.controls.role" />
+          </mat-form-field>
+        </div>
         <div>
           <button matButton matStepperPrevious>Back</button>
           <button matButton matStepperNext>Next</button>
         </div>
       </form>
     </mat-step>
-    <!-- Last Step -->
+
+    <!-- HealthCenter Details -->
+    <mat-step [stepControl]="healthCenterDetails">
+      <form [formGroup]="healthCenterDetails">
+        <ng-template matStepLabel>{{
+          "roleReqeust.step3Title" | translate
+        }}</ng-template>
+        <div class="flex gap-3 flex-wrap md:w-2/3">
+         <mat-form-field>
+            <mat-label>{{ "roleReqeust.countryLabel" | translate }}</mat-label>
+            <mat-select required>
+              @for (role of roleList(); track role.code) {
+              <mat-option [value]="`${role.code}`">{{
+                role.label
+              }}</mat-option>
+              }
+            </mat-select>
+            <app-validation-error [control]="roleDetails.controls.role" />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ "roleReqeust.stateLabel" | translate }}</mat-label>
+            <mat-select required>
+              @for (role of roleList(); track role.code) {
+              <mat-option [value]="`${role.code}`">{{
+                role.label
+              }}</mat-option>
+              }
+            </mat-select>
+            <app-validation-error [control]="roleDetails.controls.role" />
+          </mat-form-field>
+
+           <mat-form-field>
+            <mat-label>{{ "roleReqeust.districtLabel" | translate }}</mat-label>
+            <mat-select required>
+              @for (role of roleList(); track role.code) {
+              <mat-option [value]="`${role.code}`">{{
+                role.label
+              }}</mat-option>
+              }
+            </mat-select>
+            <app-validation-error [control]="roleDetails.controls.role" />
+          </mat-form-field>
+
+           <mat-form-field>
+            <mat-label>{{ "roleReqeust.subdistrictLabel" | translate }}</mat-label>
+            <mat-select required>
+              @for (role of roleList(); track role.code) {
+              <mat-option [value]="`${role.code}`">{{
+                role.label
+              }}</mat-option>
+              }
+            </mat-select>
+            <app-validation-error [control]="roleDetails.controls.role" />
+          </mat-form-field>
+
+           <mat-form-field>
+            <mat-label>{{ "roleReqeust.localityTypeLabel" | translate }}</mat-label>
+            <mat-select required>
+              @for (role of roleList(); track role.code) {
+              <mat-option [value]="`${role.code}`">{{
+                role.label
+              }}</mat-option>
+              }
+            </mat-select>
+            <app-validation-error [control]="roleDetails.controls.role" />
+          </mat-form-field>
+        </div>
+
+        <div>
+          <button matButton matStepperPrevious>Back</button>
+          <button matButton matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <!-- Done -->
     <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
-      <p>You are now done.</p>
+      <ng-template matStepLabel>{{
+        "roleReqeust.doneTitle" | translate
+      }}</ng-template>
+      <p>{{ "roleReqeust.doneMessage" | translate }}</p>
       <div>
         <button matButton matStepperPrevious>Back</button>
-        <button matButton (click)="stepper.reset()">Reset</button>
+        <button matButton (click)="stepper.reset()">
+          {{ "roleReqeust.resetButton" | translate }}
+        </button>
+        <button matButton="filled" (click)="onSubmit()">
+          {{ "roleReqeust.submitButton" | translate }}
+        </button>
       </div>
     </mat-step>
   </mat-stepper>

@@ -42,8 +42,7 @@ export class RegisterComponent {
   private readonly authService = inject(AuthService);
   private readonly alertService = inject(AlertService);
   private readonly translateService = inject(TranslateService);
-
-  fb = new FormBuilder();
+  private fb = inject(FormBuilder);
 
   readonly isLoading = signal(false);
   readonly isError = signal(false);
@@ -89,7 +88,9 @@ export class RegisterComponent {
       .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
         next: () => {
-          const translatedMsg = this.translateService.instant('registration.success')
+          const translatedMsg = this.translateService.instant(
+            'registration.success'
+          );
           this.alertService.showAlert(translatedMsg, 'success');
           this.registerForm.reset();
           this.router.navigateByUrl('/auth/login', { replaceUrl: true });

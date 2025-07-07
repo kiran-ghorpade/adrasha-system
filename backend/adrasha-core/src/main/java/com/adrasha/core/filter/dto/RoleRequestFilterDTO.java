@@ -16,5 +16,5 @@ public class RoleRequestFilterDTO {
 	
 	private RequestStatus status;
 	
-	private UUID healthCenter;
+	private UUID healthCenterId;
 }

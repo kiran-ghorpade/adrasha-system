@@ -27,7 +27,7 @@ export class DashboardComponent {
 
   currentTime: WritableSignal<Date> = signal(new Date());
   isAdmin = signal(false);
-  isAsha = signal(true);
+  isAsha = signal(false);
   isUser = signal(false);
 
   ngOnInit() {

@@ -1,36 +1,37 @@
 <div class="h-full w-full grid md:grid-rows-10 grid-cols-12 gap-2">
-
   <!-- Values -->
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-4">
     <app-data-card-label [value]="`500`" [label]="`Users`" />
   </div>
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-5">
-    <app-data-card-label [value]="`1000`" [label]="`Population`" />
-  </div>
-  <div class="row-span-4 col-span-12 md:col-span-3 paper md:order-none order-8">
-    <canvas
-      baseChart
-      [data]="chartData"
-      [type]="chartType"
-      [options]="chartOptions"
-    >
-    </canvas>
-  </div>
-  <div class="row-span-4 col-span-12 md:col-span-3 paper md:order-none order-9">
-    <canvas
-      baseChart
-      [data]="chartData"
-      [type]="chartType"
-      [options]="chartOptions"
-    >
-    </canvas>
+    <app-data-card-label [value]="`1000`" [label]="`Pending Requests`" />
   </div>
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-6">
-    <app-data-card-label [value]="`1000`" [label]="`NCD Population`" />
+    <app-data-card-label [value]="`1000`" [label]="`Health Centers`" />
   </div>
-  <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-7">
-    <app-data-card-label [value]="`1000`" [label]="`Pregnant Women`" />
+  <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-4">
+    <app-data-card-label [value]="`500`" [label]="`Locations`" />
   </div>
+
+  <!-- Charts -->
+  <div class="row-span-6 col-span-12 md:col-span-6 paper md:order-none order-8">
+    <canvas
+      baseChart
+      [data]="chartData"
+      [type]="chartType"
+      [options]="chartOptions"
+    >
+    </canvas>
+  </div>
+  <!-- <div class="row-span-4 col-span-12 md:col-span-3 paper md:order-none order-9">
+    <canvas
+      baseChart
+      [data]="chartData"
+      [type]="chartType"
+      [options]="chartOptions"
+    >
+    </canvas>
+  </div> -->
 
   <!-- records line charts -->
   <div
@@ -44,7 +45,7 @@
     ></canvas>
   </div>
 
-  <div
+  <!-- <div
     class="row-span-6 col-span-12 md:col-span-6 md:order-none order-10 paper p-2"
-  ></div>
+  ></div> -->
 </div>

@@ -31,6 +31,8 @@ import {
 import { finalize } from 'rxjs';
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 import { MatSelectModule } from '@angular/material/select';
+import { RoleRequestFormFactoryService } from './role-request-form-factory.service';
+import { RoleRequestService as RoleRequestFormService } from './role-request.service';
 
 @Component({
   selector: 'app-role-request-form',
@@ -54,95 +56,77 @@ import { MatSelectModule } from '@angular/material/select';
   templateUrl: './role-request-form.component.html',
 })
 export class RoleRequestFormComponent implements OnInit {
-  private readonly router = inject(Router);
   private readonly authService = inject(AuthService);
-  private readonly roleRequestService = inject(RoleRequestService);
+  private readonly roleRequestFactory = inject(RoleRequestFormFactoryService);
   private readonly staticDataService = inject(StaticDataService);
-  private readonly alertService = inject(AlertService);
-  private readonly translateService = inject(TranslateService);
+  private readonly RoleRequestService = inject(RoleRequestFormService);
 
-  fb = new FormBuilder();
-
+  // default static data and states
   readonly isLoading = signal(false);
+  povertyStatusList = signal<StaticDataDTO[]>([]);
+  roleList = signal<StaticDataDTO[]>([]);
+  userId = signal('');
 
-  readonly userId = signal('');
-  readonly roles = signal<StaticDataDTO[]>([]);
+  ngOnInit() {
+    this.loadStaticData();
+    this.loadUserData();
+  }
 
-  readonly roleRequestForm = this.fb.nonNullable.group({
-    name: this.fb.nonNullable.group({
-      firstname: this.fb.nonNullable.control(
-        { value: '', disabled: this.isLoading() },
-        [Validators.required, Validators.minLength(3)]
-      ),
-      midlename: this.fb.nonNullable.control(
-        { value: '', disabled: this.isLoading() },
-        [Validators.required, Validators.minLength(3)]
-      ),
-      lastname: this.fb.nonNullable.control(
-        { value: '', disabled: this.isLoading() },
-        [Validators.required, Validators.minLength(3)]
-      ),
-    }),
-    role: this.fb.nonNullable.control(
-      { value: RoleRequestCreateDTORole.ADMIN, disabled: this.isLoading() },
-      [Validators.required, Validators.minLength(8)]
-    ),
-    healthCenter: this.fb.group(
-      this.fb.nonNullable.control({ value: '', disabled: this.isLoading() }, [
-        Validators.required,
-        Validators.minLength(8),
-      ])
-    ),
-  });
+  formGroup = this.roleRequestFactory.createForm(this.isLoading());
 
-  ngOnInit(): void {
-    this.authService.user().subscribe({
-      next: (user) => {
-        this.userId.set(user?.id || '');
-      },
-    });
+  public get personalDetails() {
+    return this.formGroup.controls.personalDetails;
+  }
 
-    this.staticDataService.getRoles().subscribe({
-      next: (roleList) => {
-        this.roles.set(roleList);
-      },
+  public get roleDetails() {
+    return this.formGroup.controls.roleDetails;
+  }
+
+  public get healthCenterDetails() {
+    return this.formGroup.controls.healthCenterDetails;
+  }
+
+  onSubmit() {
+    if (this.formGroup.invalid) {
+      this.formGroup.markAllAsTouched();
+      return;
+    }
+    const formData = this.prepareFormData();
+    this.RoleRequestService.submitForm(formData, this.userId());
+  }
+
+  // Helper Methods
+  private loadStaticData() {
+    this.staticDataService
+      .getPovertyStatuses()
+      .subscribe((list) => this.povertyStatusList.set(list));
+    this.staticDataService
+      .getGenders()
+      .subscribe((genders) => this.genderList.set(genders));
+  }
+
+  private loadUserData() {
+    this.authService.user().subscribe((user) => {
+      this.userId.set(user?.id || '');
     });
   }
 
-  submit() {
-    if (this.roleRequestForm.invalid) {
-      this.roleRequestForm.markAllAsTouched();
-      return;
-    }
+  public prepareFormData(): RoleRequestCreateDTO {
+    const { firstname, middlename, lastname } =
+      this.personalDetails.getRawValue();
+    const { role } = this.roleDetails.getRawValue();
 
-    this.isLoading.set(true);
+    const { healthCenterId } = this.healthCenterDetails.getRawValue();
 
-    const { healthCenter, role, name } = this.roleRequestForm.getRawValue();
-
-    const roleReqeust: RoleRequestCreateDTO = {
+    return {
       userId: this.userId(),
-      healthCenter: '',
+      name: {
+        firstname,
+        middlename,
+        lastname,
+      },
       role,
-      name,
+      healthCenterId,
     };
-
-    this.roleRequestService
-      .createRoleRequest(roleReqeust)
-      .pipe(finalize(() => this.isLoading.set(false)))
-      .subscribe({
-        next: () => {
-          const translatedMsg = this.translateService.instant(
-            'roleRequest.success'
-          );
-          this.alertService.showAlert(translatedMsg, 'success');
-          this.roleRequestForm.reset();
-          this.router.navigateByUrl('/role-request', { replaceUrl: true });
-        },
-        error: (err) => {
-          const translatedMsg =
-            this.translateService.instant('roleRequest.failed');
-          this.alertService.showAlert(translatedMsg, 'error');
-        },
-      });
   }
 }

@@ -2,6 +2,8 @@
 export * from './auth.service';
 // export * from './token-factory.service';
 export * from './token.service';
+export * from './alert.service'
+export * from './menu.service'
 // export * from './settings.service';
 // export * from './preloader.service';
 // export * from './menu.service';

@@ -11,5 +11,5 @@ export interface RoleRequestCreateDTO {
   userId: string;
   name?: Name;
   role: RoleRequestCreateDTORole;
-  healthCenter: string;
+  healthCenterId: string;
 }

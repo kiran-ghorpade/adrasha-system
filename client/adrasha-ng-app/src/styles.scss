@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @use "tailwindcss/utilities" as *;
+@use '@angular/material' as mat;
 
 .mat-drawer,
 .mat-sidenav,
@@ -11,6 +12,7 @@
 /* Reset body and html padding/margins if Angular Material adds unexpected margin */
 html,
 body {
+  // color-scheme: light dark;
   margin: 0 !important;
   padding: 0 !important;
   height: 100% !important;
@@ -18,8 +20,20 @@ body {
   text-wrap-style: balance;
 }
 
+
 // surfaces
-.paper {
-  box-shadow: var(--mat-sys-level1);
-  background-color: var(--mat-sys-surface);
+
+
+@media (prefers-color-scheme: dark) {
+  .paper {
+    box-shadow: var(--mat-sys-level1);
+    background-color: var(--mat-sys-surface-dark);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .paper {
+    box-shadow: var(--mat-sys-level1);
+    background-color: var(--mat-sys-surface);
+  }
 }

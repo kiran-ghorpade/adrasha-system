@@ -1,12 +1,12 @@
 <div class="h-full w-full grid md:grid-rows-12 grid-cols-12 gap-2">
   <!-- Greetings -->
   <div class="row-span-2 col-span-12 p-3">
-    @if (isAdmin()) {
-    <app-dashboard-header greetings="Hello, Admin" />
-    } @else if(isAsha()){
-    <app-dashboard-header greetings="Hello, Asha" />
-    } @else if(isUser()){
-    <app-dashboard-header greetings="Hello, User" message="Welcome" />
+    @if(!isAdmin() && !isAsha()){
+    <app-dashboard-header
+      message="You don't have enough permission to access application."
+    />
+    } @else {
+    <app-dashboard-header />
     }
   </div>
 

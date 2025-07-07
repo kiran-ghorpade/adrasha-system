@@ -13,7 +13,6 @@ import lombok.Data;
 @Schema
 public class FamilyDataFilterDTO {
 	
-	private UUID locationId;
 	private UUID ashaId;
 	private PovertyStatus povertyStatus;
 

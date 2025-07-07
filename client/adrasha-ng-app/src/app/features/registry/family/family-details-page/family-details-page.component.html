@@ -1,6 +1,7 @@
 <div class="h-full grid grid-cols-12 md:gap-3">
   <div class="col-span-12 md:col-span-8">
     <div class="flex flex-col gap-2 w-full h-full">
+      <!-- Page Header -->
       <div class="">
         <app-page-header title="Family Details">
           <mat-action-list>
@@ -10,8 +11,9 @@
           </mat-action-list>
         </app-page-header>
       </div>
+
+      <!-- Family Details -->
       <div class="">
-        <!-- <h4 class="text-lg font-normal text-center">Ramesh Ghorpade</h4> -->
         <div
           style="
             box-shadow: var(--mat-sys-level1);
@@ -21,22 +23,35 @@
         >
           <mat-list>
             <app-data-label
-              name="familyId"
-              value="13122"
-              icon="shower"
+              name="HeadMember"
+              [value]="getFullName(headMemberDetails().name)"
+              icon="person"
+            ></app-data-label>
+            <app-data-label
+              name="Mobile Number"
+              [value]="headMemberDetails().mobileNumber || 'NOT FOUND'"
+              icon="phone"
             ></app-data-label>
           </mat-list>
+
           <mat-list>
             <app-data-label
-              name="familyId"
-              value="13122"
-              icon="shower"
+              name="Poverty Status"
+              [value]="familyDetails().povertyStatus || 'NOT FOUND'"
+              icon="home"
+            ></app-data-label>
+            <app-data-label
+              name="Registration Date"
+              [value]="headMemberDetails().createdAt || 'NOT FOUND'"
+              icon="event"
             ></app-data-label>
           </mat-list>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Member List -->
   <div class="col-span-12 md:col-span-4">
     <div
       class="flex flex-col p-2 gap-5"
@@ -46,7 +61,12 @@
       "
     >
       <div class="flex justify-center">
-        <button matFab extended [routerLink]="'/registry/member/register'">
+        <button
+          matFab
+          extended
+          [routerLink]="'/registry/member/new'"
+          [queryParams]="{familyId}"
+        >
           <mat-icon>add</mat-icon>
           Add New Member
         </button>

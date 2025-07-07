@@ -17,7 +17,12 @@ import { StaticDataService } from '@core/api/static-data/static-data.service';
 import { MemberCreateDTO } from '@core/model/dataService';
 import { StaticDataDTO } from '@core/model/masterdataService';
 import { PageHeaderComponent } from '@shared/components';
-import { ValidationErrorComponent } from "../../../../shared/components/validation-error/validation-error.component";
+import { ValidationErrorComponent } from '../../../../shared/components/validation-error/validation-error.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { AuthService } from '@core/services';
+import { MemberFormFactoryService } from './member-form-factory.service';
+import { MemberRegistrationService } from './member-registration.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-member-registration-form',
@@ -32,100 +37,93 @@ import { ValidationErrorComponent } from "../../../../shared/components/validati
     FormsModule,
     ReactiveFormsModule,
     PageHeaderComponent,
-    ValidationErrorComponent
-],
+    TranslatePipe,
+    ValidationErrorComponent,
+  ],
   templateUrl: './member-registration-form.component.html',
 })
 export class MemberRegistrationFormComponent implements OnInit {
-  private formBuilder = inject(FormBuilder);
-  private masterDataService = inject(StaticDataService);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly authService = inject(AuthService);
+  private readonly memberFormFactory = inject(MemberFormFactoryService);
+  private readonly staticDataService = inject(StaticDataService);
+  private readonly memberRegistrationService = inject(
+    MemberRegistrationService
+  );
 
-  // default static data
+  // default static data and states
+  readonly isLoading = signal(false);
+  povertyStatusList = signal<StaticDataDTO[]>([]);
   genderList = signal<StaticDataDTO[]>([]);
-
-  // forms
-  memberForm: FormGroup;
-
-  constructor() {
-    this.memberForm = this.formBuilder.group({
-      basicInfo: this.formBuilder.group({
-        firstname: ['', Validators.required],
-        middlename: ['', Validators.required],
-        lastname: ['', Validators.required],
-        gender: ['', Validators.required],
-      }),
-
-      birthDetails: this.formBuilder.group({
-        dateOfBirth: ['', Validators.required],
-        birthPlace: [''],
-      }),
-
-      governmentId: this.formBuilder.group({
-        adharNumber: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(12),
-            Validators.maxLength(12),
-          ],
-        ],
-        abhaNumber: [''],
-      }),
-
-      contactInfo: this.formBuilder.group({
-        mobileNumber: ['', [Validators.pattern(/^[6-9]\d{9}$/)]],
-      }),
-    });
-  }
+  userId = '';
+  familyId = '';
 
   ngOnInit() {
-    this.masterDataService.getGenders().subscribe((genders) => {
-      this.genderList.set(genders);
-    });
+    this.familyId = this.activatedRoute.snapshot.paramMap.get('familyId') || '';
+    this.loadStaticData();
+    this.loadUserData();
+  }
+
+  formGroup = this.memberFormFactory.createForm(this.isLoading());
+
+  public get personalDetails() {
+    return this.formGroup.controls.personalDetails;
+  }
+
+  public get birthDetails() {
+    return this.formGroup.controls.birthDetails;
+  }
+
+  public get identificationDetails() {
+    return this.formGroup.controls.identificationDetails;
+  }
+
+  public get contactDetails() {
+    return this.formGroup.controls.contactDetails;
   }
 
   onSubmit() {
-    if (this.memberForm.valid) {
-      const { firstname, middlename, lastname, gender } = this.basicInfo.value;
-
-      const { dateOfBirth, birthPlace } = this.birthDetails.value;
-
-      const { adharNumber, abhaNumber } = this.governmentId.value;
-
-      const { mobileNumber } = this.contactInfo.value;
-
-      const formData: MemberCreateDTO = {
-        ashaId: '',
-        familyId: '',
-        name: { firstname, middlename, lastname },
-        gender,
-        dateOfBirth,
-        birthPlace,
-        adharNumber,
-        abhaNumber,
-        mobileNumber,
-      };
-
-      console.log('Submitting family data:', formData);
-      // TODO: submit to backend
-    } else {
-      this.memberForm.markAllAsTouched();
+    if (this.formGroup.invalid) {
+      this.formGroup.markAllAsTouched();
+      return;
     }
+    const formData = this.prepareFormData();
+    this.memberRegistrationService.submitForm(formData);
   }
 
-  get basicInfo() {
-    return this.memberForm.get('basicInfo') as FormGroup;
+  // Helper Methods
+  private loadStaticData() {
+    this.staticDataService
+      .getGenders()
+      .subscribe((genders) => this.genderList.set(genders));
   }
 
-  get birthDetails() {
-    return this.memberForm.get('birthDetails') as FormGroup;
+  private loadUserData() {
+    this.authService.user().subscribe((user) => {
+      this.userId = user?.id || '';
+    });
   }
 
-  get governmentId() {
-    return this.memberForm.get('governmentId') as FormGroup;
-  }
+  public prepareFormData(): MemberCreateDTO {
+    const { firstname, middlename, lastname, gender } =
+      this.personalDetails.getRawValue();
+    const { dateOfBirth, birthPlace } = this.birthDetails.getRawValue();
 
-  get contactInfo() {
-    return this.memberForm.get('contactInfo') as FormGroup;
+    const { adharNumber, abhaNumber } =
+      this.identificationDetails.getRawValue();
+
+    const { mobileNumber } = this.contactDetails.getRawValue();
+
+    return {
+      ashaId: this.userId,
+      familyId: this.familyId,
+      name: { firstname, middlename, lastname },
+      gender,
+      dateOfBirth,
+      birthPlace,
+      adharNumber,
+      abhaNumber,
+      mobileNumber,
+    };
   }
 }

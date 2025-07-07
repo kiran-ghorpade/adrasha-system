@@ -12,8 +12,6 @@ import lombok.Data;
 @Schema
 public class FamilyCreateDTO {
 
-	@NotNull
-	private UUID locationId;
 	
 	@NotNull
 	private UUID ashaId;

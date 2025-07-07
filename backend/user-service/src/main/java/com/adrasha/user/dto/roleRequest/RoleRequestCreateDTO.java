@@ -24,5 +24,5 @@ public class RoleRequestCreateDTO {
 	private Role role;
 	
 	@NotNull
-	private UUID healthCenter;
+	private UUID healthCenterId;
 }

@@ -27,5 +27,5 @@ public class RoleRequestUpdateDTO {
 	private Role role;
 	
 	@NotNull
-	private UUID healthCenter;
+	private UUID healthCenterId;
 }

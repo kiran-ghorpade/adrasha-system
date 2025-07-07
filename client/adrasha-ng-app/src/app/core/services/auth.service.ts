@@ -30,7 +30,16 @@ export class AuthService {
   private readonly authenticationService = inject(AuthenticationService);
   private readonly tokenService = inject(TokenService);
 
-  private currentUser$ = new BehaviorSubject<UserDTO | null>(null);
+  private currentUser$ = new BehaviorSubject<UserDTO | null>({
+    id: 'u9u34u239',
+    roles: [
+      // 'ADMIN',
+      // 'ASHA',
+      'USER'
+    ],
+    status: 'PENDING',
+    username: 'Kiran',
+  });
 
   readonly isLoggedIn$ = this.currentUser$.pipe(
     tap((user) => console.log(!!user)),

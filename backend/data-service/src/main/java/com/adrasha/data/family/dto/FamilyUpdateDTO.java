@@ -14,9 +14,6 @@ public class FamilyUpdateDTO {
 	
 	@NotNull
 	private UUID headMemberId;
-	
-	@NotNull
-	private UUID locationId;
 
 	@NotNull
 	private UUID ashaId;

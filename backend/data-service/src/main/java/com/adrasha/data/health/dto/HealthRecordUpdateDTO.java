@@ -5,22 +5,14 @@ import java.util.Set;
 import java.util.UUID;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
+import jakarta.persistence.ElementCollection;
 import lombok.Data;
 
 
 @Data
 @Schema
-public class HealthCreateDTO {
-
-	@NotNull
-	private UUID memberId;
-    
-	@NotNull
-	private UUID ashaId;
+public class HealthRecordUpdateDTO {
 	
-	@PastOrPresent
 	private Instant date;
 	
     private Boolean pregnant;
@@ -29,6 +21,7 @@ public class HealthCreateDTO {
 	
 	private Double weight;
 	
+    @ElementCollection
 	private Set<UUID> NCDList;
 
 }

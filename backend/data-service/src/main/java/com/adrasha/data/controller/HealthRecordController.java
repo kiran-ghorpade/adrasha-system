@@ -28,8 +28,8 @@ import com.adrasha.core.dto.ValidationErrorResponse;
 import com.adrasha.core.filter.dto.HealthRecordFilterDTO;
 import com.adrasha.core.page.dto.HealthRecordPageResponseDTO;
 import com.adrasha.core.response.dto.HealthRecordResponseDTO;
-import com.adrasha.data.health.dto.HealthCreateDTO;
-import com.adrasha.data.health.dto.HealthUpdateDTO;
+import com.adrasha.data.health.dto.HealthRecordCreateDTO;
+import com.adrasha.data.health.dto.HealthRecordUpdateDTO;
 import com.adrasha.data.model.HealthRecord;
 import com.adrasha.data.service.HealthRecordService;
 
@@ -100,7 +100,7 @@ public class HealthRecordController {
 	@ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = HealthRecordResponseDTO.class)))
 	@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
 	@ApiResponse(responseCode = "409", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
-    public ResponseEntity<HealthRecordResponseDTO> createHealth(@Valid @RequestBody HealthCreateDTO healthCreateDTO) {
+    public ResponseEntity<HealthRecordResponseDTO> createHealth(@Valid @RequestBody HealthRecordCreateDTO healthCreateDTO) {
         HealthRecord health = mapper.map(healthCreateDTO, HealthRecord.class);
         HealthRecord created = healthService.createHealthRecord(health);
         HealthRecordResponseDTO dto = mapper.map(created, HealthRecordResponseDTO.class);
@@ -117,7 +117,7 @@ public class HealthRecordController {
     @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = HealthRecordResponseDTO.class)))
 	@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
 	@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))	
-    public HealthRecordResponseDTO updateHealthRecord(@PathVariable UUID id, @Valid @RequestBody HealthUpdateDTO updatedHealth) {
+    public HealthRecordResponseDTO updateHealthRecord(@PathVariable UUID id, @Valid @RequestBody HealthRecordUpdateDTO updatedHealth) {
         HealthRecord health = mapper.map(updatedHealth, HealthRecord.class);
         HealthRecord updated = healthService.updateHealthRecord(id, health);
         return mapper.map(updated, HealthRecordResponseDTO.class);

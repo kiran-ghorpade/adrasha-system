@@ -12,9 +12,9 @@ import { HealthRecordFormComponent } from './health/health-record-form/health-re
 
 export const registryRoutes: Route[] = [
   { path: '', component: RegistryPageComponent },
-  { path: 'family/register', component: FamilyRegistrationFormComponent },
+  { path: 'family/new', component: FamilyRegistrationFormComponent },
   { path: 'family/:id', component: FamilyDetailsPageComponent },
-  { path: 'member/register', component : MemberRegistrationFormComponent },
+  { path: 'member/new', component: MemberRegistrationFormComponent },
   { path: 'member/:id', component: MemberDetailsPageComponent },
   { path: 'health/records', component: HealthRecordsPageComponent },
   { path: 'health/records/new', component: HealthRecordFormComponent },

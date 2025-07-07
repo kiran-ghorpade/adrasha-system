@@ -27,7 +27,7 @@ export class MenuService {
     } else if (roles?.includes(UserResponseDTORolesItem.ASHA)) {
       this.menuList = SIDEBAR_MENUS.asha;
     } else {
-      this.menuList = SIDEBAR_MENUS.admin;
+      this.menuList = SIDEBAR_MENUS.user;
     }
   }
 

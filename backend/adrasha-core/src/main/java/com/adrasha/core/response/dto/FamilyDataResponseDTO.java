@@ -15,9 +15,7 @@ public class FamilyDataResponseDTO {
 	private UUID id;
 
 	private UUID headMemberId;
-	
-	private UUID locationId;
-	
+		
 	private UUID ashaId;
 	
 	private PovertyStatus povertyStatus;

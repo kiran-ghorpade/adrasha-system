@@ -56,7 +56,6 @@ public class FamilyServiceImpl implements FamilyDataService {
 	public Family createFamily(Family family, Member headMember) {
 		
 		remoteDataService.verifyUserExist(family.getAshaId());
-		remoteDataService.verifyLocationExist(family.getLocationId());
 
 		Member newMember = memberRepository.save(headMember);
 		
@@ -80,7 +79,6 @@ public class FamilyServiceImpl implements FamilyDataService {
 		}
 		
 		remoteDataService.verifyUserExist(updatedFamilyDetails.getAshaId());
-		remoteDataService.verifyLocationExist(updatedFamilyDetails.getLocationId());
 		
 		return familyRepository.save(family);
 	}

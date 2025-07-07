@@ -41,12 +41,12 @@ export class LoginComponent {
   private readonly authService = inject(AuthService);
   private readonly alertService = inject(AlertService);
   private readonly translateService = inject(TranslateService);
+  private fb = inject(FormBuilder);
 
-  fb = new FormBuilder();
-
+  // states
   readonly isLoading = signal(false);
-  readonly isError = signal(false);
 
+  // form
   readonly loginForm = this.fb.nonNullable.group({
     username: this.fb.nonNullable.control(
       { value: '', disabled: this.isLoading() },
@@ -58,6 +58,7 @@ export class LoginComponent {
     ),
   });
 
+  // login logic
   login(): void {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
@@ -65,7 +66,6 @@ export class LoginComponent {
     }
 
     this.isLoading.set(true);
-    this.isError.set(false);
 
     const { username, password } = this.loginForm.getRawValue();
 
@@ -78,7 +78,7 @@ export class LoginComponent {
       .login(loginRequest)
       .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
-        next: (result) => {          
+        next: (result) => {
           if (result) {
             const translatedMsg =
               this.translateService.instant('login.success');
@@ -88,17 +88,12 @@ export class LoginComponent {
           }
         },
         error: (err) => {
-          if (err.status === 400 && err.error.errors) {
-            Object.entries(err.error.errors).forEach(([field, message]) => {
-              const control = this.loginForm.get(field);
-              if (control) {
-                control.setErrors({ serverError: message });
-              }
-            });
-          } else {
-            const translatedMsg = this.translateService.instant('login.failed');
-            this.alertService.showAlert(translatedMsg, 'error');
+          if (err.status === 400) {
+            console.error(err);
+            return;
           }
+          const translatedMsg = this.translateService.instant('login.failed');
+          this.alertService.showAlert(translatedMsg, 'error');
         },
       });
   }

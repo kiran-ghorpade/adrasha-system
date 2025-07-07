@@ -27,8 +27,6 @@ public class Family extends Auditable{
 	@Column(nullable = false, unique = true)
 	private UUID headMemberId;
 	
-	private UUID locationId;
-	
 	private UUID ashaId;
 	
 	@Enumerated(EnumType.STRING)

@@ -27,5 +27,83 @@
     "min": "Minimum value allowed is {{minValue}}.",
     "max": "Maximum value allowed is {{maxValue}}.",
     "inconsistent": "The value is inconsistent with {{fieldName}}."
+  },
+  "registry": {
+    "family": {
+      "addFamilyTitle": "Add New Family",
+      "step1Title": "Fill Family Details",
+      "step2Title": "Fill Head Member's Personal Details",
+      "step3Title": "Fill Head Member's Other Details",
+      "doneTitle": "Done",
+      "doneMessage": "You are now done.",
+      "submitButton": "Submit",
+      "resetButton": "Reset",
+
+      "povertyStatusLabel": "Select Poverty Status",
+      "firstnameLabel": "Firstname",
+      "middlenameLabel": "Middlename",
+      "lastnameLabel": "Lastname",
+      "genderLabel": "Gender",
+      "dobLabel": "Date of Birth",
+      "birthPlaceLabel": "Birth Place",
+      "adharNumberLabel": "Adhar Number",
+      "abhaNumberLabel": "Abha Number",
+      "mobileNumberLabel": "Mobile Number",
+
+      "registration": {
+        "success": "Family Registration successful",
+        "failed": "Family Registration failed"
+      }
+    },
+
+    "member": {
+      "addMemberTitle": "Add New Member",
+      "step1Title": "Personal Details",
+      "step2Title": "Birth Details",
+      "step3Title": "Identification Details",
+      "step4Title": "Contact Details",
+      "doneTitle": "Done",
+      "doneMessage": "You are now done.",
+      "submitButton": "Submit",
+      "resetButton": "Reset",
+
+      "firstnameLabel": "Firstname",
+      "middlenameLabel": "Middlename",
+      "lastnameLabel": "Lastname",
+      "genderLabel": "Gender",
+      "dobLabel": "Date of Birth",
+      "birthPlaceLabel": "Birth Place",
+      "adharNumberLabel": "Aadhar Number",
+      "abhaNumberLabel": "ABHA Number",
+      "mobileNumberLabel": "Mobile Number",
+
+      "registration": {
+        "success": "Member Registration successful",
+        "failed": "Member Registration failed"
+      }
+    },
+
+    "healthRecord": {
+      "addhealthRecordTitle": "Add Health Record",
+      "step1Title": "Basic Details",
+      "step2Title": "Health Status",
+      "step3Title": "Pregnancy Status",
+      "step4Title": "NCD (Non-Communicable Diseases)",
+      "doneTitle": "Done",
+      "doneMessage": "You are now done.",
+      "submitButton": "Submit",
+      "resetButton": "Reset",
+
+      "dateLabel": "Date",
+      "heightLabel": "Height (cm)",
+      "weightLabel": "Weight (kg)",
+      "pregnantLabel": "Pregnant",
+      "ncdlistLabel": "Select NCDs",
+
+      "registration": {
+        "success": "Health Record Registration successful",
+        "failed": "Health Record Registration failed"
+      }
+    }
   }
 }

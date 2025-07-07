@@ -30,7 +30,7 @@ public class RoleRequestResponseDTO {
 	
 	private RequestStatus status;
 	
-	private UUID healthCenter;
+	private UUID healthCenterId;
 	
 	private Instant createdAt;
 	

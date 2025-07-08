@@ -1,79 +1,82 @@
-<div class="h-full grid grid-cols-12 gap-3">
-  <div class="col-span-12 md:col-span-9">
-    <div class="flex flex-col gap-2 w-full h-full">
-      <div class="">
-        <app-page-header title="Health Details">
-          <mat-action-list>
-            <a matIconButton>
-              <mat-icon>more_vert</mat-icon>
-            </a>
-          </mat-action-list>
-        </app-page-header>
+<app-page-wrapper>
+  <div top>
+    <app-page-header title="Health Details">
+      <mat-action-list>
+        <a matIconButton>
+          <mat-icon>more_vert</mat-icon>
+        </a>
+      </mat-action-list>
+    </app-page-header>
+  </div>
+
+  <div content class="w-full flex flex-wrap gap-3">
+    <!-- Health Details -->
+    <div class="paper h-max flex-[3] flex flex-wrap">
+      <div class="flex-[2]">
+        <mat-list>
+          <app-data-label
+            name="familyId"
+            value="13122"
+            icon="shower"
+          ></app-data-label>
+          <app-data-label
+            name="familyId"
+            value="13122"
+            icon="shower"
+          ></app-data-label>
+          <app-data-label
+            name="familyId"
+            value="13122"
+            icon="shower"
+          ></app-data-label>
+          <app-data-label
+            name="familyId"
+            value="13122"
+            icon="shower"
+          ></app-data-label>
+        </mat-list>
       </div>
-      <div class="paper" >
-        <!-- <h4 class="text-lg font-normal text-center">Ramesh Ghorpade</h4> -->
-        <div matSubheader>Current Health Status</div>
-        <div class="flex justify-around">
-          <mat-list>
-            <app-data-label
-              name="familyId"
-              value="13122"
-              icon="shower"
-            ></app-data-label>
-            <app-data-label
-              name="familyId"
-              value="13122"
-              icon="shower"
-            ></app-data-label>
-            <app-data-label
-              name="familyId"
-              value="13122"
-              icon="shower"
-            ></app-data-label>
-            <app-data-label
-              name="familyId"
-              value="13122"
-              icon="shower"
-            ></app-data-label>
-          </mat-list>
-          <mat-list>
-            <app-data-label
-              name="familyId"
-              value="13122"
-              icon="shower"
-            ></app-data-label>
-            <app-data-label
-              name="familyId"
-              value="13122"
-              icon="shower"
-            ></app-data-label>
-            <app-data-label
-              name="familyId"
-              value="13122"
-              icon="shower"
-            ></app-data-label>
-            <app-data-label
-              name="familyId"
-              value="13122"
-              icon="shower"
-            ></app-data-label>
-          </mat-list>
-        </div>
+      <div class="flex-[2]">
+        <mat-list>
+          <app-data-label
+            name="familyId"
+            value="13122"
+            icon="shower"
+          ></app-data-label>
+          <app-data-label
+            name="familyId"
+            value="13122"
+            icon="shower"
+          ></app-data-label>
+          <app-data-label
+            name="familyId"
+            value="13122"
+            icon="shower"
+          ></app-data-label>
+          <app-data-label
+            name="familyId"
+            value="13122"
+            icon="shower"
+          ></app-data-label>
+        </mat-list>
       </div>
     </div>
-  </div>
-  <div class="col-span-12 md:col-span-3 p-2">
-    <div class="h-full flex flex-col gap-3 justify-center">
-      <button matFab extended [routerLink]="'/registry/health/records/new'">
+
+    <!-- Actions -->
+    <div class=" flex-[1] flex  flex-col p-2 gap-5">
+      <button
+        matButton="filled"
+        [routerLink]="'/registry/health/records/new'"
+      >
         <mat-icon>add</mat-icon>
         Add New Health Record
       </button>
-      <a matButton="elevated" [routerLink]="`/registry/member/1`"
+      <a matButton="outlined" [routerLink]="`/registry/member/1`"
         >View Member Profile
       </a>
-      <a matButton="elevated" [routerLink]="`/registry/health/records`"
+      <a matButton="outlined" [routerLink]="`/registry/health/records`"
         >View Past Health Records
       </a>
     </div>
   </div>
-</div>
+</app-page-wrapper>

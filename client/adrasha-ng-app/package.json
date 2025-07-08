@@ -28,7 +28,9 @@
     "@tailwindcss/postcss": "^4.1.11",
     "base64-js": "^1.5.1",
     "chart.js": "^4.5.0",
+    "ng-qrcode": "^20.0.0",
     "ng2-charts": "^8.0.0",
+    "ngx-print": "^3.2.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

@@ -8,6 +8,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { DataLabelComponent } from '@shared/components/data-label/data-label.component';
 import { PageHeaderComponent } from "../../../../shared/components/page-header/page-header.component";
+import { PageWrapperComponent } from "../../../../shared/components/page-wrapper/page-wrapper.component";
 
 @Component({
   selector: 'app-member-details-page',
@@ -20,7 +21,8 @@ import { PageHeaderComponent } from "../../../../shared/components/page-header/p
     DataLabelComponent,
     RouterModule,
     CommonModule,
-    PageHeaderComponent
+    PageHeaderComponent,
+    PageWrapperComponent
 ],
   templateUrl: './member-details-page.component.html',
 })

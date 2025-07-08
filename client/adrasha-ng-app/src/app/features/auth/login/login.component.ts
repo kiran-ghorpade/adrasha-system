@@ -42,6 +42,7 @@ export class LoginComponent {
   private readonly alertService = inject(AlertService);
   private readonly translateService = inject(TranslateService);
   private fb = inject(FormBuilder);
+  hide = signal(true);
 
   // states
   readonly isLoading = signal(false);
@@ -57,6 +58,12 @@ export class LoginComponent {
       [Validators.required, Validators.minLength(8)]
     ),
   });
+
+  hidePassword(event: MouseEvent) {
+    event.preventDefault();
+    this.hide.set(!this.hide());
+    event.stopPropagation();
+  }
 
   // login logic
   login(): void {

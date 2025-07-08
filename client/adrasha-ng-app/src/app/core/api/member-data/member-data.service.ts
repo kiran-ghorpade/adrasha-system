@@ -48,8 +48,6 @@ type HttpClientOptions = {
   withCredentials?: boolean;
 };
 
-
-
 @Injectable({ providedIn: 'root' })
 export class MemberDataService {
   constructor(

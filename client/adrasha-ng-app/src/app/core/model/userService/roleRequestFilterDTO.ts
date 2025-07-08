@@ -11,4 +11,5 @@ export interface RoleRequestFilterDTO {
   role?: RoleRequestFilterDTORole;
   status?: RoleRequestFilterDTOStatus;
   healthCenter?: string;
+  userId?:string,
 }

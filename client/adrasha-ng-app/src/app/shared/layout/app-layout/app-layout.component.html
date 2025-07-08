@@ -10,9 +10,15 @@
     id="secondary-container"
     class="w-full flex flex-col md:px-5 md:pb-2 gap-1"
   >
+    @if(isDashboard()){
     <app-top-appbar />
+    }@else {
+    <div class="hidden md:block">
+      <app-top-appbar />
+    </div>
+    }
     <div
-      class="h-full overflow-scroll mb-14 md:m-0 rounded-md md:p-2"
+      class="h-full w-full overflow-scroll mb-14 md:m-0 rounded-md md:p-2"
       style="box-shadow: var(--mat-sys-level3)"
     >
       <router-outlet />

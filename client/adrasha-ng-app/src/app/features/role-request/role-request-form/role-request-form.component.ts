@@ -1,38 +1,32 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import {
-  FormBuilder,
   FormsModule,
-  ReactiveFormsModule,
-  Validators,
+  ReactiveFormsModule
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { Router, RouterModule } from '@angular/router';
-import { RoleRequestService } from '@core/api/role-request/role-request.service';
+import { RouterModule } from '@angular/router';
 import { StaticDataService } from '@core/api/static-data/static-data.service';
 import { StaticDataDTO } from '@core/model/masterdataService';
 import {
-  RoleRequestCreateDTO,
-  RoleRequestCreateDTORole,
+  RoleRequestCreateDTO
 } from '@core/model/userService';
 import { AuthService } from '@core/services';
-import { AlertService } from '@core/services/alert.service';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import {
-  DataCardLabelComponent,
-  ValidationErrorComponent,
+  ValidationErrorComponent
 } from '@shared/components';
-import { finalize } from 'rxjs';
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
-import { MatSelectModule } from '@angular/material/select';
 import { RoleRequestFormFactoryService } from './role-request-form-factory.service';
 import { RoleRequestService as RoleRequestFormService } from './role-request.service';
+import { PageWrapperComponent } from "../../../shared/components/page-wrapper/page-wrapper.component";
 
 @Component({
   selector: 'app-role-request-form',
@@ -52,7 +46,8 @@ import { RoleRequestService as RoleRequestFormService } from './role-request.ser
     MatToolbarModule,
     FormsModule,
     ReactiveFormsModule,
-  ],
+    PageWrapperComponent
+],
   templateUrl: './role-request-form.component.html',
 })
 export class RoleRequestFormComponent implements OnInit {
@@ -98,11 +93,11 @@ export class RoleRequestFormComponent implements OnInit {
   // Helper Methods
   private loadStaticData() {
     this.staticDataService
-      .getPovertyStatuses()
-      .subscribe((list) => this.povertyStatusList.set(list));
-    this.staticDataService
-      .getGenders()
-      .subscribe((genders) => this.genderList.set(genders));
+      .getRoles()
+      .subscribe((list) => this.roleList.set(list));
+    // this.staticDataService
+    //   .getGenders()
+    //   .subscribe((genders) => this.genderList.set(genders));
   }
 
   private loadUserData() {

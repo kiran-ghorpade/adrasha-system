@@ -12,7 +12,7 @@
 /* Reset body and html padding/margins if Angular Material adds unexpected margin */
 html,
 body {
-  // color-scheme: light dark;
+  // color-scheme: light dark; // remove .paper if enabled
   margin: 0 !important;
   padding: 0 !important;
   height: 100% !important;
@@ -22,18 +22,22 @@ body {
 
 
 // surfaces
-
-
-@media (prefers-color-scheme: dark) {
-  .paper {
-    box-shadow: var(--mat-sys-level1);
-    background-color: var(--mat-sys-surface-dark);
-  }
+// remove this on color-scheme
+.paper {
+  box-shadow: var(--mat-sys-level1);
+  background-color: var(--mat-sys-surface);
 }
 
-@media (prefers-color-scheme: light) {
-  .paper {
-    box-shadow: var(--mat-sys-level1);
-    background-color: var(--mat-sys-surface);
-  }
-}
+// @media (prefers-color-scheme: dark) {
+//   .paper {
+//     box-shadow: var(--mat-sys-level1);
+//     background-color: var(--mat-sys-surface-dark);
+//   }
+// }
+
+// @media (prefers-color-scheme: light) {
+//   .paper {
+//     box-shadow: var(--mat-sys-level1);
+//     background-color: var(--mat-sys-surface);
+//   }
+// }

@@ -1,65 +1,50 @@
-<div class="h-full grid grid-cols-12 md:gap-3">
-  <div class="col-span-12 md:col-span-8">
-    <div class="flex flex-col gap-2 w-full h-full">
-      <!-- Page Header -->
-      <div class="">
-        <app-page-header title="Family Details">
-          <mat-action-list>
-            <a matIconButton>
-              <mat-icon>more_vert</mat-icon>
-            </a>
-          </mat-action-list>
-        </app-page-header>
-      </div>
-
-      <!-- Family Details -->
-      <div class="">
-        <div
-          style="
-            box-shadow: var(--mat-sys-level1);
-            background-color: var(--mat-sys-surface);
-          "
-          class="flex justify-around"
-        >
-          <mat-list>
-            <app-data-label
-              name="HeadMember"
-              [value]="getFullName(headMemberDetails().name)"
-              icon="person"
-            ></app-data-label>
-            <app-data-label
-              name="Mobile Number"
-              [value]="headMemberDetails().mobileNumber || 'NOT FOUND'"
-              icon="phone"
-            ></app-data-label>
-          </mat-list>
-
-          <mat-list>
-            <app-data-label
-              name="Poverty Status"
-              [value]="familyDetails().povertyStatus || 'NOT FOUND'"
-              icon="home"
-            ></app-data-label>
-            <app-data-label
-              name="Registration Date"
-              [value]="headMemberDetails().createdAt || 'NOT FOUND'"
-              icon="event"
-            ></app-data-label>
-          </mat-list>
-        </div>
-      </div>
-    </div>
+<app-page-wrapper>
+  <div top>
+    <app-page-header title="Family Details">
+      <mat-action-list>
+        <a matIconButton>
+          <mat-icon>more_vert</mat-icon>
+        </a>
+      </mat-action-list>
+    </app-page-header>
   </div>
 
-  <!-- Member List -->
-  <div class="col-span-12 md:col-span-4">
-    <div
-      class="flex flex-col p-2 gap-5"
-      style="
-        box-shadow: var(--mat-sys-level1);
-        background-color: var(--mat-sys-surface);
-      "
-    >
+  <div content class="flex flex-wrap justify-evenly gap-3">
+    <!-- Family Details -->
+    <div class="w-full paper h-max flex-[3] flex flex-wrap">
+      <div class="flex-[2]">
+        <mat-list>
+          <app-data-label
+            name="HeadMember"
+            [value]="getFullName(headMemberDetails().name)"
+            icon="person"
+          ></app-data-label>
+          <app-data-label
+            name="Mobile Number"
+            [value]="headMemberDetails().mobileNumber || 'NOT FOUND'"
+            icon="phone"
+          ></app-data-label>
+        </mat-list>
+      </div>
+
+      <div class="flex-[2]">
+        <mat-list>
+          <app-data-label
+            name="Poverty Status"
+            [value]="familyDetails().povertyStatus || 'NOT FOUND'"
+            icon="home"
+          ></app-data-label>
+          <app-data-label
+            name="Registration Date"
+            [value]="headMemberDetails().createdAt || 'NOT FOUND'"
+            icon="event"
+          ></app-data-label>
+        </mat-list>
+      </div>
+    </div>
+
+    <!-- Member List -->
+    <div class="w-full paper flex-[2] flex flex-col p-2 gap-5">
       <div class="flex justify-center">
         <button
           matFab
@@ -83,4 +68,4 @@
       </mat-action-list>
     </div>
   </div>
-</div>
+</app-page-wrapper>

@@ -34,15 +34,15 @@ export class AuthService {
     id: 'u9u34u239',
     roles: [
       // 'ADMIN',
-      // 'ASHA',
-      'USER'
+      'ASHA',
+      // 'USER'
     ],
     status: 'PENDING',
     username: 'Kiran',
   });
 
   readonly isLoggedIn$ = this.currentUser$.pipe(
-    tap((user) => console.log(!!user)),
+    tap((user) => console.log(user)),
     switchMap((user) => of(!!user))
   );
 

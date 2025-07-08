@@ -16,7 +16,8 @@ public class CORSConfiguration {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                    .allowedOriginPatterns("*")   // customize origins here
+                	.allowedOrigins("https://377l555m-4200.inc1.devtunnels.ms")
+                	.allowedOriginPatterns("*")   // customize origins here
                     .allowedMethods("*")   // GET, POST, PUT, DELETE etc
                     .allowedHeaders("*")
                     .allowCredentials(true);

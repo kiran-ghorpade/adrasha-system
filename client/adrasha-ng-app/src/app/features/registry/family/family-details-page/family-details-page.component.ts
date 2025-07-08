@@ -16,6 +16,7 @@ import {
 } from '@core/model/dataService';
 import { FamilyDataService } from '@core/api/family-data/family-data.service';
 import { MemberDataService } from '@core/api/member-data/member-data.service';
+import { PageWrapperComponent } from "../../../../shared/components/page-wrapper/page-wrapper.component";
 
 @Component({
   selector: 'app-family-details-page',
@@ -30,7 +31,8 @@ import { MemberDataService } from '@core/api/member-data/member-data.service';
     RouterModule,
     CommonModule,
     PageHeaderComponent,
-  ],
+    PageWrapperComponent
+],
   templateUrl: './family-details-page.component.html',
 })
 export class FamilyDetailsPageComponent implements OnInit {

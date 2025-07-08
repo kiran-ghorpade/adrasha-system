@@ -6,6 +6,8 @@ import com.adrasha.core.model.RequestStatus;
 import com.adrasha.core.model.Role;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Data;
 
 @Data
@@ -17,4 +19,7 @@ public class RoleRequestFilterDTO {
 	private RequestStatus status;
 	
 	private UUID healthCenterId;
+	
+	private UUID userId;
+
 }

@@ -12,7 +12,7 @@
             <mat-label>{{
               "registry.family.povertyStatusLabel" | translate
             }}</mat-label>
-            <mat-select>
+            <mat-select required>
               @for (povertyStatus of povertyStatusList(); track
               povertyStatus.code) {
               <mat-option [value]="`${povertyStatus.code}`">{{

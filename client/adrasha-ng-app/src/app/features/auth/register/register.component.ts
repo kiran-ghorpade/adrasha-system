@@ -95,7 +95,7 @@ export class RegisterComponent {
           this.registerForm.reset();
           this.router.navigateByUrl('/auth/login', { replaceUrl: true });
         },
-        error: (err) => {
+        error: () => {
           const translatedMsg = this.translateService.instant(
             'registration.failed'
           );

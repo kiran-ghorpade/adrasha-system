@@ -85,20 +85,13 @@ export class LoginComponent {
       .login(loginRequest)
       .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
-        next: (result) => {
-          if (result) {
-            const translatedMsg =
-              this.translateService.instant('login.success');
-            this.alertService.showAlert(translatedMsg, 'success');
-            this.loginForm.reset();
-            this.router.navigateByUrl('/dashboard', { replaceUrl: true });
-          }
+        next: () => {
+          const translatedMsg = this.translateService.instant('login.success');
+          this.alertService.showAlert(translatedMsg, 'success');
+          this.loginForm.reset();
+          this.router.navigateByUrl('/dashboard', { replaceUrl: true });
         },
-        error: (err) => {
-          if (err.status === 400) {
-            console.error(err);
-            return;
-          }
+        error: () => {
           const translatedMsg = this.translateService.instant('login.failed');
           this.alertService.showAlert(translatedMsg, 'error');
         },

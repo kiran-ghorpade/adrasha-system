@@ -3,20 +3,20 @@ import {
   Component,
   inject,
   OnInit,
+  output,
   signal,
   ViewChild,
-  WritableSignal,
+  WritableSignal
 } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
-import { BaseChartDirective } from 'ng2-charts';
-import { ChartConfiguration, ChartType, Ticks } from 'chart.js';
-import { DataCardLabelComponent } from '@shared/components';
-import { DashboardHeaderComponent } from '../../../../shared/components/dashboard-header/dashboard-header.component';
 import { AnalyticsService } from '@core/api/analytics/analytics.service';
 import { FamilyStats, MemberStats } from '@core/model/analyticsService';
+import { DataCardLabelComponent } from '@shared/components';
+import { ChartConfiguration, ChartType } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
 
 @Component({
   selector: 'app-asha-dashboard',
@@ -33,6 +33,7 @@ import { FamilyStats, MemberStats } from '@core/model/analyticsService';
 })
 export class AshaDashboardComponent implements OnInit {
   private readonly analyticsService = inject(AnalyticsService);
+  loadingStateChange = output<boolean>();
 
   currentTime: WritableSignal<Date> = signal(new Date());
   familyStats = signal<FamilyStats>({
@@ -48,15 +49,24 @@ export class AshaDashboardComponent implements OnInit {
   });
 
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
+  isLoading = signal(false);
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.setLoading(true);
+
     this.analyticsService.getFamilyStats().subscribe((stats) => {
       this.familyStats.set(stats);
     });
 
     this.analyticsService.getMemberStats().subscribe((stats) => {
       this.memberStats.set(stats);
+      this.setLoading(false);
     });
+  }
+
+  setLoading(loading: boolean) {
+    this.isLoading.set(loading);
+    this.loadingStateChange.emit(this.isLoading());
   }
 
   lineChartType: ChartType = 'line';

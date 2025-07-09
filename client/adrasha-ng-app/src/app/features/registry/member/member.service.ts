@@ -30,9 +30,7 @@ export class MemberService {
       error: (err) => {
         if (err.status === 400) {
           console.log(err);
-          return;
         }
-
         const translatedMsg = this.translateService.instant(
           'registry.member.registration.failed'
         );
@@ -57,9 +55,7 @@ export class MemberService {
       error: (err) => {
         if (err.status === 400) {
           console.log(err);
-          return;
         }
-
         const translatedMsg = this.translateService.instant(
           'registry.member.update.failed'
         );
@@ -70,16 +66,17 @@ export class MemberService {
 
   deleteMember(memberId: string, familyId: string) {
     this.memberService.deleteMember(memberId).subscribe({
-      next: (result) => {
+      next: () => {
         const translatedMsg = this.translateService.instant(
           'registry.member.deletion.success'
         );
-        this.alertService.showAlert(translatedMsg, 'success');
+        this.alertService.showAlert(translatedMsg, 'success');  
         this.router.navigateByUrl(`/registry/family/${familyId}`, {
           replaceUrl: true,
         });
       },
       error: (err) => {
+        console.log(err);
         const translatedMsg = this.translateService.instant(
           'registry.member.deletion.failed'
         );

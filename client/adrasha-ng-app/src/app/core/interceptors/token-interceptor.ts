@@ -1,6 +1,7 @@
 import {
   HttpErrorResponse,
   HttpHandlerFn,
+  HttpInterceptorFn,
   HttpRequest,
 } from '@angular/common/http';
 import { inject } from '@angular/core';
@@ -8,10 +9,10 @@ import { Router } from '@angular/router';
 import { TokenService } from '@core/services';
 import { catchError, tap, throwError } from 'rxjs';
 
-export function tokenInterceptor(
+export const tokenInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
-) {
+) => {
   const router = inject(Router);
   const tokenService = inject(TokenService);
 
@@ -42,4 +43,4 @@ export function tokenInterceptor(
   }
 
   return next(req).pipe(tap(() => handler()));
-}
+};

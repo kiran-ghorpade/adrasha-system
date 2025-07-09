@@ -15,6 +15,7 @@ import {
   BehaviorSubject,
   catchError,
   iif,
+  map,
   Observable,
   of,
   share,
@@ -30,24 +31,29 @@ export class AuthService {
   private readonly authenticationService = inject(AuthenticationService);
   private readonly tokenService = inject(TokenService);
 
-  private currentUser$ = new BehaviorSubject<UserDTO | null>({
-    id: 'u9u34u239',
-    roles: [
-      // 'ADMIN',
-      'ASHA',
-      // 'USER'
-    ],
-    status: 'PENDING',
-    username: 'Kiran',
-  });
+  private currentUser$ = new BehaviorSubject<UserDTO | null>(null);
+  // {
+  //   id: 'u9u34u239',
+  //   roles: [
+  //     // 'ADMIN',
+  //     'ASHA',
+  //     // 'USER'
+  //   ],
+  //   status: 'PENDING',
+  //   username: 'Kiran',
+  // }
 
   readonly isLoggedIn$ = this.currentUser$.pipe(
-    tap((user) => console.log(user)),
     switchMap((user) => of(!!user))
   );
 
   check() {
-    return this.tokenService.valid();
+    return this.isLoggedIn$.pipe(
+      switchMap((loggedIn) => {
+        if (loggedIn) return of(this.tokenService.valid());
+        return of(false);
+      })
+    );
   }
 
   // This method is used to login called by authenticationService.
@@ -63,7 +69,7 @@ export class AuthService {
         this.tokenService.set(token);
       }),
       tap((response) => response.user && this.loadCurrentUser(response.user)), // After login, load current us
-      switchMap(() => of(this.check())),
+      switchMap(this.check),
       catchError((error) => {
         console.error('AuthService error:', error);
         return throwError(() => error);
@@ -81,15 +87,11 @@ export class AuthService {
   }
 
   loadCurrentUser(user: UserDTO) {
-    if (!this.check()) {
-      return of(null).pipe(tap(() => this.currentUser$.next(null)));
-    }
-    return this.currentUser$.next(user); // Set the user in BehaviorSubject
+    return this.currentUser$.next(user);
   }
 
   logout(): void {
     this.tokenService.clear();
-    !this.check();
     this.currentUser$.next(null);
   }
 

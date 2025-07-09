@@ -15,12 +15,12 @@
       <div class="flex-[2]">
         <mat-list>
           <app-data-label
-            name="HeadMember"
+            label="HeadMember"
             [value]="getFullName(headMemberDetails().name)"
             icon="person"
           ></app-data-label>
           <app-data-label
-            name="Mobile Number"
+            label="Mobile Number"
             [value]="headMemberDetails().mobileNumber || 'NOT FOUND'"
             icon="phone"
           ></app-data-label>
@@ -30,12 +30,12 @@
       <div class="flex-[2]">
         <mat-list>
           <app-data-label
-            name="Poverty Status"
+            label="Poverty Status"
             [value]="familyDetails().povertyStatus || 'NOT FOUND'"
             icon="home"
           ></app-data-label>
           <app-data-label
-            name="Registration Date"
+            label="Registration Date"
             [value]="headMemberDetails().createdAt || 'NOT FOUND'"
             icon="event"
           ></app-data-label>

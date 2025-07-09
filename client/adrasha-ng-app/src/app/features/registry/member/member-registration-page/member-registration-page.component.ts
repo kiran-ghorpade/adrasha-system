@@ -1,6 +1,5 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { StaticDataDTO } from '@core/model/masterdataService';
 import { AuthService } from '@core/services';
 import { TranslatePipe } from '@ngx-translate/core';
 import { PageHeaderComponent } from '@shared/components';
@@ -25,10 +24,6 @@ export class MemberRegistrationPageComponent implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly authService = inject(AuthService);
 
-  // default static data and states
-  readonly isLoading = signal(false);
-  povertyStatusList = signal<StaticDataDTO[]>([]);
-  genderList = signal<StaticDataDTO[]>([]);
   userId = '';
   familyId = '';
 

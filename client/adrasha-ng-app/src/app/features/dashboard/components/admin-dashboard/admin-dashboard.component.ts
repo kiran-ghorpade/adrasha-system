@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, output, signal, ViewChild } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -18,15 +18,25 @@ import { BaseChartDirective } from 'ng2-charts';
     DataCardLabelComponent,
     BaseChartDirective,
     CommonModule,
-],
+  ],
   templateUrl: './admin-dashboard.component.html',
 })
 export class AdminDashboardComponent implements OnInit {
-  
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
+
+  loadingStateChange = output<boolean>();
   
+  isLoading = signal(false);
+
   ngOnInit() {
+    this.isLoading.set(true);
   }
+
+    setLoading(loading: boolean) {
+    this.isLoading.set(loading);
+    this.loadingStateChange.emit(this.isLoading());
+  }
+
 
   lineChartType: ChartType = 'line';
   lineChartData: ChartConfiguration['data'] = {
@@ -100,5 +110,4 @@ export class AdminDashboardComponent implements OnInit {
       },
     },
   };
-
 }

@@ -105,7 +105,7 @@ export class FamilyRegistrationFormComponent implements OnInit {
       family: {
         ashaId: this.userId(),
         locationId: '',
-        povertyStatus,
+        povertyStatus,  
       },
       headMember: {
         name: { firstname, middlename, lastname },

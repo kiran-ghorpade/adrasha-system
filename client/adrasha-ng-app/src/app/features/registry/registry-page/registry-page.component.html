@@ -30,7 +30,7 @@
     <!-- Family List -->
     <mat-action-list>
       <div class="h-[480px] overflow-scroll">
-        @for (family of users; track $index) {
+        @for (family of familyHeadList(); track $index) {
         <a mat-list-item [routerLink]="`family/${family.id}`">
           <div matListItemAvatar class="flex items-center justify-center">
             <mat-icon>person</mat-icon>

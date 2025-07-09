@@ -17,6 +17,6 @@ import { Component, input } from '@angular/core';
   </div>`,
 })
 export class DataCardLabelComponent {
-  value = input('Value');
-  label = input('Label');
+  value = input.required();
+  label = input.required();
 }

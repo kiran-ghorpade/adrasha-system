@@ -9,7 +9,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute } from '@angular/router';
 import { StaticDataService } from '@core/api/static-data/static-data.service';
 import { AuthService } from '@core/services';
-import { MemberRegistrationService } from '@features/registry/member/member-registration-form/member-registration.service';
+import { MemberService } from '@features/registry/member/member.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { HealthRecordService } from './health-record.service';
 import { NCDResponseDTO, StaticDataDTO } from '@core/model/masterdataService';

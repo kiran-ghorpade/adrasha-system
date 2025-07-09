@@ -33,7 +33,6 @@ export class TopAppBarComponent implements OnInit {
 
   loggedIn = signal(false);
 
-  anchorElUser: any = null;
   settings = [
     { label: 'Profile', toLink: '/profile', icon: 'person' },
     { label: 'Settings', toLink: '/settings', icon: 'settings' },
@@ -49,14 +48,6 @@ export class TopAppBarComponent implements OnInit {
 
   isDashboard() {
     return this.router.url === '/dashboard';
-  }
-
-  handleOpenUserMenu(event: any) {
-    this.anchorElUser = event.target;
-  }
-
-  handleCloseUserMenu() {
-    this.anchorElUser = null;
   }
 
   logout() {

@@ -2,10 +2,22 @@
   <div top>
     <app-page-header title="Member Details">
       <mat-action-list>
-        <a matIconButton>
+        <a matIconButton [matMenuTriggerFor]="menu">
           <mat-icon class="h-[24px] w-[24px]">more_vert</mat-icon>
         </a>
       </mat-action-list>
+
+      <mat-menu #menu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item (click)="handleUpdateClick()">
+          <mat-icon>edit</mat-icon>
+          <span>Update Member</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="handleDeleteMember()">
+          <mat-icon>delete</mat-icon>
+          <span>Delete Member</span>
+        </button>
+      </mat-menu>
     </app-page-header>
   </div>
 

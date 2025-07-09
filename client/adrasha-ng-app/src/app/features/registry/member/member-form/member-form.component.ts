@@ -1,70 +1,70 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
 import {
-  FormBuilder,
-  FormGroup,
+  Component,
+  inject,
+  input,
+  InputSignal,
+  OnInit,
+  signal
+} from '@angular/core';
+import {
   FormsModule,
-  ReactiveFormsModule,
-  Validators,
+  ReactiveFormsModule
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { StaticDataService } from '@core/api/static-data/static-data.service';
-import { MemberCreateDTO } from '@core/model/dataService';
+import { MemberCreateDTO, MemberUpdateDTO } from '@core/model/dataService';
 import { StaticDataDTO } from '@core/model/masterdataService';
-import { PageHeaderComponent } from '@shared/components';
-import { ValidationErrorComponent } from '../../../../shared/components/validation-error/validation-error.component';
 import { TranslatePipe } from '@ngx-translate/core';
-import { AuthService } from '@core/services';
-import { MemberFormFactoryService } from './member-form-factory.service';
-import { MemberRegistrationService } from './member-registration.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ValidationErrorComponent } from '../../../../shared/components/validation-error/validation-error.component';
+import { MemberFormFactoryService } from '../member-form-factory.service';
+import { MemberService } from '../member.service';
 
 @Component({
-  selector: 'app-member-registration-form',
+  selector: 'app-member-form',
   imports: [
     MatButtonModule,
     MatStepperModule,
-    MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
     MatIconModule,
     MatToolbarModule,
     FormsModule,
     ReactiveFormsModule,
-    PageHeaderComponent,
     TranslatePipe,
     ValidationErrorComponent,
   ],
-  templateUrl: './member-registration-form.component.html',
+  templateUrl: './member-form.component.html',
 })
-export class MemberRegistrationFormComponent implements OnInit {
-  private readonly activatedRoute = inject(ActivatedRoute);
-  private readonly authService = inject(AuthService);
+export class MemberFormComponent implements OnInit {
   private readonly memberFormFactory = inject(MemberFormFactoryService);
   private readonly staticDataService = inject(StaticDataService);
-  private readonly memberRegistrationService = inject(
-    MemberRegistrationService
-  );
+  private readonly memberService = inject(MemberService);
+
+  member = input({});
+  userId: InputSignal<string> = input.required();
+  id: InputSignal<string> = input.required();
+  isUpdate: InputSignal<boolean> = input.required();
 
   // default static data and states
   readonly isLoading = signal(false);
   povertyStatusList = signal<StaticDataDTO[]>([]);
   genderList = signal<StaticDataDTO[]>([]);
-  userId = '';
-  familyId = '';
+
+  memberId = '';
 
   ngOnInit() {
-    this.familyId = this.activatedRoute.snapshot.paramMap.get('familyId') || '';
     this.loadStaticData();
-    this.loadUserData();
   }
 
-  formGroup = this.memberFormFactory.createForm(this.isLoading());
+  formGroup = this.memberFormFactory.createRegistrationForm(
+    this.member(),
+    this.isLoading()
+  );
 
   public get personalDetails() {
     return this.formGroup.controls.personalDetails;
@@ -87,8 +87,16 @@ export class MemberRegistrationFormComponent implements OnInit {
       this.formGroup.markAllAsTouched();
       return;
     }
-    const formData = this.prepareFormData();
-    this.memberRegistrationService.submitForm(formData);
+
+    if (this.isUpdate()) {
+      this.memberService.updateMember(
+        this.memberId,
+        this.prepareUpdateFormData()
+      );
+      return;
+    }
+
+    this.memberService.addMember(this.prepareRegistrationFormData());
   }
 
   // Helper Methods
@@ -98,13 +106,7 @@ export class MemberRegistrationFormComponent implements OnInit {
       .subscribe((genders) => this.genderList.set(genders));
   }
 
-  private loadUserData() {
-    this.authService.user().subscribe((user) => {
-      this.userId = user?.id || '';
-    });
-  }
-
-  public prepareFormData(): MemberCreateDTO {
+  public prepareRegistrationFormData(): MemberCreateDTO {
     const { firstname, middlename, lastname, gender } =
       this.personalDetails.getRawValue();
     const { dateOfBirth, birthPlace } = this.birthDetails.getRawValue();
@@ -115,8 +117,30 @@ export class MemberRegistrationFormComponent implements OnInit {
     const { mobileNumber } = this.contactDetails.getRawValue();
 
     return {
-      ashaId: this.userId,
-      familyId: this.familyId,
+      ashaId: this.userId() || '',
+      familyId: this.id(),
+      name: { firstname, middlename, lastname },
+      gender,
+      dateOfBirth,
+      birthPlace,
+      adharNumber,
+      abhaNumber,
+      mobileNumber,
+    };
+  }
+
+  public prepareUpdateFormData(): MemberUpdateDTO {
+    const { firstname, middlename, lastname, gender } =
+      this.personalDetails.getRawValue();
+    const { dateOfBirth, birthPlace } = this.birthDetails.getRawValue();
+
+    const { adharNumber, abhaNumber } =
+      this.identificationDetails.getRawValue();
+
+    const { mobileNumber } = this.contactDetails.getRawValue();
+
+    return {
+      familyId: this.id(),
       name: { firstname, middlename, lastname },
       gender,
       dateOfBirth,

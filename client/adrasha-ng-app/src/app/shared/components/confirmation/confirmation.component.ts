@@ -1,6 +1,10 @@
 import { Component, inject, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 
 export interface Confirmation {
   title: string;
@@ -16,9 +20,14 @@ export interface Confirmation {
     </mat-dialog-content>
     <mat-dialog-actions>
       <button matButton mat-dialog-close>No</button>
-      <button matButton mat-dialog-close cdkFocusInitial>Ok</button>
+      <button matButton (click)="onConfirm()" cdkFocusInitial>Ok</button>
     </mat-dialog-actions> `,
 })
 export class ConfirmationComponent {
-  data : Confirmation = inject(MAT_DIALOG_DATA);
+  data: Confirmation = inject(MAT_DIALOG_DATA);
+  dialogRef: MatDialogRef<ConfirmationComponent> = inject(MatDialogRef);
+
+  onConfirm() {
+    this.dialogRef.close(true); // Emit true for confirmation
+  }
 }

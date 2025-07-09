@@ -15,6 +15,6 @@ import { MatListModule } from '@angular/material/list';
 })
 export class DataLabelComponent {
   icon = input('folder');
-  name = input('name');
-  value = input('value');
+  name = input.required();
+  value = input.required();
 }

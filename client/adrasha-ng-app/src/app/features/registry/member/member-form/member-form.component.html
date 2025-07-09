@@ -1,0 +1,155 @@
+<mat-stepper orientation="vertical" [linear]="true" #stepper>
+  <!-- Birth Details -->
+  <mat-step [stepControl]="personalDetails">
+    <form [formGroup]="personalDetails">
+      <ng-template matStepLabel>{{
+        "registry.member.step1Title" | translate
+      }}</ng-template>
+      <div class="flex gap-3 flex-wrap md:w-2/3">
+        <mat-form-field>
+          <mat-label>{{
+            "registry.member.firstnameLabel" | translate
+          }}</mat-label>
+          <input matInput formControlName="firstname" required />
+          <app-validation-error
+            [control]="personalDetails.controls.firstname"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{
+            "registry.member.middlenameLabel" | translate
+          }}</mat-label>
+          <input matInput formControlName="middlename" required />
+          <app-validation-error
+            [control]="personalDetails.controls.middlename"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{
+            "registry.member.lastnameLabel" | translate
+          }}</mat-label>
+          <input matInput formControlName="lastname" required />
+          <app-validation-error [control]="personalDetails.controls.lastname" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ "registry.member.genderLabel" | translate }}</mat-label>
+          <mat-select required>
+            @for (gender of genderList(); track gender.code) {
+            <mat-option [value]="`${gender.code}`">{{
+              gender.label
+            }}</mat-option>
+            }
+          </mat-select>
+          <app-validation-error [control]="personalDetails.controls.gender" />
+        </mat-form-field>
+      </div>
+      <div>
+        <button matButton matStepperPrevious>Back</button>
+        <button matButton matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- Birth Details -->
+  <mat-step [stepControl]="birthDetails">
+    <form [formGroup]="birthDetails">
+      <ng-template matStepLabel>{{
+        "registry.member.step2Title" | translate
+      }}</ng-template>
+      <div class="flex gap-3 flex-wrap md:w-2/3">
+        <mat-form-field>
+          <mat-label>{{ "registry.member.dobLabel" | translate }}</mat-label>
+          <input matInput type="date" formControlName="dateOfBirth" required />
+          <app-validation-error [control]="birthDetails.controls.dateOfBirth" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{
+            "registry.member.birthPlaceLabel" | translate
+          }}</mat-label>
+          <input matInput formControlName="birthPlace" />
+          <app-validation-error [control]="birthDetails.controls.birthPlace" />
+        </mat-form-field>
+      </div>
+      <div>
+        <button matButton matStepperPrevious>Back</button>
+        <button matButton matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- Identification Details -->
+  <mat-step [stepControl]="identificationDetails">
+    <form [formGroup]="identificationDetails">
+      <ng-template matStepLabel>{{
+        "registry.member.step3Title" | translate
+      }}</ng-template>
+      <div class="flex gap-3 flex-wrap md:w-2/3">
+        <mat-form-field>
+          <mat-label>{{
+            "registry.member.adharNumberLabel" | translate
+          }}</mat-label>
+          <input matInput formControlName="adharNumber" required />
+          <app-validation-error
+            [control]="identificationDetails.controls.adharNumber"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{
+            "registry.member.abhaNumberLabel" | translate
+          }}</mat-label>
+          <input matInput formControlName="abhaNumber" />
+          <app-validation-error
+            [control]="identificationDetails.controls.abhaNumber"
+          />
+        </mat-form-field>
+      </div>
+
+      <div>
+        <button matButton matStepperPrevious>Back</button>
+        <button matButton matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- Contact Details -->
+  <mat-step [stepControl]="contactDetails">
+    <form [formGroup]="contactDetails">
+      <ng-template matStepLabel>{{
+        "registry.member.step4Title" | translate
+      }}</ng-template>
+      <div class="flex gap-3 flex-wrap md:w-2/3">
+        <mat-form-field>
+          <mat-label>{{
+            "registry.member.mobileNumberLabel" | translate
+          }}</mat-label>
+          <input matInput formControlName="mobileNumber" />
+          <app-validation-error
+            [control]="contactDetails.controls.mobileNumber"
+          />
+        </mat-form-field>
+      </div>
+
+      <div>
+        <button matButton matStepperPrevious>Back</button>
+        <button matButton matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- Done -->
+  <mat-step>
+    <ng-template matStepLabel>{{
+      "registry.member.doneTitle" | translate
+    }}</ng-template>
+    <p>{{ "registry.member.doneMessage" | translate }}</p>
+    <div>
+      <button matButton matStepperPrevious>Back</button>
+      <button matButton (click)="stepper.reset()">
+        {{ "registry.member.resetButton" | translate }}
+      </button>
+      <button matButton="filled" (click)="onSubmit()">
+        {{ "registry.member.submitButton" | translate }}
+      </button>
+    </div>
+  </mat-step>
+</mat-stepper>

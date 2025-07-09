@@ -1,6 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { MemberDataResponseDTOGender } from '@core/model/dataService';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import {
+  MemberDataResponseDTO,
+  MemberDataResponseDTOGender,
+} from '@core/model/dataService';
 
 @Injectable({
   providedIn: 'root',
@@ -8,27 +11,50 @@ import { MemberDataResponseDTOGender } from '@core/model/dataService';
 export class MemberFormFactoryService {
   private readonly fb = inject(FormBuilder);
 
-  createForm(isLoading: boolean) {
+  createRegistrationForm(
+    initialData: MemberDataResponseDTO,
+    isLoading: boolean
+  ) {
     // form groups
     const personalDetails = this.fb.group({
-      firstname: this.createControl('', [Validators.required], isLoading),
-      middlename: this.createControl('', [Validators.required], isLoading),
-      lastname: this.createControl('', [Validators.required], isLoading),
+      firstname: this.createControl(
+        initialData.name?.firstname || '',
+        [Validators.required],
+        isLoading
+      ),
+      middlename: this.createControl(
+        initialData.name?.middlename || '',
+        [Validators.required],
+        isLoading
+      ),
+      lastname: this.createControl(
+        initialData.name?.lastname || '',
+        [Validators.required],
+        isLoading
+      ),
       gender: this.createControl(
-        MemberDataResponseDTOGender.MALE,
+        initialData.gender || MemberDataResponseDTOGender.MALE,
         [Validators.required],
         isLoading
       ),
     });
 
     const birthDetails = this.fb.group({
-      dateOfBirth: this.createControl('', [Validators.required], isLoading),
-      birthPlace: this.createControl('', [], isLoading),
+      dateOfBirth: this.createControl(
+        initialData.dateOfBirth || '',
+        [Validators.required],
+        isLoading
+      ),
+      birthPlace: this.createControl(
+        initialData.birthPlace || '',
+        [],
+        isLoading
+      ),
     });
 
     const identificationDetails = this.fb.group({
       adharNumber: this.createControl(
-        '',
+        initialData.adharNumber || '',
         [
           Validators.required,
           Validators.pattern(/^\d+$/),
@@ -38,7 +64,7 @@ export class MemberFormFactoryService {
         isLoading
       ),
       abhaNumber: this.createControl(
-        '',
+        initialData.abhaNumber || '',
         [Validators.pattern(/^\d+$/)],
         isLoading
       ),
@@ -46,7 +72,7 @@ export class MemberFormFactoryService {
 
     const contactDetails = this.fb.group({
       mobileNumber: this.createControl(
-        '',
+        initialData.mobileNumber || '',
         [Validators.pattern(/^[6-9]\d{9}$/)],
         isLoading
       ),

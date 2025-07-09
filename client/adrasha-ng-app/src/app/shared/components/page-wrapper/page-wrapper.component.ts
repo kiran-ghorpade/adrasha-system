@@ -17,7 +17,4 @@ import { Component, input } from '@angular/core';
     </div>
   `,
 })
-export class PageWrapperComponent {
-  leftAside = input(false);
-  rightAside = input(false);
-}
+export class PageWrapperComponent {}

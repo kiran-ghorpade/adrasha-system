@@ -23,5 +23,5 @@ import { BackButtonComponent } from '../back-button/back-button.component';
 })
 export class PageHeaderComponent {
   icon = input('');
-  title = input('Title');
+  title = input.required();
 }

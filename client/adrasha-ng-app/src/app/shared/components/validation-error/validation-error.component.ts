@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, Input, InputSignal } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
@@ -9,6 +9,6 @@ import { TranslateModule } from '@ngx-translate/core';
   imports: [MatFormFieldModule, TranslateModule],
 })
 export class ValidationErrorComponent {
-  @Input() control!: AbstractControl | null;
-  @Input() componentName?: string;
+  control: InputSignal<AbstractControl> = input.required();
+  componentName = input('previous value');
 }

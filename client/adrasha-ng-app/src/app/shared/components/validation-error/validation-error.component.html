@@ -1,49 +1,50 @@
-@if (control && control.errors && control.touched && control.invalid && control.dirty) {
-  @if (control.hasError('required')) {
-    <mat-error>
-      <span>{{ 'validation.required' | translate }}</span>
-    </mat-error>
-  }
-
-  @if (control.hasError('minlength')) {
-    <mat-error>
-      <span>{{ 'validation.minLength' | translate: { minLength: control.getError('minlength')?.requiredLength} }}</span>
-    </mat-error>
-  }
-
-  @if (control.hasError('maxlength')) {
-    <mat-error>
-      <span>{{ 'validation.maxLength' | translate: { maxLength: control.getError('maxlength')?.requiredLength} }}</span>
-    </mat-error>
-  }
-
-  @if (control.hasError('pattern')) {
-    <mat-error>
-      <span>{{ 'validation.pattern' | translate }}</span>
-    </mat-error>
-  }
-
-  @if (control.hasError('email')) {
-    <mat-error>
-      <span>{{ 'validation.email' | translate }}</span>
-    </mat-error>
-  }
-
-  @if (control.hasError('min')) {
-    <mat-error>
-      <span>{{ 'validation.min' | translate: { minValue: control.getError('min')?.requiredLength } }}</span>
-    </mat-error>
-  }
-
-  @if (control.hasError('max')) {
-    <mat-error>
-      <span>{{ 'validation.max' | translate: { maxValue: control.getError('max')?.requiredLength } }}</span>
-    </mat-error>
-  }
-
-  @if (control.hasError('mismatch')) {
-    <mat-error>
-      <span>{{ 'validation.inconsistent' | translate : {fieldName: componentName} }}</span>
-    </mat-error>
-  }
-}
+@if (control() && control().errors && control().touched && control().invalid &&
+control().dirty) { @if (control().hasError('required')) {
+<mat-error>
+  <span>{{ "validation.required" | translate }}</span>
+</mat-error>
+} @if (control().hasError('minlength')) {
+<mat-error>
+  <span>{{
+    "validation.minLength"
+      | translate
+        : { minLength: control().getError("minlength")?.requiredLength }
+  }}</span>
+</mat-error>
+} @if (control().hasError('maxlength')) {
+<mat-error>
+  <span>{{
+    "validation.maxLength"
+      | translate
+        : { maxLength: control().getError("maxlength")?.requiredLength }
+  }}</span>
+</mat-error>
+} @if (control().hasError('pattern')) {
+<mat-error>
+  <span>{{ "validation.pattern" | translate }}</span>
+</mat-error>
+} @if (control().hasError('email')) {
+<mat-error>
+  <span>{{ "validation.email" | translate }}</span>
+</mat-error>
+} @if (control().hasError('min')) {
+<mat-error>
+  <span>{{
+    "validation.min"
+      | translate : { minValue: control().getError("min")?.requiredLength }
+  }}</span>
+</mat-error>
+} @if (control().hasError('max')) {
+<mat-error>
+  <span>{{
+    "validation.max"
+      | translate : { maxValue: control().getError("max")?.requiredLength }
+  }}</span>
+</mat-error>
+} @if (control().hasError('mismatch')) {
+<mat-error>
+  <span>{{
+    "validation.inconsistent" | translate : { fieldName: componentName }
+  }}</span>
+</mat-error>
+} }

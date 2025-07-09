@@ -15,7 +15,6 @@ import { Router } from '@angular/router';
   `,
 })
 export class BackButtonComponent {
-  path = input('');
 
   constructor(private router: Router) {}
 
@@ -23,7 +22,7 @@ export class BackButtonComponent {
     if (window.history.length > 1) {
       window.history.back();
     } else {
-      this.router.navigate([this.path]);
+      this.router.navigateByUrl("/dashboard");
     }
   }
 }

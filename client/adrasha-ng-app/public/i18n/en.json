@@ -58,6 +58,7 @@
 
     "member": {
       "addMemberTitle": "Add New Member",
+      "updateMemberTitle": "Update Member",
       "step1Title": "Personal Details",
       "step2Title": "Birth Details",
       "step3Title": "Identification Details",

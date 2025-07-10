@@ -1,1 +1,36 @@
-<p>member-page works!</p>
+<app-page-wrapper>
+  <div top>
+    <app-page-header title="Member Details">
+      <mat-action-list>
+        <a matIconButton [matMenuTriggerFor]="menu">
+          <mat-icon class="h-[24px] w-[24px]">more_vert</mat-icon>
+        </a>
+      </mat-action-list>
+
+      <mat-menu #menu="matMenu" [overlapTrigger]="false">
+        <button mat-menu-item (click)="handleUpdateClick()">
+          <mat-icon>edit</mat-icon>
+          <span>Update Member</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="handleDeleteMember()">
+          <mat-icon>delete</mat-icon>
+          <span>Delete Member</span>
+        </button>
+      </mat-menu>
+    </app-page-header>
+  </div>
+
+  <!-- <h4 class="text-lg font-normal text-center">Ramesh Ghorpade</h4> -->
+  <div content class="paper flex flex-wrap">
+    <mat-list>
+      @for(data of memberDetails(); track $index){
+      <app-data-label
+        [label]="data.label"
+        [value]="data.value"
+        [icon]="data.value"
+      ></app-data-label>
+      }
+    </mat-list>
+  </div>
+</app-page-wrapper>

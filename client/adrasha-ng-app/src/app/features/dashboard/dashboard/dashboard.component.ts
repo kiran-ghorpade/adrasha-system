@@ -10,12 +10,13 @@ import {
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { RouterModule } from '@angular/router';
 import { UserResponseDTORolesItem } from '@core/model/userService';
-import { AuthService } from '@core/services';
-import { map } from 'rxjs';
+import { AuthService, LoadingService } from '@core/services';
+import { map, Subscription } from 'rxjs';
 import { DashboardHeaderComponent } from '../../../shared/components/dashboard-header/dashboard-header.component';
 import { AdminDashboardComponent } from '../components/admin-dashboard/admin-dashboard.component';
 import { AshaDashboardComponent } from '../components/asha-dashboard/asha-dashboard.component';
 import { UserDashboardComponent } from '../user-dashboard/user-dashboard.component';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-dashboard',
@@ -32,16 +33,16 @@ import { UserDashboardComponent } from '../user-dashboard/user-dashboard.compone
 })
 export class DashboardComponent {
   private readonly authService = inject(AuthService);
+  private readonly loadingService = inject(LoadingService);
 
   currentTime: WritableSignal<Date> = signal(new Date());
   isAdmin = signal(false);
   isAsha = signal(false);
   isUser = signal(false);
-  isLoading = signal(false);
+  
+  isLoading = toSignal(this.loadingService.loading$, { initialValue: false });
 
   ngOnInit() {
-    this.isLoading.set(true);
-
     setInterval(() => {
       this.currentTime.set(new Date());
     }, 1000);
@@ -52,16 +53,9 @@ export class DashboardComponent {
       .subscribe({
         next: (roles) => {
           this.getCurrentRole(roles);
-          this.isLoading.set(false);
         },
-        error: () => {
-          this.isLoading.set(false);
-        },
+        error: () => {},
       });
-  }
-
-  updateLoadingState(loadingState: boolean): void {
-    this.isLoading.set(loadingState);
   }
 
   private getCurrentRole(roles: string[] = []) {

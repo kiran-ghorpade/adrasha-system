@@ -1,6 +1,8 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBar } from '@angular/material/progress-bar';
+import { LoadingService } from '@core/services';
 import { BackButtonComponent } from '../back-button/back-button.component';
 
 @Component({
@@ -28,7 +30,10 @@ import { BackButtonComponent } from '../back-button/back-button.component';
   `,
 })
 export class PageHeaderComponent {
+  private loadingService = inject(LoadingService);
+
   icon = input('');
   title = input.required();
-  isLoading = input(true);
+  isLoading = toSignal(this.loadingService.loading$, { initialValue: false });
+
 }

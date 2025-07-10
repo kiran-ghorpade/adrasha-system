@@ -24,19 +24,8 @@ import { BaseChartDirective } from 'ng2-charts';
 export class AdminDashboardComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
-  loadingStateChange = output<boolean>();
-  
-  isLoading = signal(false);
-
   ngOnInit() {
-    this.isLoading.set(true);
   }
-
-    setLoading(loading: boolean) {
-    this.isLoading.set(loading);
-    this.loadingStateChange.emit(this.isLoading());
-  }
-
 
   lineChartType: ChartType = 'line';
   lineChartData: ChartConfiguration['data'] = {

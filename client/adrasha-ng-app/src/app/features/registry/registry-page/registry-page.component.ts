@@ -10,7 +10,7 @@ import { FamilyDataService } from '@core/api/family-data/family-data.service';
 import { MemberDataService } from '@core/api/member-data/member-data.service';
 import { FamilyDataResponseDTO, Name } from '@core/model/dataService';
 import { AuthService } from '@core/services';
-import { map } from 'rxjs';
+import { forkJoin, map } from 'rxjs';
 import { PageWrapperComponent } from '../../../shared/components/page-wrapper/page-wrapper.component';
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 
@@ -73,31 +73,27 @@ export class RegistryPageComponent implements OnInit {
         },
       })
       .subscribe((families) => {
-        families.content?.forEach((family) => {
-          this.loadHeadMember(family);
+        const familyList = families.content || [];
+
+        const memberRequests = familyList.map((family) =>
+          this.memberService.getMember(family.headMemberId || '').pipe(
+            map((member) => ({
+              id: family.id || '',
+              name: member.name || {
+                firstname: 'Not Found',
+                middlename: 'Not Found',
+                lastname: 'Not Found',
+              },
+              age: member.age ?? -1,
+            }))
+          )
+        );
+
+        forkJoin(memberRequests).subscribe((headList) => {
+          this.familyHeadList.set(headList);
+          this.page.set(families.pageable?.pageNumber ?? 0);
+          this.totalSize.set(families.totalElements ?? 0);
         });
-
-        this.page.set(families.pageable?.pageNumber || 0);
-        this.totalSize.set(families.totalElements || 0);
-      });
-  }
-
-  loadHeadMember(family: FamilyDataResponseDTO) {
-    this.memberService
-      .getMember(family.headMemberId || '')
-      .subscribe((member) => {
-        this.familyHeadList.set([
-          ...this.familyHeadList(),
-          {
-            name: member.name || {
-              firstname: 'Not Found',
-              lastname: 'Not Found',
-              middlename: 'Not found',
-            },
-            id: family.id || '',
-            age: member.age || -1,
-          },
-        ]);
       });
   }
 
@@ -108,5 +104,4 @@ export class RegistryPageComponent implements OnInit {
 
     return 'fullname';
   }
-
 }

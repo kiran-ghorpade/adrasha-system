@@ -7,6 +7,7 @@ import {
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { TokenService } from '@core/services';
+import { LogService } from '@shared/services';
 import { catchError, tap, throwError } from 'rxjs';
 
 export const tokenInterceptor: HttpInterceptorFn = (
@@ -15,6 +16,7 @@ export const tokenInterceptor: HttpInterceptorFn = (
 ) => {
   const router = inject(Router);
   const tokenService = inject(TokenService);
+  const logService = inject(LogService);
 
   const handler = () => {
     if (req.url.includes('/auth/logout')) {
@@ -33,9 +35,10 @@ export const tokenInterceptor: HttpInterceptorFn = (
       })
     ).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 401) {
-          tokenService.clear();
-        }
+        // logService.add({
+        //   elapsedTime:0,
+        //   message:"Error "
+        // })
         return throwError(() => error);
       }),
       tap(() => handler())

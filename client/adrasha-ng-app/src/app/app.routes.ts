@@ -5,6 +5,7 @@ import { LogsComponent } from '@features/logs/logs.component';
 import { PageNotFoundComponent } from '@shared/components/page-not-found/page-not-found.component';
 import { AppLayout } from '@shared/layout/app-layout/app-layout.component';
 import { AuthLayoutComponent } from '@shared/layout/auth-layout/auth-layout.component';
+import { BlankLayoutComponent } from '@shared/layout/blank-layout/blank-layout.component';
 
 export const routes: Routes = [
   {
@@ -26,7 +27,7 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     title: 'Dashboard',
-    canActivate: [authGuard],
+    // canActivate: [authGuard],
     data: {
       roles: [UserResponseDTORolesItem.ADMIN, UserResponseDTORolesItem.ASHA],
     },
@@ -55,7 +56,7 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'role-request',
+    path: 'role-requests',
     title: 'Role Request',
     component: AppLayout,
     loadChildren: () =>
@@ -75,7 +76,7 @@ export const routes: Routes = [
   {
     path: 'logs',
     title: 'Logs',
-    component: AppLayout,
+    component: BlankLayoutComponent,
     children: [{ path: '', component: LogsComponent }],
   },
   {

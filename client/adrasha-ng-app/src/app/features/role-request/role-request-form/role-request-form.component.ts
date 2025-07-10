@@ -1,8 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import {
-  FormsModule,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,18 +12,14 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { StaticDataService } from '@core/api/static-data/static-data.service';
 import { StaticDataDTO } from '@core/model/masterdataService';
-import {
-  RoleRequestCreateDTO
-} from '@core/model/userService';
-import { AuthService } from '@core/services';
+import { RoleRequestCreateDTO } from '@core/model/userService';
+import { AuthService, LoadingService } from '@core/services';
 import { TranslatePipe } from '@ngx-translate/core';
-import {
-  ValidationErrorComponent
-} from '@shared/components';
+import { ValidationErrorComponent } from '@shared/components';
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 import { RoleRequestFormFactoryService } from './role-request-form-factory.service';
 import { RoleRequestService as RoleRequestFormService } from './role-request.service';
-import { PageWrapperComponent } from "../../../shared/components/page-wrapper/page-wrapper.component";
+import { PageWrapperComponent } from '../../../shared/components/page-wrapper/page-wrapper.component';
 
 @Component({
   selector: 'app-role-request-form',
@@ -46,8 +39,8 @@ import { PageWrapperComponent } from "../../../shared/components/page-wrapper/pa
     MatToolbarModule,
     FormsModule,
     ReactiveFormsModule,
-    PageWrapperComponent
-],
+    PageWrapperComponent,
+  ],
   templateUrl: './role-request-form.component.html',
 })
 export class RoleRequestFormComponent implements OnInit {
@@ -55,6 +48,7 @@ export class RoleRequestFormComponent implements OnInit {
   private readonly roleRequestFactory = inject(RoleRequestFormFactoryService);
   private readonly staticDataService = inject(StaticDataService);
   private readonly RoleRequestService = inject(RoleRequestFormService);
+  private readonly loadingService = inject(LoadingService);
 
   // default static data and states
   readonly isLoading = signal(false);
@@ -63,6 +57,9 @@ export class RoleRequestFormComponent implements OnInit {
   userId = signal('');
 
   ngOnInit() {
+    this.loadingService.loading$.subscribe((status) => {
+      this.isLoading.set(status);
+    });
     this.loadStaticData();
     this.loadUserData();
   }

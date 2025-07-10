@@ -15,11 +15,11 @@
 
   <div class="row-span-10 col-span-12 p-3">
     @if (isAdmin()) {
-    <app-admin-dashboard (loadingStateChange)="updateLoadingState($event)"/>
+    <app-admin-dashboard />
     } @else if(isAsha()){
-    <app-asha-dashboard greetings="Hello, Asha" (loadingStateChange)="updateLoadingState($event)"/>
+    <app-asha-dashboard greetings="Hello, Asha" />
     } @else if(isUser()){
-    <app-user-dashboard (loadingStateChange)="updateLoadingState($event)"/>
+    <app-user-dashboard />
     }
   </div>
 </div>

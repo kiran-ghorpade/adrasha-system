@@ -33,7 +33,6 @@ import { BaseChartDirective } from 'ng2-charts';
 })
 export class AshaDashboardComponent implements OnInit {
   private readonly analyticsService = inject(AnalyticsService);
-  loadingStateChange = output<boolean>();
 
   currentTime: WritableSignal<Date> = signal(new Date());
   familyStats = signal<FamilyStats>({
@@ -52,7 +51,6 @@ export class AshaDashboardComponent implements OnInit {
   isLoading = signal(false);
 
   ngOnInit() {
-    this.setLoading(true);
 
     this.analyticsService.getFamilyStats().subscribe((stats) => {
       this.familyStats.set(stats);
@@ -60,13 +58,7 @@ export class AshaDashboardComponent implements OnInit {
 
     this.analyticsService.getMemberStats().subscribe((stats) => {
       this.memberStats.set(stats);
-      this.setLoading(false);
     });
-  }
-
-  setLoading(loading: boolean) {
-    this.isLoading.set(loading);
-    this.loadingStateChange.emit(this.isLoading());
   }
 
   lineChartType: ChartType = 'line';

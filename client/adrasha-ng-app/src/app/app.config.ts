@@ -14,21 +14,14 @@ import {
   provideHttpClient,
   withInterceptors,
 } from '@angular/common/http';
-import {
-  httpRequestInterceptor,
-  loggingInterceptor,
-  tokenInterceptor,
-} from '@core/interceptors';
+import { loggingInterceptor, tokenInterceptor } from '@core/interceptors';
 import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { loadingInterceptor } from '@core/interceptors/loading.interceptor';
 
 // Http interceptor providers in outside-in order
-const interceptors = [
-  httpRequestInterceptor,
-  tokenInterceptor,
-  loggingInterceptor,
-];
+const interceptors = [tokenInterceptor, loggingInterceptor, loadingInterceptor];
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (
   http: HttpClient

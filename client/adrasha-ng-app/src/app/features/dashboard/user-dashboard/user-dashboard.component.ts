@@ -10,15 +10,9 @@ import { DataCardLabelComponent } from '@shared/components';
   templateUrl: './user-dashboard.component.html',
 })
 export class UserDashboardComponent {
-  loadingStateChange = output<boolean>();
 
-  isLoading = signal(false);
 
   ngOnInit() {
-    this.setLoading(true);
   }
-  setLoading(loading: boolean) {
-    this.isLoading.set(loading);
-    this.loadingStateChange.emit(this.isLoading());
-  }
+
 }

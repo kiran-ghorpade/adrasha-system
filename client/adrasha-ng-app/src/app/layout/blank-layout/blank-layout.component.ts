@@ -1,7 +1,7 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { TopAppBarComponent } from '../../components/top-appbar/top-appbar.component';
+import { RouterModule } from '@angular/router';
+import { TopAppBarComponent } from '@shared/components';
 
 @Component({
   selector: 'blank-layout',

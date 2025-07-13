@@ -1,10 +1,10 @@
-import { Component, inject, ViewEncapsulation } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { TopAppBarComponent } from '../../components/top-appbar/top-appbar.component';
+import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { LoadingService } from '@core/services';
 import { MatProgressBar } from "@angular/material/progress-bar";
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { RouterModule } from '@angular/router';
+import { LoadingService } from '@core/services';
+import { TopAppBarComponent } from '@shared/components';
 
 @Component({
   selector: 'auth-layout',

@@ -1,9 +1,8 @@
-import { Component, inject, signal } from '@angular/core';
-import { PageHeaderComponent } from '@shared/components';
-import { TranslatePipe } from '@ngx-translate/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '@core/services';
-import { MemberDataService } from '@core/api/member-data/member-data.service';
+import { TranslatePipe } from '@ngx-translate/core';
+import { PageHeaderComponent } from '@shared/components';
 import { MemberFormComponent } from '../../components';
 
 @Component({
@@ -24,7 +23,6 @@ import { MemberFormComponent } from '../../components';
 export class MemberEditPageComponent {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly authService = inject(AuthService);
-  private readonly memberService = inject(MemberDataService);
 
   userId = '';
   familyId = '';

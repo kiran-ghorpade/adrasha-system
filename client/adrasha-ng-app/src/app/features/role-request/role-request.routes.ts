@@ -3,8 +3,8 @@ import { RoleRequestDetailsComponent } from './components';
 import {
   RoleRequestCreatePageComponent,
   RoleRequestEditPageComponent,
+  RoleRequestPageComponent,
 } from './pages';
-import { RoleRequestPageComponent } from './role-request-page/role-request-page.component';
 
 export const roleRequestRoutes: Route[] = [
   { path: '', component: RoleRequestPageComponent },

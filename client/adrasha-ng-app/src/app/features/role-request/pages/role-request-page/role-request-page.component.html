@@ -1,1 +1,27 @@
-<p>role-request-page works!</p>
+<app-page-wrapper>
+  <div top>
+    <app-page-header title="Previous Requests"></app-page-header>
+  </div>
+  <!-- records line charts -->
+  <div content>
+    <div class="flex">
+      <!-- <mat-form-field >
+        <mat-label>Filter</mat-label>
+        <input matInput />
+      </mat-form-field> -->
+    </div>
+
+    <div>
+      <app-role-request-list [users]="users" />
+      <mat-paginator
+        [pageIndex]="0"
+        [length]="totalSize()"
+        [pageSize]="0"
+        aria-label="Select page"
+        (page)="onPageChange($event)"
+        [disabled]="totalSize() == 0"
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</app-page-wrapper>

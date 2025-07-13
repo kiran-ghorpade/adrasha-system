@@ -11,7 +11,7 @@ import {
 export class MemberFormFactoryService {
   private readonly fb = inject(FormBuilder);
 
-  createRegistrationForm(
+  createForm(
     initialData: MemberDataResponseDTO,
     isLoading: boolean
   ) {

@@ -10,5 +10,5 @@ import type { RoleRequestUpdateDTORole } from './roleRequestUpdateDTORole';
 export interface RoleRequestUpdateDTO {
   name?: Name;
   role: RoleRequestUpdateDTORole;
-  healthCenter: string;
+  healthCenterId: string;
 }

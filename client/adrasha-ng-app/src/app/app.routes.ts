@@ -1,11 +1,9 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '@core/guards';
 import { UserResponseDTORolesItem } from '@core/model/userService';
-import { LogsComponent } from '@features/logs/logs.component';
-import { PageNotFoundComponent } from '@shared/components/page-not-found/page-not-found.component';
-import { AppLayout } from '@shared/layout/app-layout/app-layout.component';
-import { AuthLayoutComponent } from '@shared/layout/auth-layout/auth-layout.component';
-import { BlankLayoutComponent } from '@shared/layout/blank-layout/blank-layout.component';
+import { AppLayout, AuthLayoutComponent, BlankLayoutComponent } from './layout';
+import { PageNotFoundComponent } from '@shared/components';
+import { LogsComponent } from '@features/logs';
 
 export const routes: Routes = [
   {
@@ -59,6 +57,7 @@ export const routes: Routes = [
     path: 'role-requests',
     title: 'Role Request',
     component: AppLayout,
+    pathMatch: 'full',
     loadChildren: () =>
       import('@features/role-request/role-request.routes').then(
         (route) => route.roleRequestRoutes
@@ -77,6 +76,7 @@ export const routes: Routes = [
     path: 'logs',
     title: 'Logs',
     component: BlankLayoutComponent,
+    pathMatch: 'full',
     children: [{ path: '', component: LogsComponent }],
   },
   {

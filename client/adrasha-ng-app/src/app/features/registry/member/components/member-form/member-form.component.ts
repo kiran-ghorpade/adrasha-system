@@ -60,7 +60,7 @@ export class MemberFormComponent implements OnInit {
     this.loadStaticData();
   }
 
-  formGroup = this.memberFormFactory.createRegistrationForm(
+  formGroup = this.memberFormFactory.createForm(
     this.member(),
     this.isLoading()
   );

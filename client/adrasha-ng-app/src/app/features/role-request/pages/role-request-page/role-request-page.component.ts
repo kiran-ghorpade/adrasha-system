@@ -36,20 +36,20 @@ export class RoleRequestPageComponent {
 
   ngOnInit(): void {
     this.loadUser();
-    this.loadFamilies();
+    this.loadRoleRequests();
   }
 
   onPageChange(event: any) {
-    this.loadFamilies();
+    this.loadRoleRequests();
   }
 
   loadUser() {
-    this.authService.user().subscribe((user) => {
+    this.authService.currentUser.subscribe((user) => {
       this.userId = user?.id || '';
     });
   }
 
-  loadFamilies() {
+  loadRoleRequests() {
     this.roleRequestService
       .getAllRoleRequests({
         filterDTO: {
@@ -67,11 +67,11 @@ export class RoleRequestPageComponent {
       });
   }
 
-  users = [
-    { id: 1, name: 'Ramesh Jadhav', age: 35 },
-    { id: 2, name: 'Sita Verma', age: 28 },
-    { id: 3, name: 'John Doe', age: 40 },
-    { id: 4, name: 'Ayesha Khan', age: 31 },
-    { id: 5, name: 'Michael Smith', age: 45 },
-  ];
+  // users = [
+  //   { id: 1, name: 'Ramesh Jadhav', age: 35 },
+  //   { id: 2, name: 'Sita Verma', age: 28 },
+  //   { id: 3, name: 'John Doe', age: 40 },
+  //   { id: 4, name: 'Ayesha Khan', age: 31 },
+  //   { id: 5, name: 'Michael Smith', age: 45 },
+  // ];
 }

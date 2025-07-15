@@ -1,7 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { RoleRequestService as RoleRequestApiService } from '@core/api/role-request/role-request.service';
-import { RoleRequestCreateDTO, RoleRequestUpdateDTO } from '@core/model/userService';
+import {
+  RoleRequestCreateDTO,
+  RoleRequestUpdateDTO,
+} from '@core/model/userService';
 import { AlertService } from '@core/services';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -22,7 +25,7 @@ export class RoleRequestService {
             'roleRequest.registration.success'
           );
           this.alertService.showAlert(translatedMsg, 'success');
-          this.router.navigateByUrl(`/registry/member/${result.id}`, {
+          this.router.navigateByUrl(`/roleRequests/${result.id}`, {
             replaceUrl: true,
           });
         }
@@ -47,7 +50,7 @@ export class RoleRequestService {
             'roleRequest.update.success'
           );
           this.alertService.showAlert(translatedMsg, 'success');
-          this.router.navigateByUrl(`/registry/member/${result.id}`, {
+          this.router.navigateByUrl(`/roleRequests/${result.id}`, {
             replaceUrl: true,
           });
         }
@@ -64,14 +67,14 @@ export class RoleRequestService {
     });
   }
 
-  delete(memberId: string, familyId: string) {
-    this.roleRequestService.deleteRoleRequest(memberId).subscribe({
+  delete(roleRequestId: string): void {
+    this.roleRequestService.deleteRoleRequest(roleRequestId).subscribe({
       next: () => {
         const translatedMsg = this.translateService.instant(
           'roleRequest.deletion.success'
         );
         this.alertService.showAlert(translatedMsg, 'success');
-        this.router.navigateByUrl(`/registry/family/${familyId}`, {
+        this.router.navigateByUrl(`/roleRequests`, {
           replaceUrl: true,
         });
       },

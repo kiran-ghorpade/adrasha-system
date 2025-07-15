@@ -48,7 +48,7 @@ export class DashboardComponent {
     }, 1000);
 
     this.authService
-      .user()
+      .currentUser
       .pipe(map((user) => user?.roles))
       .subscribe({
         next: (roles) => {

@@ -7,7 +7,7 @@ export type Menu = {
 const user: Menu[] = [
   { label: 'Dashboard', route: '/dashboard', icon: 'dashboard' },
   { label: 'History', route: '/role-requests/', icon: 'history' },
-  { label: 'Request', route: '/role-requests/new', icon: 'create' },
+  // { label: 'Request', route: '/role-requests/new', icon: 'create' },
 ];
 
 const asha: Menu[] = [

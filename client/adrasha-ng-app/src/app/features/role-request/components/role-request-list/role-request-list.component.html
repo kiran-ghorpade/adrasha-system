@@ -1,12 +1,12 @@
-@if(users().length == 0){
+@if(roleRequestList().length == 0){
 <div class="flex justify-center items-center">
   <mat-icon>search_off</mat-icon>
   <h4 class="ml-4 text-wrap">No Role Request found. Try adding a new one!</h4>
 </div>
 }@else {
 <mat-action-list>
-  @for (family of users(); track $index) {
-  <a mat-list-item>
+  @for (roleRequest of roleRequestList(); track $index) {
+  <a mat-list-item [routerLink]="['/role-requests', roleRequest.id]">
     <div matListItemIcon>
       <mat-icon>cancel</mat-icon>
     </div>

@@ -95,7 +95,7 @@ export class AuthService {
     this.currentUser$.next(null);
   }
 
-  user(): Observable<UserDTO | null> {
+  get currentUser(): Observable<UserDTO | null> {
     return this.currentUser$.pipe(share());
   }
 }

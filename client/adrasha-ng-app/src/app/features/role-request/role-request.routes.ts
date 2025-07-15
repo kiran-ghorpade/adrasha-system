@@ -1,14 +1,13 @@
 import { Route } from '@angular/router';
-import { RoleRequestDetailsComponent } from './components';
 import {
-  RoleRequestCreatePageComponent,
-  RoleRequestEditPageComponent,
-  RoleRequestPageComponent,
+  RoleRequestDetailsPageComponent,
+  RoleRequestFormPageComponent,
+  RoleRequestPageComponent
 } from './pages';
 
 export const roleRequestRoutes: Route[] = [
   { path: '', component: RoleRequestPageComponent },
-  { path: 'new', component: RoleRequestCreatePageComponent },
-  { path: 'update', component: RoleRequestEditPageComponent },
-  { path: ':id', component: RoleRequestDetailsComponent },
+  { path: 'new', component: RoleRequestFormPageComponent },
+  { path: 'update/:id', component: RoleRequestFormPageComponent },
+  { path: ':id', component: RoleRequestDetailsPageComponent },
 ];

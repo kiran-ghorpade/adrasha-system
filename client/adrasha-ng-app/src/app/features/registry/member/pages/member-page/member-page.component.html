@@ -1,36 +1,16 @@
 <app-page-wrapper>
   <div top>
-    <app-page-header title="Member Details">
-      <mat-action-list>
-        <a matIconButton [matMenuTriggerFor]="menu">
-          <mat-icon class="h-[24px] w-[24px]">more_vert</mat-icon>
-        </a>
-      </mat-action-list>
-
-      <mat-menu #menu="matMenu" [overlapTrigger]="false">
-        <button mat-menu-item (click)="handleUpdateClick()">
-          <mat-icon>edit</mat-icon>
-          <span>Update Member</span>
-        </button>
-        <mat-divider></mat-divider>
-        <button mat-menu-item (click)="handleDeleteMember()">
-          <mat-icon>delete</mat-icon>
-          <span>Delete Member</span>
-        </button>
-      </mat-menu>
-    </app-page-header>
+    <app-page-header title="Member List"> </app-page-header>
   </div>
 
-  <!-- <h4 class="text-lg font-normal text-center">Ramesh Ghorpade</h4> -->
   <div content class="paper flex flex-wrap">
-    <mat-list>
-      @for(data of memberDetails(); track $index){
-      <app-data-label
-        [label]="data.label"
-        [value]="data.value"
-        [icon]="data.value"
-      ></app-data-label>
-      }
-    </mat-list>
+    @if(memberList()){
+    <app-member-list [memberData]="memberList()" [route]="''" />
+    }@else{
+    <div class="overflow-scroll flex justify-center items-center">
+      <mat-icon>search_off</mat-icon>
+      <h4 class="ml-4 text-wrap">No Members found. Try adding a new one!</h4>
+    </div>
+    }
   </div>
 </app-page-wrapper>

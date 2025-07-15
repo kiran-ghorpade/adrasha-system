@@ -1,0 +1,47 @@
+<mat-stepper orientation="vertical" [linear]="true" #stepper>
+  <!-- Family Details -->
+  <mat-step [stepControl]="familyDetails">
+    <form [formGroup]="familyDetails">
+      <ng-template matStepLabel>{{
+        "registry.family.step1Title" | translate
+      }}</ng-template>
+      <div class="flex gap-3 flex-wrap md:w-2/3">
+        <mat-form-field>
+          <mat-label>{{
+            "registry.family.povertyStatusLabel" | translate
+          }}</mat-label>
+          <mat-select required>
+            @for (povertyStatus of povertyStatusList(); track
+            povertyStatus.code) {
+            <mat-option [value]="`${povertyStatus.code}`">{{
+              povertyStatus.label
+            }}</mat-option>
+            }
+          </mat-select>
+          <app-validation-error
+            [control]="familyDetails.controls.povertyStatus"
+          />
+        </mat-form-field>
+      </div>
+      <div>
+        <button matButton matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <!-- Done -->
+  <mat-step>
+    <ng-template matStepLabel>{{
+      "registry.family.doneTitle" | translate
+    }}</ng-template>
+    <p>{{ "registry.family.doneMessage" | translate }}</p>
+    <div>
+      <button matButton matStepperPrevious>Back</button>
+      <button matButton (click)="stepper.reset()">
+        {{ "registry.family.resetButton" | translate }}
+      </button>
+      <button matButton="filled" (click)="onSubmit()">
+        {{ "registry.family.submitButton" | translate }}
+      </button>
+    </div>
+  </mat-step>
+</mat-stepper>

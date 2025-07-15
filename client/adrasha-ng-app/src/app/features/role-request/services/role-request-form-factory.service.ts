@@ -1,6 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { RoleRequestCreateDTORole, RoleRequestResponseDTO } from '@core/model/userService';
+import {
+  RoleRequestCreateDTORole,
+  RoleRequestResponseDTO,
+} from '@core/model/userService';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +13,20 @@ export class RoleRequestFormFactoryService {
 
   createForm(initialData: RoleRequestResponseDTO, isLoading: boolean) {
     // form groups
-    const personalDetails = this.fb.group({
+    const personalDetails = this.step1(initialData, isLoading);
+    const roleDetails = this.step2(initialData, isLoading);
+    const healthCenterDetails = this.step3(initialData, isLoading);
+
+    return this.fb.group({
+      personalDetails,
+      roleDetails,
+      healthCenterDetails,
+    });
+  }
+
+  // form steps
+  private step1(initialData: RoleRequestResponseDTO, isLoading: boolean) {
+    return this.fb.group({
       firstname: this.createControl(
         initialData.name?.firstname || '',
         [Validators.required],
@@ -27,16 +43,20 @@ export class RoleRequestFormFactoryService {
         isLoading
       ),
     });
+  }
 
-    const roleDetails = this.fb.group({
+  private step2(initialData: RoleRequestResponseDTO, isLoading: boolean) {
+    return this.fb.group({
       role: this.createControl(
         initialData.role || RoleRequestCreateDTORole.ASHA,
         [Validators.required],
         isLoading
       ),
     });
+  }
 
-    const healthCenterDetails = this.fb.group({
+  private step3(initialData: RoleRequestResponseDTO, isLoading: boolean) {
+    return this.fb.group({
       healthCenterId: this.createControl(
         initialData.healthCenter || '',
         [
@@ -48,14 +68,9 @@ export class RoleRequestFormFactoryService {
         isLoading
       ),
     });
-
-    return this.fb.group({
-      personalDetails,
-      roleDetails,
-      healthCenterDetails,
-    });
   }
 
+  // helper
   private createControl<T>(
     initialValue: T,
     validators: any[] = [],

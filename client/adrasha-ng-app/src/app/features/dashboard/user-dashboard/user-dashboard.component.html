@@ -1,31 +1,43 @@
 <div class="h-full w-full grid md:grid-rows-10 grid-cols-12 gap-2">
   <div class="row-span-1 col-span-12 flex justify-start gap-3 p-2">
-    <button matButton="outlined" [routerLink]="'/role-request/new'">
+    @if(latestRoleRequest()){
+    <button
+      matButton="outlined"
+      [routerLink]="['/role-requests/update', latestRoleRequest()?.id]"
+    >
+      <mat-icon>edit</mat-icon>
+      Update Role Request
+    </button>
+    }@else {
+    <button matButton="outlined" [routerLink]="'/role-requests/new'">
       <mat-icon>add</mat-icon>
       Make Role Request
     </button>
+    }
 
-    <button
-      matButton="outlined"
-      extended
-      [routerLink]="'/role-request/history'"
-    >
+    <button matButton="outlined" extended [routerLink]="'/role-requests'">
       <mat-icon>visibility</mat-icon>
       View History
     </button>
   </div>
-  <div class="row-span-2 col-span-12 p-2">
-    <app-data-card-label [value]="`Pending`" [label]="`Profile Status`" />
-  </div>
 
+  @if (latestRoleRequest()) {
   <div class="row-span-2 col-span-12 p-2">
-    <app-data-card-label [value]="`No Request Found`" [label]="`Remark`" />
+    <app-data-card-label
+      [value]="latestRoleRequest()?.status"
+      label="Profile Status"
+    />
   </div>
 
   <div class="row-span-2 col-span-12 p-2">
     <app-data-card-label
-      [value]="`Get role by making new Role Request`"
-      [label]="`Message`"
+      [value]="latestRoleRequest()?.role"
+      label="Requested Role"
     />
   </div>
+  }@else {
+  <div class="row-span-2 col-span-12 p-2">
+    <app-data-card-label value="No Request Found" label="Message" />
+  </div>
+  }
 </div>

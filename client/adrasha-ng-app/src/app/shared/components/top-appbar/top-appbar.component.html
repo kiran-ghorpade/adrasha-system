@@ -5,8 +5,8 @@
   <!-- Search Box (Replace with your search component) -->
   <!-- <app-searchbar /> -->
 
-  @if (loggedIn()) {
   <!-- Profile Avatar -->
+  @if (loggedIn()) {
   <button
     matIconButton
     [matMenuTriggerFor]="menu"
@@ -19,7 +19,7 @@
   <!-- User Menu -->
   <mat-menu #menu="matMenu" [overlapTrigger]="false">
     @for(setting of settings; track setting.label){
-    <button mat-menu-item (click)="router.navigate([setting.toLink])">
+    <button mat-menu-item [routerLink]="[setting.toLink]">
       <mat-icon>{{ setting.icon }}</mat-icon>
       <span>{{ setting.label }}</span>
     </button>

@@ -43,7 +43,7 @@ export class DashboardHeaderComponent implements OnInit {
   }
 
   loadUsername() {
-    this.authService.user().subscribe((user) => {
+    this.authService.currentUser.subscribe((user) => {
       this.username.set(user?.username || 'User');
     });
   }

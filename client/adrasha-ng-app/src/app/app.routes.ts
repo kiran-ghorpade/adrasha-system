@@ -1,11 +1,20 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '@core/guards';
-import { UserResponseDTORolesItem } from '@core/model/userService';
-import { AppLayout, AuthLayoutComponent, BlankLayoutComponent } from './layout';
-import { PageNotFoundComponent } from '@shared/components';
+import { roleGuard } from '@core/guards/role.guard';
+import {
+  UserResponseDTORolesItem
+} from '@core/model/userService';
 import { LogsComponent } from '@features/logs';
+import { PageNotFoundComponent } from '@shared/components';
+import { AppLayout, AuthLayoutComponent, BlankLayoutComponent } from './layout';
 
 export const routes: Routes = [
+  {
+    path: '',
+    title: 'ADRASHA',
+    pathMatch: 'full',
+    redirectTo: '/dashboard',
+  },
   {
     path: 'auth',
     title: 'Authentication',
@@ -16,6 +25,14 @@ export const routes: Routes = [
   {
     path: 'profile',
     title: 'Profile',
+    canActivate: [authGuard, roleGuard],
+    data: {
+      roles: [
+        UserResponseDTORolesItem.ADMIN,
+        UserResponseDTORolesItem.ASHA,
+        UserResponseDTORolesItem.USER,
+      ],
+    },
     component: AppLayout,
     loadChildren: () =>
       import('@features/profile/profile.routes').then(
@@ -25,9 +42,13 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     title: 'Dashboard',
-    // canActivate: [authGuard],
+    canActivate: [authGuard, roleGuard],
     data: {
-      roles: [UserResponseDTORolesItem.ADMIN, UserResponseDTORolesItem.ASHA],
+      roles: [
+        UserResponseDTORolesItem.ADMIN,
+        UserResponseDTORolesItem.ASHA,
+        UserResponseDTORolesItem.USER,
+      ],
     },
     component: AppLayout,
     loadChildren: () =>
@@ -38,6 +59,10 @@ export const routes: Routes = [
   {
     path: 'registry',
     title: 'Registry',
+    canActivate: [authGuard, roleGuard],
+    data: {
+      roles: [UserResponseDTORolesItem.ASHA],
+    },
     component: AppLayout,
     loadChildren: () =>
       import('@features/registry/registry.routes').then(
@@ -45,19 +70,13 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'search',
-    title: 'Search',
-    component: AppLayout,
-    loadChildren: () =>
-      import('@features/search/search.routes').then(
-        (route) => route.searchPageRoutes
-      ),
-  },
-  {
     path: 'role-requests',
     title: 'Role Request',
+    canActivate: [authGuard, roleGuard],
+    data: {
+      roles: [UserResponseDTORolesItem.ADMIN, UserResponseDTORolesItem.USER],
+    },
     component: AppLayout,
-    pathMatch: 'full',
     loadChildren: () =>
       import('@features/role-request/role-request.routes').then(
         (route) => route.roleRequestRoutes
@@ -66,6 +85,8 @@ export const routes: Routes = [
   {
     path: 'masterdata',
     title: 'Masterdata',
+    canActivate: [authGuard, roleGuard],
+    data: { roles: [UserResponseDTORolesItem.ADMIN] },
     component: AppLayout,
     loadChildren: () =>
       import('@features/masterdata/masterdata.routes').then(
@@ -81,7 +102,7 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    title: 'Not Found',
+    title: 'ADRASHA : Not Found',
     component: PageNotFoundComponent,
   },
 ];

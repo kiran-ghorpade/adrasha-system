@@ -4,12 +4,9 @@ import {
   input,
   InputSignal,
   OnInit,
-  signal
+  signal,
 } from '@angular/core';
-import {
-  FormsModule,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -46,15 +43,14 @@ export class MemberFormComponent implements OnInit {
 
   member = input({});
   userId: InputSignal<string> = input.required();
-  id: InputSignal<string> = input.required();
+  memberId: InputSignal<string> = input.required();
+  familyId: InputSignal<string> = input.required();
   isUpdate: InputSignal<boolean> = input.required();
 
   // default static data and states
   readonly isLoading = signal(false);
   povertyStatusList = signal<StaticDataDTO[]>([]);
   genderList = signal<StaticDataDTO[]>([]);
-
-  memberId = '';
 
   ngOnInit() {
     this.loadStaticData();
@@ -89,7 +85,7 @@ export class MemberFormComponent implements OnInit {
 
     if (this.isUpdate()) {
       this.memberService.updateMember(
-        this.memberId,
+        this.memberId(),
         this.prepareUpdateFormData()
       );
       return;
@@ -105,48 +101,51 @@ export class MemberFormComponent implements OnInit {
       .subscribe((genders) => this.genderList.set(genders));
   }
 
+  private getRawValues() {
+    return {
+      ...this.personalDetails.getRawValue(),
+      ...this.birthDetails.getRawValue(),
+      ...this.identificationDetails.getRawValue(),
+      ...this.contactDetails.getRawValue(),
+    };
+  }
+
   public prepareRegistrationFormData(): MemberCreateDTO {
-    const { firstname, middlename, lastname, gender } =
-      this.personalDetails.getRawValue();
-    const { dateOfBirth, birthPlace } = this.birthDetails.getRawValue();
-
-    const { adharNumber, abhaNumber } =
-      this.identificationDetails.getRawValue();
-
-    const { mobileNumber } = this.contactDetails.getRawValue();
+    const data = this.getRawValues();
 
     return {
       ashaId: this.userId() || '',
-      familyId: this.id(),
-      name: { firstname, middlename, lastname },
-      gender,
-      dateOfBirth,
-      birthPlace,
-      adharNumber,
-      abhaNumber,
-      mobileNumber,
+      familyId: this.familyId(),
+      name: {
+        firstname: data.firstname,
+        middlename: data.middlename,
+        lastname: data.lastname,
+      },
+      gender: data.gender,
+      dateOfBirth: data.dateOfBirth,
+      birthPlace: data.birthPlace,
+      adharNumber: data.adharNumber,
+      abhaNumber: data.abhaNumber,
+      mobileNumber: data.mobileNumber,
     };
   }
 
   public prepareUpdateFormData(): MemberUpdateDTO {
-    const { firstname, middlename, lastname, gender } =
-      this.personalDetails.getRawValue();
-    const { dateOfBirth, birthPlace } = this.birthDetails.getRawValue();
-
-    const { adharNumber, abhaNumber } =
-      this.identificationDetails.getRawValue();
-
-    const { mobileNumber } = this.contactDetails.getRawValue();
+    const data = this.getRawValues();
 
     return {
-      familyId: this.id(),
-      name: { firstname, middlename, lastname },
-      gender,
-      dateOfBirth,
-      birthPlace,
-      adharNumber,
-      abhaNumber,
-      mobileNumber,
+      familyId: this.familyId(),
+      name: {
+        firstname: data.firstname,
+        middlename: data.middlename,
+        lastname: data.lastname,
+      },
+      gender: data.gender,
+      dateOfBirth: data.dateOfBirth,
+      birthPlace: data.birthPlace,
+      adharNumber: data.adharNumber,
+      abhaNumber: data.abhaNumber,
+      mobileNumber: data.mobileNumber,
     };
   }
 }

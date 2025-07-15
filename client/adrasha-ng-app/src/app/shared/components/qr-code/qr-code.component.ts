@@ -6,6 +6,13 @@ import { QrCodeComponent } from 'ng-qrcode';
 import { NgxPrintModule } from 'ngx-print';
 import { AppLogoComponent } from '../../widgets/logo.component';
 
+export interface FamilyQRType {
+  url: string;
+  homeId: string;
+  headname: string;
+  contact: string;
+}
+
 @Component({
   selector: 'app-qr-code',
   imports: [
@@ -16,7 +23,7 @@ import { AppLogoComponent } from '../../widgets/logo.component';
     MatIconModule,
     AppLogoComponent,
   ],
-  template: ` <h2 mat-dialog-title>Family QR Code</h2>
+  template: ` 
     <div mat-dialog-content id="printSection">
       @if(data){
       <div class="text-center">
@@ -50,5 +57,5 @@ import { AppLogoComponent } from '../../widgets/logo.component';
     </div>`,
 })
 export class QrCodeDialog {
-  data = inject(MAT_DIALOG_DATA);
+  data: FamilyQRType = inject(MAT_DIALOG_DATA);
 }

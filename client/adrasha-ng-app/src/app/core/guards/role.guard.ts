@@ -13,7 +13,7 @@ export const roleGuard: CanActivateChildFn = (childRoute, state) => {
     | UserResponseDTORolesItem[]
     | undefined;
 
-  return auth.user().pipe(
+  return auth.currentUser.pipe(
     take(1),
     map((user: UserDTO | null) => {
       if (user) {

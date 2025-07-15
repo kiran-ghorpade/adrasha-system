@@ -3,25 +3,25 @@
   <mat-step [stepControl]="personalDetails">
     <form [formGroup]="personalDetails">
       <ng-template matStepLabel>{{
-        "roleReqeust.step1Title" | translate
+        "roleRequest.step1Title" | translate
       }}</ng-template>
       <div class="flex gap-3 flex-wrap md:w-2/3">
         <mat-form-field>
-          <mat-label>{{ "roleReqeust.firstnameLabel" | translate }}</mat-label>
+          <mat-label>{{ "roleRequest.firstnameLabel" | translate }}</mat-label>
           <input matInput formControlName="firstname" required />
           <app-validation-error
             [control]="personalDetails.controls.firstname"
           />
         </mat-form-field>
         <mat-form-field>
-          <mat-label>{{ "roleReqeust.middlenameLabel" | translate }}</mat-label>
+          <mat-label>{{ "roleRequest.middlenameLabel" | translate }}</mat-label>
           <input matInput formControlName="middlename" required />
           <app-validation-error
             [control]="personalDetails.controls.middlename"
           />
         </mat-form-field>
         <mat-form-field>
-          <mat-label>{{ "roleReqeust.lastnameLabel" | translate }}</mat-label>
+          <mat-label>{{ "roleRequest.lastnameLabel" | translate }}</mat-label>
           <input matInput formControlName="lastname" required />
           <app-validation-error [control]="personalDetails.controls.lastname" />
         </mat-form-field>
@@ -37,11 +37,11 @@
   <mat-step [stepControl]="roleDetails">
     <form [formGroup]="roleDetails">
       <ng-template matStepLabel>{{
-        "roleReqeust.step2Title" | translate
+        "roleRequest.step2Title" | translate
       }}</ng-template>
       <div class="flex gap-3 flex-wrap md:w-2/3">
         <mat-form-field>
-          <mat-label>{{ "roleReqeust.roleLabel" | translate }}</mat-label>
+          <mat-label>{{ "roleRequest.roleLabel" | translate }}</mat-label>
           <mat-select required formControlName="role">
             @for (role of roleList(); track $index) {
             <mat-option [value]="`${role.code}`">{{ role.label }}</mat-option>
@@ -61,16 +61,16 @@
   <mat-step [stepControl]="healthCenterDetails">
     <form [formGroup]="healthCenterDetails">
       <ng-template matStepLabel>{{
-        "roleReqeust.step3Title" | translate
+        "roleRequest.step3Title" | translate
       }}</ng-template>
       <div class="flex gap-3 flex-wrap md:w-2/3">
         <mat-form-field>
           <mat-label>{{
-            "roleReqeust.localityTypeLabel" | translate
+            "roleRequest.healthCenterLabel" | translate
           }}</mat-label>
-          <mat-select required formControlName="healthcenterId">
-            @for (role of healthCenterList(); track $index) {
-            <mat-option [value]="`${role.id}`">{{ role.id }}</mat-option>
+          <mat-select required formControlName="healthCenterId">
+            @for (center of healthCenterList(); track $index) {
+            <mat-option [value]="`${center.id}`">{{ center.id }}</mat-option>
             }
           </mat-select>
           <app-validation-error
@@ -89,16 +89,16 @@
   <!-- Done -->
   <mat-step>
     <ng-template matStepLabel>{{
-      "roleReqeust.doneTitle" | translate
+      "roleRequest.doneTitle" | translate
     }}</ng-template>
-    <p>{{ "roleReqeust.doneMessage" | translate }}</p>
+    <p>{{ "roleRequest.doneMessage" | translate }}</p>
     <div>
       <button matButton matStepperPrevious>Back</button>
       <button matButton (click)="stepper.reset()">
-        {{ "roleReqeust.resetButton" | translate }}
+        {{ "roleRequest.resetButton" | translate }}
       </button>
       <button matButton="filled" (click)="onSubmit()">
-        {{ "roleReqeust.submitButton" | translate }}
+        {{ "roleRequest.submitButton" | translate }}
       </button>
     </div>
   </mat-step>

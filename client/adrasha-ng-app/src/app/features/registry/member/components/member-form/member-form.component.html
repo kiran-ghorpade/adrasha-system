@@ -1,5 +1,5 @@
 <mat-stepper orientation="vertical" [linear]="true" #stepper>
-  <!-- Birth Details -->
+  <!-- Personal Details -->
   <mat-step [stepControl]="personalDetails">
     <form [formGroup]="personalDetails">
       <ng-template matStepLabel>{{
@@ -11,9 +11,7 @@
             "registry.member.firstnameLabel" | translate
           }}</mat-label>
           <input matInput formControlName="firstname" required />
-          <app-validation-error
-            [control]="personalDetails.controls.firstname"
-          />
+          <app-validation-error [control]="personalDetails.controls.firstname" />
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{

@@ -55,7 +55,7 @@ export class RegistryPageComponent implements OnInit {
   }
 
   loadUser() {
-    this.authService.user().subscribe((user) => {
+    this.authService.currentUser.subscribe((user) => {
       this.userId = user?.id || '';
     });
   }

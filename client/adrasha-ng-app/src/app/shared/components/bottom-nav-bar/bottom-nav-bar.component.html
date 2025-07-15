@@ -2,7 +2,7 @@
   <!-- FIX : change bg color for dark mode -->
   <div
     style="box-shadow: var(--mat-sys-level3)"
-    class="w-full bottom-0 fixed md:hidden flex justify-center items-center bg-white z-50" 
+    class="w-full bottom-0 fixed md:hidden flex justify-center items-center bg-white z-50"
   >
     @for(menu of menuList() ; track menu.label){
     <div
@@ -14,12 +14,10 @@
           'hover:bg-blue-300 rounded-md': true
         }"
         [routerLinkActive]="'bg-blue-500 text-white'"
+        [routerLinkActiveOptions]="{ exact: true }"
         class="h-[32px] w-[56px] my-[4px] flex items-center justify-center transition-colors duration-300 rounded-2xl"
       >
-        <mat-icon
-          class="w-[24px] h-[24px]"
-          >{{ menu.icon }}</mat-icon
-        >
+        <mat-icon class="w-[24px] h-[24px]">{{ menu.icon }}</mat-icon>
       </div>
       <div id="label" class="font-light text-xs text-center">
         {{ menu.label }}

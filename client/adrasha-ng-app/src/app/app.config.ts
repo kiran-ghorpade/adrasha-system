@@ -29,6 +29,7 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    
     provideRouter(
       routes,
       withInMemoryScrolling({

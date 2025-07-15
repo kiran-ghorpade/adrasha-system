@@ -12,7 +12,7 @@
     </div>
 
     <div>
-      <app-role-request-list [users]="users" />
+      <app-role-request-list [roleRequestList]="roleRequestList()" />
       <mat-paginator
         [pageIndex]="0"
         [length]="totalSize()"

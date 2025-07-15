@@ -4,85 +4,86 @@ import {
   MemberDataResponseDTO,
   MemberDataResponseDTOGender,
 } from '@core/model/dataService';
+import { abhaNumberValidation, adharNumberValidation, mobileNumberValidation } from '@shared/validations';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class MemberFormFactoryService {
   private readonly fb = inject(FormBuilder);
 
-  createForm(
-    initialData: MemberDataResponseDTO,
-    isLoading: boolean
-  ) {
+  createForm(initialData: MemberDataResponseDTO, isLoading: boolean) {
     // form groups
-    const personalDetails = this.fb.group({
-      firstname: this.createControl(
-        initialData.name?.firstname || '',
-        [Validators.required],
-        isLoading
-      ),
-      middlename: this.createControl(
-        initialData.name?.middlename || '',
-        [Validators.required],
-        isLoading
-      ),
-      lastname: this.createControl(
-        initialData.name?.lastname || '',
-        [Validators.required],
-        isLoading
-      ),
-      gender: this.createControl(
-        initialData.gender || MemberDataResponseDTOGender.MALE,
-        [Validators.required],
-        isLoading
-      ),
-    });
-
-    const birthDetails = this.fb.group({
-      dateOfBirth: this.createControl(
-        initialData.dateOfBirth || '',
-        [Validators.required],
-        isLoading
-      ),
-      birthPlace: this.createControl(
-        initialData.birthPlace || '',
-        [],
-        isLoading
-      ),
-    });
-
-    const identificationDetails = this.fb.group({
-      adharNumber: this.createControl(
-        initialData.adharNumber || '',
-        [
-          Validators.required,
-          Validators.pattern(/^\d+$/),
-          Validators.minLength(12),
-          Validators.maxLength(12),
-        ],
-        isLoading
-      ),
-      abhaNumber: this.createControl(
-        initialData.abhaNumber || '',
-        [Validators.pattern(/^\d+$/)],
-        isLoading
-      ),
-    });
-
-    const contactDetails = this.fb.group({
-      mobileNumber: this.createControl(
-        initialData.mobileNumber || '',
-        [Validators.pattern(/^[6-9]\d{9}$/)],
-        isLoading
-      ),
-    });
+    const personalDetails = this.step1(initialData, isLoading);
+    const birthDetails = this.step2(initialData, isLoading);
+    const identificationDetails = this.step3(initialData, isLoading);
+    const contactDetails = this.step4(initialData, isLoading);
 
     return this.fb.group({
       personalDetails,
       birthDetails,
       identificationDetails,
       contactDetails,
+    });
+  }
+
+  // steps
+  private step1(data: MemberDataResponseDTO, isLoading: boolean) {
+    return this.fb.group({
+      firstname: this.createControl(
+        data.name?.firstname || '',
+        [Validators.required],
+        isLoading
+      ),
+      middlename: this.createControl(
+        data.name?.middlename || '',
+        [Validators.required],
+        isLoading
+      ),
+      lastname: this.createControl(
+        data.name?.lastname || '',
+        [Validators.required],
+        isLoading
+      ),
+      gender: this.createControl(
+        data.gender || MemberDataResponseDTOGender.MALE,
+        [Validators.required],
+        isLoading
+      ),
+    });
+  }
+
+  private step2(data: MemberDataResponseDTO, isLoading: boolean) {
+    return this.fb.group({
+      dateOfBirth: this.createControl(
+        data.dateOfBirth || '',
+        [Validators.required],
+        isLoading
+      ),
+      birthPlace: this.createControl(data.birthPlace || '', [], isLoading),
+    });
+  }
+
+  private step3(data: MemberDataResponseDTO, isLoading: boolean) {
+    return this.fb.group({
+      adharNumber: this.createControl(
+        data.adharNumber || '',
+        adharNumberValidation,
+        isLoading
+      ),
+      abhaNumber: this.createControl(
+        data.abhaNumber || '',
+        abhaNumberValidation,
+        isLoading
+      ),
+    });
+  }
+
+  private step4(data: MemberDataResponseDTO, isLoading: boolean) {
+    return this.fb.group({
+      mobileNumber: this.createControl(
+        data.mobileNumber || '',
+        mobileNumberValidation,
+        isLoading
+      ),
     });
   }
 

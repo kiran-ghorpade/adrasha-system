@@ -1,7 +1,12 @@
-import { Component, inject, input, InputSignal, signal } from '@angular/core';
+import { Component, inject, input, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
+import { HealthCenterService } from '@core/api/health-center/health-center.service';
 import { StaticDataService } from '@core/api/static-data/static-data.service';
 import {
   HealthCenterResponseDTO,
@@ -9,14 +14,14 @@ import {
 } from '@core/model/masterdataService';
 import {
   RoleRequestCreateDTO,
+  RoleRequestResponseDTO,
   RoleRequestUpdateDTO,
 } from '@core/model/userService';
+import { LoadingService } from '@core/services';
 import { RoleRequestFormFactoryService } from '@features/role-request/services/role-request-form-factory.service';
 import { RoleRequestService } from '@features/role-request/services/role-request.service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ValidationErrorComponent } from '@shared/components';
-import { MatSelectModule } from '@angular/material/select';
-import { HealthCenterService } from '@core/api/health-center/health-center.service';
 import { map } from 'rxjs';
 
 @Component({
@@ -24,6 +29,8 @@ import { map } from 'rxjs';
   imports: [
     MatStepperModule,
     MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
     TranslatePipe,
     ReactiveFormsModule,
     ValidationErrorComponent,
@@ -32,30 +39,36 @@ import { map } from 'rxjs';
   templateUrl: './role-request-form.component.html',
 })
 export class RoleRequestFormComponent {
+  // dependencies
   private readonly formFactory = inject(RoleRequestFormFactoryService);
   private readonly staticDataService = inject(StaticDataService);
+  private readonly roleReqeustService = inject(RoleRequestService);
   private readonly healthCenterService = inject(HealthCenterService);
-  private readonly service = inject(RoleRequestService);
+  private readonly loadingService = inject(LoadingService);
 
-  roleRequest = input({});
-  userId: InputSignal<string> = input.required();
-  id: InputSignal<string> = input.required();
-  isUpdate: InputSignal<boolean> = input.required();
+  // states
+  readonly userId = input.required<string>();
+  readonly roleRequestId = input.required<string>();
+  readonly isUpdate = input.required<boolean>();
+  readonly roleRequest = input<RoleRequestResponseDTO>();
 
-  // default static data and states
-  readonly isLoading = signal(false);
-  roleList = signal<StaticDataDTO[]>([]);
-  genderList = signal<StaticDataDTO[]>([]);
+  readonly roleList = signal<StaticDataDTO[]>([]);
   healthCenterList = signal<HealthCenterResponseDTO[]>([]);
 
-  memberId = '';
+  readonly isLoading = toSignal(this.loadingService.loading$, {
+    initialValue: false,
+  });
+
+  readonly formGroup = this.formFactory.createForm(
+    this.roleRequest() ?? {},
+    this.isLoading()
+  );
 
   ngOnInit() {
     this.loadStaticData();
   }
 
-  formGroup = this.formFactory.createForm(this.roleRequest(), this.isLoading());
-
+  // getters
   public get personalDetails() {
     return this.formGroup.controls.personalDetails;
   }
@@ -68,6 +81,8 @@ export class RoleRequestFormComponent {
     return this.formGroup.controls.healthCenterDetails;
   }
 
+
+  // logic
   onSubmit() {
     if (this.formGroup.invalid) {
       this.formGroup.markAllAsTouched();
@@ -75,56 +90,73 @@ export class RoleRequestFormComponent {
     }
 
     if (this.isUpdate()) {
-      this.service.update(this.memberId, this.prepareUpdateFormData());
+      this.update();
       return;
     }
 
-    this.service.add(this.prepareRegistrationFormData());
+    this.add();
+  }
+
+  private add() {
+    this.roleReqeustService.add(this.prepareRegistrationFormData());
+  }
+
+  private update() {
+    this.roleReqeustService.update(
+      this.roleRequestId(),
+      this.prepareUpdateFormData()
+    );
   }
 
   // Helper Methods
   private loadStaticData() {
     this.staticDataService
-      .getGenders()
-      .subscribe((genders) => this.genderList.set(genders));
-
-    this.staticDataService
       .getRoles()
       .subscribe((roles) => this.roleList.set(roles));
 
-      // TODO : fix this issue.
     this.healthCenterService
-      .getAllHealthCenters()
-      .pipe(map((center) => center.content))
-      .subscribe((centers) => this.healthCenterList.set(centers || []));
+      .getAllHealthCenters({
+        filterDTO: {},
+        pageable: {},
+      })
+      .pipe(map((response) => response.content))
+      .subscribe((centers) => this.healthCenterList.set(centers ?? []));
+  }
+
+  private getRawValues() {
+    return {
+      ...this.personalDetails.getRawValue(),
+      ...this.roleDetails.getRawValue(),
+      ...this.healthCenterDetails.getRawValue(),
+    };
   }
 
   public prepareRegistrationFormData(): RoleRequestCreateDTO {
-    const { firstname, middlename, lastname } =
-      this.personalDetails.getRawValue();
-    const { role } = this.roleDetails.getRawValue();
-
-    const { healthCenterId } = this.healthCenterDetails.getRawValue();
+    const data = this.getRawValues();
 
     return {
-      userId: this.userId() || '',
-      name: { firstname, middlename, lastname },
-      role,
-      healthCenterId,
+      userId: this.userId() ?? '',
+      name: {
+        firstname: data.firstname,
+        middlename: data.middlename,
+        lastname: data.lastname,
+      },
+      healthCenterId: data.healthCenterId,
+      role: data.role,
     };
   }
 
   public prepareUpdateFormData(): RoleRequestUpdateDTO {
-    const { firstname, middlename, lastname } =
-      this.personalDetails.getRawValue();
-    const { role } = this.roleDetails.getRawValue();
-
-    const { healthCenterId } = this.healthCenterDetails.getRawValue();
+    const data = this.getRawValues();
 
     return {
-      name: { firstname, middlename, lastname },
-      healthCenterId,
-      role,
+      name: {
+        firstname: data.firstname,
+        middlename: data.middlename,
+        lastname: data.lastname,
+      },
+      healthCenterId: data.healthCenterId,
+      role: data.role,
     };
   }
 }

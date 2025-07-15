@@ -1,1 +1,55 @@
-<p>member-details-page works!</p>
+<app-page-wrapper>
+  <div top>
+    <app-page-header title="Member Details">
+      <mat-action-list>
+        <a matIconButton [matMenuTriggerFor]="menu">
+          <mat-icon class="h-[24px] w-[24px]">more_vert</mat-icon>
+        </a>
+      </mat-action-list>
+
+      <mat-menu #menu="matMenu" [overlapTrigger]="false">
+        <button
+          mat-menu-item
+          [routerLink]="['/registry/members/update', memberData()?.id ?? '']"
+        >
+          <mat-icon>edit</mat-icon>
+          <span>Update Member</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="handleDeleteMember()">
+          <mat-icon>delete</mat-icon>
+          <span>Delete Member</span>
+        </button>
+      </mat-menu>
+    </app-page-header>
+  </div>
+
+  <div content class="flex flex-wrap justify-evenly gap-3">
+    <!-- Family Details -->
+    @if(data().length > 0){
+    <div class="w-full paper h-max flex-[3] flex flex-wrap">
+      <app-member-details [memberData]="data()"></app-member-details>
+    </div>
+    }@else {
+    <div class="overflow-scroll flex justify-center items-center">
+      <mat-icon>search_off</mat-icon>
+      <h4 class="ml-4 text-wrap">something went wrong</h4>
+    </div>
+    }
+
+    <!-- Member List -->
+    <!-- <div class="w-full paper flex-[2] flex flex-col p-2 gap-5">
+      <div class="flex justify-center">
+        <button
+          matFab
+          extended
+          [routerLink]="'/registry/members/new'"
+          [queryParams]="{ familyId: memberData()?.familyId }"
+        >
+          <mat-icon>add</mat-icon>
+          Add New Member
+        </button>
+      </div>
+    </div> -->
+  </div>
+</app-page-wrapper>

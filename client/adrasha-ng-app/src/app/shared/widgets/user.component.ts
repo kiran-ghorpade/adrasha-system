@@ -54,7 +54,7 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     this.auth
-      .user()
+      .currentUser
       .pipe(
         tap(user => (this.user = user)),
         debounceTime(10)

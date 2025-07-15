@@ -1,1 +1,103 @@
-<p>family-details-page works!</p>
+<app-page-wrapper>
+  <div top>
+    <app-page-header title="Family Details">
+      <mat-action-list>
+        <div class="flex gap-2">
+          <button matIconButton (click)="handleQrClick()" matTooltip="Generate Qr">
+            <mat-icon>qr_code</mat-icon>
+          </button>
+          <a matIconButton [matMenuTriggerFor]="menu" matTooltip="More">
+            <mat-icon class="h-[24px] w-[24px]">more_vert</mat-icon>
+          </a>
+        </div>
+      </mat-action-list>
+
+      <mat-menu #menu="matMenu" [overlapTrigger]="false">
+        <button
+          mat-menu-item
+          [routerLink]="['/registry/family/update', familyDetails().id ?? '']"
+        >
+          <mat-icon>edit</mat-icon>
+          <span>Update Family</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="handleDeleteFamily()">
+          <mat-icon>delete</mat-icon>
+          <span>Delete Family</span>
+        </button>
+      </mat-menu>
+    </app-page-header>
+  </div>
+
+  <div content class="flex flex-wrap justify-evenly gap-3">
+    <!-- Family Details -->
+    <div class="w-full paper h-max flex-[3] flex flex-wrap">
+      @if(familyDetails()){
+      <div class="flex-[2]">
+        <mat-list>
+          <!-- TODO : fullname -->
+          <app-data-label
+            label="HeadMember"
+            [value]="`${headMemberDetails().name?.firstname} ${headMemberDetails().name?.middlename}  ${headMemberDetails().name?.lastname} `|| 'NOT FOUND'"
+            icon="person"
+          ></app-data-label>
+          <app-data-label
+            label="Mobile Number"
+            [value]="headMemberDetails().mobileNumber || 'NOT FOUND'"
+            icon="phone"
+          ></app-data-label>
+        </mat-list>
+      </div>
+
+      <div class="flex-[2]">
+        <mat-list>
+          <app-data-label
+            label="Poverty Status"
+            [value]="familyDetails().povertyStatus || 'NOT FOUND'"
+            icon="home"
+          ></app-data-label>
+          <app-data-label
+            label="Registration Date"
+            [value]="headMemberDetails().createdAt || 'NOT FOUND'"
+            icon="event"
+          ></app-data-label>
+        </mat-list>
+      </div>
+      }@else {
+      <div class="overflow-scroll flex justify-center items-center">
+        <mat-icon>search_off</mat-icon>
+        <h4 class="ml-4 text-wrap">Something went wrong</h4>
+      </div>
+      }
+    </div>
+
+    <!-- Member List -->
+    <div class="w-full paper flex-[2] flex flex-col p-2 gap-5">
+      <div class="flex justify-center">
+        <button
+          matFab
+          extended
+          [routerLink]="'/registry/members/new'"
+          [queryParams]="{familyId}"
+        >
+          <mat-icon>add</mat-icon>
+          Add New Member
+        </button>
+      </div>
+
+      <mat-action-list>
+        @for (member of memberList(); track $index) {
+        <a mat-list-item [routerLink]="`/registry/members/${member.id}`">
+          <div matListItemAvatar class="flex items-center justify-center">
+            <mat-icon>person</mat-icon>
+          </div>
+          <h3 matListItemTitle>
+            {{`${member.name?.firstname} ${member.name?.middlename} ${member.name?.lastname}` }}
+          </h3>
+          <p matListItemLine>{{ member.age }}</p>
+        </a>
+        }
+      </mat-action-list>
+    </div>
+  </div>
+</app-page-wrapper>

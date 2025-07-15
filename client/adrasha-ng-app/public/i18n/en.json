@@ -31,9 +31,12 @@
   "registry": {
     "family": {
       "addFamilyTitle": "Add New Family",
-      "step1Title": "Fill Family Details",
-      "step2Title": "Fill Head Member's Personal Details",
-      "step3Title": "Fill Head Member's Other Details",
+      "updateFamilyTitle": "Update Family",
+      "step1Title": "Family Details",
+      "step2Title": "Head Member's Personal Details",
+      "step3Title": "Head Member's Other Details",
+      "step4Title": "Head Member's Identification Details",
+      "step5Title": "Head Member's Contact Details",
       "doneTitle": "Done",
       "doneMessage": "You are now done.",
       "submitButton": "Submit",
@@ -53,6 +56,14 @@
       "registration": {
         "success": "Family Registration successful",
         "failed": "Family Registration failed"
+      },
+      "update": {
+        "success": "Family Update successful",
+        "failed": "Family Update failed"
+      },
+      "deletion": {
+        "success": "Family Deletion successful",
+        "failed": "Family Deletion failed"
       }
     },
 
@@ -81,6 +92,14 @@
       "registration": {
         "success": "Member Registration successful",
         "failed": "Member Registration failed"
+      },
+      "update": {
+        "success": "Member Update successful",
+        "failed": "Member Update failed"
+      },
+      "deletion": {
+        "success": "Member Deletion successful",
+        "failed": "Member Deletion failed"
       }
     },
 
@@ -104,7 +123,45 @@
       "registration": {
         "success": "Health Record Registration successful",
         "failed": "Health Record Registration failed"
+      },
+      "update": {
+        "success": "Role Request Update successful",
+        "failed": "Role Request Update failed"
+      },
+      "deletion": {
+        "success": "Role Request Deletion successful",
+        "failed": "Role Request Deletion failed"
       }
+    }
+  },
+  "roleRequest": {
+    "addRoleRequestTitle": "Add Role Request",
+    "updateRoleRequestTitle": "Update Role Request",
+    "step1Title": "Personal Details",
+    "step2Title": "Role Details",
+    "step3Title": "Health Center Details",
+    "doneTitle": "Done",
+    "doneMessage": "You are now done.",
+    "submitButton": "Submit",
+    "resetButton": "Reset",
+
+    "firstnameLabel": "Firstname",
+    "middlenameLabel": "Middlename",
+    "lastnameLabel": "Lastname",
+    "roleLabel": "Select Role",
+    "healthCenterLabel": "Health Center",
+
+    "registration": {
+      "success": "Role Request Registration successful",
+      "failed": "Role Request Registration failed"
+    },
+    "update": {
+      "success": "Role Request Update successful",
+      "failed": "Role Request Update failed"
+    },
+    "deletion": {
+      "success": "Role Request Deletion successful",
+      "failed": "Role Request Deletion failed"
     }
   }
 }

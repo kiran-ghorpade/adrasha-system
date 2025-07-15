@@ -14,7 +14,7 @@ export class MenuService {
 
   constructor() {
     this.authService
-      .user()
+      .currentUser
       .pipe(map((user) => user?.roles))
       .subscribe((roles) => {
         this.getMenuList(roles);

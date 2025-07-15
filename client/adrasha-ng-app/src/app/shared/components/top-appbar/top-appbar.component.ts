@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { AuthService } from '@core/services';
 import { AppLogoComponent } from '../../widgets/logo.component';
 // import { AuthenticationService } from 'src/app/services/authentication.service'; // import your auth service
@@ -23,6 +23,7 @@ import { AppLogoComponent } from '../../widgets/logo.component';
     MatTooltipModule,
     MatListModule,
     AppLogoComponent,
+    RouterModule,
     CommonModule,
   ],
 })
@@ -41,7 +42,6 @@ export class TopAppBarComponent implements OnInit {
     this.authService.isLoggedIn$.subscribe((status) => {
       this.loggedIn.set(status);
       console.log(this.loggedIn());
-      
     });
   }
 

@@ -25,6 +25,7 @@ import {
   QrCodeDialog,
 } from '@shared/components';
 import { map } from 'rxjs';
+import { FamilyService } from '../../services';
 
 @Component({
   selector: 'app-family-details-page',
@@ -47,7 +48,8 @@ import { map } from 'rxjs';
 })
 export class FamilyDetailsPageComponent {
   private readonly activatedRoute = inject(ActivatedRoute);
-  private readonly familyService = inject(FamilyDataService);
+  private readonly familyApiService = inject(FamilyDataService);
+  private readonly familyService = inject(FamilyService);
   private readonly memberService = inject(MemberDataService);
   private readonly dialog = inject(MatDialog);
 
@@ -68,7 +70,7 @@ export class FamilyDetailsPageComponent {
   }
 
   loadFamilyDetails() {
-    this.familyService.getFamily(this.familyId).subscribe((user) => {
+    this.familyApiService.getFamily(this.familyId).subscribe((user) => {
       this.familyDetails.set(user);
     });
 
@@ -97,7 +99,7 @@ export class FamilyDetailsPageComponent {
     this.dialog.open(QrCodeDialog, {
       data: {
         url,
-        homeId: this.getHeadFullName(this.headMemberDetails().name ?? null),
+        headname: this.getHeadFullName(this.headMemberDetails().name ?? null),
         contact: this.headMemberDetails()?.mobileNumber ?? '',
       },
     });
@@ -113,7 +115,7 @@ export class FamilyDetailsPageComponent {
 
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
-        this.memberService.deleteMember(this.familyId);
+        this.familyService.delete(this.familyId);
       }
     });
   }

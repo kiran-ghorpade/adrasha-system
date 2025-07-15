@@ -26,10 +26,10 @@ import {
 import type {
   GetAllHealthRecordsParams,
   GetTotalCount1Params,
-  HealthCreateDTO,
+  HealthRecordCreateDTO,
   HealthRecordPageResponseDTO,
   HealthRecordResponseDTO,
-  HealthUpdateDTO
+  HealthRecordUpdateDTO
 } from '../../model/dataService';
 
 
@@ -71,22 +71,22 @@ export class HealthRecordService {
   }
  updateHealthRecord<TData = HealthRecordResponseDTO>(
     id: string,
-    healthUpdateDTO: HealthUpdateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+    healthRecordUpdateDTO: HealthRecordUpdateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
     updateHealthRecord<TData = HealthRecordResponseDTO>(
     id: string,
-    healthUpdateDTO: HealthUpdateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+    healthRecordUpdateDTO: HealthRecordUpdateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
     updateHealthRecord<TData = HealthRecordResponseDTO>(
     id: string,
-    healthUpdateDTO: HealthUpdateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+    healthRecordUpdateDTO: HealthRecordUpdateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
   ): Observable<HttpEvent<TData>>;updateHealthRecord<TData = HealthRecordResponseDTO>(
     id: string,
-    healthUpdateDTO: HealthUpdateDTO, options?: HttpClientOptions
+    healthRecordUpdateDTO: HealthRecordUpdateDTO, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.put<TData>(
       `http://localhost:8080/data/healthRecords/${id}`,
-      healthUpdateDTO,options
+      healthRecordUpdateDTO,options
     );
   }
  deleteHealthRecord<TData = void>(
@@ -118,23 +118,23 @@ export class HealthRecordService {
     return this.http.get<TData>(
       `http://localhost:8080/data/healthRecords`,{
     ...options,
-        ...params, ...options?.params }
+       ...params, ...options?.params}
     );
   }
  createHealth<TData = HealthRecordResponseDTO>(
-    healthCreateDTO: HealthCreateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+    healthRecordCreateDTO: HealthRecordCreateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
     createHealth<TData = HealthRecordResponseDTO>(
-    healthCreateDTO: HealthCreateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+    healthRecordCreateDTO: HealthRecordCreateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
     createHealth<TData = HealthRecordResponseDTO>(
-    healthCreateDTO: HealthCreateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+    healthRecordCreateDTO: HealthRecordCreateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
   ): Observable<HttpEvent<TData>>;createHealth<TData = HealthRecordResponseDTO>(
-    healthCreateDTO: HealthCreateDTO, options?: HttpClientOptions
+    healthRecordCreateDTO: HealthRecordCreateDTO, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.post<TData>(
       `http://localhost:8080/data/healthRecords`,
-      healthCreateDTO,options
+      healthRecordCreateDTO,options
     );
   }
  getTotalCount1<TData = string>(
@@ -151,7 +151,7 @@ export class HealthRecordService {
     return this.http.get<TData>(
       `http://localhost:8080/data/healthRecords/count`,{
     ...options,
-        ...params, ...options?.params }
+       ...params, ...options?.params}
     );
   }
 };

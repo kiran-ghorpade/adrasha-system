@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '@core/services';
+import { AuthService, LoadingService } from '@core/services';
 import { LoginRequest } from '@core/model/authService';
 import { AlertService } from '@core/services/alert.service';
 import { ValidationErrorComponent } from '../../../shared/components/validation-error/validation-error.component';
@@ -19,6 +19,7 @@ import {
   TranslateService,
 } from '@ngx-translate/core';
 import { finalize } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-login',
@@ -41,12 +42,15 @@ export class LoginComponent {
   private readonly authService = inject(AuthService);
   private readonly alertService = inject(AlertService);
   private readonly translateService = inject(TranslateService);
+  private readonly loadingService = inject(LoadingService);
   private fb = inject(FormBuilder);
   hide = signal(true);
 
   // states
-  readonly isLoading = signal(false);
-
+  readonly isLoading = toSignal(this.loadingService.loading$, {
+    initialValue: false,
+  });
+  
   // form
   readonly loginForm = this.fb.nonNullable.group({
     username: this.fb.nonNullable.control(
@@ -72,8 +76,6 @@ export class LoginComponent {
       return;
     }
 
-    this.isLoading.set(true);
-
     const { username, password } = this.loginForm.getRawValue();
 
     const loginRequest: LoginRequest = {
@@ -81,20 +83,17 @@ export class LoginComponent {
       password,
     };
 
-    this.authService
-      .login(loginRequest)
-      .pipe(finalize(() => this.isLoading.set(false)))
-      .subscribe({
-        next: () => {
-          const translatedMsg = this.translateService.instant('login.success');
-          this.alertService.showAlert(translatedMsg, 'success');
-          this.loginForm.reset();
-          this.router.navigateByUrl('/dashboard', { replaceUrl: true });
-        },
-        error: () => {
-          const translatedMsg = this.translateService.instant('login.failed');
-          this.alertService.showAlert(translatedMsg, 'error');
-        },
-      });
+    this.authService.login(loginRequest).subscribe({
+      next: () => {
+        const translatedMsg = this.translateService.instant('login.success');
+        this.alertService.showAlert(translatedMsg, 'success');
+        this.router.navigateByUrl('/dashboard', { replaceUrl: true });
+        this.loginForm.reset();
+      },
+      error: () => {
+        const translatedMsg = this.translateService.instant('login.failed');
+        this.alertService.showAlert(translatedMsg, 'error');
+      },
+    });
   }
 }

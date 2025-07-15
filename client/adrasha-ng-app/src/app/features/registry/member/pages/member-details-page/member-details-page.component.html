@@ -27,13 +27,13 @@
   <div content class="flex flex-wrap justify-evenly gap-3">
     <!-- Family Details -->
     @if(data().length > 0){
-    <div class="w-full paper h-max flex-[3] flex flex-wrap">
+    <div class="h-max paper flex flex-wrap">
       <app-member-details [memberData]="data()"></app-member-details>
     </div>
     }@else {
     <div class="overflow-scroll flex justify-center items-center">
       <mat-icon>search_off</mat-icon>
-      <h4 class="ml-4 text-wrap">something went wrong</h4>
+      <h4 class="ml-4 text-wrap">member not found</h4>
     </div>
     }
 

@@ -41,7 +41,7 @@ export class FamilyService {
             'registry.family.registration.success'
           );
           this.alertService.showAlert(translatedMsg, 'success');
-          this.router.navigateByUrl(`/registry/member/${result.id}`, {
+          this.router.navigateByUrl(`/registry/families/${result.id}`, {
             replaceUrl: true,
           });
         }
@@ -66,7 +66,7 @@ export class FamilyService {
             'registry.family.update.success'
           );
           this.alertService.showAlert(translatedMsg, 'success');
-          this.router.navigateByUrl(`/registry/member/${result.id}`, {
+          this.router.navigateByUrl(`/registry/families/${result.id}`, {
             replaceUrl: true,
           });
         }
@@ -83,14 +83,14 @@ export class FamilyService {
     });
   }
 
-  delete(memberId: string, familyId: string) {
-    this.familyService.deleteFamily(memberId).subscribe({
+  delete(familyId: string) {
+    this.familyService.deleteFamily(familyId).subscribe({
       next: () => {
         const translatedMsg = this.translateService.instant(
           'registry.family.deletion.success'
         );
         this.alertService.showAlert(translatedMsg, 'success');
-        this.router.navigateByUrl(`/registry/family/${familyId}`, {
+        this.router.navigateByUrl(`/registry`, {
           replaceUrl: true,
         });
       },

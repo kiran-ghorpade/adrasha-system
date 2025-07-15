@@ -65,6 +65,8 @@ export class RoleRequestFormComponent {
   );
 
   ngOnInit() {
+    console.log(this.roleRequest());
+    
     this.loadStaticData();
   }
 

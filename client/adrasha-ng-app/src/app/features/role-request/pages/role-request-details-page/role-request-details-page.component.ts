@@ -38,7 +38,7 @@ export class RoleRequestDetailsPageComponent {
   private readonly roleRequestService = inject(RoleRequestService);
 
   data = signal<DataLabelType[]>([]);
-  memberData = signal<RoleRequestResponseDTO | null>(null);
+  roleRequestDetails = signal<RoleRequestResponseDTO | null>(null);
   roleRequestId: string = '';
 
   ngOnInit(): void {
@@ -51,11 +51,11 @@ export class RoleRequestDetailsPageComponent {
       .getRoleRequest(this.roleRequestId)
       .subscribe((member) => {
         this.data.set(roleRequestToData(member));
-        this.memberData.set(member);
+        this.roleRequestDetails.set(member);
       });
   }
 
-  handleDeleteMember() {
+  handleDeleteClick() {
     const dialogRef = this.dialog.open(ConfirmationComponent, {
       data: {
         title: 'Do you want to delete this member?',

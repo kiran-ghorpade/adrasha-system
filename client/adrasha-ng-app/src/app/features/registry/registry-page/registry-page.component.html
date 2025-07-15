@@ -35,7 +35,7 @@
           <div matListItemAvatar class="flex items-center justify-center">
             <mat-icon>person</mat-icon>
           </div>
-          <h3 matListItemTitle>{{ family.name }}</h3>
+          <h3 matListItemTitle>{{ getFullName(family.name) }}</h3>
           <p matListItemLine>Id : {{ family.id }}</p>
           <p matListItemMeta>Age : {{ family.age }}</p>
         </a>
@@ -50,8 +50,6 @@
         [pageIndex]="page()"
         [length]="totalSize()"
         [pageSize]="pageSize()"
-        [pageSizeOptions]="[5, 10, 25, 100]"
-        aria-label="Select page"
         (page)="onPageChange($event)"
         [disabled]="totalSize() == 0"
       >

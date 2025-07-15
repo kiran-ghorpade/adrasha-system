@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -50,6 +51,15 @@ public class UserDetailsController {
     UserDetailsController(AdminInitializer adminInitializer) {
         this.adminInitializer = adminInitializer;
     }
+    
+	@GetMapping("/users/me")
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = JwtUser.class)))
+	@PreAuthorize("hasAnyRole('USER')")
+	public JwtUser getCurrentUser(Authentication authentication) {
+
+		return (JwtUser) authentication.getPrincipal();
+		
+	}
 
 	@PostMapping("/resetPassword")
 	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = UserDTO.class)))
@@ -70,7 +80,7 @@ public class UserDetailsController {
 	@DeleteMapping("/users/me")
 	@ApiResponse(responseCode = "204", content = @Content())
 	@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
-	@PreAuthorize("#id.toString() == authentication.principal.toString() and hasAnyRole('USER')")
+	@PreAuthorize("hasAnyRole('USER')")
 	public ResponseEntity<Void> deleteCurrentUser(Authentication authentication) {
 
 		JwtUser user = (JwtUser) authentication.getPrincipal();

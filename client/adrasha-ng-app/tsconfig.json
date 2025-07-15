@@ -30,7 +30,7 @@
       "@testing": ["testing"],
       "@testing/*": ["testing/*"],
       "@env": ["environments"],
-      "@env/*": ["environments/*"]
+      "@env/*": ["environments/*"],
     },
     "typeRoots": ["./node_modules/primeng"]
   },

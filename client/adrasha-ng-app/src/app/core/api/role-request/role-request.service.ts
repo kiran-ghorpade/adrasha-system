@@ -4,18 +4,24 @@
  * ADRASHA USER-SERVICE API Docs
  * OpenAPI spec version: 1.0.0
  */
-import { HttpClient } from '@angular/common/http';
+import {
+  HttpClient
+} from '@angular/common/http';
 import type {
   HttpContext,
   HttpEvent,
   HttpHeaders,
   HttpParams,
-  HttpResponse as AngularHttpResponse,
+  HttpResponse as AngularHttpResponse
 } from '@angular/common/http';
 
-import { Injectable } from '@angular/core';
+import {
+  Injectable
+} from '@angular/core';
 
-import { Observable } from 'rxjs';
+import {
+  Observable
+} from 'rxjs';
 
 import type {
   GetAllRoleRequestsParams,
@@ -23,239 +29,184 @@ import type {
   RoleRequestCreateDTO,
   RoleRequestPageResponseDTO,
   RoleRequestResponseDTO,
-  RoleRequestUpdateDTO,
+  RoleRequestUpdateDTO
 } from '../../model/userService';
 
+
+
 type HttpClientOptions = {
-  headers?:
-    | HttpHeaders
-    | {
-        [header: string]: string | string[];
-      };
+  headers?: HttpHeaders | {
+      [header: string]: string | string[];
+  };
   context?: HttpContext;
   observe?: any;
-  params?:
-    | HttpParams
-    | {
-        [param: string]:
-          | string
-          | number
-          | boolean
-          | ReadonlyArray<string | number | boolean>;
-      };
+  params?: HttpParams | {
+    [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean>;
+  };
   reportProgress?: boolean;
   responseType?: any;
   withCredentials?: boolean;
 };
 
+
+
 @Injectable({ providedIn: 'root' })
 export class RoleRequestService {
-  constructor(private http: HttpClient) {}
-  getRoleRequest<TData = RoleRequestResponseDTO>(
-    id: string,
-    options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+  constructor(
+    private http: HttpClient,
+  ) {} getRoleRequest<TData = RoleRequestResponseDTO>(
+    id: string, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-  getRoleRequest<TData = RoleRequestResponseDTO>(
-    id: string,
-    options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+    getRoleRequest<TData = RoleRequestResponseDTO>(
+    id: string, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-  getRoleRequest<TData = RoleRequestResponseDTO>(
-    id: string,
-    options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;
-  getRoleRequest<TData = RoleRequestResponseDTO>(
-    id: string,
-    options?: HttpClientOptions
-  ): Observable<TData> {
+    getRoleRequest<TData = RoleRequestResponseDTO>(
+    id: string, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getRoleRequest<TData = RoleRequestResponseDTO>(
+    id: string, options?: HttpClientOptions
+  ): Observable<TData>  {
     return this.http.get<TData>(
-      `http://localhost:8080/roleRequests/${id}`,
-      options
+      `http://localhost:8080/roleRequests/${id}`,options
     );
   }
-  updateRoleRequest<TData = RoleRequestResponseDTO>(
+ updateRoleRequest<TData = RoleRequestResponseDTO>(
     id: string,
-    roleRequestUpdateDTO: RoleRequestUpdateDTO,
-    options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+    roleRequestUpdateDTO: RoleRequestUpdateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-  updateRoleRequest<TData = RoleRequestResponseDTO>(
+    updateRoleRequest<TData = RoleRequestResponseDTO>(
     id: string,
-    roleRequestUpdateDTO: RoleRequestUpdateDTO,
-    options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+    roleRequestUpdateDTO: RoleRequestUpdateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-  updateRoleRequest<TData = RoleRequestResponseDTO>(
+    updateRoleRequest<TData = RoleRequestResponseDTO>(
     id: string,
-    roleRequestUpdateDTO: RoleRequestUpdateDTO,
-    options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;
-  updateRoleRequest<TData = RoleRequestResponseDTO>(
+    roleRequestUpdateDTO: RoleRequestUpdateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;updateRoleRequest<TData = RoleRequestResponseDTO>(
     id: string,
-    roleRequestUpdateDTO: RoleRequestUpdateDTO,
-    options?: HttpClientOptions
-  ): Observable<TData> {
+    roleRequestUpdateDTO: RoleRequestUpdateDTO, options?: HttpClientOptions
+  ): Observable<TData>  {
     return this.http.put<TData>(
       `http://localhost:8080/roleRequests/${id}`,
-      roleRequestUpdateDTO,
-      options
+      roleRequestUpdateDTO,options
     );
   }
-  deleteRoleRequest<TData = void>(
-    id: string,
-    options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+ deleteRoleRequest<TData = void>(
+    id: string, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-  deleteRoleRequest<TData = void>(
-    id: string,
-    options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+    deleteRoleRequest<TData = void>(
+    id: string, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-  deleteRoleRequest<TData = void>(
-    id: string,
-    options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;
-  deleteRoleRequest<TData = void>(
-    id: string,
-    options?: HttpClientOptions
-  ): Observable<TData> {
+    deleteRoleRequest<TData = void>(
+    id: string, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;deleteRoleRequest<TData = void>(
+    id: string, options?: HttpClientOptions
+  ): Observable<TData>  {
     return this.http.delete<TData>(
-      `http://localhost:8080/roleRequests/${id}`,
-      options
+      `http://localhost:8080/roleRequests/${id}`,options
     );
   }
-  rejectUserRequest<TData = void>(
-    id: string,
-    options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+ rejectUserRequest<TData = void>(
+    id: string, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-  rejectUserRequest<TData = void>(
-    id: string,
-    options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+    rejectUserRequest<TData = void>(
+    id: string, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-  rejectUserRequest<TData = void>(
-    id: string,
-    options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;
-  rejectUserRequest<TData = void>(
-    id: string,
-    options?: HttpClientOptions
-  ): Observable<TData> {
+    rejectUserRequest<TData = void>(
+    id: string, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;rejectUserRequest<TData = void>(
+    id: string, options?: HttpClientOptions
+  ): Observable<TData>  {
     return this.http.put<TData>(
-      `http://localhost:8080/roleRequests/reject/${id}`,
-      undefined,
-      options
+      `http://localhost:8080/roleRequests/reject/${id}`,undefined,options
     );
   }
-  approveUserRequest<TData = void>(
-    id: string,
-    options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+ approveUserRequest<TData = void>(
+    id: string, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-  approveUserRequest<TData = void>(
-    id: string,
-    options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+    approveUserRequest<TData = void>(
+    id: string, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-  approveUserRequest<TData = void>(
-    id: string,
-    options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;
-  approveUserRequest<TData = void>(
-    id: string,
-    options?: HttpClientOptions
-  ): Observable<TData> {
+    approveUserRequest<TData = void>(
+    id: string, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;approveUserRequest<TData = void>(
+    id: string, options?: HttpClientOptions
+  ): Observable<TData>  {
     return this.http.put<TData>(
-      `http://localhost:8080/roleRequests/approve/${id}`,
-      undefined,
-      options
+      `http://localhost:8080/roleRequests/approve/${id}`,undefined,options
     );
   }
-  getAllRoleRequests<TData = RoleRequestPageResponseDTO>(
-    params: GetAllRoleRequestsParams,
-    options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+ getAllRoleRequests<TData = RoleRequestPageResponseDTO>(
+    params: GetAllRoleRequestsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-  getAllRoleRequests<TData = RoleRequestPageResponseDTO>(
-    params: GetAllRoleRequestsParams,
-    options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+    getAllRoleRequests<TData = RoleRequestPageResponseDTO>(
+    params: GetAllRoleRequestsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-  getAllRoleRequests<TData = RoleRequestPageResponseDTO>(
-    params: GetAllRoleRequestsParams,
-    options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;
-  getAllRoleRequests<TData = RoleRequestPageResponseDTO>(
-    params: GetAllRoleRequestsParams,
-    options?: HttpClientOptions
-  ): Observable<TData> {
-    return this.http.get<TData>(`http://localhost:8080/roleRequests`, {
-      ...options,
-      ...params,
-      ...options?.params,
-    });
+    getAllRoleRequests<TData = RoleRequestPageResponseDTO>(
+    params: GetAllRoleRequestsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getAllRoleRequests<TData = RoleRequestPageResponseDTO>(
+    params: GetAllRoleRequestsParams, options?: HttpClientOptions
+  ): Observable<TData>  {
+    return this.http.get<TData>(
+      `http://localhost:8080/roleRequests`,{
+    ...options,
+       ...params, ...options?.params}
+    );
   }
-  createRoleRequest<TData = RoleRequestResponseDTO>(
-    roleRequestCreateDTO: RoleRequestCreateDTO,
-    options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+ createRoleRequest<TData = RoleRequestResponseDTO>(
+    roleRequestCreateDTO: RoleRequestCreateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-  createRoleRequest<TData = RoleRequestResponseDTO>(
-    roleRequestCreateDTO: RoleRequestCreateDTO,
-    options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+    createRoleRequest<TData = RoleRequestResponseDTO>(
+    roleRequestCreateDTO: RoleRequestCreateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-  createRoleRequest<TData = RoleRequestResponseDTO>(
-    roleRequestCreateDTO: RoleRequestCreateDTO,
-    options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;
-  createRoleRequest<TData = RoleRequestResponseDTO>(
-    roleRequestCreateDTO: RoleRequestCreateDTO,
-    options?: HttpClientOptions
-  ): Observable<TData> {
+    createRoleRequest<TData = RoleRequestResponseDTO>(
+    roleRequestCreateDTO: RoleRequestCreateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;createRoleRequest<TData = RoleRequestResponseDTO>(
+    roleRequestCreateDTO: RoleRequestCreateDTO, options?: HttpClientOptions
+  ): Observable<TData>  {
     return this.http.post<TData>(
       `http://localhost:8080/roleRequests`,
-      roleRequestCreateDTO,
-      options
+      roleRequestCreateDTO,options
     );
   }
-  getCurrentUserRoleRequest<TData = RoleRequestResponseDTO>(
-    options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+ getCurrentUserRoleRequest<TData = RoleRequestResponseDTO>(
+     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-  getCurrentUserRoleRequest<TData = RoleRequestResponseDTO>(
-    options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+    getCurrentUserRoleRequest<TData = RoleRequestResponseDTO>(
+     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-  getCurrentUserRoleRequest<TData = RoleRequestResponseDTO>(
-    options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;
-  getCurrentUserRoleRequest<TData = RoleRequestResponseDTO>(
-    options?: HttpClientOptions
-  ): Observable<TData> {
+    getCurrentUserRoleRequest<TData = RoleRequestResponseDTO>(
+     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getCurrentUserRoleRequest<TData = RoleRequestResponseDTO>(
+     options?: HttpClientOptions
+  ): Observable<TData>  {
     return this.http.get<TData>(
-      `http://localhost:8080/roleRequests/me`,
-      options
+      `http://localhost:8080/roleRequests/me`,options
     );
   }
-  getTotalRoleRequests<TData = string>(
-    params: GetTotalRoleRequestsParams,
-    options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+ getTotalRoleRequests<TData = string>(
+    params: GetTotalRoleRequestsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-  getTotalRoleRequests<TData = string>(
-    params: GetTotalRoleRequestsParams,
-    options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+    getTotalRoleRequests<TData = string>(
+    params: GetTotalRoleRequestsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-  getTotalRoleRequests<TData = string>(
-    params: GetTotalRoleRequestsParams,
-    options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;
-  getTotalRoleRequests<TData = string>(
-    params: GetTotalRoleRequestsParams,
-    options?: HttpClientOptions
-  ): Observable<TData> {
-    return this.http.get<TData>(`http://localhost:8080/roleRequests/count`, {
-      ...options,
-      ...params,
-      ...options?.params,
-    });
+    getTotalRoleRequests<TData = string>(
+    params: GetTotalRoleRequestsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getTotalRoleRequests<TData = string>(
+    params: GetTotalRoleRequestsParams, options?: HttpClientOptions
+  ): Observable<TData>  {
+    return this.http.get<TData>(
+      `http://localhost:8080/roleRequests/count`,{
+    ...options,
+       ...params, ...options?.params}
+    );
   }
-}
+};
 
-export type GetRoleRequestClientResult = NonNullable<RoleRequestResponseDTO>;
-export type UpdateRoleRequestClientResult = NonNullable<RoleRequestResponseDTO>;
-export type DeleteRoleRequestClientResult = NonNullable<void>;
-export type RejectUserRequestClientResult = NonNullable<void>;
-export type ApproveUserRequestClientResult = NonNullable<void>;
-export type GetAllRoleRequestsClientResult =
-  NonNullable<RoleRequestPageResponseDTO>;
-export type CreateRoleRequestClientResult = NonNullable<RoleRequestResponseDTO>;
-export type GetCurrentUserRoleRequestClientResult =
-  NonNullable<RoleRequestResponseDTO>;
-export type GetTotalRoleRequestsClientResult = NonNullable<string>;
+export type GetRoleRequestClientResult = NonNullable<RoleRequestResponseDTO>
+export type UpdateRoleRequestClientResult = NonNullable<RoleRequestResponseDTO>
+export type DeleteRoleRequestClientResult = NonNullable<void>
+export type RejectUserRequestClientResult = NonNullable<void>
+export type ApproveUserRequestClientResult = NonNullable<void>
+export type GetAllRoleRequestsClientResult = NonNullable<RoleRequestPageResponseDTO>
+export type CreateRoleRequestClientResult = NonNullable<RoleRequestResponseDTO>
+export type GetCurrentUserRoleRequestClientResult = NonNullable<RoleRequestResponseDTO>
+export type GetTotalRoleRequestsClientResult = NonNullable<string>

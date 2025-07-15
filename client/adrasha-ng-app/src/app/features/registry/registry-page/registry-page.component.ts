@@ -10,9 +10,10 @@ import { FamilyDataService } from '@core/api/family-data/family-data.service';
 import { MemberDataService } from '@core/api/member-data/member-data.service';
 import { FamilyDataResponseDTO, Name } from '@core/model/dataService';
 import { AuthService } from '@core/services';
-import { forkJoin, map } from 'rxjs';
+import { forkJoin, map, switchMap, tap } from 'rxjs';
 import { PageWrapperComponent } from '../../../shared/components/page-wrapper/page-wrapper.component';
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 type FamilyHeadItem = { name: Name; age: number; id: string };
 
@@ -36,14 +37,19 @@ export class RegistryPageComponent implements OnInit {
   private readonly familyService = inject(FamilyDataService);
   private readonly memberService = inject(MemberDataService);
 
-  userId: string = '';
+  userId = toSignal(
+    this.authService.currentUser.pipe(map((user) => user?.id)),
+    {
+      initialValue: null,
+    }
+  );
+
   familyHeadList = signal<FamilyHeadItem[]>([]);
   page = signal(1);
   pageSize = signal(10);
   totalSize = signal(0);
 
   ngOnInit(): void {
-    this.loadUser();
     this.loadFamilies();
   }
 
@@ -54,17 +60,11 @@ export class RegistryPageComponent implements OnInit {
     this.loadFamilies();
   }
 
-  loadUser() {
-    this.authService.currentUser.subscribe((user) => {
-      this.userId = user?.id || '';
-    });
-  }
-
   loadFamilies() {
     this.familyService
       .getAllFamilies({
         filterDTO: {
-          ashaId: this.userId,
+          ashaId: this.userId() ?? '',
         },
         pageable: {
           page: this.page(),
@@ -72,28 +72,33 @@ export class RegistryPageComponent implements OnInit {
           sort: [],
         },
       })
-      .subscribe((families) => {
-        const familyList = families.content || [];
+      .pipe(
+        tap((response) => {
+          this.page.set(response.page?.number ?? 0);
+          this.totalSize.set(response.page?.totalElements ?? 0);
+        }),
+        map((response) => response.content ?? []),
+        switchMap((families) => {
+          const memberRequests = families.map((family) =>
+            this.memberService.getMember(family.headMemberId || '').pipe(
+              map((member) => ({
+                id: family.id || '',
+                name: member.name ?? {
+                  firstname: 'Not Found',
+                  middlename: 'Not Found',
+                  lastname: 'Not Found',
+                },
+                age: member.age ?? -1,
+              }))
+            )
+          );
 
-        const memberRequests = familyList.map((family) =>
-          this.memberService.getMember(family.headMemberId || '').pipe(
-            map((member) => ({
-              id: family.id || '',
-              name: member.name || {
-                firstname: 'Not Found',
-                middlename: 'Not Found',
-                lastname: 'Not Found',
-              },
-              age: member.age ?? -1,
-            }))
-          )
-        );
-
-        forkJoin(memberRequests).subscribe((headList) => {
-          this.familyHeadList.set(headList);
-          this.page.set(families.pageable?.pageNumber ?? 0);
-          this.totalSize.set(families.totalElements ?? 0);
-        });
+          return forkJoin(memberRequests);
+        })
+      )
+      .subscribe((headList) => {
+        this.familyHeadList.set(headList);
+        console.log(this.familyHeadList());
       });
   }
 

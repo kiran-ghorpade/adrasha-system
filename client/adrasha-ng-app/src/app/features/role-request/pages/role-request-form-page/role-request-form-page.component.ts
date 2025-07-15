@@ -54,14 +54,14 @@ export class RoleRequestFormPageComponent {
     );
 
     if (this.roleRequestId()) {
-      this.loadMemberData(this.roleRequestId()!);
+      this.loadMemberData(this.roleRequestId() ?? '');
     }
   }
 
   // helpers
   private loadMemberData(roleRequestId: string): void {
-    this.roleReqeuestService.getRoleRequest(roleRequestId).subscribe((data) => {
-      this.data.set(data);
+    this.roleReqeuestService.getRoleRequest(roleRequestId).subscribe((request) => {
+      this.data.set(request);
     });
   }
 }

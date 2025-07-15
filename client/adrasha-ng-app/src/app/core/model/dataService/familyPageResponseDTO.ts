@@ -10,7 +10,7 @@ import type { SortObject } from './sortObject';
 
 export interface FamilyPageResponseDTO {
   content?: FamilyDataResponseDTO[];
-  pageable?: PageableObject;
+  page?: PageableObject;
   totalPages?: number;
   totalElements?: number;
   last?: boolean;

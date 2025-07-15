@@ -6,22 +6,22 @@ import { DataLabelComponent, DataLabelType } from '@shared/components';
   selector: 'app-member-details',
   imports: [MatList, DataLabelComponent],
   template: `
-    <div class="w-full paper h-max flex-[3] flex flex-wrap">
-      <div class="flex-[2]">
-        <mat-list>
-          @if(memberData().length > 0) { @for(data of memberData(); track
-          $index){
+    <ng-container>
+      <mat-list style="display:flex;flex-wrap:wrap; gap:8;">
+        @if (memberData().length > 0) { @for (data of memberData(); track
+        $index) {
+        <div class="w-full sm:w-1/2 box-border">
           <app-data-label
             [label]="data.label"
             [value]="data.value"
             [icon]="data.icon"
           ></app-data-label>
-          } } @else {
-          <p>No member details available.</p>
-          }
-        </mat-list>
-      </div>
-    </div>
+        </div>
+        } } @else {
+        <p>No member details available.</p>
+        }
+      </mat-list>
+    </ng-container>
   `,
 })
 export class MemberDetailsComponent {

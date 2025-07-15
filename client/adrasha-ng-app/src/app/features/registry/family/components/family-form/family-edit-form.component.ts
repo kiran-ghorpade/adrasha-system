@@ -94,7 +94,6 @@ export class FamilyFormComponent {
     return {
       ashaId: this.userId(),
       headMemberId: this.familyData()?.headMemberId ?? '',
-      locationId: '',
       povertyStatus: data.povertyStatus,
     };
   }

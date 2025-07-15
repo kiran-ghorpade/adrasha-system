@@ -7,7 +7,6 @@
 import type { FamilyDataFilterDTOPovertyStatus } from './familyDataFilterDTOPovertyStatus';
 
 export interface FamilyDataFilterDTO {
-  locationId?: string;
   ashaId?: string;
   povertyStatus?: FamilyDataFilterDTOPovertyStatus;
 }

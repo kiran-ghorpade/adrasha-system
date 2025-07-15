@@ -9,7 +9,6 @@ import type { FamilyDataResponseDTOPovertyStatus } from './familyDataResponseDTO
 export interface FamilyDataResponseDTO {
   id?: string;
   headMemberId?: string;
-  locationId?: string;
   ashaId?: string;
   povertyStatus?: FamilyDataResponseDTOPovertyStatus;
   createdAt?: string;

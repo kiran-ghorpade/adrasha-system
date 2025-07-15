@@ -17,5 +17,6 @@ export * from './registrationRequest';
 export * from './roleUpdateDTO';
 export * from './roleUpdateDTORole';
 export * from './userDTO';
+export * from './userDTORolesItem';
 export * from './userDTOStatus';
 export * from './validationErrorResponse';

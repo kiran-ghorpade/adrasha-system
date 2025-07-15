@@ -14,10 +14,10 @@ export interface UserPageResponseDTO {
   totalPages?: number;
   totalElements?: number;
   last?: boolean;
-  first?: boolean;
   size?: number;
   number?: number;
   sort?: SortObject;
+  first?: boolean;
   numberOfElements?: number;
   empty?: boolean;
 }

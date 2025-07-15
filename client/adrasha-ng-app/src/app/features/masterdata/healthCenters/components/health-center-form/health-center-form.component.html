@@ -1,1 +1,96 @@
-<p>health-center-form works!</p>
+<mat-stepper orientation="vertical" [linear]="true" #stepper>
+  <!-- HealthCenter Details -->
+  <mat-step [stepControl]="healthCenterDetails">
+    <form [formGroup]="healthCenterDetails">
+      <ng-template matStepLabel>{{
+        "healthCenter.step1Title" | translate
+      }}</ng-template>
+      <div class="flex gap-3 flex-wrap md:w-2/3">
+        <mat-form-field>
+          <mat-label>{{ "healthCenter.nameLabel" | translate }}</mat-label>
+          <input matInput formControlName="name" required />
+          <app-validation-error [control]="healthCenterDetails.controls.name" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{ "healthCenter.roleLabel" | translate }}</mat-label>
+          <mat-select required formControlName="centerType">
+            @for (type of healthCenterTypeList(); track $index) {
+            <mat-option [value]="`${type.code}`">{{ type.label }}</mat-option>
+            }
+          </mat-select>
+          <app-validation-error
+            [control]="healthCenterDetails.controls.centerType"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{
+            "healthCenter.totalFamiliesLabel" | translate
+          }}</mat-label>
+          <input matInput formControlName="totalFamilies" required />
+          <app-validation-error
+            [control]="healthCenterDetails.controls.totalFamilies"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{
+            "healthCenter.totalPopulationLabel" | translate
+          }}</mat-label>
+          <input matInput formControlName="totalPopulation" required />
+          <app-validation-error
+            [control]="healthCenterDetails.controls.totalPopulation"
+          />
+        </mat-form-field>
+      </div>
+      <div>
+        <button matButton matStepperPrevious>Back</button>
+        <button matButton matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- Address Details -->
+  <mat-step [stepControl]="addressDetails">
+    <form [formGroup]="addressDetails">
+      <ng-template matStepLabel>{{
+        "healthCenter.step3Title" | translate
+      }}</ng-template>
+      <div class="flex gap-3 flex-wrap md:w-2/3">
+        <mat-form-field>
+          <mat-label>{{
+            "healthCenter.healthCenterLabel" | translate
+          }}</mat-label>
+          <mat-select required formControlName="healthCenterId">
+            @for (location of locationList(); track $index) {
+            <mat-option [value]="`${location.id}`">{{ location.id }}</mat-option>
+            }
+          </mat-select>
+          <app-validation-error
+            [control]="addressDetails.controls.locationId"
+          />
+        </mat-form-field>
+      </div>
+
+      <div>
+        <button matButton matStepperPrevious>Back</button>
+        <button matButton matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- Done -->
+  <mat-step>
+    <ng-template matStepLabel>{{
+      "healthCenter.doneTitle" | translate
+    }}</ng-template>
+    <p>{{ "healthCenter.doneMessage" | translate }}</p>
+    <div>
+      <button matButton matStepperPrevious>Back</button>
+      <button matButton (click)="stepper.reset()">
+        {{ "healthCenter.resetButton" | translate }}
+      </button>
+      <button matButton="filled" (click)="onSubmit()">
+        {{ "healthCenter.submitButton" | translate }}
+      </button>
+    </div>
+  </mat-step>
+</mat-stepper>

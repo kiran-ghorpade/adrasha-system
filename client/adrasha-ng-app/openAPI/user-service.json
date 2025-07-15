@@ -1253,13 +1253,13 @@
               "ASHA"
             ]
           },
-          "healthCenter": {
+          "healthCenterId": {
             "type": "string",
             "format": "uuid"
           }
         },
         "required": [
-          "healthCenter",
+          "healthCenterId",
           "role"
         ]
       },
@@ -1294,7 +1294,7 @@
               "REJECTED"
             ]
           },
-          "healthCenter": {
+          "healthCenterId": {
             "type": "string",
             "format": "uuid"
           },
@@ -1327,13 +1327,13 @@
               "ASHA"
             ]
           },
-          "healthCenter": {
+          "healthCenterId": {
             "type": "string",
             "format": "uuid"
           }
         },
         "required": [
-          "healthCenter",
+          "healthCenterId",
           "role",
           "userId"
         ]
@@ -1431,9 +1431,6 @@
           "last": {
             "type": "boolean"
           },
-          "first": {
-            "type": "boolean"
-          },
           "size": {
             "type": "integer",
             "format": "int32"
@@ -1444,6 +1441,9 @@
           },
           "sort": {
             "$ref": "#/components/schemas/SortObject"
+          },
+          "first": {
+            "type": "boolean"
           },
           "numberOfElements": {
             "type": "integer",
@@ -1474,7 +1474,11 @@
               "REJECTED"
             ]
           },
-          "healthCenter": {
+          "healthCenterId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userId": {
             "type": "string",
             "format": "uuid"
           }
@@ -1503,9 +1507,6 @@
           "last": {
             "type": "boolean"
           },
-          "first": {
-            "type": "boolean"
-          },
           "size": {
             "type": "integer",
             "format": "int32"
@@ -1516,6 +1517,9 @@
           },
           "sort": {
             "$ref": "#/components/schemas/SortObject"
+          },
+          "first": {
+            "type": "boolean"
           },
           "numberOfElements": {
             "type": "integer",

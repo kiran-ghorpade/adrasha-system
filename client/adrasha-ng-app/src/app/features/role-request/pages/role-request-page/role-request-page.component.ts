@@ -1,4 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,10 +8,7 @@ import { RoleRequestService } from '@core/api/role-request/role-request.service'
 import { RoleRequestResponseDTO } from '@core/model/userService';
 import { AuthService } from '@core/services';
 import { RoleRequestListComponent } from '@features/role-request/components';
-import {
-  PageHeaderComponent,
-  PageWrapperComponent
-} from '@shared/components';
+import { PageHeaderComponent, PageWrapperComponent } from '@shared/components';
 
 @Component({
   selector: 'app-role-request-page',
@@ -33,6 +31,8 @@ export class RoleRequestPageComponent {
   userId: string = '';
   roleRequestList = signal<RoleRequestResponseDTO[]>([]);
   totalSize = signal(0);
+
+  isAdmin = toSignal(this.authService.isAdmin(), { initialValue: false });
 
   ngOnInit(): void {
     this.loadUser();

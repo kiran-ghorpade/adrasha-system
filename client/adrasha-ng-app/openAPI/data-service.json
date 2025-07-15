@@ -307,7 +307,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HealthUpdateDTO"
+                "$ref": "#/components/schemas/HealthRecordUpdateDTO"
               }
             }
           },
@@ -863,7 +863,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HealthCreateDTO"
+                "$ref": "#/components/schemas/HealthRecordCreateDTO"
               }
             }
           },
@@ -1469,7 +1469,7 @@
           }
         }
       },
-      "HealthUpdateDTO": {
+      "HealthRecordUpdateDTO": {
         "type": "object",
         "properties": {
           "date": {
@@ -1552,10 +1552,6 @@
             "type": "string",
             "format": "uuid"
           },
-          "locationId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "ashaId": {
             "type": "string",
             "format": "uuid"
@@ -1570,8 +1566,7 @@
         },
         "required": [
           "ashaId",
-          "headMemberId",
-          "locationId"
+          "headMemberId"
         ]
       },
       "FamilyDataResponseDTO": {
@@ -1582,10 +1577,6 @@
             "format": "uuid"
           },
           "headMemberId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "locationId": {
             "type": "string",
             "format": "uuid"
           },
@@ -1659,7 +1650,7 @@
           "gender"
         ]
       },
-      "HealthCreateDTO": {
+      "HealthRecordCreateDTO": {
         "type": "object",
         "properties": {
           "memberId": {
@@ -1702,10 +1693,6 @@
       "FamilyCreateDTO": {
         "type": "object",
         "properties": {
-          "locationId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "ashaId": {
             "type": "string",
             "format": "uuid"
@@ -1720,7 +1707,6 @@
         },
         "required": [
           "ashaId",
-          "locationId",
           "povertyStatus"
         ]
       },
@@ -1994,10 +1980,6 @@
       "FamilyDataFilterDTO": {
         "type": "object",
         "properties": {
-          "locationId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "ashaId": {
             "type": "string",
             "format": "uuid"

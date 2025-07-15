@@ -39,7 +39,7 @@ import { Subscription } from 'rxjs';
     PageHeaderComponent,
   ],
   template: `<app-page-wrapper>
-    <div top><app-page-header title="Logs" icon="terminal"/></div>
+    <div top><app-page-header title="Logs" icon="terminal" /></div>
     <div content class="h-full w-full">
       <!-- Sidebar: Logs List -->
       <button matButton (click)="clearLogs()">clear</button>
@@ -129,9 +129,11 @@ export class LogsComponent implements OnInit, OnDestroy {
   template: ` <section class="overflow-scroll p-2 flex flex-col items-center">
     <h3 matDialogTitle>Log Details</h3>
     <div matDialogContent>
-      <pre class="w-full text-sm bg-gray-100 text-balance">{{
-        data | json
-      }}</pre>
+      <pre
+        class="w-full text-sm bg-gray-100 overflow-auto whitespace-pre-wrap break-all"
+      >
+  {{ data | json }}
+     </pre >
     </div>
   </section>`,
   imports: [

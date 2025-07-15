@@ -6,22 +6,22 @@ import { DataLabelComponent, DataLabelType } from '@shared/components';
   selector: 'app-role-request-details',
   imports: [MatListModule, DataLabelComponent],
   template: `
-    <div class="w-full paper h-max flex-[3] flex flex-wrap">
-      <div class="flex-[2]">
-        <mat-list>
-          @if(roleRequest().length > 0) { @for(data of roleRequest(); track
-          $index){
+    <ng-container>
+      <mat-list style="display:flex;flex-wrap:wrap; gap:8;">
+        @if(roleRequest().length > 0) { @for(data of roleRequest(); track
+        $index){
+        <div class="w-full sm:w-1/2 box-border">
           <app-data-label
             [label]="data.label"
             [value]="data.value"
             [icon]="data.icon"
           ></app-data-label>
-          } } @else {
-          <p>No member details available.</p>
-          }
-        </mat-list>
-      </div>
-    </div>
+        </div>
+        } } @else {
+        <p>No member details available.</p>
+        }
+      </mat-list>
+    </ng-container>
   `,
 })
 export class RoleRequestDetailsComponent {

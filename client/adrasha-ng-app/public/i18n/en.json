@@ -8,6 +8,10 @@
     "success": "Login successful",
     "failed": "Login failed"
   },
+  "logout": {
+    "success": "Logout successful",
+    "failed": "Logout failed"
+  },
   "registration": {
     "title": "User Registration",
     "username": "Username",
@@ -152,8 +156,8 @@
     "healthCenterLabel": "Health Center",
 
     "registration": {
-      "success": "Role Request Registration successful",
-      "failed": "Role Request Registration failed"
+      "success": "Role Request Added successful",
+      "failed": "Role Request Creation failed"
     },
     "update": {
       "success": "Role Request Update successful",

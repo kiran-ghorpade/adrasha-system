@@ -8,7 +8,6 @@ import type { FamilyUpdateDTOPovertyStatus } from './familyUpdateDTOPovertyStatu
 
 export interface FamilyUpdateDTO {
   headMemberId: string;
-  locationId: string;
   ashaId: string;
   povertyStatus?: FamilyUpdateDTOPovertyStatus;
 }

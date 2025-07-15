@@ -22,7 +22,7 @@ export class MemberService {
             'registry.member.registration.success'
           );
           this.alertService.showAlert(translatedMsg, 'success');
-          this.router.navigateByUrl(`/registry/member/${result.id}`, {
+          this.router.navigateByUrl(`/registry/members/${result.id}`, {
             replaceUrl: true,
           });
         }
@@ -47,7 +47,7 @@ export class MemberService {
             'registry.member.update.success'
           );
           this.alertService.showAlert(translatedMsg, 'success');
-          this.router.navigateByUrl(`/registry/member/${result.id}`, {
+          this.router.navigateByUrl(`/registry/members/${result.id}`, {
             replaceUrl: true,
           });
         }

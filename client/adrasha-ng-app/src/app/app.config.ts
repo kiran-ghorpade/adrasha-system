@@ -1,4 +1,7 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  provideZoneChangeDetection
+} from '@angular/core';
 import {
   provideRouter,
   withComponentInputBinding,
@@ -14,22 +17,18 @@ import {
   provideHttpClient,
   withInterceptors,
 } from '@angular/common/http';
-import { loggingInterceptor, tokenInterceptor } from '@core/interceptors';
+
 import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
-import { loadingInterceptor } from '@core/interceptors/loading.interceptor';
+import { provideAuthInitializer, httpLoaderFactory, interceptors } from './config';
+import { provideI18nInitializer } from './config/i18n.initializer';
 
-// Http interceptor providers in outside-in order
-const interceptors = [tokenInterceptor, loggingInterceptor, loadingInterceptor];
 
-const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (
-  http: HttpClient
-) => new TranslateHttpLoader(http, './i18n/', '.json');
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    
+    provideAuthInitializer,
+    provideI18nInitializer,
     provideRouter(
       routes,
       withInMemoryScrolling({

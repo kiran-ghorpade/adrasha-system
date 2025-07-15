@@ -1,1 +1,29 @@
-<p>health-center-list works!</p>
+@if(healthCenterList().length == 0){
+<div class="flex justify-center items-center">
+  <mat-icon>search_off</mat-icon>
+  <h4 class="ml-4 text-wrap">No Role Request found. Try adding a new one!</h4>
+</div>
+}@else {
+<mat-action-list>
+  @for (roleRequest of healthCenterList(); track $index) {
+  <a mat-list-item [routerLink]="['/masterdata/healthCenter', roleRequest.id]">
+    <div matListItemIcon>
+      <mat-icon>health</mat-icon>
+    </div>
+    <h3 matListItemTitle><strong> REJECTED </strong></h3>
+    <p matListItemLine>
+      Remark -
+      <em>
+        ipsum dolor sit amet consectetur, adipisicing elit. Repellat, facilis
+        nam soluta non sunt sit molestias totam quisquam, error nulla illum
+        ullam mollitia dicta natus.
+      </em>
+    </p>
+
+    <p matListItemMeta class="mat-body-2 text-sm text-gray-500 mt-2">
+      19/12/25
+    </p>
+  </a>
+  }
+</mat-action-list>
+}

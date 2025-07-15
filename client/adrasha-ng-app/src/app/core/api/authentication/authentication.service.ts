@@ -25,6 +25,7 @@ import {
 
 import type {
   AuthTokenResponse,
+  JwtUser,
   LoginRequest,
   PasswordResetRequest,
   RegistrationRequest,
@@ -101,19 +102,19 @@ export class AuthenticationService {
       loginRequest,options
     );
   }
- deleteUser<TData = void>(
-    id: string, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+ getCurrentUser<TData = JwtUser>(
+     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-    deleteUser<TData = void>(
-    id: string, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+    getCurrentUser<TData = JwtUser>(
+     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-    deleteUser<TData = void>(
-    id: string, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;deleteUser<TData = void>(
-    id: string, options?: HttpClientOptions
+    getCurrentUser<TData = JwtUser>(
+     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getCurrentUser<TData = JwtUser>(
+     options?: HttpClientOptions
   ): Observable<TData>  {
-    return this.http.delete<TData>(
-      `http://localhost:8080/auth/users/${id}`,options
+    return this.http.get<TData>(
+      `http://localhost:8080/auth/users/me`,options
     );
   }
  deleteCurrentUser<TData = void>(
@@ -131,10 +132,26 @@ export class AuthenticationService {
       `http://localhost:8080/auth/users/me`,options
     );
   }
+ deleteUser<TData = void>(
+    id: string, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+  ): Observable<TData>;
+    deleteUser<TData = void>(
+    id: string, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+  ): Observable<AngularHttpResponse<TData>>;
+    deleteUser<TData = void>(
+    id: string, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;deleteUser<TData = void>(
+    id: string, options?: HttpClientOptions
+  ): Observable<TData>  {
+    return this.http.delete<TData>(
+      `http://localhost:8080/auth/users/${id}`,options
+    );
+  }
 };
 
 export type ResetPasswordClientResult = NonNullable<UserDTO>
 export type RegisterUserClientResult = NonNullable<UserDTO>
 export type LoginUserClientResult = NonNullable<AuthTokenResponse>
-export type DeleteUserClientResult = NonNullable<void>
+export type GetCurrentUserClientResult = NonNullable<JwtUser>
 export type DeleteCurrentUserClientResult = NonNullable<void>
+export type DeleteUserClientResult = NonNullable<void>

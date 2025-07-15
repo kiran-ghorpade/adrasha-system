@@ -328,23 +328,55 @@
         }
       }
     },
-    "/auth/users/{id}": {
+    "/auth/users/me": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "operationId": "getCurrentUser",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/JwtUser"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      },
       "delete": {
         "tags": [
           "Authentication"
         ],
-        "operationId": "deleteUser",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
+        "operationId": "deleteCurrentUser",
         "responses": {
           "204": {
             "description": "No Content"
@@ -387,12 +419,23 @@
         ]
       }
     },
-    "/auth/users/me": {
+    "/auth/users/{id}": {
       "delete": {
         "tags": [
           "Authentication"
         ],
-        "operationId": "deleteCurrentUser",
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
         "responses": {
           "204": {
             "description": "No Content"
@@ -472,7 +515,12 @@
           "roles": {
             "type": "array",
             "items": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "USER",
+                "ADMIN",
+                "ASHA"
+              ]
             },
             "uniqueItems": true
           },
@@ -615,7 +663,7 @@
         "type": "object",
         "properties": {
           "user": {
-            "$ref": "#/components/schemas/JwtUser"
+            "$ref": "#/components/schemas/UserDTO"
           },
           "accessToken": {
             "type": "string"

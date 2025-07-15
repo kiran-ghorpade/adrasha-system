@@ -1,5 +1,6 @@
 package com.adrasha.user.service.serviceImpl;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -41,9 +42,11 @@ public class RoleRequestServiceImpl implements RoleRequestService {
 	@Override
 	public RoleRequest createRoleRequest(RoleRequest request) {
 		
-		Optional<RoleRequest> existingRequest = requestRepository.findByUserId(request.getUserId());
+		List<RoleRequest> existingRequests = requestRepository.findByUserId(request.getUserId());
 		
-	  	if(existingRequest.isPresent()) {
+		Optional<RoleRequest> req = existingRequests.stream().filter(item-> item.getStatus().equals(request.getStatus())).findFirst();	
+		
+	  	if(req.isPresent()) {
 	  		throw new AlreadyExistsException("error.roleRequest.alreadyExists");
 	  	}
 
@@ -65,10 +68,9 @@ public class RoleRequestServiceImpl implements RoleRequestService {
 	}
 
 	@Override
-	public RoleRequest getRoleRequestByUserId(UUID userId) throws NotFoundException {
+	public List<RoleRequest> getRoleRequestsByUserId(UUID userId) {
 
-		return requestRepository.findByUserId(userId)
-				.orElseThrow(()-> new NotFoundException("error.roleRequest.notFound"));
+		return requestRepository.findByUserId(userId);
 	}
 
 	@Override

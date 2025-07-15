@@ -10,6 +10,6 @@ import type { RoleRequestFilterDTOStatus } from './roleRequestFilterDTOStatus';
 export interface RoleRequestFilterDTO {
   role?: RoleRequestFilterDTORole;
   status?: RoleRequestFilterDTOStatus;
-  healthCenter?: string;
-  userId?:string,
+  healthCenterId?: string;
+  userId?: string;
 }

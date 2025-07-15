@@ -7,7 +7,6 @@
 import type { FamilyCreateDTOPovertyStatus } from './familyCreateDTOPovertyStatus';
 
 export interface FamilyCreateDTO {
-  locationId: string;
   ashaId: string;
   povertyStatus: FamilyCreateDTOPovertyStatus;
 }

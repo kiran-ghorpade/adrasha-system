@@ -1,16 +1,16 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 // import { MatAvatarModule } from '@angular/material/avatar';
 import { CommonModule } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { Router, RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '@core/services';
 import { AppLogoComponent } from '../../widgets/logo.component';
-// import { AuthenticationService } from 'src/app/services/authentication.service'; // import your auth service
 
 @Component({
   selector: 'app-top-appbar',
@@ -27,27 +27,21 @@ import { AppLogoComponent } from '../../widgets/logo.component';
     CommonModule,
   ],
 })
-export class TopAppBarComponent implements OnInit {
+export class TopAppBarComponent {
   private readonly authService = inject(AuthService);
   readonly router = inject(Router);
 
-  loggedIn = signal(false);
+  loggedIn = toSignal(this.authService.isLoggedIn$, { initialValue: false });
 
-  settings = [
-    { label: 'Profile', toLink: '/profile', icon: 'person' },
-    { label: 'Settings', toLink: '/settings', icon: 'settings' },
-  ];
+  isAdmin = toSignal(this.authService.isAdmin(), { initialValue: false });
 
-  ngOnInit(): void {
-    this.authService.isLoggedIn$.subscribe((status) => {
-      this.loggedIn.set(status);
-      console.log(this.loggedIn());
-    });
-  }
-
-  isDashboard() {
-    return this.router.url === '/dashboard';
-  }
+  readonly settings = computed(() => {
+    const base = [{ label: 'Settings', toLink: '/settings', icon: 'settings' }];
+    // if (!this.isAdmin()) {
+    //   base.unshift({ label: 'Profile', toLink: '/profile', icon: 'person' });
+    // }
+    return base;
+  });
 
   logout() {
     this.authService.logout();

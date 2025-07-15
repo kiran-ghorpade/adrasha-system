@@ -1,7 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateChildFn, Router } from '@angular/router';
-import { UserDTO } from '@core/model/authService';
-import { UserResponseDTORolesItem } from '@core/model/userService';
+import { UserDTO, UserDTORolesItem } from '@core/model/authService';
 import { AuthService } from '@core/services';
 import { map, of, switchMap, take } from 'rxjs';
 
@@ -10,7 +9,7 @@ export const roleGuard: CanActivateChildFn = (childRoute, state) => {
   const router = inject(Router);
 
   const expectedRoles = childRoute.data['roles'] as
-    | UserResponseDTORolesItem[]
+    | UserDTORolesItem[]
     | undefined;
 
   return auth.currentUser.pipe(

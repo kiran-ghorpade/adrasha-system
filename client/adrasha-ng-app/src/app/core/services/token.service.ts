@@ -59,6 +59,8 @@ export class TokenService {
 
   valid(): boolean {
     const token = this.get();
+    console.log('token valid() called : ' + (!!token && !this.isExpired()));
+
     return !!token && !this.isExpired();
   }
 

@@ -58,13 +58,8 @@ export class RoleRequestFormFactoryService {
   private step3(initialData: RoleRequestResponseDTO, isLoading: boolean) {
     return this.fb.group({
       healthCenterId: this.createControl(
-        initialData.healthCenter || '',
-        [
-          Validators.required,
-          Validators.pattern(/^\d+$/),
-          Validators.minLength(12),
-          Validators.maxLength(12),
-        ],
+        initialData.healthCenterId || '',
+        [Validators.required],
         isLoading
       ),
     });

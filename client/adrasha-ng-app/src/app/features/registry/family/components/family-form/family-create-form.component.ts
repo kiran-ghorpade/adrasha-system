@@ -30,7 +30,6 @@ import { FamilyRegistrationDTO } from '@core/model/dataService';
     MatSelectModule,
     MatIconModule,
     MatToolbarModule,
-    PageHeaderComponent,
     TranslatePipe,
     ReactiveFormsModule,
     ValidationErrorComponent,
@@ -119,7 +118,6 @@ export class FamilyFormComponent {
     return {
       family: {
         ashaId: this.userId(),
-        locationId: '',
         povertyStatus: data.povertyStatus,
       },
       headMember: {

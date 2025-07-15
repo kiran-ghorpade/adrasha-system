@@ -1,6 +1,7 @@
 package com.adrasha.user.controller;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -79,6 +80,7 @@ public class RoleRequestController {
 		@GetMapping
 		@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = RoleRequestPageResponseDTO.class)))
 		@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
+		@PreAuthorize("hasAnyRole('ADMIN','USER','SYSTEM')")
 		public Page<RoleRequestResponseDTO> getAllRoleRequests(
 				RoleRequestFilterDTO filterDTO,
 			    @PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.DESC)
@@ -112,6 +114,7 @@ public class RoleRequestController {
 		@GetMapping("/{id}")
 		@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = RoleRequestResponseDTO.class)))
 		@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+		@PreAuthorize("hasAnyRole('ADMIN','USER','SYSTEM')")
 		public RoleRequestResponseDTO getRoleRequest(@PathVariable UUID id){
 			
 			RoleRequest request = roleRequestService.getRoleRequest(id);
@@ -123,7 +126,7 @@ public class RoleRequestController {
 		@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = RoleRequestResponseDTO.class)))
 		@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 		@PreAuthorize("hasAnyRole('USER', 'SYSTEM')")
-		public RoleRequestResponseDTO getCurrentUserRoleRequest(Authentication authentication) {
+		public List<RoleRequest> getCurrentUserRoleRequest(Authentication authentication) {
 
 			if(authentication == null) {
 				throw new UnAuthorizedException();
@@ -132,10 +135,8 @@ public class RoleRequestController {
 			// if principal change, then please change this code.
 			UUID userId = UUID.fromString(authentication.getPrincipal().toString());
 			
-			RoleRequest request = roleRequestService.getRoleRequestByUserId(userId);
-			
-			return mapper.map(request, RoleRequestResponseDTO.class);
-			
+			return roleRequestService.getRoleRequestsByUserId(userId);
+						
 		}
 		
 		@PostMapping

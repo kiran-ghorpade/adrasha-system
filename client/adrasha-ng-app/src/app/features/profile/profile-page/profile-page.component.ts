@@ -10,10 +10,11 @@ import {
   LocationResponseDTO,
 } from '@core/model/masterdataService';
 import { LocationService } from '@core/api/location/location.service';
+import { PageWrapperComponent } from "@shared/components";
 
 @Component({
   selector: 'app-profile-page',
-  imports: [MatCardModule, PageHeaderComponent],
+  imports: [MatCardModule, PageHeaderComponent, PageWrapperComponent],
   templateUrl: './profile-page.component.html',
 })
 export class ProfilePageComponent implements OnInit {

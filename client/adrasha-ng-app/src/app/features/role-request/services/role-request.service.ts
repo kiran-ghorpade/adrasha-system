@@ -25,7 +25,7 @@ export class RoleRequestService {
             'roleRequest.registration.success'
           );
           this.alertService.showAlert(translatedMsg, 'success');
-          this.router.navigateByUrl(`/roleRequests/${result.id}`, {
+          this.router.navigateByUrl(`/role-requests/${result.id}`, {
             replaceUrl: true,
           });
         }
@@ -50,7 +50,7 @@ export class RoleRequestService {
             'roleRequest.update.success'
           );
           this.alertService.showAlert(translatedMsg, 'success');
-          this.router.navigateByUrl(`/roleRequests/${result.id}`, {
+          this.router.navigateByUrl(`/role-requests/${result.id}`, {
             replaceUrl: true,
           });
         }
@@ -74,7 +74,7 @@ export class RoleRequestService {
           'roleRequest.deletion.success'
         );
         this.alertService.showAlert(translatedMsg, 'success');
-        this.router.navigateByUrl(`/roleRequests`, {
+        this.router.navigateByUrl(`/role-requests`, {
           replaceUrl: true,
         });
       },

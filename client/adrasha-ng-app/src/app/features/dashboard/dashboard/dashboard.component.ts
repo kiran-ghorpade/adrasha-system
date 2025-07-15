@@ -15,7 +15,7 @@ import { map, Subscription } from 'rxjs';
 import { DashboardHeaderComponent } from '../../../shared/components/dashboard-header/dashboard-header.component';
 import { AdminDashboardComponent } from '../components/admin-dashboard/admin-dashboard.component';
 import { AshaDashboardComponent } from '../components/asha-dashboard/asha-dashboard.component';
-import { UserDashboardComponent } from '../user-dashboard/user-dashboard.component';
+import { UserDashboardComponent } from '../components/user-dashboard/user-dashboard.component';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({

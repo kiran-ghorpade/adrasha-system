@@ -3,20 +3,20 @@
   <!-- Values -->
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-4">
     <app-data-card-label
-      [value]="`${familyStats().totalFamilies}`"
+      [value]="`${familyStats()?.totalFamilies ?? 0}`"
       [label]="`Families`"
     />
   </div>
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-5">
     <app-data-card-label
-      [value]="`${memberStats().totalMembers}`"
+      [value]="`${memberStats()?.totalMembers ?? 0}`"
       [label]="`Population`"
     />
   </div>
   <div class="row-span-4 col-span-12 md:col-span-3 paper md:order-none order-8">
     <canvas
       baseChart
-      [data]="chartData"
+      [data]="genderChartData()"
       [type]="chartType"
       [options]="chartOptions"
     >
@@ -25,7 +25,7 @@
   <div class="row-span-4 col-span-12 md:col-span-3 paper md:order-none order-9">
     <canvas
       baseChart
-      [data]="chartData"
+      [data]="povertyChartData()"
       [type]="chartType"
       [options]="chartOptions"
     >

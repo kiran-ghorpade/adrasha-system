@@ -57,6 +57,8 @@ public class FamilyServiceImpl implements FamilyDataService {
 		
 		remoteDataService.verifyUserExist(family.getAshaId());
 
+		headMember.setAshaId(family.getAshaId());
+		headMember.setFamilyId(family.getAshaId()); // temp value
 		Member newMember = memberRepository.save(headMember);
 		
 		family.setHeadMemberId(newMember.getId());

@@ -19,7 +19,7 @@ export const masterdataRoutes: Route[] = [
       ),
   },
   {
-    path: 'ncds',
+    path: 'ncd',
     loadChildren: () => import('./ncd/ncd.routes').then((m) => m.ncdRoutes),
   },
 ];

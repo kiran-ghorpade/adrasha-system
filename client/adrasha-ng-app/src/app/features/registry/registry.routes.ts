@@ -1,9 +1,7 @@
 import { Routes } from '@angular/router';
 
-import { RegistryPageComponent } from './registry-page/registry-page.component';
-
 export const registryRoutes: Routes = [
-  { path: '', component: RegistryPageComponent },
+  // { path: '', component: RegistryPageComponent },
   {
     path: 'families',
     loadChildren: () =>

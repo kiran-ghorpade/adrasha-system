@@ -5,7 +5,7 @@
 
   <div content class="paper flex flex-wrap">
     @if(memberList()){
-    <app-member-list [memberData]="memberList()" [route]="''" />
+    <app-member-list [memberList]="memberList()" [route]="''" />
     }@else{
     <div class="overflow-scroll flex justify-center items-center">
       <mat-icon>search_off</mat-icon>

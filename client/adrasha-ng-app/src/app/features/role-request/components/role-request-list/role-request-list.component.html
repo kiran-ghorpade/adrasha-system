@@ -8,20 +8,20 @@
   @for (roleRequest of roleRequestList(); track $index) {
   <a mat-list-item [routerLink]="['/role-requests', roleRequest.id]">
     <div matListItemIcon>
-      <mat-icon>cancel</mat-icon>
+      <mat-icon>{{ getIcon(roleRequest.status ?? "") }}</mat-icon>
     </div>
-    <h3 matListItemTitle><strong> REJECTED </strong></h3>
+    <h3 matListItemTitle>
+      <strong> {{ roleRequest.status }} </strong>
+    </h3>
     <p matListItemLine>
       Remark -
       <em>
-        ipsum dolor sit amet consectetur, adipisicing elit. Repellat, facilis
-        nam soluta non sunt sit molestias totam quisquam, error nulla illum
-        ullam mollitia dicta natus.
+        {{ roleRequest.name?.firstname }}
       </em>
     </p>
 
     <p matListItemMeta class="mat-body-2 text-sm text-gray-500 mt-2">
-      19/12/25
+      {{ roleRequest.createdAt | date }}
     </p>
   </a>
   }

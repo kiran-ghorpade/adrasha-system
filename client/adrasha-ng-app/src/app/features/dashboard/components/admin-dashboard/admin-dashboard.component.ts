@@ -24,23 +24,34 @@ import { BaseChartDirective } from 'ng2-charts';
 export class AdminDashboardComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   lineChartType: ChartType = 'line';
   lineChartData: ChartConfiguration['data'] = {
     labels: Array.from({ length: 30 }, (_, i) => `Day ${i + 1}`),
     datasets: [
       {
-        label: 'Health Records Added',
+        label: 'Requests Added',
         data: Array.from(
           { length: 30 },
           () => Math.floor(Math.random() * 50) + 5
         ),
-        borderColor: '#3b82f6',
-        backgroundColor: 'rgba(59, 130, 246, 0.2)',
+        // borderColor: '#3b82f6',
+        // backgroundColor: 'rgba(59, 130, 246, 0.2)',
         pointBackgroundColor: '#3b82f6',
-        fill: true,
+        // fill: true,
+        tension: 0.4,
+      },
+      {
+        label: 'Locations Added',
+        data: Array.from(
+          { length: 30 },
+          () => Math.floor(Math.random() * 50) + 5
+        ),
+        // borderColor: '#3b82f6',
+        // backgroundColor: 'rgba(59, 130, 246, 0.2)',
+        pointBackgroundColor: '#3b82f6',
+        // fill: true,
         tension: 0.4,
       },
     ],
@@ -70,7 +81,7 @@ export class AdminDashboardComponent implements OnInit {
   chartType: ChartType = 'doughnut';
 
   chartData: ChartConfiguration['data'] = {
-    labels: ['Male', 'Female', 'Other'],
+    labels: ['Pending Requests', 'Rejected Requests', 'Other'],
     datasets: [
       {
         data: [45, 50, 5], // Example percentages or counts

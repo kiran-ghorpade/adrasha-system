@@ -1,14 +1,21 @@
-import {
-  RoleRequestResponseDTO,
-  RoleRequestResponseDTOStatus,
-} from '@core/model/userService';
+import { RoleRequestResponseDTO } from '@core/model/userService';
 import { DataLabelType } from '@shared/components';
+import { getFullName } from '@shared/utils/fullName';
+import { getStatusIcon } from './getIconStatus';
 
 export function roleRequestToData(
   roleRequest: RoleRequestResponseDTO
 ): DataLabelType[] {
   return [
     { label: 'RoleRequest ID', value: roleRequest.id, icon: 'badge' },
+    { label: 'Name', value: getFullName(roleRequest.name), icon: 'person' },
+    { label: 'Requested role', value: roleRequest.role, icon: 'branding_watermark' },
+    { label: 'User Id', value: roleRequest.userId, icon: 'badge' },
+    {
+      label: 'HealthCenter',
+      value: roleRequest.healthCenterId,
+      icon: 'first_aid',
+    },
     {
       label: 'Status',
       value: roleRequest.status,
@@ -21,17 +28,4 @@ export function roleRequestToData(
     },
     { label: 'Last Update', value: roleRequest.updatedAt, icon: 'update' },
   ];
-}
-
-function getStatusIcon(status: string): string {
-  switch (status) {
-    case RoleRequestResponseDTOStatus.APPROVED:
-      return 'check_circle';
-    case RoleRequestResponseDTOStatus.REJECTED:
-      return 'cancel';
-    case RoleRequestResponseDTOStatus.PENDING:
-      return 'hourglass_empty';
-    default:
-      return 'help_outline';
-  }
 }

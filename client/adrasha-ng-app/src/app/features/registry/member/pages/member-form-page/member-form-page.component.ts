@@ -25,10 +25,10 @@ import { MemberFormComponent } from '../../components';
       }
       <app-member-form
         [userId]="userId() ?? ''"
-        [memberId]="memberId() ?? ''"
+        [id]="memberId() ?? ''"
         [familyId]="familyId() ?? ''"
         [isUpdate]="isUpdate()"
-        [member]="memberData() ?? {}"
+        [entity]="memberData() ?? {}"
       />
     </div>
   `,

@@ -11,7 +11,7 @@ import { Component, input } from '@angular/core';
       </div>
 
       <!-- Second ng-content section -->
-      <div class="h-full w-full p-2">
+      <div class="h-full w-auto p-2">
         <ng-content select="[content]"></ng-content>
       </div>
     </div>

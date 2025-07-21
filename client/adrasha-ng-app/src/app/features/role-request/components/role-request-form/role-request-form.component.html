@@ -1,7 +1,7 @@
 <mat-stepper orientation="vertical" [linear]="true" #stepper>
   <!-- Personal Details -->
-  <mat-step [stepControl]="personalDetails">
-    <form [formGroup]="personalDetails">
+  <mat-step [stepControl]="steps.personalDetails">
+    <form [formGroup]="steps.personalDetails">
       <ng-template matStepLabel>{{
         "roleRequest.step1Title" | translate
       }}</ng-template>
@@ -10,20 +10,20 @@
           <mat-label>{{ "roleRequest.firstnameLabel" | translate }}</mat-label>
           <input matInput formControlName="firstname" required />
           <app-validation-error
-            [control]="personalDetails.controls.firstname"
+            [control]="steps.personalDetails.controls.firstname"
           />
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{ "roleRequest.middlenameLabel" | translate }}</mat-label>
           <input matInput formControlName="middlename" required />
           <app-validation-error
-            [control]="personalDetails.controls.middlename"
+            [control]="steps.personalDetails.controls.middlename"
           />
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{ "roleRequest.lastnameLabel" | translate }}</mat-label>
           <input matInput formControlName="lastname" required />
-          <app-validation-error [control]="personalDetails.controls.lastname" />
+          <app-validation-error [control]="steps.personalDetails.controls.lastname" />
         </mat-form-field>
       </div>
       <div>
@@ -34,8 +34,8 @@
   </mat-step>
 
   <!-- Role Details -->
-  <mat-step [stepControl]="roleDetails">
-    <form [formGroup]="roleDetails">
+  <mat-step [stepControl]="steps.roleDetails">
+    <form [formGroup]="steps.roleDetails">
       <ng-template matStepLabel>{{
         "roleRequest.step2Title" | translate
       }}</ng-template>
@@ -47,7 +47,7 @@
             <mat-option [value]="`${role.code}`">{{ role.label }}</mat-option>
             }
           </mat-select>
-          <app-validation-error [control]="roleDetails.controls.role" />
+          <app-validation-error [control]="steps.roleDetails.controls.role" />
         </mat-form-field>
       </div>
       <div>
@@ -58,8 +58,8 @@
   </mat-step>
 
   <!-- HealthCenter Details -->
-  <mat-step [stepControl]="healthCenterDetails">
-    <form [formGroup]="healthCenterDetails">
+  <mat-step [stepControl]="steps.healthCenterDetails">
+    <form [formGroup]="steps.healthCenterDetails">
       <ng-template matStepLabel>{{
         "roleRequest.step3Title" | translate
       }}</ng-template>
@@ -74,7 +74,7 @@
             }
           </mat-select>
           <app-validation-error
-            [control]="healthCenterDetails.controls.healthCenterId"
+            [control]="steps.healthCenterDetails.controls.healthCenterId"
           />
         </mat-form-field>
       </div>

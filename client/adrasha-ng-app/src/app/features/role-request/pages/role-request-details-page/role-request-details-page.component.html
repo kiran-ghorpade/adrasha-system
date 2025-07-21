@@ -1,6 +1,7 @@
 <app-page-wrapper>
   <div top>
     <app-page-header title="Role Request Details">
+      @if (isAdmin()) {
       <mat-action-list>
         <a matIconButton [matMenuTriggerFor]="menu">
           <mat-icon class="h-[24px] w-[24px]">more_vert</mat-icon>
@@ -23,19 +24,25 @@
           <mat-icon>delete</mat-icon>
           <span>Delete Request</span>
         </button>
-      </mat-menu></app-page-header
-    >
+      </mat-menu>
+      }
+    </app-page-header>
   </div>
 
   <div content class="flex flex-wrap justify-evenly gap-3">
     <!-- RoleRequest Details -->
     @if(data().length > 0){
-    <div class="paper h-max flex flex-wrap">
+    <div class="paper flex flex-wrap">
       <app-role-request-details
         [roleRequest]="data()"
       ></app-role-request-details>
     </div>
-    }@else {
+    @if(!isAdmin()){
+    <div class="flex paper p-3 flex-wrap w-full justify-center gap-3">
+      <button matButton="filled">Approve</button>
+      <button matButton="outlined">Reject</button>
+    </div>
+    } }@else {
     <div class="overflow-scroll flex justify-center items-center">
       <mat-icon>search_off</mat-icon>
       <h4 class="ml-4 text-wrap">something went wrong</h4>

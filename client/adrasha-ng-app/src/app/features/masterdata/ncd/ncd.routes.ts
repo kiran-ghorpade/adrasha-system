@@ -1,16 +1,13 @@
 import { Routes } from '@angular/router';
+import { NcdDetailsComponent } from './components';
 import {
-    NcdDetailsComponent
-} from './components';
-import {
-    NcdCreatePageComponent,
-    NcdEditPageComponent,
-    NcdPageComponent
+  NcdFormPageComponent,
+  NcdPageComponent
 } from './pages';
 
 export const ncdRoutes: Routes = [
   { path: '', component: NcdPageComponent },
-  { path: 'new', component: NcdCreatePageComponent },
-  { path: 'update', component: NcdEditPageComponent },
+  { path: 'new', component: NcdFormPageComponent },
+  { path: 'update/:id', component: NcdFormPageComponent },
   { path: ':id', component: NcdDetailsComponent },
 ];

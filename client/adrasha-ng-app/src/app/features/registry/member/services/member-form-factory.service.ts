@@ -1,15 +1,27 @@
 import { inject, Injectable } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import {
+  AbstractControlOptions,
+  FormBuilder,
+  FormControl,
+  Validators,
+} from '@angular/forms';
 import {
   MemberDataResponseDTO,
   MemberDataResponseDTOGender,
 } from '@core/model/dataService';
-import { abhaNumberValidation, adharNumberValidation, mobileNumberValidation } from '@shared/validations';
+import { BaseFormFactory } from '@shared/directives';
+import { CreateFormOnly } from '@shared/interfaces';
+import {
+  abhaNumberValidation,
+  adharNumberValidation,
+  mobileNumberValidation,
+} from '@shared/validations';
 
 @Injectable({ providedIn: 'root' })
-export class MemberFormFactoryService {
-  private readonly fb = inject(FormBuilder);
-
+export class MemberFormFactoryService
+  extends BaseFormFactory
+  implements CreateFormOnly<MemberDataResponseDTO>
+{
   createForm(initialData: MemberDataResponseDTO, isLoading: boolean) {
     // form groups
     const personalDetails = this.step1(initialData, isLoading);
@@ -26,7 +38,7 @@ export class MemberFormFactoryService {
   }
 
   // steps
-  private step1(data: MemberDataResponseDTO, isLoading: boolean) {
+  public step1(data: MemberDataResponseDTO, isLoading: boolean) {
     return this.fb.group({
       firstname: this.createControl(
         data.name?.firstname || '',
@@ -51,7 +63,7 @@ export class MemberFormFactoryService {
     });
   }
 
-  private step2(data: MemberDataResponseDTO, isLoading: boolean) {
+  public step2(data: MemberDataResponseDTO, isLoading: boolean) {
     return this.fb.group({
       dateOfBirth: this.createControl(
         data.dateOfBirth || '',
@@ -62,7 +74,7 @@ export class MemberFormFactoryService {
     });
   }
 
-  private step3(data: MemberDataResponseDTO, isLoading: boolean) {
+  public step3(data: MemberDataResponseDTO, isLoading: boolean) {
     return this.fb.group({
       adharNumber: this.createControl(
         data.adharNumber || '',
@@ -77,7 +89,7 @@ export class MemberFormFactoryService {
     });
   }
 
-  private step4(data: MemberDataResponseDTO, isLoading: boolean) {
+  public step4(data: MemberDataResponseDTO, isLoading: boolean) {
     return this.fb.group({
       mobileNumber: this.createControl(
         data.mobileNumber || '',
@@ -85,16 +97,5 @@ export class MemberFormFactoryService {
         isLoading
       ),
     });
-  }
-
-  private createControl<T>(
-    initialValue: T,
-    validators: any[] = [],
-    disabled = false
-  ) {
-    return this.fb.nonNullable.control(
-      { value: initialValue, disabled },
-      validators
-    );
   }
 }

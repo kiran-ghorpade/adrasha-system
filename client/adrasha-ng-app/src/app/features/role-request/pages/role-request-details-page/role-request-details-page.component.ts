@@ -1,4 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,6 +8,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { RoleRequestService as RoleRequestApiService } from '@core/api/role-request/role-request.service';
 import { RoleRequestResponseDTO } from '@core/model/userService';
+import { AuthService } from '@core/services';
 import { RoleRequestDetailsComponent } from '@features/role-request/components';
 import { RoleRequestService } from '@features/role-request/services';
 import { roleRequestToData } from '@features/role-request/utils/convertor';
@@ -36,10 +38,13 @@ export class RoleRequestDetailsPageComponent {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly roleRequestApiService = inject(RoleRequestApiService);
   private readonly roleRequestService = inject(RoleRequestService);
+  private readonly authService = inject(AuthService);
 
   data = signal<DataLabelType[]>([]);
   roleRequestDetails = signal<RoleRequestResponseDTO | null>(null);
   roleRequestId: string = '';
+
+  isAdmin = toSignal(this.authService.isAdmin(), { initialValue: false });
 
   ngOnInit(): void {
     this.roleRequestId = this.activatedRoute.snapshot.paramMap.get('id') || '';

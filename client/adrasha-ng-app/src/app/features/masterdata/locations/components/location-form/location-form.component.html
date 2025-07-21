@@ -1,1 +1,114 @@
-<p>location-form works!</p>
+<mat-stepper orientation="vertical" [linear]="true" #stepper>
+  <!-- Personal Details -->
+  <mat-step [stepControl]="steps.locationDetails">
+    <form [formGroup]="steps.locationDetails">
+      <ng-template matStepLabel>{{
+        "masterdata.location.step1Title" | translate
+      }}</ng-template>
+      <div class="flex gap-3 flex-wrap md:w-2/3">
+        <mat-form-field>
+          <mat-label>{{
+            "masterdata.location.nameLabel" | translate
+          }}</mat-label>
+          <input matInput formControlName="name" required />
+          <app-validation-error
+            [control]="steps.locationDetails.controls.name"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{
+            "masterdata.location.typeLabel" | translate
+          }}</mat-label>
+          <mat-select required formControlName="type">
+            @for (types of locationTypes(); track $index) {
+            <mat-option [value]="`${types.code}`">{{ types.label }}</mat-option>
+            }
+          </mat-select>
+          <app-validation-error
+            [control]="steps.locationDetails.controls.type"
+          />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>{{
+            "masterdata.location.pincodeLabel" | translate
+          }}</mat-label>
+          <input matInput formControlName="pincode" required />
+          <app-validation-error
+            [control]="steps.locationDetails.controls.pincode"
+          />
+        </mat-form-field>
+      </div>
+      <div>
+        <button matButton matStepperPrevious>Back</button>
+        <button matButton matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- Role Details -->
+  <mat-step [stepControl]="steps.otherDetails">
+    <form [formGroup]="steps.otherDetails">
+      <ng-template matStepLabel>{{
+        "masterdata.location.step2Title" | translate
+      }}</ng-template>
+      <div class="flex gap-3 flex-wrap md:w-2/3">
+        <mat-form-field>
+          <mat-label>{{
+            "masterdata.location.subdistrictLabel" | translate
+          }}</mat-label>
+          <input matInput formControlName="subdistrict" required />
+          <app-validation-error
+            [control]="steps.otherDetails.controls.subdistrict"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{
+            "masterdata.location.districtLabel" | translate
+          }}</mat-label>
+          <input matInput formControlName="district" required />
+          <app-validation-error
+            [control]="steps.otherDetails.controls.district"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{
+            "masterdata.location.stateLabel" | translate
+          }}</mat-label>
+          <input matInput formControlName="state" required />
+          <app-validation-error [control]="steps.otherDetails.controls.state" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{
+            "masterdata.location.countryLabel" | translate
+          }}</mat-label>
+          <input matInput formControlName="country" required />
+          <app-validation-error
+            [control]="steps.otherDetails.controls.country"
+          />
+        </mat-form-field>
+      </div>
+      <div>
+        <button matButton matStepperPrevious>Back</button>
+        <button matButton matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- Done -->
+  <mat-step>
+    <ng-template matStepLabel>{{
+      "masterdata.location.doneTitle" | translate
+    }}</ng-template>
+    <p>{{ "masterdata.location.doneMessage" | translate }}</p>
+    <div>
+      <button matButton matStepperPrevious>Back</button>
+      <button matButton (click)="stepper.reset()">
+        {{ "masterdata.location.resetButton" | translate }}
+      </button>
+      <button matButton="filled" (click)="onSubmit()">
+        {{ "masterdata.location.submitButton" | translate }}
+      </button>
+    </div>
+  </mat-step>
+</mat-stepper>

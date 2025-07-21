@@ -1,4 +1,4 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, inject, input, InputSignal, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -20,6 +20,7 @@ import { ValidationErrorComponent } from '@shared/components';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslatePipe } from '@ngx-translate/core';
 import { StaticDataService } from '@core/api/static-data/static-data.service';
+import { BaseFormComponent } from '@shared/directives';
 
 @Component({
   selector: 'app-health-center-form',
@@ -34,77 +35,61 @@ import { StaticDataService } from '@core/api/static-data/static-data.service';
   ],
   templateUrl: './health-center-form.component.html',
 })
-export class HealthCenterFormComponent {
+export class HealthCenterFormComponent extends BaseFormComponent<
+  HealthCenterFormFactoryService,
+  HealthCenterCreateDTO,
+  HealthCenterUpdateDTO,
+  HealthCenterResponseDTO
+> {
+  // overriden states
+  override readonly formFactory = inject(HealthCenterFormFactoryService);
+  override id = input.required<string>();
+  override isUpdate = input.required<boolean>();
+  override entity = input<HealthCenterResponseDTO>({});
+
   // dependencies
-  private readonly formFactory = inject(HealthCenterFormFactoryService);
-  private readonly healthCenterService = inject(HealthCenterService);
-  private readonly locationService = inject(LocationService);
-  private readonly staticDataService = inject(StaticDataService);
-  private readonly loadingService = inject(LoadingService);
+  protected readonly healthCenterService = inject(HealthCenterService);
+  protected readonly locationService = inject(LocationService);
+  protected readonly staticDataService = inject(StaticDataService);
 
   // states
   readonly userId = input.required<string>();
-  readonly healthCenterId = input.required<string>();
-  readonly isUpdate = input.required<boolean>();
-
   healthCenter = signal<HealthCenterResponseDTO | null>(null);
   healthCenterTypeList = signal<StaticDataDTO[]>([]);
   locationList = signal<LocationResponseDTO[]>([]);
 
-  readonly isLoading = toSignal(this.loadingService.loading$, {
-    initialValue: false,
-  });
-
-  readonly formGroup = this.formFactory.createForm(
+  // form data handling
+  readonly form = this.formFactory.createForm(
     this.healthCenter() ?? {},
     this.isLoading()
   );
 
-  ngOnInit() {
-    this.loadStaticData();
+  public get steps() {
+    return { ...this.form.controls };
   }
 
-  // getters
-  public get healthCenterDetails() {
-    return this.formGroup.controls.healthCenterDetails;
-  }
-
-  public get addressDetails() {
-    return this.formGroup.controls.addressDetails;
+  private getRawValues() {
+    return {
+      ...this.steps.healthCenterDetails.getRawValue(),
+      ...this.steps.addressDetails.getRawValue(),
+    };
   }
 
   // logic
-  onSubmit() {
-    if (this.formGroup.invalid) {
-      this.formGroup.markAllAsTouched();
-      return;
-    }
-
-    if (this.isUpdate()) {
-      this.update();
-      return;
-    }
-
-    this.add();
+  override add() {
+    this.healthCenterService.add(this.prepareCreateData());
   }
 
-  private add() {
-    this.healthCenterService.add(this.prepareRegistrationFormData());
-  }
-
-  private update() {
-    this.healthCenterService.update(
-      this.healthCenterId(),
-      this.prepareUpdateFormData()
-    );
+  override update() {
+    this.healthCenterService.update(this.id(), this.prepareUpdateData());
   }
 
   // Helper Methods
-  private loadStaticData() {
+  override loadStaticData() {
     this.staticDataService
       .getHealthCenterTypes()
       .subscribe((types) => this.healthCenterTypeList.set(types));
-      
+
     this.locationService
       .getAllLocations({
         filterDTO: {},
@@ -114,16 +99,8 @@ export class HealthCenterFormComponent {
       .subscribe((list) => this.locationList.set(list ?? []));
   }
 
-  private getRawValues() {
-    return {
-      ...this.healthCenterDetails.getRawValue(),
-      ...this.addressDetails.getRawValue(),
-    };
-  }
-
-  public prepareRegistrationFormData(): HealthCenterCreateDTO {
+  override prepareCreateData(): HealthCenterCreateDTO {
     const data = this.getRawValues();
-
     return {
       centerType: data.centerType,
       locationId: data.locationId,
@@ -133,9 +110,8 @@ export class HealthCenterFormComponent {
     };
   }
 
-  public prepareUpdateFormData(): HealthCenterUpdateDTO {
+  override prepareUpdateData(): HealthCenterUpdateDTO {
     const data = this.getRawValues();
-
     return {
       centerType: data.centerType,
       locationId: data.locationId,

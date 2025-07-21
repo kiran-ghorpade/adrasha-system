@@ -1,7 +1,7 @@
 <mat-stepper orientation="vertical" [linear]="true" #stepper>
   <!-- Family Details -->
-  <mat-step [stepControl]="familyDetails">
-    <form [formGroup]="familyDetails">
+  <mat-step [stepControl]="steps.familyDetails">
+    <form [formGroup]="steps.familyDetails">
       <ng-template matStepLabel>{{
         "registry.family.step1Title" | translate
       }}</ng-template>
@@ -19,7 +19,7 @@
             }
           </mat-select>
           <app-validation-error
-            [control]="familyDetails.controls.povertyStatus"
+            [control]="steps.familyDetails.controls.povertyStatus"
           />
         </mat-form-field>
       </div>

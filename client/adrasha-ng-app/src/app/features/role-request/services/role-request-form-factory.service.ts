@@ -3,14 +3,18 @@ import { FormBuilder, Validators } from '@angular/forms';
 import {
   RoleRequestCreateDTORole,
   RoleRequestResponseDTO,
+  RoleRequestResponseDTORole,
 } from '@core/model/userService';
+import { BaseFormFactory } from '@shared/directives';
+import { CreateFormOnly } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
-export class RoleRequestFormFactoryService {
-  private readonly fb = inject(FormBuilder);
-
+export class RoleRequestFormFactoryService
+  extends BaseFormFactory
+  implements CreateFormOnly<RoleRequestResponseDTO>
+{
   createForm(initialData: RoleRequestResponseDTO, isLoading: boolean) {
     // form groups
     const personalDetails = this.step1(initialData, isLoading);
@@ -63,17 +67,5 @@ export class RoleRequestFormFactoryService {
         isLoading
       ),
     });
-  }
-
-  // helper
-  private createControl<T>(
-    initialValue: T,
-    validators: any[] = [],
-    disabled = false
-  ) {
-    return this.fb.nonNullable.control(
-      { value: initialValue, disabled },
-      validators
-    );
   }
 }

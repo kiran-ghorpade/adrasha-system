@@ -1,9 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '@core/guards';
 import { roleGuard } from '@core/guards/role.guard';
-import {
-  UserResponseDTORolesItem
-} from '@core/model/userService';
+import { UserResponseDTORolesItem } from '@core/model/userService';
 import { LogsComponent } from '@features/logs';
 import { PageNotFoundComponent } from '@shared/components';
 import { AppLayout, AuthLayoutComponent, BlankLayoutComponent } from './layout';
@@ -99,6 +97,15 @@ export const routes: Routes = [
     component: BlankLayoutComponent,
     pathMatch: 'full',
     children: [{ path: '', component: LogsComponent }],
+  },
+  {
+    path: 'settings',
+    title: 'settings',
+    component: AppLayout,
+    loadChildren: () =>
+      import('@features/settings/settings.routes').then(
+        (route) => route.settingsRoutes
+      ),
   },
   {
     path: '**',

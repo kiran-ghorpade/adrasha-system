@@ -53,7 +53,7 @@ export class FamilyFormComponent {
   povertyStatusList = signal<StaticDataDTO[]>([]);
 
   // form
-  readonly formGroup = this.formFactory.createUpdateForm(
+  readonly formGroup = this.formFactory.updateForm(
     this.familyData() ?? {},
     this.isLoading()
   );
@@ -63,8 +63,8 @@ export class FamilyFormComponent {
   }
 
   // getters
-  public get familyDetails() {
-    return this.formGroup.controls.familyDetails;
+  public get steps() {
+    return { ...this.formGroup.controls };
   }
 
   // logic
@@ -85,7 +85,7 @@ export class FamilyFormComponent {
 
   private getRawValues() {
     return {
-      ...this.familyDetails.getRawValue(),
+      ...this.steps.familyDetails.getRawValue(),
     };
   }
   public prepareUpdateFormData(): FamilyUpdateDTO {

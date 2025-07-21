@@ -12,7 +12,6 @@ import { StaticDataService } from '@core/api/static-data/static-data.service';
 import { LoadingService } from '@core/services';
 import { TranslatePipe } from '@ngx-translate/core';
 import {
-  PageHeaderComponent,
   ValidationErrorComponent,
 } from '@shared/components';
 import { FamilyFormFactoryService, FamilyService } from '../../services';
@@ -52,7 +51,7 @@ export class FamilyFormComponent {
   genderList = signal<StaticDataDTO[]>([]);
 
   // form
-  readonly formGroup = this.formFactory.createRegistrationForm(
+  readonly formGroup = this.formFactory.createForm(
     this.isLoading()
   );
 
@@ -61,24 +60,8 @@ export class FamilyFormComponent {
   }
 
   // getters
-  public get familyDetails() {
-    return this.formGroup.controls.familyDetails;
-  }
-
-  public get headPersonalDetails() {
-    return this.formGroup.controls.headPersonalDetails;
-  }
-
-  public get headBirthDetails() {
-    return this.formGroup.controls.headBirthDetails;
-  }
-
-  public get headIdentificationDetails() {
-    return this.formGroup.controls.headIdentificationDetails;
-  }
-
-  public get headContactDetails() {
-    return this.formGroup.controls.headContactDetails;
+  public get steps() {
+    return {...this.formGroup.controls};
   }
 
   // logic
@@ -104,11 +87,11 @@ export class FamilyFormComponent {
 
   private getRawValues() {
     return {
-      ...this.familyDetails.getRawValue(),
-      ...this.headPersonalDetails.getRawValue(),
-      ...this.headBirthDetails.getRawValue(),
-      ...this.headIdentificationDetails.getRawValue(),
-      ...this.headContactDetails.getRawValue(),
+      ...this.steps.familyDetails.getRawValue(),
+      ...this.steps.headPersonalDetails.getRawValue(),
+      ...this.steps.headBirthDetails.getRawValue(),
+      ...this.steps.headIdentificationDetails.getRawValue(),
+      ...this.steps.headContactDetails.getRawValue(),
     };
   }
 

@@ -1,18 +1,23 @@
-import { inject, Injectable } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Injectable } from '@angular/core';
+import { Validators } from '@angular/forms';
 import {
-  HealthCenterCreateDTO,
   HealthCenterCreateDTOCenterType,
   HealthCenterResponseDTO,
 } from '@core/model/masterdataService';
+import { BaseFormFactory } from '@shared/directives';
+import { CreateFormOnly } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
-export class HealthCenterFormFactoryService {
-  private readonly fb = inject(FormBuilder);
-
-  createForm(initialData: HealthCenterResponseDTO, isLoading: boolean) {
+export class HealthCenterFormFactoryService
+  extends BaseFormFactory
+  implements CreateFormOnly<HealthCenterResponseDTO>
+{
+  createForm(
+    initialData: HealthCenterResponseDTO,
+    isLoading: boolean
+  ) {
     // form groups
     const healthCenterDetails = this.step1(initialData, isLoading);
     const addressDetails = this.step2(initialData, isLoading);
@@ -57,17 +62,5 @@ export class HealthCenterFormFactoryService {
         isLoading
       ),
     });
-  }
-
-  // helper
-  private createControl<T>(
-    initialValue: T,
-    validators: any[] = [],
-    disabled = false
-  ) {
-    return this.fb.nonNullable.control(
-      { value: initialValue, disabled },
-      validators
-    );
   }
 }

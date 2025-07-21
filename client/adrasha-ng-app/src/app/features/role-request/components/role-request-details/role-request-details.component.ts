@@ -18,7 +18,7 @@ import { DataLabelComponent, DataLabelType } from '@shared/components';
           ></app-data-label>
         </div>
         } } @else {
-        <p>No member details available.</p>
+        <p>No details available.</p>
         }
       </mat-list>
     </ng-container>

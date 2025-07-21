@@ -1,1 +1,45 @@
-<p>ncd-form works!</p>
+<mat-stepper orientation="vertical" [linear]="true" #stepper>
+  <!-- Step 1 -->
+  <mat-step [stepControl]="steps.ncdDetails">
+    <form [formGroup]="steps.ncdDetails">
+      <ng-template matStepLabel>{{
+        "masterdata.ncd.step1Title" | translate
+      }}</ng-template>
+      <div class="flex gap-3 flex-wrap md:w-2/3">
+        <mat-form-field>
+          <mat-label>{{ "masterdata.ncd.nameLabel" | translate }}</mat-label>
+          <input matInput formControlName="name" required />
+          <app-validation-error [control]="steps.ncdDetails.controls.name" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{
+            "masterdata.ncd.descriptionLabel" | translate
+          }}</mat-label>
+          <input matInput formControlName="description" required />
+          <app-validation-error [control]="steps.ncdDetails.controls.description" />
+        </mat-form-field>
+      </div>
+      <div>
+        <button matButton matStepperPrevious>Back</button>
+        <button matButton matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- Done -->
+  <mat-step>
+    <ng-template matStepLabel>{{
+      "masterdata.ncd.doneTitle" | translate
+    }}</ng-template>
+    <p>{{ "masterdata.ncd.doneMessage" | translate }}</p>
+    <div>
+      <button matButton matStepperPrevious>Back</button>
+      <button matButton (click)="stepper.reset()">
+        {{ "masterdata.ncd.resetButton" | translate }}
+      </button>
+      <button matButton="filled" (click)="onSubmit()">
+        {{ "masterdata.ncd.submitButton" | translate }}
+      </button>
+    </div>
+  </mat-step>
+</mat-stepper>

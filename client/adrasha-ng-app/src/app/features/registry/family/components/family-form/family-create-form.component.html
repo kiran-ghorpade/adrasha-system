@@ -1,7 +1,7 @@
 <mat-stepper orientation="vertical" [linear]="true" #stepper>
   <!-- Family Details -->
-  <mat-step [stepControl]="familyDetails">
-    <form [formGroup]="familyDetails">
+  <mat-step [stepControl]="steps.familyDetails">
+    <form [formGroup]="steps.familyDetails">
       <ng-template matStepLabel>{{
         "registry.family.step1Title" | translate
       }}</ng-template>
@@ -19,7 +19,7 @@
             }
           </mat-select>
           <app-validation-error
-            [control]="familyDetails.controls.povertyStatus"
+            [control]="steps.familyDetails.controls.povertyStatus"
           />
         </mat-form-field>
       </div>
@@ -30,8 +30,8 @@
   </mat-step>
 
   <!-- Personal Details -->
-  <mat-step [stepControl]="headPersonalDetails">
-    <form [formGroup]="headPersonalDetails">
+  <mat-step [stepControl]="steps.headPersonalDetails">
+    <form [formGroup]="steps.headPersonalDetails">
       <ng-template matStepLabel>{{
         "registry.family.step2Title" | translate
       }}</ng-template>
@@ -42,7 +42,7 @@
           }}</mat-label>
           <input matInput formControlName="firstname" required />
           <app-validation-error
-            [control]="headPersonalDetails.controls.firstname"
+            [control]="steps.headPersonalDetails.controls.firstname"
           />
         </mat-form-field>
         <mat-form-field>
@@ -51,7 +51,7 @@
           }}</mat-label>
           <input matInput formControlName="middlename" required />
           <app-validation-error
-            [control]="headPersonalDetails.controls.middlename"
+            [control]="steps.headPersonalDetails.controls.middlename"
           />
         </mat-form-field>
         <mat-form-field>
@@ -60,7 +60,7 @@
           }}</mat-label>
           <input matInput formControlName="lastname" required />
           <app-validation-error
-            [control]="headPersonalDetails.controls.lastname"
+            [control]="steps.headPersonalDetails.controls.lastname"
           />
         </mat-form-field>
         <mat-form-field>
@@ -73,7 +73,7 @@
             }
           </mat-select>
           <app-validation-error
-            [control]="headPersonalDetails.controls.gender"
+            [control]="steps.headPersonalDetails.controls.gender"
           />
         </mat-form-field>
       </div>
@@ -85,8 +85,8 @@
   </mat-step>
 
   <!-- Birth Details -->
-  <mat-step [stepControl]="headBirthDetails">
-    <form [formGroup]="headBirthDetails">
+  <mat-step [stepControl]="steps.headBirthDetails">
+    <form [formGroup]="steps.headBirthDetails">
       <ng-template matStepLabel>{{
         "registry.family.step3Title" | translate
       }}</ng-template>
@@ -95,7 +95,7 @@
           <mat-label>{{ "registry.member.dobLabel" | translate }}</mat-label>
           <input matInput type="date" formControlName="dateOfBirth" required />
           <app-validation-error
-            [control]="headBirthDetails.controls.dateOfBirth"
+            [control]="steps.headBirthDetails.controls.dateOfBirth"
           />
         </mat-form-field>
         <mat-form-field>
@@ -104,7 +104,7 @@
           }}</mat-label>
           <input matInput formControlName="birthPlace" />
           <app-validation-error
-            [control]="headBirthDetails.controls.birthPlace"
+            [control]="steps.headBirthDetails.controls.birthPlace"
           />
         </mat-form-field>
       </div>
@@ -116,8 +116,8 @@
   </mat-step>
 
   <!-- Identification Details -->
-  <mat-step [stepControl]="headIdentificationDetails">
-    <form [formGroup]="headIdentificationDetails">
+  <mat-step [stepControl]="steps.headIdentificationDetails">
+    <form [formGroup]="steps.headIdentificationDetails">
       <ng-template matStepLabel>{{
         "registry.family.step4Title" | translate
       }}</ng-template>
@@ -128,7 +128,7 @@
           }}</mat-label>
           <input matInput formControlName="adharNumber" required />
           <app-validation-error
-            [control]="headIdentificationDetails.controls.adharNumber"
+            [control]="steps.headIdentificationDetails.controls.adharNumber"
           />
         </mat-form-field>
         <mat-form-field>
@@ -137,7 +137,7 @@
           }}</mat-label>
           <input matInput formControlName="abhaNumber" />
           <app-validation-error
-            [control]="headIdentificationDetails.controls.abhaNumber"
+            [control]="steps.headIdentificationDetails.controls.abhaNumber"
           />
         </mat-form-field>
       </div>
@@ -150,8 +150,8 @@
   </mat-step>
 
   <!-- Contact Details -->
-  <mat-step [stepControl]="headContactDetails">
-    <form [formGroup]="headContactDetails">
+  <mat-step [stepControl]="steps.headContactDetails">
+    <form [formGroup]="steps.headContactDetails">
       <ng-template matStepLabel>{{
         "registry.family.step5Title" | translate
       }}</ng-template>
@@ -162,7 +162,7 @@
           }}</mat-label>
           <input matInput formControlName="mobileNumber" />
           <app-validation-error
-            [control]="headContactDetails.controls.mobileNumber"
+            [control]="steps.headContactDetails.controls.mobileNumber"
           />
         </mat-form-field>
       </div>

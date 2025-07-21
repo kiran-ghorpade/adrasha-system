@@ -18,8 +18,8 @@ import { PageWrapperComponent } from '@shared/components/page-wrapper/page-wrapp
 })
 export class MasterDataPageComponent {
   masterdataTypes = [
-    { label: 'Locations', icon: 'location_on', route:'location' },
+    { label: 'Locations', icon: 'location_on', route:'locations' },
     { label: 'Health Centers', icon: 'local_hospital', route:'healthCenters' },
-    { label: 'Non-Communicable Disease', icon: 'health_and_safety', route:'ncd/list' },
+    { label: 'Non-Communicable Disease', icon: 'health_and_safety', route:'ncd' },
   ];
 }

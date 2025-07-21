@@ -24,9 +24,9 @@ import { map } from 'rxjs';
       />
       <app-role-request-form
         [userId]="userId() ?? ''"
-        [roleRequestId]="roleRequestId() ?? ''"
+        [id]="roleRequestId() ?? ''"
         [isUpdate]="isUpdate()"
-        [roleRequest]="data() ?? {}"
+        [entity]="data() ?? {}"
       />
     </div>
   `,
@@ -60,8 +60,10 @@ export class RoleRequestFormPageComponent {
 
   // helpers
   private loadMemberData(roleRequestId: string): void {
-    this.roleReqeuestService.getRoleRequest(roleRequestId).subscribe((request) => {
-      this.data.set(request);
-    });
+    this.roleReqeuestService
+      .getRoleRequest(roleRequestId)
+      .subscribe((request) => {
+        this.data.set(request);
+      });
   }
 }

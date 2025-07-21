@@ -1,7 +1,7 @@
 <mat-stepper orientation="vertical" [linear]="true" #stepper>
   <!-- HealthCenter Details -->
-  <mat-step [stepControl]="healthCenterDetails">
-    <form [formGroup]="healthCenterDetails">
+  <mat-step [stepControl]="steps.healthCenterDetails">
+    <form [formGroup]="steps.healthCenterDetails">
       <ng-template matStepLabel>{{
         "healthCenter.step1Title" | translate
       }}</ng-template>
@@ -9,7 +9,7 @@
         <mat-form-field>
           <mat-label>{{ "healthCenter.nameLabel" | translate }}</mat-label>
           <input matInput formControlName="name" required />
-          <app-validation-error [control]="healthCenterDetails.controls.name" />
+          <app-validation-error [control]="steps.healthCenterDetails.controls.name" />
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{ "healthCenter.roleLabel" | translate }}</mat-label>
@@ -19,7 +19,7 @@
             }
           </mat-select>
           <app-validation-error
-            [control]="healthCenterDetails.controls.centerType"
+            [control]="steps.healthCenterDetails.controls.centerType"
           />
         </mat-form-field>
         <mat-form-field>
@@ -28,7 +28,7 @@
           }}</mat-label>
           <input matInput formControlName="totalFamilies" required />
           <app-validation-error
-            [control]="healthCenterDetails.controls.totalFamilies"
+            [control]="steps.healthCenterDetails.controls.totalFamilies"
           />
         </mat-form-field>
         <mat-form-field>
@@ -37,7 +37,7 @@
           }}</mat-label>
           <input matInput formControlName="totalPopulation" required />
           <app-validation-error
-            [control]="healthCenterDetails.controls.totalPopulation"
+            [control]="steps.healthCenterDetails.controls.totalPopulation"
           />
         </mat-form-field>
       </div>
@@ -49,8 +49,8 @@
   </mat-step>
 
   <!-- Address Details -->
-  <mat-step [stepControl]="addressDetails">
-    <form [formGroup]="addressDetails">
+  <mat-step [stepControl]="steps.addressDetails">
+    <form [formGroup]="steps.addressDetails">
       <ng-template matStepLabel>{{
         "healthCenter.step3Title" | translate
       }}</ng-template>
@@ -65,7 +65,7 @@
             }
           </mat-select>
           <app-validation-error
-            [control]="addressDetails.controls.locationId"
+            [control]="steps.addressDetails.controls.locationId"
           />
         </mat-form-field>
       </div>

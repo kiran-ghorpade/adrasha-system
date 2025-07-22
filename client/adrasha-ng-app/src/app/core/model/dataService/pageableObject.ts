@@ -8,9 +8,9 @@ import type { SortObject } from './sortObject';
 
 export interface PageableObject {
   paged?: boolean;
-  number?: number;
-  size?: number;
+  pageNumber?: number;
+  pageSize?: number;
   unpaged?: boolean;
-  totalElements: number;
-  totalPages: number;
+  offset?: number;
+  sort?: SortObject;
 }

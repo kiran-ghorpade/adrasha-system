@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   RoleRequestCreateDTORole,
   RoleRequestResponseDTO,
@@ -25,6 +25,22 @@ export class RoleRequestFormFactoryService
       personalDetails,
       roleDetails,
       healthCenterDetails,
+    });
+  }
+
+  public patchForm(form: FormGroup, data: RoleRequestResponseDTO) {
+    form.patchValue({
+      personalDetails: {
+        firstname: data.name?.firstname ?? '',
+        middlename: data.name?.middlename ?? '',
+        lastname: data.name?.lastname ?? '',
+      },
+      roleDetails: {
+        role: data.role ?? RoleRequestCreateDTORole.ASHA,
+      },
+      healthCenterDetails: {
+        healthCenterId: data.healthCenterId ?? '',
+      },
     });
   }
 

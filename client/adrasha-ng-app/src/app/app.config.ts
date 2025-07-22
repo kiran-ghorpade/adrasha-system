@@ -1,14 +1,15 @@
 import {
   ApplicationConfig,
-  provideZoneChangeDetection
+  importProvidersFrom,
+  provideZoneChangeDetection,
 } from '@angular/core';
+import { MatNativeDateModule } from '@angular/material/core';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {
   provideRouter,
   withComponentInputBinding,
   withInMemoryScrolling,
 } from '@angular/router';
-
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 import { routes } from './app.routes';
 
@@ -20,15 +21,18 @@ import {
 
 import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
-import { provideAuthInitializer, httpLoaderFactory, interceptors } from './config';
+import {
+  httpLoaderFactory,
+  interceptors,
+  provideAuthInitializer,
+} from './config';
 import { provideI18nInitializer } from './config/i18n.initializer';
-
-
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideAuthInitializer,
     provideI18nInitializer,
+    importProvidersFrom(MatNativeDateModule),
     provideRouter(
       routes,
       withInMemoryScrolling({

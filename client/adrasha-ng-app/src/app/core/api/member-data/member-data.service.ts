@@ -118,7 +118,7 @@ export class MemberDataService {
     return this.http.get<TData>(
       `http://localhost:8080/data/members`,{
     ...options,
-       ...params, ...options?.params}
+        ...params, ...options?.params,}
     );
   }
  createMember<TData = MemberDataResponseDTO>(
@@ -151,7 +151,7 @@ export class MemberDataService {
     return this.http.get<TData>(
       `http://localhost:8080/data/members/count`,{
     ...options,
-       ...params, ...options?.params}
+        ...params, ...options?.params,}
     );
   }
 };

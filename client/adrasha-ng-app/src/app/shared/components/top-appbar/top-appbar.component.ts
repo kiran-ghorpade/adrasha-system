@@ -9,7 +9,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '@core/services';
+import { AuthService, ThemeService } from '@core/services';
 import { AppLogoComponent } from '../../widgets/logo.component';
 
 @Component({
@@ -26,9 +26,15 @@ import { AppLogoComponent } from '../../widgets/logo.component';
     RouterModule,
     CommonModule,
   ],
+  styles: `
+     .iconShadow{
+       box-shadow: var(--mat-sys-level3)
+     }
+  `,
 })
 export class TopAppBarComponent {
   private readonly authService = inject(AuthService);
+  protected themeService = inject(ThemeService);
   readonly router = inject(Router);
 
   loggedIn = toSignal(this.authService.isLoggedIn$, { initialValue: false });

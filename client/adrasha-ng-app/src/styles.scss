@@ -1,43 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
 @use "tailwindcss/utilities" as *;
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 
-.mat-drawer,
-.mat-sidenav,
-.mat-menu {
-  display: block !important;
-  /* Prevent Angular Material from applying flexbox styles that could conflict */
-}
+// .mat-drawer,
+// .mat-sidenav,
+// .mat-menu {
+//   display: block !important;
+// }
 
-/* Reset body and html padding/margins if Angular Material adds unexpected margin */
+
 html,
 body {
-  // color-scheme: light dark; // remove .paper if enabled
-  margin: 0 !important;
-  padding: 0 !important;
-  height: 100% !important;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  text-wrap-style: balance;
+  // color-scheme: light dark;
+  @include mat.theme((color: mat.$azure-palette,
+    ));
+  margin: 0;
+  padding: 0;
 }
 
-
-// surfaces
-// remove this on color-scheme
-.paper {
-  box-shadow: var(--mat-sys-level1);
-  background-color: var(--mat-sys-surface);
-}
-
+// // surfaces
 // @media (prefers-color-scheme: dark) {
 //   .paper {
 //     box-shadow: var(--mat-sys-level1);
-//     background-color: var(--mat-sys-surface-dark);
-//   }
-// }
-
-// @media (prefers-color-scheme: light) {
-//   .paper {
-//     box-shadow: var(--mat-sys-level1);
-//     background-color: var(--mat-sys-surface);
+//     background-color: var(--mat-sys-secondary-container);
+//     color: var(--mat-sys-on-secondary-container);
 //   }
 // }

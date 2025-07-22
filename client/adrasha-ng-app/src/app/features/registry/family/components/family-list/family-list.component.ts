@@ -18,10 +18,10 @@ export type FamilyHeadItem = { name: Name; age: number; id: string };
     }@else {
 
     <!-- Family List -->
-    <mat-action-list>
-      <div class="h-[480px] overflow-scroll">
+    <mat-action-list> 
+      <div class=" overflow-scroll">
         @for (head of familyHeadList(); track $index) {
-        <a mat-list-item [routerLink]="['families', head.id]">
+        <a mat-list-item [routerLink]="[head.id]">
           <div matListItemAvatar class="flex items-center justify-center">
             <mat-icon>person</mat-icon>
           </div>

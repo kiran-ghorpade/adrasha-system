@@ -1,20 +1,19 @@
 import { Component, input } from '@angular/core';
+import { MatCard, MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-data-card-label',
-  imports: [],
-  template: ` <div
-    class="paper flex flex-col items-center justify-center gap-2 p-4 md:p-7 rounded-md"
+  imports: [MatCardModule],
+  template: ` <mat-card
+    class="flex flex-col items-center justify-center gap-2 p-4 md:p-7 rounded-md h-full"
   >
-    <div class="text-center" style="font: var(--mat-sys-headline-medium);">
+    <mat-card-title class="text-center">
       {{ value() }}
-    </div>
-    <div
-      style="font: var(--mat-sys-label-large); color: var(--mat-sys-outline);"
-    >
+    </mat-card-title>
+    <mat-card-subtitle>
       {{ label() }}
-    </div>
-  </div>`,
+    </mat-card-subtitle>
+  </mat-card>`,
 })
 export class DataCardLabelComponent {
   value = input.required();

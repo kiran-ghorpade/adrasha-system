@@ -1,4 +1,3 @@
-export * from './back-button/back-button.component';
 export * from './bottom-nav-bar/bottom-nav-bar.component';
 export * from './confirmation/confirmation.component';
 export * from './dashboard-header/dashboard-header.component';
@@ -12,3 +11,4 @@ export * from './searchbar/searchbar.component';
 export * from './sidebar/sidebar.component';
 export * from './top-appbar/top-appbar.component';
 export * from './validation-error/validation-error.component';
+

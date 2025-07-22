@@ -1556,6 +1556,10 @@
             "type": "string",
             "format": "uuid"
           },
+          "houseId": {
+            "type": "integer",
+            "format": "int32"
+          },
           "povertyStatus": {
             "type": "string",
             "enum": [
@@ -1583,6 +1587,10 @@
           "ashaId": {
             "type": "string",
             "format": "uuid"
+          },
+          "houseId": {
+            "type": "integer",
+            "format": "int32"
           },
           "povertyStatus": {
             "type": "string",
@@ -1696,6 +1704,10 @@
           "ashaId": {
             "type": "string",
             "format": "uuid"
+          },
+          "houseId": {
+            "type": "integer",
+            "format": "int32"
           },
           "povertyStatus": {
             "type": "string",

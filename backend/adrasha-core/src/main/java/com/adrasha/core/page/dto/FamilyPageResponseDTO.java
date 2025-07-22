@@ -20,4 +20,6 @@ public class FamilyPageResponseDTO extends PageImpl<FamilyDataResponseDTO> {
 	public FamilyPageResponseDTO() {
 		super(List.of()); // Required for Swagger 
 	}
+	
+	
 }

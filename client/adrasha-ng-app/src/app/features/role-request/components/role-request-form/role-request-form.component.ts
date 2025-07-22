@@ -1,4 +1,4 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, inject, input, signal, SimpleChanges } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,6 +13,7 @@ import {
 } from '@core/model/masterdataService';
 import {
   RoleRequestCreateDTO,
+  RoleRequestCreateDTORole,
   RoleRequestResponseDTO,
   RoleRequestUpdateDTO,
 } from '@core/model/userService';
@@ -61,7 +62,14 @@ export class RoleRequestFormComponent extends BaseFormComponent<
 
   readonly form = this.formFactory.createForm(this.entity(), this.isLoading());
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['entity'] && changes['entity'].currentValue) {
+      this.formFactory.patchForm(this.form, changes['entity'].currentValue);
+    }
+  }
+
   // form data handling
+
   public get steps() {
     return { ...this.form.controls };
   }

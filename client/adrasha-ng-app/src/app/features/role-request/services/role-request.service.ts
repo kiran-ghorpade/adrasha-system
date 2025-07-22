@@ -87,4 +87,52 @@ export class RoleRequestService {
       },
     });
   }
+
+  approve(roleRequestId: string): void {
+    this.roleRequestService.approveUserRequest(roleRequestId).subscribe({
+      next: () => {
+        const translatedMsg = this.translateService.instant(
+          'roleRequest.approve.success'
+        );
+        this.alertService.showAlert(translatedMsg, 'success');
+
+        this.router
+          .navigateByUrl('/', { skipLocationChange: true })
+          .then(() => {
+            this.router.navigate([`/role-requests/${roleRequestId}`]);
+          });
+      },
+      error: (err) => {
+        console.log(err);
+        const translatedMsg = this.translateService.instant(
+          'roleRequest.approve.failed'
+        );
+        this.alertService.showAlert(translatedMsg, 'error');
+      },
+    });
+  }
+
+  reject(roleRequestId: string): void {
+    this.roleRequestService.rejectUserRequest(roleRequestId).subscribe({
+      next: () => {
+        const translatedMsg = this.translateService.instant(
+          'roleRequest.reject.success'
+        );
+        this.alertService.showAlert(translatedMsg, 'success');
+
+        this.router
+          .navigateByUrl('/', { skipLocationChange: true })
+          .then(() => {
+            this.router.navigate([`/role-requests/${roleRequestId}`]);
+          });
+      },
+      error: (err) => {
+        console.log(err);
+        const translatedMsg = this.translateService.instant(
+          'roleRequest.reject.failed'
+        );
+        this.alertService.showAlert(translatedMsg, 'error');
+      },
+    });
+  }
 }

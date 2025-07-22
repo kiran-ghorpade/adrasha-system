@@ -2,33 +2,56 @@
   <!-- LOGO -->
   <app-logo />
 
-  <!-- Search Box (Replace with your search component) -->
-  <!-- <app-searchbar /> -->
-
-  <!-- Profile Avatar -->
-  @if (loggedIn()) {
-  <button
-    matIconButton
-    [matMenuTriggerFor]="menu"
-    matTooltip="Open settings"
-    style="box-shadow: var(--mat-sys-level3)"
-  >
-    <mat-icon>account_circle</mat-icon>
-  </button>
-
-  <!-- User Menu -->
-  <mat-menu #menu="matMenu" [overlapTrigger]="false">
-    @for(setting of settings(); track $index){
-    <button mat-menu-item [routerLink]="[setting.toLink]">
-      <mat-icon>{{ setting.icon }}</mat-icon>
-      <span>{{ setting.label }}</span>
+  <div class="flex gap-3">
+    <!-- Angular Dark Mode -->
+    <div class="flex-stretch"></div>
+    <button
+      mat-icon-button
+      [mat-menu-trigger-for]="themeMenu"
+      class="iconShadow"
+    >
+      <mat-icon>{{ themeService.selectedTheme()?.icon }}</mat-icon>
     </button>
+    <mat-menu #themeMenu="matMenu">
+      @for (theme of themeService.getThemes(); track theme.name) {
+      <button
+        [class.selected-theme]="
+          themeService.selectedTheme()?.name === theme.name
+        "
+        mat-menu-item
+        (click)="themeService.setTheme(theme.name)"
+      >
+        <mat-icon>{{ theme.icon }}</mat-icon>
+        <span>{{ theme.name | titlecase }}</span>
+      </button>
+      }
+    </mat-menu>
+
+    <!-- Profile Avatar -->
+    @if (loggedIn()) {
+    <button
+      matIconButton
+      [matMenuTriggerFor]="menu"
+      matTooltip="Open settings"
+      class="iconShadow"
+    >
+      <mat-icon>account_circle</mat-icon>
+    </button>
+
+    <!-- User Menu -->
+    <mat-menu #menu="matMenu" [overlapTrigger]="false">
+      @for(setting of settings(); track $index){
+      <button mat-menu-item [routerLink]="[setting.toLink]">
+        <mat-icon>{{ setting.icon }}</mat-icon>
+        <span>{{ setting.label }}</span>
+      </button>
+      }
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
     }
-    <mat-divider></mat-divider>
-    <button mat-menu-item (click)="logout()">
-      <mat-icon>logout</mat-icon>
-      <span>Logout</span>
-    </button>
-  </mat-menu>
-  }
+  </div>
 </div>

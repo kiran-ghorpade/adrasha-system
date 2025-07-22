@@ -3,10 +3,10 @@
     <app-page-header title="Family Registry" />
   </div>
 
-  <div content class="h-full flex flex-col gap-5">
+  <div content class="flex flex-col gap-5">
     <!-- Add Family Button -->
     <div class="flex justify-center">
-      <button mat-fab extended [routerLink]="['families', 'new']">
+      <button mat-fab extended [routerLink]="['new']">
         <mat-icon>add</mat-icon>
         Add New Family
       </button>
@@ -19,12 +19,15 @@
         <input matInput #input [disabled]="totalSize() == 0" />
       </mat-form-field>
     </div>
+    
 
     <!-- Family List -->
-    <app-family-list [familyHeadList]="familyHeadList()" />
+    <div class="">
+      <app-family-list [familyHeadList]="familyHeadList()" />
+    </div>
 
     <!-- Pagination -->
-    <div class="sticky bottom-0">
+    <div>
       <mat-paginator
         [pageIndex]="page()"
         [length]="totalSize()"

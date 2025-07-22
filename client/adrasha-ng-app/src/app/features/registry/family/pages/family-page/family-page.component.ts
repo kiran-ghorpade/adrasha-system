@@ -72,8 +72,8 @@ export class FamilyPageComponent {
       })
       .pipe(
         tap((response) => {
-          this.page.set(response.page?.number ?? 0);
-          this.totalSize.set(response.page?.totalElements ?? 0);
+          this.page.set(response.number ?? 0);
+          this.totalSize.set(response.totalElements ?? 0);
         }),
         map((response) => response.content ?? []),
         switchMap((families) => {

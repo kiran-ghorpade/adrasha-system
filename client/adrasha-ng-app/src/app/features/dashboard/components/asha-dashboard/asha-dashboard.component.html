@@ -12,24 +12,24 @@
       [label]="`Population`"
     />
   </div>
-  <div class="row-span-4 col-span-12 md:col-span-3 paper md:order-none order-8">
-    <canvas
-      baseChart
-      [data]="genderChartData()"
-      [type]="chartType"
-      [options]="chartOptions"
+  <mat-card
+    class="row-span-5 col-span-12 md:col-span-3 paper md:order-none order-8 flex justify-center items-center"
+  >
+    <app-pie-chart
+      [labels]="genderChartData().labels"
+      [datasets]="genderChartData().datasets"
     >
-    </canvas>
-  </div>
-  <div class="row-span-4 col-span-12 md:col-span-3 paper md:order-none order-9">
-    <canvas
-      baseChart
-      [data]="povertyChartData()"
-      [type]="chartType"
-      [options]="chartOptions"
+    </app-pie-chart>
+  </mat-card>
+  <mat-card
+    class="row-span-5 col-span-12 md:col-span-3 paper md:order-none order-9 flex justify-center items-center"
+  >
+    <app-pie-chart
+      [labels]="povertyChartData().labels"
+      [datasets]="povertyChartData().datasets"
     >
-    </canvas>
-  </div>
+    </app-pie-chart>
+  </mat-card>
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-6">
     <app-data-card-label [value]="`1000`" [label]="`NCD Population`" />
   </div>
@@ -38,20 +38,18 @@
   </div>
 
   <!-- records line charts -->
-  <div
-    class="row-span-6 col-span-12 md:col-span-6 md:order-none order-11 paper p-2"
+  <mat-card
+    class="row-span-6 col-span-12 md:col-span-6 md:order-none order-11 paper p-2 flex justify-center"
   >
-    <canvas
-      baseChart
-      [data]="lineChartData"
-      [type]="lineChartType"
-      [options]="lineChartOptions"
-    ></canvas>
-  </div>
+    <app-line-chart [labels]="[]" [datasets]="[]"></app-line-chart>
+  </mat-card>
 
-  <div
-    class="row-span-6 col-span-12 md:col-span-6 md:order-none order-10 paper p-2"
+  <mat-card
+    class="row-span-5 col-span-12 md:col-span-6 md:order-none order-10 paper p-2"
   >
-  
-</div>
+    <mat-card-header>Last Visits</mat-card-header>
+    <mat-card-content>
+      <app-previous-visits-list [memberList]="[]" />
+    </mat-card-content>
+  </mat-card>
 </div>

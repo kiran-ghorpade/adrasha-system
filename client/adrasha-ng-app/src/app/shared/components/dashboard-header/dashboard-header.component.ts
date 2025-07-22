@@ -7,18 +7,18 @@ import { AuthService } from '@core/services';
   imports: [DataCardLabelComponent],
   template: `
     <!-- Greetings -->
-    <div class="h-full w-full grid grid-cols-12 gap-2">
-      <div class="col-span-12 md:col-span-6 p-3 md:order-none order-1">
+    <div class="h-full w-full grid grid-cols-12 grid-rows-4 gap-2">
+      <div class="col-span-12 row-span-4 md:col-span-6 p-3 md:order-none order-1">
         <h1 class="text-pretty">Hello, {{ username() }}</h1>
         <p>{{ message() }}</p>
       </div>
-      <div class="col-span-6 md:col-span-3 md:order-none order-2">
+      <div class="col-span-6 row-span-4 md:col-span-3 md:order-none order-2">
         <app-data-card-label
           [value]="currentTime().toDateString()"
           [label]="'Current Date'"
         />
       </div>
-      <div class="col-span-6 md:col-span-3 md:order-none order-3">
+      <div class="col-span-6 row-span-4 md:col-span-3 md:order-none order-3">
         <app-data-card-label
           [value]="currentTime().toLocaleTimeString()"
           [label]="'Current Time'"

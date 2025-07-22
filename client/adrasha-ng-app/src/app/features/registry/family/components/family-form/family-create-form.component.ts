@@ -11,12 +11,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { StaticDataService } from '@core/api/static-data/static-data.service';
 import { LoadingService } from '@core/services';
 import { TranslatePipe } from '@ngx-translate/core';
-import {
-  ValidationErrorComponent,
-} from '@shared/components';
+import { ValidationErrorComponent } from '@shared/components';
 import { FamilyFormFactoryService, FamilyService } from '../../services';
 import { StaticDataDTO } from '@core/model/masterdataService';
 import { FamilyRegistrationDTO } from '@core/model/dataService';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-family-create-form',
@@ -29,6 +28,7 @@ import { FamilyRegistrationDTO } from '@core/model/dataService';
     MatSelectModule,
     MatIconModule,
     MatToolbarModule,
+    MatDatepickerModule,
     TranslatePipe,
     ReactiveFormsModule,
     ValidationErrorComponent,
@@ -49,11 +49,10 @@ export class FamilyFormComponent {
   });
   povertyStatusList = signal<StaticDataDTO[]>([]);
   genderList = signal<StaticDataDTO[]>([]);
+  todayDate: Date = new Date();
 
   // form
-  readonly formGroup = this.formFactory.createForm(
-    this.isLoading()
-  );
+  readonly formGroup = this.formFactory.createForm(this.isLoading());
 
   ngOnInit() {
     this.loadStaticData();
@@ -61,7 +60,7 @@ export class FamilyFormComponent {
 
   // getters
   public get steps() {
-    return {...this.formGroup.controls};
+    return { ...this.formGroup.controls };
   }
 
   // logic

@@ -1,5 +1,28 @@
 <app-page-wrapper>
-    <div top> 
-        <app-page-header title="Locations"></app-page-header>
+  <div top>
+    <app-page-header title="Locations"></app-page-header>
+  </div>
+  <div content>
+    <div class="h-full flex flex-col items-between">
+      <div class="flex">
+        <!-- <mat-form-field >
+        <mat-label>Filter</mat-label>
+        <input matInput />
+      </mat-form-field> -->
+      </div>
+
+      <div>
+        <app-location-list [locationList]="locationList()" />
+        <mat-paginator
+          [pageIndex]="page()"
+          [length]="totalSize()"
+          [pageSize]="10"
+          aria-label="Select page"
+          (page)="onPageChange($event)"
+          [disabled]="totalSize() == 0"
+        >
+        </mat-paginator>
+      </div>
     </div>
+  </div>
 </app-page-wrapper>

@@ -12,7 +12,7 @@ import { MemberDataResponseDTO } from '@core/model/dataService';
     <div class="flex justify-center items-center">
       <mat-icon>search_off</mat-icon>
       <h4 class="ml-4 text-wrap">
-        No Role Request found. Try adding a new one!
+        No Member found. Try adding a new one!
       </h4>
     </div>
     }@else {

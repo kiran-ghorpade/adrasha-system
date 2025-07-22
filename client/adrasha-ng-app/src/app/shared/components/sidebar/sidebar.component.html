@@ -1,28 +1,26 @@
 <div
   class="w-[96px] p-2 h-full hidden md:flex px-12 flex-col justify-center items-center shrink-0"
 >
-  <div
-    style="box-shadow: var(--mat-sys-level3)"
-    class="w-[56px] p-[20px] flex flex-col justify-center items-center rounded-md"
-  >
-    @for(menu of menuList() ; track $index){
+  <mat-card appearance="raised">
     <div
-      class="my-[4px] h-[56px] w-[56px] transition-all duration-300"
-      [routerLink]="menu.route"
+      class="w-[56px] p-[20px] flex flex-col justify-center items-center rounded-md"
     >
+      @for(menu of menuList() ; track $index){
       <div
-        class="h-[32px] md:flex flex-col items-center justify-center transition-colors duration-300 rounded-2xl"
-        [routerLinkActive]="'bg-blue-500 text-white'"
-        [ngClass]="{
-          'hover:bg-blue-300 rounded-md': true
-        }"
+        class="my-[4px] h-[56px] w-[56px] transition-all duration-300"
+        [routerLink]="menu.route"
       >
-        <mat-icon class="w-[24px] h-[24px]">{{ menu.icon }}</mat-icon>
+        <div
+          class="h-[32px] md:flex flex-col items-center justify-center transition-colors duration-300 rounded-2xl"
+          routerLinkActive="active-link"
+        >
+          <mat-icon class="w-[24px] h-[24px]">{{ menu.icon }}</mat-icon>
+        </div>
+        <div class="h-[24px] font-light text-xs text-center">
+          {{ menu.label }}
+        </div>
       </div>
-      <div class="h-[24px] font-light text-xs text-center">
-        {{ menu.label }}
-      </div>
+      }
     </div>
-    }
-  </div>
+  </mat-card>
 </div>

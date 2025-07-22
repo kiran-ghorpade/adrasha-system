@@ -18,6 +18,8 @@ public class FamilyDataResponseDTO {
 		
 	private UUID ashaId;
 	
+	private Integer houseId;
+	
 	private PovertyStatus povertyStatus;
 	
 	private Instant createdAt;

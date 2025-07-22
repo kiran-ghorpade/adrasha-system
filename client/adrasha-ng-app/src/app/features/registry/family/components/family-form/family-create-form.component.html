@@ -93,7 +93,18 @@
       <div class="flex gap-3 flex-wrap md:w-2/3">
         <mat-form-field>
           <mat-label>{{ "registry.member.dobLabel" | translate }}</mat-label>
-          <input matInput type="date" formControlName="dateOfBirth" required />
+          <input
+            matInput
+            [matDatepicker]="picker"
+            [max]="todayDate"
+            formControlName="dateOfBirth"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+
           <app-validation-error
             [control]="steps.headBirthDetails.controls.dateOfBirth"
           />

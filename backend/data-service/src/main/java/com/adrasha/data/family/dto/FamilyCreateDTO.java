@@ -16,6 +16,8 @@ public class FamilyCreateDTO {
 	@NotNull
 	private UUID ashaId;
 
+	private Integer houseId;
+	
 	@NotNull
 	private PovertyStatus povertyStatus;
 

@@ -117,7 +117,7 @@ export class UserService {
     return this.http.get<TData>(
       `http://localhost:8080/users`,{
     ...options,
-       ...params, ...options?.params}
+        ...params, ...options?.params,}
     );
   }
  getCurrentUser<TData = UserResponseDTO>(
@@ -149,7 +149,7 @@ export class UserService {
     return this.http.get<TData>(
       `http://localhost:8080/users/count`,{
     ...options,
-       ...params, ...options?.params}
+        ...params, ...options?.params,}
     );
   }
  removeRole<TData = void>(

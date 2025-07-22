@@ -4,8 +4,7 @@ import {
   computed,
   inject,
   signal,
-  ViewChild,
-  WritableSignal,
+  WritableSignal
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatCardModule } from '@angular/material/card';
@@ -14,8 +13,9 @@ import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { AnalyticsService } from '@core/api/analytics/analytics.service';
 import { DataCardLabelComponent } from '@shared/components';
-import { ChartConfiguration, ChartType } from 'chart.js';
-import { BaseChartDirective } from 'ng2-charts';
+import { LineChartComponent } from "@shared/components/line-chart/line-chart.component";
+import { PieChartComponent } from "@shared/components/pie-chart/pie-chart.component";
+import { PreviousVisitsListComponent } from "../previous-visits-list/previous-visits-list.component";
 
 @Component({
   selector: 'app-asha-dashboard',
@@ -25,9 +25,11 @@ import { BaseChartDirective } from 'ng2-charts';
     MatIconModule,
     MatListModule,
     DataCardLabelComponent,
-    BaseChartDirective,
     CommonModule,
-  ],
+    PieChartComponent,
+    LineChartComponent,
+    PreviousVisitsListComponent
+],
   templateUrl: './asha-dashboard.component.html',
 })
 export class AshaDashboardComponent {
@@ -43,12 +45,12 @@ export class AshaDashboardComponent {
     initialValue: null,
   });
 
-  genderChartData = computed<ChartConfiguration['data']>(() => {
+  genderChartData = computed(() => {
     const stats = this.memberStats();
     if (!stats?.genderDistribution) return { labels: [], datasets: [] };
 
-    const ageDist = stats?.genderDistribution;
-    const labels = Object.keys(ageDist);
+    const ageDist = stats?.genderDistribution ?? [];
+    const labels = Object.keys(ageDist) ?? [] as string[];
     const data = labels.map((label) => ageDist[label] ?? 0);
 
     return {
@@ -64,12 +66,12 @@ export class AshaDashboardComponent {
     };
   });
 
-  povertyChartData = computed<ChartConfiguration['data']>(() => {
+  povertyChartData = computed(() => {
     const stats = this.familyStats();
     if (!stats?.povertyStats) return { labels: [], datasets: [] };
 
-    const povertyStats = stats.povertyStats;
-    const labels = Object.keys(povertyStats);
+    const povertyStats = stats.povertyStats ?? [];
+    const labels = Object.keys(povertyStats) ?? [] as string[];
     const data = labels.map((label) => povertyStats[label] ?? 0);
 
     return {
@@ -85,67 +87,4 @@ export class AshaDashboardComponent {
     };
   });
 
-  // chart config
-  @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
-
-  lineChartType: ChartType = 'line';
-  lineChartData: ChartConfiguration['data'] = {
-    labels: Array.from({ length: 10 }, (_, i) => `Day ${i + 1}`),
-    datasets: [
-      {
-        label: 'Health Records Added',
-        data: Array.from(
-          { length: 30 },
-          () => Math.floor(Math.random() * 50) + 5
-        ),
-        borderColor: '#3b82f6',
-        backgroundColor: 'rgba(59, 130, 246, 0.2)',
-        pointBackgroundColor: '#3b82f6',
-        fill: true,
-        tension: 0.4,
-      },
-    ],
-  };
-
-  lineChartOptions: ChartConfiguration['options'] = {
-    responsive: true,
-    maintainAspectRatio: false,
-    interaction: {
-      mode: 'index',
-      intersect: false,
-    },
-    plugins: {
-      legend: { display: true },
-    },
-    scales: {
-      x: {},
-      y: {
-        beginAtZero: true,
-        ticks: {
-          callback: (value) => `${value}`,
-        },
-      },
-    },
-  };
-
-  chartType: ChartType = 'doughnut';
-
-  chartOptions: ChartConfiguration['options'] = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        position: 'bottom',
-        labels: {
-          color: '#374151',
-          font: { size: 14 },
-        },
-      },
-      tooltip: {
-        callbacks: {
-          label: (ctx) => `${ctx.label}: ${ctx.parsed}`,
-        },
-      },
-    },
-  };
 }

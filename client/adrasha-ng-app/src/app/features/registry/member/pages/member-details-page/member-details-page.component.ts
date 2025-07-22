@@ -1,7 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { MatMenuModule } from '@angular/material/menu';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MemberDataService } from '@core/api/member-data/member-data.service';
 import { MemberDataResponseDTO } from '@core/model/dataService';
 import {
@@ -11,11 +13,9 @@ import {
   PageWrapperComponent,
 } from '@shared/components';
 import { MemberDetailsComponent } from '../../components';
-import { memberToData } from '../../utils/convertor';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatDialog } from '@angular/material/dialog';
-import { AlertService } from '@core/services';
 import { MemberService } from '../../services';
+import { memberToData } from '../../utils/convertor';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-member-details-page',
@@ -23,6 +23,7 @@ import { MemberService } from '../../services';
     MatMenuModule,
     MatListModule,
     RouterModule,
+    MatButtonModule,
     PageWrapperComponent,
     PageHeaderComponent,
     MatIconModule,

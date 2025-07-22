@@ -26,6 +26,7 @@ import {
 } from '@shared/components';
 import { map } from 'rxjs';
 import { FamilyService } from '../../services';
+import { MatCalendar } from "@angular/material/datepicker";
 
 @Component({
   selector: 'app-family-details-page',
@@ -43,7 +44,8 @@ import { FamilyService } from '../../services';
     PageWrapperComponent,
     MatTooltipModule,
     MatMenuModule,
-  ],
+    MatCalendar
+],
   templateUrl: './family-details-page.component.html',
 })
 export class FamilyDetailsPageComponent {

@@ -1,7 +1,7 @@
 <app-page-wrapper>
   <div top>
     <app-page-header title="Role Request Details">
-      @if (isAdmin()) {
+      @if(!isAdmin()) {
       <mat-action-list>
         <a matIconButton [matMenuTriggerFor]="menu">
           <mat-icon class="h-[24px] w-[24px]">more_vert</mat-icon>
@@ -37,10 +37,22 @@
         [roleRequest]="data()"
       ></app-role-request-details>
     </div>
-    @if(!isAdmin()){
+    @if(isAdmin()){
     <div class="flex paper p-3 flex-wrap w-full justify-center gap-3">
-      <button matButton="filled">Approve</button>
-      <button matButton="outlined">Reject</button>
+      <button
+        matButton="filled"
+        (click)="handleApproveClick()"
+        [disabled]="roleRequestDetails()?.status === 'APPROVED'"
+      >
+        Approve
+      </button>
+      <button
+        matButton="outlined"
+        (click)="handleRejectClick()"
+        [disabled]="roleRequestDetails()?.status === 'APPROVED'"
+      >
+        Reject
+      </button>
     </div>
     } }@else {
     <div class="overflow-scroll flex justify-center items-center">

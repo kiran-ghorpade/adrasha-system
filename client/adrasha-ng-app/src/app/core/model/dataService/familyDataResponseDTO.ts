@@ -10,6 +10,7 @@ export interface FamilyDataResponseDTO {
   id?: string;
   headMemberId?: string;
   ashaId?: string;
+  houseId?: number;
   povertyStatus?: FamilyDataResponseDTOPovertyStatus;
   createdAt?: string;
   updatedAt?: string;

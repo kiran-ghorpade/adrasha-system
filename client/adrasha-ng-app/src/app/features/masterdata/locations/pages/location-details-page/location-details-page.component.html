@@ -1,1 +1,40 @@
-<p>location-details-page works!</p>
+<app-page-wrapper>
+  <div top>
+    <app-page-header title="Location Details">
+      <mat-action-list>
+        <a matIconButton [matMenuTriggerFor]="menu">
+          <mat-icon class="h-[24px] w-[24px]">more_vert</mat-icon>
+        </a>
+      </mat-action-list>
+
+      <mat-menu #menu="matMenu" [overlapTrigger]="false">
+        <button
+          mat-menu-item
+          [routerLink]="['/masterdata/locations/update', locationDetails()?.id ?? '']"
+        >
+          <mat-icon>edit</mat-icon>
+          <span>Update</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="handleDeleteClick()">
+          <mat-icon>delete</mat-icon>
+          <span>Delete</span>
+        </button>
+      </mat-menu>
+    </app-page-header>
+  </div>
+
+  <div content class="flex flex-wrap justify-evenly gap-3">
+    <!-- RoleRequest Details -->
+    @if (data().length === 0 || !locationDetails()) {
+    <div class="overflow-scroll flex justify-center items-center">
+      <mat-icon>search_off</mat-icon>
+      <h4 class="ml-4 text-wrap">Not Found</h4>
+    </div>
+    }@else {
+    <div class="paper flex w-full flex-wrap">
+      <app-location-details [locationData]="data()"></app-location-details>
+    </div>
+    }
+  </div>
+</app-page-wrapper>

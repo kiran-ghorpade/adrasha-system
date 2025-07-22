@@ -38,18 +38,17 @@
     }
 
     <!-- Member List -->
-    <!-- <div class="w-full paper flex-[2] flex flex-col p-2 gap-5">
+    <div class="w-full paper flex-[2] flex flex-col p-2 gap-5">
       <div class="flex justify-center">
         <button
           matFab
           extended
-          [routerLink]="'/registry/members/new'"
-          [queryParams]="{ familyId: memberData()?.familyId }"
+          [routerLink]="`/registry/health/${memberData()?.id ?? ''}`"
         >
-          <mat-icon>add</mat-icon>
-          Add New Member
+          <mat-icon>fitness_center</mat-icon>
+          View Health Profile
         </button>
       </div>
-    </div> -->
+    </div>
   </div>
 </app-page-wrapper>

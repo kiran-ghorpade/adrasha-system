@@ -1,5 +1,7 @@
 {
   "terminal.integrated.env.linux": {
     "PATH": "/home/cybernaut/.nvm/versions/node/v22.16.0/bin:${env:PATH}"
-  }
+  },
+
+  "tailwindCSS.lint.invalidConfigPath": "ignore"
 }

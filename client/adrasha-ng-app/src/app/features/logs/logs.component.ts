@@ -48,7 +48,7 @@ import { Subscription } from 'rxjs';
         @for (log of logs(); track $index) {
         <mat-list-item
           (click)="onClick($index)"
-          class="cursor-pointer hover:bg-gray-100"
+          class="cursor-pointer "
         >
           <div matListItemIcon>
             @switch (log.status) { @case ('info') {

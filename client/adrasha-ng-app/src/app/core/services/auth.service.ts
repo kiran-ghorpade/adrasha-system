@@ -44,15 +44,15 @@ export class AuthService {
   }
 
   readonly isLoggedIn$ = this.currentUser$.pipe(
-    tap((value) => console.log('user:', value)),
+    // tap((value) => console.log('user:', value)),
     map((user) => !!user)
   );
 
   check(): Observable<boolean> {
     return this.initialized$.pipe(
-      tap((value) => console.log('init status : ' + value)),
+      // tap((value) => console.log('init status : ' + value)),
       switchMap(() => this.isLoggedIn$),
-      tap((value) => console.log('check status : ' + value)),
+      // tap((value) => console.log('check status : ' + value)),
       map((loggedIn) => loggedIn && this.tokenService.valid())
     );
   }
@@ -69,7 +69,6 @@ export class AuthService {
         this.tokenService.set(token);
       }),
       switchMap(() => this.loadCurrentUser()),
-      // map((response)=> this.currentUser$.next(response.user || null)),
       switchMap(() => this.check()),
       catchError((error) => {
         console.error('AuthService error:', error);
@@ -117,8 +116,7 @@ export class AuthService {
 
   isAdmin(): Observable<boolean> {
     return this.currentUser.pipe(
-      switchMap((user) => user?.roles ?? []),
-      switchMap((roles) => of(roles.includes(UserDTORolesItem.ADMIN)))
+      map((user) => user?.roles?.includes(UserDTORolesItem.ADMIN) ?? false)
     );
   }
 }

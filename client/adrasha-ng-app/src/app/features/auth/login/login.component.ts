@@ -50,7 +50,7 @@ export class LoginComponent {
   readonly isLoading = toSignal(this.loadingService.loading$, {
     initialValue: false,
   });
-  
+
   // form
   readonly loginForm = this.fb.nonNullable.group({
     username: this.fb.nonNullable.control(
@@ -84,7 +84,12 @@ export class LoginComponent {
     };
 
     this.authService.login(loginRequest).subscribe({
-      next: () => {
+      next: (loginStatus) => {
+        if (!loginStatus) {
+          const translatedMsg = this.translateService.instant('login.failed');
+          this.alertService.showAlert(translatedMsg, 'error');
+        }
+        
         const translatedMsg = this.translateService.instant('login.success');
         this.alertService.showAlert(translatedMsg, 'success');
         this.router.navigateByUrl('/dashboard', { replaceUrl: true });

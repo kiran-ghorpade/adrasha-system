@@ -1,8 +1,10 @@
-
 <div class="h-full w-full grid md:grid-rows-10 grid-cols-12 gap-2">
   <!-- Values -->
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-4">
-    <app-data-card-label [value]="`500`" [label]="`Users`" />
+    <app-data-card-label
+      [value]="userStats()?.totalUsers ?? 0"
+      [label]="`Users`"
+    />
   </div>
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-5">
     <app-data-card-label [value]="`1000`" [label]="`Pending Requests`" />
@@ -15,38 +17,26 @@
   </div>
 
   <!-- Charts -->
-  <div class="row-span-6 col-span-12 md:col-span-6 paper md:order-none order-8">
-    <canvas
-      baseChart
-      [data]="chartData"
-      [type]="chartType"
-      [options]="chartOptions"
-    >
-    </canvas>
-  </div>
-  <!-- <div class="row-span-4 col-span-12 md:col-span-3 paper md:order-none order-9">
-    <canvas
-      baseChart
-      [data]="chartData"
-      [type]="chartType"
-      [options]="chartOptions"
-    >
-    </canvas>
-  </div> -->
+  <mat-card
+    class="row-span-6 col-span-12 md:col-span-6 md:order-none order-8 flex justify-center items-center"
+  >
+    <app-pie-chart
+      [labels]="pieChartData().labels"
+      [datasets]="pieChartData().datasets"
+    />
+  </mat-card>
 
   <!-- records line charts -->
-  <div
-    class="row-span-6 col-span-12 md:col-span-6 md:order-none order-11 paper p-2"
+  <mat-card
+    class="row-span-6 col-span-12 md:col-span-6 md:order-none order-11 flex justify-center"
   >
-    <canvas
-      baseChart
-      [data]="lineChartData"
-      [type]="lineChartType"
-      [options]="lineChartOptions"
-    ></canvas>
-  </div>
+    <app-line-chart
+      [labels]="lineChartData().labels"
+      [datasets]="lineChartData().datasets"
+    />
+  </mat-card>
 
   <!-- <div
-    class="row-span-6 col-span-12 md:col-span-6 md:order-none order-10 paper p-2"
+    class="row-span-6 col-span-12 md:col-span-6 md:order-none order-10 p-2"
   ></div> -->
 </div>

@@ -1,34 +1,40 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, output, signal, ViewChild } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
+import { AnalyticsService } from '@core/api';
 import { DataCardLabelComponent } from '@shared/components';
-import { ChartConfiguration, ChartType } from 'chart.js';
-import { BaseChartDirective } from 'ng2-charts';
+import { LineChartComponent } from '@shared/components/line-chart/line-chart.component';
+import { PieChartComponent } from '@shared/components/pie-chart/pie-chart.component';
 
 @Component({
   selector: 'app-admin-dashboard',
+  standalone: true,
   imports: [
     RouterModule,
     MatCardModule,
     MatIconModule,
     MatListModule,
     DataCardLabelComponent,
-    BaseChartDirective,
     CommonModule,
+    PieChartComponent,
+    LineChartComponent,
   ],
   templateUrl: './admin-dashboard.component.html',
 })
-export class AdminDashboardComponent implements OnInit {
-  @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
+export class AdminDashboardComponent {
+  private readonly analyticsService = inject(AnalyticsService);
 
-  ngOnInit() {}
+  userStats = toSignal(this.analyticsService.getUserStats());
+  masterdataStats = toSignal(this.analyticsService.getMasterDataStats(), {
+    initialValue: {},
+  });
 
-  lineChartType: ChartType = 'line';
-  lineChartData: ChartConfiguration['data'] = {
-    labels: Array.from({ length: 30 }, (_, i) => `Day ${i + 1}`),
+  lineChartData = signal({
+    labels: Array.from({ length: 10 }, (_, i) => `Day ${i + 1}`),
     datasets: [
       {
         label: 'Requests Added',
@@ -36,78 +42,32 @@ export class AdminDashboardComponent implements OnInit {
           { length: 30 },
           () => Math.floor(Math.random() * 50) + 5
         ),
-        // borderColor: '#3b82f6',
-        // backgroundColor: 'rgba(59, 130, 246, 0.2)',
-        pointBackgroundColor: '#3b82f6',
-        // fill: true,
-        tension: 0.4,
-      },
-      {
-        label: 'Locations Added',
-        data: Array.from(
-          { length: 30 },
-          () => Math.floor(Math.random() * 50) + 5
-        ),
-        // borderColor: '#3b82f6',
-        // backgroundColor: 'rgba(59, 130, 246, 0.2)',
-        pointBackgroundColor: '#3b82f6',
-        // fill: true,
-        tension: 0.4,
       },
     ],
-  };
+  });
 
-  lineChartOptions: ChartConfiguration['options'] = {
-    responsive: true,
-    maintainAspectRatio: false,
-    interaction: {
-      mode: 'index',
-      intersect: false,
-    },
-    plugins: {
-      legend: { display: true },
-    },
-    scales: {
-      x: {},
-      y: {
-        beginAtZero: true,
-        ticks: {
-          callback: (value) => `${value}`,
-        },
-      },
-    },
-  };
-
-  chartType: ChartType = 'doughnut';
-
-  chartData: ChartConfiguration['data'] = {
-    labels: ['Pending Requests', 'Rejected Requests', 'Other'],
+  pieChartData = signal({
+    labels: [] as string[],
     datasets: [
       {
-        data: [45, 50, 5], // Example percentages or counts
-        backgroundColor: ['#3b82f6', '#ec4899', '#a78bfa'],
-        hoverBackgroundColor: ['#2563eb', '#db2777', '#7c3aed'],
-        borderWidth: 1,
+        data: [] as number[],
       },
     ],
-  };
+  });
 
-  chartOptions: ChartConfiguration['options'] = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        position: 'bottom',
-        labels: {
-          color: '#374151',
-          font: { size: 14 },
+  updatePieChartData = effect(() => {
+    const stats = this.userStats();
+    const roleDist = stats?.roleDistribution ?? {};
+
+    this.pieChartData.update((data) => ({
+      ...data,
+      labels: Object.keys(roleDist),
+      datasets: [
+        {
+          ...data.datasets[0],
+          data: Object.values(roleDist),
         },
-      },
-      tooltip: {
-        callbacks: {
-          label: (ctx) => `${ctx.label}: ${ctx.parsed} %`,
-        },
-      },
-    },
-  };
+      ],
+    }));
+  });
 }

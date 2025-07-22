@@ -74,4 +74,34 @@ export class RoleRequestDetailsPageComponent {
       }
     });
   }
+
+  handleApproveClick() {
+    const dialogRef = this.dialog.open(ConfirmationComponent, {
+      data: {
+        title: 'Do you want to approve this request?',
+        message: `user will get access as ${this.roleRequestDetails()?.role}`,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.roleRequestService.approve(this.roleRequestId);
+      }
+    });
+  }
+
+  handleRejectClick() {
+    const dialogRef = this.dialog.open(ConfirmationComponent, {
+      data: {
+        title: 'Do you want to reject this request?',
+        message: `user will not be allowed with role ${this.roleRequestDetails()?.role}`,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.roleRequestService.reject(this.roleRequestId);
+      }
+    });
+  }
 }

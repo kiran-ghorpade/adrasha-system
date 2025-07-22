@@ -19,7 +19,7 @@ const asha: Menu[] = [
   {
     label: 'Registry',
     icon: 'app_registration',
-    route: '/registry',
+    route: '/registry/families',
   },
   {
     label: 'Search',
@@ -31,11 +31,11 @@ const asha: Menu[] = [
     icon: 'show_chart',
     route: '/anaytics',
   },
-  // {
-  //   label: 'Reports',
-  //   icon: 'picture_as_pdf',
-  //   route: '/reports',
-  // },
+  {
+    label: 'Reports',
+    icon: 'picture_as_pdf',
+    route: '/reports',
+  },
 ];
 
 const admin: Menu[] = [

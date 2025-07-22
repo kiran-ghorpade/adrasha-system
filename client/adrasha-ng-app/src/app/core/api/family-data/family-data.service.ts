@@ -118,7 +118,7 @@ export class FamilyDataService {
     return this.http.get<TData>(
       `http://localhost:8080/data/families`,{
     ...options,
-       ...params, ...options?.params}
+        ...params, ...options?.params,}
     );
   }
  createFamily<TData = FamilyDataResponseDTO>(
@@ -151,7 +151,7 @@ export class FamilyDataService {
     return this.http.get<TData>(
       `http://localhost:8080/data/families/count`,{
     ...options,
-       ...params, ...options?.params}
+        ...params, ...options?.params,}
     );
   }
 };

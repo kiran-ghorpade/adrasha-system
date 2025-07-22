@@ -17,6 +17,8 @@ public class FamilyUpdateDTO {
 
 	@NotNull
 	private UUID ashaId;
+	
+	private Integer houseId;
 
 	private PovertyStatus povertyStatus;
 

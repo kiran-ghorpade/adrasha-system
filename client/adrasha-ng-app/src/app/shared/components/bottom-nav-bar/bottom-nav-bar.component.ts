@@ -19,6 +19,12 @@ import { MenuService } from '@core/services/menu.service';
     CommonModule,
   ],
   templateUrl: './bottom-nav-bar.component.html',
+  styles: `
+  .active-link {
+      background-color: var(--mat-sys-primary);
+      color: var(--mat-sys-on-primary);
+    }
+  `,
 })
 export class BottomNavBarComponent {
   private readonly menuService = inject(MenuService);

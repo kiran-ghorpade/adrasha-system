@@ -68,6 +68,19 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'reports',
+    title: 'Reports',
+    canActivate: [authGuard, roleGuard],
+    data: {
+      roles: [UserResponseDTORolesItem.ASHA],
+    },
+    component: AppLayout,
+    loadChildren: () =>
+      import('@features/reports/reports.routes').then(
+        (route) => route.reportsRoutes
+      ),
+  },
+  {
     path: 'role-requests',
     title: 'Role Request',
     canActivate: [authGuard, roleGuard],

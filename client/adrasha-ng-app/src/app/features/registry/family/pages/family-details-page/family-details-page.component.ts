@@ -26,7 +26,6 @@ import {
 } from '@shared/components';
 import { map } from 'rxjs';
 import { FamilyService } from '../../services';
-import { MatCalendar } from "@angular/material/datepicker";
 
 @Component({
   selector: 'app-family-details-page',
@@ -44,7 +43,6 @@ import { MatCalendar } from "@angular/material/datepicker";
     PageWrapperComponent,
     MatTooltipModule,
     MatMenuModule,
-    MatCalendar
 ],
   templateUrl: './family-details-page.component.html',
 })
@@ -75,7 +73,6 @@ export class FamilyDetailsPageComponent {
     this.familyApiService.getFamily(this.familyId).subscribe((user) => {
       this.familyDetails.set(user);
     });
-
     this.memberService
       .getAllMembers({
         filterDTO: {

@@ -130,7 +130,7 @@ export class LogsComponent implements OnInit, OnDestroy {
     <h3 matDialogTitle>Log Details</h3>
     <div matDialogContent>
       <pre
-        class="w-full text-sm bg-gray-100 overflow-auto whitespace-pre-wrap break-all"
+        class="w-full text-sm  overflow-auto whitespace-pre-wrap break-all"
       >
   {{ data | json }}
      </pre >

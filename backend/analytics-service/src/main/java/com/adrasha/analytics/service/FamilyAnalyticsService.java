@@ -6,11 +6,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.adrasha.analytics.client.FamilyDataClient;
-import com.adrasha.analytics.client.UserDataClient;
-import com.adrasha.core.filter.dto.FamilyDataFilterDTO;
+import com.adrasha.core.dto.filter.FamilyDataFilterDTO;
+import com.adrasha.core.dto.response.UserResponseDTO;
 import com.adrasha.core.model.PovertyStatus;
-import com.adrasha.core.response.dto.UserResponseDTO;
+import com.adrasha.reports.client.FamilyDataClient;
+import com.adrasha.reports.client.UserDataClient;
 
 @Service
 public class FamilyAnalyticsService {

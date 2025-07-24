@@ -3,9 +3,9 @@ package com.adrasha.analytics.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.adrasha.analytics.client.HealthCenterDataClient;
-import com.adrasha.analytics.client.LocationClient;
-import com.adrasha.analytics.client.NCDClient;
+import com.adrasha.reports.client.HealthCenterDataClient;
+import com.adrasha.reports.client.LocationClient;
+import com.adrasha.reports.client.NCDClient;
 
 @Service
 public class MasterDataAnalyticsService {

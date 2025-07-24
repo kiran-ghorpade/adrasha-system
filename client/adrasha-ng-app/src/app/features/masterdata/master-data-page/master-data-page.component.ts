@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
-import { DataLabelType, PageHeaderComponent } from '@shared/components';
+import { PageHeaderComponent } from '@shared/components';
 import { PageWrapperComponent } from '@shared/components/page-wrapper/page-wrapper.component';
 
 @Component({

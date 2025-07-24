@@ -148,7 +148,12 @@ export class RoleRequestService {
     return this.http.get<TData>(
       `http://localhost:8080/roleRequests`,{
     ...options,
-        ...params, ...options?.params,}
+        params:{
+          ...params.filterDTO,
+          ...params.pageable,
+          ...options?.params,
+        }
+      }
     );
   }
  createRoleRequest<TData = RoleRequestResponseDTO>(
@@ -196,7 +201,7 @@ export class RoleRequestService {
     return this.http.get<TData>(
       `http://localhost:8080/roleRequests/count`,{
     ...options,
-        ...params, ...options?.params,}
+        params:{...params.filterDTO, ...options?.params},}
     );
   }
 };

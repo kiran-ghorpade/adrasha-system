@@ -11,14 +11,14 @@ import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.adrasha.analytics.client.HealthRecordClient;
-import com.adrasha.analytics.client.NCDClient;
-import com.adrasha.analytics.client.UserDataClient;
-import com.adrasha.core.filter.dto.HealthRecordFilterDTO;
-import com.adrasha.core.response.dto.HealthRecordResponseDTO;
-import com.adrasha.core.response.dto.NCDResponseDTO;
-import com.adrasha.core.response.dto.UserResponseDTO;
+import com.adrasha.core.dto.filter.HealthRecordFilterDTO;
+import com.adrasha.core.dto.response.HealthRecordResponseDTO;
+import com.adrasha.core.dto.response.NCDResponseDTO;
+import com.adrasha.core.dto.response.UserResponseDTO;
 import com.adrasha.core.utils.PaginationUtils;
+import com.adrasha.reports.client.HealthRecordClient;
+import com.adrasha.reports.client.NCDClient;
+import com.adrasha.reports.client.UserDataClient;
 
 @Service
 public class HealthRecordAnalyticsService {

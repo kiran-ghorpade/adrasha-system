@@ -12,14 +12,14 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.adrasha.analytics.client.MemberDataClient;
-import com.adrasha.analytics.client.UserDataClient;
-import com.adrasha.core.filter.dto.MemberDataFilterDTO;
+import com.adrasha.core.dto.filter.MemberDataFilterDTO;
+import com.adrasha.core.dto.response.MemberDataResponseDTO;
+import com.adrasha.core.dto.response.UserResponseDTO;
 import com.adrasha.core.model.AgeGroup;
 import com.adrasha.core.model.Gender;
-import com.adrasha.core.response.dto.MemberDataResponseDTO;
-import com.adrasha.core.response.dto.UserResponseDTO;
 import com.adrasha.core.utils.PaginationUtils;
+import com.adrasha.reports.client.MemberDataClient;
+import com.adrasha.reports.client.UserDataClient;
 
 @Service
 public class MemberAnalyticsService {

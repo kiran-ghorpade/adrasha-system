@@ -11,13 +11,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import com.adrasha.analytics.client.HealthCenterDataClient;
-import com.adrasha.analytics.client.UserDataClient;
-import com.adrasha.core.filter.dto.UserFilterDTO;
+import com.adrasha.core.dto.filter.UserFilterDTO;
+import com.adrasha.core.dto.response.HealthCenterResponseDTO;
+import com.adrasha.core.dto.response.UserResponseDTO;
 import com.adrasha.core.model.Role;
-import com.adrasha.core.response.dto.HealthCenterResponseDTO;
-import com.adrasha.core.response.dto.UserResponseDTO;
 import com.adrasha.core.utils.PaginationUtils;
+import com.adrasha.reports.client.HealthCenterDataClient;
+import com.adrasha.reports.client.UserDataClient;
 
 @Service
 public class UserAnalyticsService {

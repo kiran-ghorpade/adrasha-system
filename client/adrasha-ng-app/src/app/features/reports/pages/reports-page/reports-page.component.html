@@ -1,0 +1,26 @@
+<app-page-wrapper>
+  <div top>
+    <app-page-header title="Reports"> </app-page-header>
+  </div>
+
+  <div content class="h-full flex flex-col">
+    <!-- Values -->
+
+    <mat-action-list>
+      @for (data of reportsTypes; track $index) {
+      <a mat-list-item [routerLink]="`${data.route}`">
+        <div matListItemIcon>
+          <mat-icon>{{ data.icon }}</mat-icon>
+        </div>
+        <h3 matListItemTitle>
+          <strong> {{ data.label }} </strong>
+        </h3>
+        <p matListItemLine></p>
+        <p matListItemMeta>
+          <mat-icon>arrow_forward</mat-icon>
+        </p>
+      </a>
+      }
+    </mat-action-list>
+  </div>
+</app-page-wrapper>

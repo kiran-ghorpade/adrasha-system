@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.adrasha.core.dto.ErrorResponse;
+import com.adrasha.core.dto.response.UserResponseDTO;
 import com.adrasha.core.exception.UnAuthorizedException;
-import com.adrasha.core.response.dto.UserResponseDTO;
 import com.adrasha.user.model.User;
 import com.adrasha.user.service.UserService;
 

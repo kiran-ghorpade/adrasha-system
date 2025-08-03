@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 // import { MatAvatarModule } from '@angular/material/avatar';
 import { CommonModule } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -11,6 +11,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService, ThemeService } from '@core/services';
 import { AppLogoComponent } from '../../widgets/logo.component';
+import { MatToolbar } from '@angular/material/toolbar';
+import { AlertComponent } from '../alert/alert.component';
 
 @Component({
   selector: 'app-top-appbar',
@@ -25,6 +27,7 @@ import { AppLogoComponent } from '../../widgets/logo.component';
     AppLogoComponent,
     RouterModule,
     CommonModule,
+    AlertComponent,
   ],
   styles: `
      .iconShadow{
@@ -37,9 +40,14 @@ export class TopAppBarComponent {
   protected themeService = inject(ThemeService);
   readonly router = inject(Router);
 
+  online = signal(navigator.onLine);
   loggedIn = toSignal(this.authService.isLoggedIn$, { initialValue: false });
-
   isAdmin = toSignal(this.authService.isAdmin(), { initialValue: false });
+
+  constructor() {
+    window.addEventListener('online', () => this.online.set(true));
+    window.addEventListener('offline', () => this.online.set(false));
+  }
 
   readonly settings = computed(() => {
     const base = [{ label: 'Settings', toLink: '/settings', icon: 'settings' }];
@@ -51,6 +59,10 @@ export class TopAppBarComponent {
 
   logout() {
     this.authService.logout();
-    this.router.navigate(['/auth/login']);
+    this.router.navigate(['/auth/login'], { replaceUrl: true });
+  }
+
+  isOnline() {
+    return navigator.onLine;
   }
 }

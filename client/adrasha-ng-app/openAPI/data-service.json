@@ -222,7 +222,7 @@
         ]
       }
     },
-    "/data/healthRecords/{id}": {
+    "/data/health/records/{id}": {
       "get": {
         "tags": [
           "HealthRecord"
@@ -641,7 +641,7 @@
         "tags": [
           "MemberData"
         ],
-        "operationId": "getAllMembers",
+        "operationId": "getMemberPage",
         "parameters": [
           {
             "name": "filterDTO",
@@ -782,12 +782,12 @@
         ]
       }
     },
-    "/data/healthRecords": {
+    "/data/health/records": {
       "get": {
         "tags": [
           "HealthRecord"
         ],
-        "operationId": "getAllHealthRecords",
+        "operationId": "getHealthRecordPage",
         "parameters": [
           {
             "name": "filterDTO",
@@ -933,7 +933,7 @@
         "tags": [
           "FamilyData"
         ],
-        "operationId": "getAllFamilies",
+        "operationId": "getFamilyPage",
         "parameters": [
           {
             "name": "filterDTO",
@@ -1079,7 +1079,7 @@
         "tags": [
           "MemberData"
         ],
-        "operationId": "getTotalCount",
+        "operationId": "getMemberCount",
         "parameters": [
           {
             "name": "filterDTO",
@@ -1096,7 +1096,8 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "type": "string"
+                  "type": "integer",
+                  "format": "int64"
                 }
               }
             }
@@ -1139,12 +1140,12 @@
         ]
       }
     },
-    "/data/healthRecords/count": {
+    "/data/health/records/count": {
       "get": {
         "tags": [
           "HealthRecord"
         ],
-        "operationId": "getTotalCount_1",
+        "operationId": "getFamilyCount",
         "parameters": [
           {
             "name": "filterDTO",
@@ -1161,7 +1162,8 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "type": "string"
+                  "type": "integer",
+                  "format": "int64"
                 }
               }
             }
@@ -1209,7 +1211,7 @@
         "tags": [
           "FamilyData"
         ],
-        "operationId": "getTotalCount_2",
+        "operationId": "getFamilyCount_1",
         "parameters": [
           {
             "name": "filterDTO",
@@ -1226,7 +1228,8 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "type": "string"
+                  "type": "integer",
+                  "format": "int64"
                 }
               }
             }
@@ -1309,8 +1312,13 @@
             "type": "string",
             "pattern": "^[6-9]\\d{9}$"
           },
-          "alive": {
-            "type": "boolean"
+          "aliveStatus": {
+            "type": "string",
+            "enum": [
+              "ALIVE",
+              "DECEASED",
+              "UNKNOWN"
+            ]
           }
         },
         "required": [
@@ -1389,8 +1397,13 @@
           "mobileNumber": {
             "type": "string"
           },
-          "alive": {
-            "type": "boolean"
+          "aliveStatus": {
+            "type": "string",
+            "enum": [
+              "ALIVE",
+              "DECEASED",
+              "UNKNOWN"
+            ]
           },
           "createdAt": {
             "type": "string",
@@ -1472,7 +1485,7 @@
       "HealthRecordUpdateDTO": {
         "type": "object",
         "properties": {
-          "date": {
+          "recordedAt": {
             "type": "string",
             "format": "date-time"
           },
@@ -1512,7 +1525,7 @@
             "type": "string",
             "format": "uuid"
           },
-          "date": {
+          "recordedAt": {
             "type": "string",
             "format": "date-time"
           },
@@ -1669,7 +1682,7 @@
             "type": "string",
             "format": "uuid"
           },
-          "date": {
+          "recordedAt": {
             "type": "string",
             "format": "date-time"
           },
@@ -1795,12 +1808,21 @@
             "type": "string",
             "format": "date"
           },
-          "age": {
+          "minAge": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxAge": {
             "type": "integer",
             "format": "int32"
           },
           "alive": {
-            "type": "boolean"
+            "type": "string",
+            "enum": [
+              "ALIVE",
+              "DECEASED",
+              "UNKNOWN"
+            ]
           }
         }
       },
@@ -1837,19 +1859,16 @@
           "pageable": {
             "$ref": "#/components/schemas/PageableObject"
           },
-          "totalPages": {
-            "type": "integer",
-            "format": "int32"
+          "last": {
+            "type": "boolean"
           },
           "totalElements": {
             "type": "integer",
             "format": "int64"
           },
-          "last": {
-            "type": "boolean"
-          },
-          "first": {
-            "type": "boolean"
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
           },
           "size": {
             "type": "integer",
@@ -1861,6 +1880,9 @@
           },
           "sort": {
             "$ref": "#/components/schemas/SortObject"
+          },
+          "first": {
+            "type": "boolean"
           },
           "numberOfElements": {
             "type": "integer",
@@ -1885,15 +1907,15 @@
             "type": "integer",
             "format": "int32"
           },
-          "unpaged": {
-            "type": "boolean"
-          },
           "offset": {
             "type": "integer",
             "format": "int64"
           },
           "sort": {
             "$ref": "#/components/schemas/SortObject"
+          },
+          "unpaged": {
+            "type": "boolean"
           }
         }
       },
@@ -1903,10 +1925,10 @@
           "sorted": {
             "type": "boolean"
           },
-          "unsorted": {
+          "empty": {
             "type": "boolean"
           },
-          "empty": {
+          "unsorted": {
             "type": "boolean"
           }
         }
@@ -1955,19 +1977,16 @@
           "pageable": {
             "$ref": "#/components/schemas/PageableObject"
           },
-          "totalPages": {
-            "type": "integer",
-            "format": "int32"
+          "last": {
+            "type": "boolean"
           },
           "totalElements": {
             "type": "integer",
             "format": "int64"
           },
-          "last": {
-            "type": "boolean"
-          },
-          "first": {
-            "type": "boolean"
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
           },
           "size": {
             "type": "integer",
@@ -1979,6 +1998,9 @@
           },
           "sort": {
             "$ref": "#/components/schemas/SortObject"
+          },
+          "first": {
+            "type": "boolean"
           },
           "numberOfElements": {
             "type": "integer",
@@ -2017,19 +2039,16 @@
           "pageable": {
             "$ref": "#/components/schemas/PageableObject"
           },
-          "totalPages": {
-            "type": "integer",
-            "format": "int32"
+          "last": {
+            "type": "boolean"
           },
           "totalElements": {
             "type": "integer",
             "format": "int64"
           },
-          "last": {
-            "type": "boolean"
-          },
-          "first": {
-            "type": "boolean"
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
           },
           "size": {
             "type": "integer",
@@ -2041,6 +2060,9 @@
           },
           "sort": {
             "$ref": "#/components/schemas/SortObject"
+          },
+          "first": {
+            "type": "boolean"
           },
           "numberOfElements": {
             "type": "integer",

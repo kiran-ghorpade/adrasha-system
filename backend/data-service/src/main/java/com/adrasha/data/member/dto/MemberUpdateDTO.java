@@ -3,6 +3,7 @@ package com.adrasha.data.member.dto;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import com.adrasha.core.model.AliveStatus;
 import com.adrasha.core.model.Gender;
 import com.adrasha.core.model.Name;
 
@@ -46,5 +47,5 @@ public class MemberUpdateDTO {
 	private String mobileNumber;
 
 	@Default
-	private boolean alive = true;
+	private AliveStatus aliveStatus = AliveStatus.ALIVE;
 }

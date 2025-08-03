@@ -37,7 +37,7 @@ public class HealthCenterServiceImpl implements HealthCenterService {
 	}
 	
 	@Override
-	public long getCount(Example<HealthCenter> example) {
+	public Long getCount(Example<HealthCenter> example) {
 		return healthCenterRepository.count(example);
 	}
 

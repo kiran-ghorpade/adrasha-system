@@ -1,5 +1,10 @@
 package com.adrasha.core.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
+
+@Schema
+@Getter
 public enum AliveStatus {
 
     ALIVE("Alive"),
@@ -8,11 +13,7 @@ public enum AliveStatus {
 
     private final String displayName;
 
-    AliveStatus(String displayName) {
+    private AliveStatus(String displayName) {
         this.displayName = displayName;
-    }
-
-    public String getDisplayName() {
-        return displayName;
     }
 }

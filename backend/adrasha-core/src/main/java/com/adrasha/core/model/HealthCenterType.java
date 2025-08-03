@@ -1,8 +1,10 @@
 package com.adrasha.core.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
 
 @Schema
+@Getter
 public enum HealthCenterType {
 
     SUB_CENTER("Subcenter"),
@@ -13,18 +15,8 @@ public enum HealthCenterType {
     MEDICAL_COLLEGE("Medical College");
 
     private final String displayName;
-    
 
-    HealthCenterType(String displayName) {
+    private HealthCenterType(String displayName) {
         this.displayName = displayName;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    @Override
-    public String toString() {
-        return displayName;
     }
 }

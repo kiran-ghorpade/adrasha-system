@@ -1,8 +1,10 @@
 import { Injectable, computed, effect, inject, signal } from '@angular/core';
 import { LocalStorageService } from '@shared/services';
 
+type ColorScheme = 'light' | 'dark' | 'system';
+
 export interface AppTheme {
-  name: 'light' | 'dark' | 'system';
+  name: ColorScheme;
   icon: string;
 }
 
@@ -27,6 +29,18 @@ export class ThemeService {
     return this.themes;
   }
 
+  getTheme() {
+    return this.appTheme;
+  }
+
+  isDarkMode() {
+    try {
+      return (this.storageService.get('theme') as ColorScheme) == 'dark';
+    } catch {
+      return false;
+    }
+  }
+
   setTheme(theme: 'light' | 'dark' | 'system') {
     this.appTheme.set(theme);
     this.storageService.set('theme', theme);
@@ -37,7 +51,10 @@ export class ThemeService {
       const appTheme = this.appTheme();
       const lastTheme = this.storageService.get('theme');
       const colorScheme = appTheme === 'system' ? 'light dark' : appTheme;
-      document.documentElement.style.setProperty('color-scheme', lastTheme ?? colorScheme);
+      document.documentElement.style.setProperty(
+        'color-scheme',
+        lastTheme ?? colorScheme
+      );
     });
   }
 }

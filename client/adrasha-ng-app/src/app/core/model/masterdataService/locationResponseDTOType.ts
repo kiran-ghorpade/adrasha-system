@@ -10,8 +10,8 @@ export type LocationResponseDTOType = typeof LocationResponseDTOType[keyof typeo
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const LocationResponseDTOType = {
-  City: 'City',
-  Village: 'Village',
-  Town: 'Town',
-  Hamlet: 'Hamlet',
+  CITY: 'CITY',
+  VILLAGE: 'VILLAGE',
+  TOWN: 'TOWN',
+  HAMLET: 'HAMLET',
 } as const;

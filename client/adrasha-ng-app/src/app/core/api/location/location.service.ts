@@ -118,7 +118,7 @@ export class LocationService {
     return this.http.get<TData>(
       `http://localhost:8080/masterdata/locations`,{
     ...options,
-        ...params, ...options?.params,}
+        params: {...params.filterDTO, ...params.pageable, ...options?.params},}
     );
   }
  createLocation<TData = LocationResponseDTO>(
@@ -151,7 +151,7 @@ export class LocationService {
     return this.http.get<TData>(
       `http://localhost:8080/masterdata/locations/count`,{
     ...options,
-        ...params, ...options?.params,}
+        params: {...params.filterDTO, ...options?.params},}
     );
   }
 };

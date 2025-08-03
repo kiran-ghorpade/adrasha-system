@@ -139,6 +139,21 @@ export class StaticDataService {
       `http://localhost:8080/masterdata/genders`,options
     );
   }
+ getAliveStatuses<TData = StaticDataDTO[]>(
+     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+  ): Observable<TData>;
+    getAliveStatuses<TData = StaticDataDTO[]>(
+     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+  ): Observable<AngularHttpResponse<TData>>;
+    getAliveStatuses<TData = StaticDataDTO[]>(
+     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getAliveStatuses<TData = StaticDataDTO[]>(
+     options?: HttpClientOptions
+  ): Observable<TData>  {
+    return this.http.get<TData>(
+      `http://localhost:8080/masterdata/alive-statuses`,options
+    );
+  }
  getAgeGroups<TData = StaticDataDTO[]>(
      options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
@@ -162,4 +177,5 @@ export type GetPovertyStatusesClientResult = NonNullable<StaticDataDTO[]>
 export type GetLocationTypesClientResult = NonNullable<StaticDataDTO[]>
 export type GetHealthCenterTypesClientResult = NonNullable<StaticDataDTO[]>
 export type GetGendersClientResult = NonNullable<StaticDataDTO[]>
+export type GetAliveStatusesClientResult = NonNullable<StaticDataDTO[]>
 export type GetAgeGroupsClientResult = NonNullable<StaticDataDTO[]>

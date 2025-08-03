@@ -38,48 +38,48 @@ import { Subscription } from 'rxjs';
     MatChip,
     PageHeaderComponent,
   ],
-  template: `<app-page-wrapper>
-    <div top><app-page-header title="Logs" icon="terminal" /></div>
-    <div content class="h-full w-full">
-      <!-- Sidebar: Logs List -->
-      <button matButton (click)="clearLogs()">clear</button>
+  template: ` <div
+  >
+    <app-page-wrapper>
+      <div top><app-page-header title="Logs" icon="terminal" /></div>
+      <div content class="h-full w-full">
+        <!-- Sidebar: Logs List -->
+        <button matButton (click)="clearLogs()">clear</button>
 
-      <mat-action-list>
-        @for (log of logs(); track $index) {
-        <mat-list-item
-          (click)="onClick($index)"
-          class="cursor-pointer "
-        >
-          <div matListItemIcon>
-            @switch (log.status) { @case ('info') {
-            <mat-icon class="text-blue-500"> info</mat-icon>
-            } @case ('success') {
-            <mat-icon class="text-green-500"> check_circle</mat-icon>
-            } @case ('failure') {
-            <mat-icon class="text-red-500"> error</mat-icon>
-            } }
-          </div>
-          <div matListItemTitle class="truncate">
-            {{ log.message }}
-          </div>
-          <div matListItemLine class="text-sm text-gray-500">
-            {{ log.status }}
-          </div>
-          <div matListItemMeta class="text-sm text-gray-500">
-            @if (!log.isViewed) {
-            <mat-chip class="ml-2 text-red-500">
-              <div class="text-blue-500">new</div>
-            </mat-chip>
-            }
-          </div>
-          <div matListItemMeta class="text-xs text-gray-400">
-            {{ log.timestamp | date : 'HH:mm:ss' }}
-          </div>
-        </mat-list-item>
-        }
-      </mat-action-list>
-    </div>
-  </app-page-wrapper> `,
+        <mat-action-list>
+          @for (log of logs(); track $index) {
+          <mat-list-item (click)="onClick($index)" class="cursor-pointer ">
+            <div matListItemIcon>
+              @switch (log.status) { @case ('info') {
+              <mat-icon class="text-blue-500"> info</mat-icon>
+              } @case ('success') {
+              <mat-icon class="text-green-500"> check_circle</mat-icon>
+              } @case ('failure') {
+              <mat-icon class="text-red-500"> error</mat-icon>
+              } }
+            </div>
+            <div matListItemTitle class="truncate">
+              {{ log.message }}
+            </div>
+            <div matListItemLine class="text-sm text-gray-500">
+              {{ log.status }}
+            </div>
+            <div matListItemMeta class="text-sm text-gray-500">
+              @if (!log.isViewed) {
+              <mat-chip class="ml-2 text-red-500">
+                <div class="text-blue-500">new</div>
+              </mat-chip>
+              }
+            </div>
+            <div matListItemMeta class="text-xs text-gray-400">
+              {{ log.timestamp | date : 'HH:mm:ss' }}
+            </div>
+          </mat-list-item>
+          }
+        </mat-action-list>
+      </div>
+    </app-page-wrapper>
+  </div>`,
 })
 export class LogsComponent implements OnInit, OnDestroy {
   private readonly logService = inject(LogService);
@@ -129,11 +129,10 @@ export class LogsComponent implements OnInit, OnDestroy {
   template: ` <section class="overflow-scroll p-2 flex flex-col items-center">
     <h3 matDialogTitle>Log Details</h3>
     <div matDialogContent>
-      <pre
-        class="w-full text-sm  overflow-auto whitespace-pre-wrap break-all"
-      >
+      <pre class="w-full text-sm  overflow-auto whitespace-pre-wrap break-all">
   {{ data | json }}
-     </pre >
+     </pre
+      >
     </div>
   </section>`,
   imports: [

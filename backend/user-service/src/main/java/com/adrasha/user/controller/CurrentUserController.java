@@ -3,7 +3,6 @@ package com.adrasha.user.controller;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,18 +20,17 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/users/me")
+@RequiredArgsConstructor
 @SecurityRequirement(name = "BearerAuthentication")
 @Tag(name = "User")
 public class CurrentUserController {
 
-	@Autowired
-	private UserService userService;
-
-	@Autowired
-	private ModelMapper mapper;
+	private final UserService userService;
+	private final ModelMapper mapper;
 
 	@GetMapping
 	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = UserResponseDTO.class)))

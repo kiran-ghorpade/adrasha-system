@@ -11,4 +11,6 @@ export interface RoleRequestUpdateDTO {
   name?: Name;
   role: RoleRequestUpdateDTORole;
   healthCenterId: string;
+  /** @minLength 1 */
+  remark: string;
 }

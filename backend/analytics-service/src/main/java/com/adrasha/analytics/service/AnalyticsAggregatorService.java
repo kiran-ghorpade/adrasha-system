@@ -1,56 +1,48 @@
 package com.adrasha.analytics.service;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.adrasha.analytics.client.FamilyAnalyticsClient;
-import com.adrasha.analytics.client.HealthAnalyticsClient;
-import com.adrasha.analytics.client.MemberAnalyticsClient;
+import com.adrasha.analytics.model.AgeGroupCount;
+import com.adrasha.analytics.model.GenderCount;
+import com.adrasha.analytics.model.PovertyStatusCount;
+import com.adrasha.analytics.model.PregnancyCount;
+import com.adrasha.analytics.model.RoleRequestStatusCount;
+import com.adrasha.analytics.repository.AgeGroupCountRepository;
+import com.adrasha.analytics.repository.GenderCountRepository;
+import com.adrasha.analytics.repository.PovertyStatusCountRepository;
+import com.adrasha.analytics.repository.PregnancyCountRepository;
+import com.adrasha.analytics.repository.RoleRequestStatusCountRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class AnalyticsAggregatorService {
-    private final MemberAnalyticsClient memberClient;
-    private final FamilyAnalyticsClient familyClient;
-    private final HealthAnalyticsClient healthClient;
+	private final AgeGroupCountRepository ageGroupCountRepository;
+	private final GenderCountRepository genderCountRepository;
+	private final PovertyStatusCountRepository povertyStatusCountRepository;
+	private final PregnancyCountRepository pregnancyCountRepository;
+	private final RoleRequestStatusCountRepository roleRequestStatusCountRepository;
 
-    public AnalyticsAggregatorService(MemberAnalyticsClient memberClient,
-                                     FamilyAnalyticsClient familyClient,
-                                     HealthAnalyticsClient healthClient) {
-        this.memberClient = memberClient;
-        this.familyClient = familyClient;
-        this.healthClient = healthClient;
-    }
+	public Page<AgeGroupCount> getAgeGroupDistribution(Pageable pageable) {
+		return ageGroupCountRepository.findAll(pageable);
+	}
+	
+	public Page<GenderCount> getGenderDistribution(Pageable pageable) {
+		return genderCountRepository.findAll(pageable);
+	}
 
-    public Map<String, Object> getFullAnalyticsOverview() {
-        Map<String, Object> result = new HashMap<>();
-        result.put("member", getMemberOverview());
-        result.put("family", getFamilyOverview());
-        result.put("health", getHealthOverview());
-        return result;
-    }
-
-    private Map<String, Object> getMemberOverview() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("genderCounts", memberClient.getGenderCounts());
-        map.put("statusCounts", memberClient.getStatusCounts());
-        map.put("ageGroupCounts", memberClient.getAgeGroupCounts());
-        map.put("headCount", memberClient.getHeadMemberCount());
-        return map;
-    }
-
-    private Map<String, Object> getFamilyOverview() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("povertyCounts", familyClient.getPovertyCounts());
-        map.put("localityCounts", familyClient.getLocalityCounts());
-        return map;
-    }
-
-    private Map<String, Object> getHealthOverview() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("pregnantCount", healthClient.getPregnantCount());
-        map.put("ncdCounts", healthClient.getNcdCounts());
-        return map;
-    }
+	public Page<PovertyStatusCount> getPovertyStatusDistribution(Pageable pageable) {
+		return povertyStatusCountRepository.findAll(pageable);
+	}
+	
+	public Page<PregnancyCount> getPregnancyDistribution(Pageable pageable) {
+		return pregnancyCountRepository.findAll(pageable);
+	}
+	
+	public Page<RoleRequestStatusCount> getRoleRequestStatusDistribution(Pageable pageable) {
+		return roleRequestStatusCountRepository.findAll(pageable);
+	}
 }

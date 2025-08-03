@@ -33,11 +33,17 @@ public class UserServiceImpl implements UserService {
 	private ModelMapper modelMapper;
 
 	@Override
-	public Page<User> getAllUsers(Example<User> example, Pageable pageable) {
+	public Page<User> getUserPage(Example<User> example, Pageable pageable) {
 		
 		return userRepository.findAll(example, pageable);
 	}
 
+	@Override
+	public Long getUserCount(Example<User> example) {
+
+		return userRepository.count(example);
+	}
+	
 	@Override
 	public User getUser(UUID userId) {
 
@@ -71,11 +77,6 @@ public class UserServiceImpl implements UserService {
 		
 		userRepository.delete(user);
 		return user;
-	}
-
-	@Override
-	public long getTotalUserCount(Example<User> example) {
-		return userRepository.count(example);
 	}
 
 	@Override

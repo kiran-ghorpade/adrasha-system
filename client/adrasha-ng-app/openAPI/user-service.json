@@ -821,12 +821,12 @@
         ]
       }
     },
-    "/users/count": {
+    "/users/analytics/count": {
       "get": {
         "tags": [
           "User"
         ],
-        "operationId": "getTotalUsers",
+        "operationId": "getCount",
         "parameters": [
           {
             "name": "filterDTO",
@@ -886,77 +886,12 @@
         ]
       }
     },
-    "/roleRequests/me": {
+    "/users/analytics/count/role": {
       "get": {
         "tags": [
-          "RoleRequest"
+          "User"
         ],
-        "operationId": "getCurrentUserRoleRequest",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/RoleRequestResponseDTO"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "BearerAuthentication": []
-          }
-        ]
-      }
-    },
-    "/roleRequests/count": {
-      "get": {
-        "tags": [
-          "RoleRequest"
-        ],
-        "operationId": "getTotalRoleRequests",
-        "parameters": [
-          {
-            "name": "filterDTO",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/RoleRequestFilterDTO"
-            }
-          }
-        ],
+        "operationId": "getRoleCount",
         "responses": {
           "200": {
             "description": "OK",
@@ -1256,10 +1191,15 @@
           "healthCenterId": {
             "type": "string",
             "format": "uuid"
+          },
+          "remark": {
+            "type": "string",
+            "minLength": 1
           }
         },
         "required": [
           "healthCenterId",
+          "remark",
           "role"
         ]
       },
@@ -1297,6 +1237,9 @@
           "healthCenterId": {
             "type": "string",
             "format": "uuid"
+          },
+          "remark": {
+            "type": "string"
           },
           "createdAt": {
             "type": "string",
@@ -1382,15 +1325,15 @@
             "type": "integer",
             "format": "int32"
           },
-          "unpaged": {
-            "type": "boolean"
-          },
           "offset": {
             "type": "integer",
             "format": "int64"
           },
           "sort": {
             "$ref": "#/components/schemas/SortObject"
+          },
+          "unpaged": {
+            "type": "boolean"
           }
         }
       },
@@ -1400,10 +1343,10 @@
           "sorted": {
             "type": "boolean"
           },
-          "unsorted": {
+          "empty": {
             "type": "boolean"
           },
-          "empty": {
+          "unsorted": {
             "type": "boolean"
           }
         }
@@ -1431,9 +1374,6 @@
           "last": {
             "type": "boolean"
           },
-          "first": {
-            "type": "boolean"
-          },
           "size": {
             "type": "integer",
             "format": "int32"
@@ -1448,6 +1388,9 @@
           "numberOfElements": {
             "type": "integer",
             "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
           },
           "empty": {
             "type": "boolean"
@@ -1507,9 +1450,6 @@
           "last": {
             "type": "boolean"
           },
-          "first": {
-            "type": "boolean"
-          },
           "size": {
             "type": "integer",
             "format": "int32"
@@ -1524,6 +1464,9 @@
           "numberOfElements": {
             "type": "integer",
             "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
           },
           "empty": {
             "type": "boolean"

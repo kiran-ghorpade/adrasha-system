@@ -1,4 +1,9 @@
-import { Component, input, ViewChild } from '@angular/core';
+import {
+  Component,
+  computed,
+  input,
+  ViewChild
+} from '@angular/core';
 import { ChartConfiguration, ChartDataset, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 
@@ -8,7 +13,7 @@ import { BaseChartDirective } from 'ng2-charts';
   template: `
     <canvas
       baseChart
-      [data]="chartData"
+      [data]="chartData()"
       [type]="chartType"
       [options]="chartOptions"
     >
@@ -22,8 +27,8 @@ export class PieChartComponent {
   datasets = input<ChartDataset[]>();
 
   // chart config
-  chartData: ChartConfiguration['data'] = {
-    labels: this.labels() ?? ['Label'],
+  chartData = computed<ChartConfiguration['data']>(() => ({
+    labels: this.labels() ?? ['lable1','lable2','lable3'],
     datasets: this.datasets() ?? [
       {
         data: [45, 50, 5], // Example percentages or counts
@@ -32,7 +37,7 @@ export class PieChartComponent {
         borderWidth: 1,
       },
     ],
-  };
+  }));
 
   chartType: ChartType = 'doughnut';
 
@@ -41,6 +46,9 @@ export class PieChartComponent {
     maintainAspectRatio: false,
     plugins: {
       legend: {
+        title:{
+          text:'jkl'
+        },
         position: 'bottom',
         labels: {
           color: '#374151',

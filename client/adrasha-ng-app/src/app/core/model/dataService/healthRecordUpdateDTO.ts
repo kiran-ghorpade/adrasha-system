@@ -6,7 +6,7 @@
  */
 
 export interface HealthRecordUpdateDTO {
-  date?: string;
+  recordedAt?: string;
   pregnant?: boolean;
   height?: number;
   weight?: number;

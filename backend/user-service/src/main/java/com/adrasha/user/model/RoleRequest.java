@@ -13,7 +13,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.validation.Valid;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -27,7 +26,6 @@ public class RoleRequest extends Auditable{
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 	
-	@Valid
 	private Name name;
 	
 	@Enumerated(EnumType.STRING)
@@ -39,5 +37,7 @@ public class RoleRequest extends Auditable{
 	
 	@Enumerated(EnumType.STRING)
 	private RequestStatus status;
+	
+	private String remark;
 	
 }

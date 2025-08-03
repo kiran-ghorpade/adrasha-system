@@ -650,14 +650,6 @@
             "schema": {
               "$ref": "#/components/schemas/NCDFilterDTO"
             }
-          },
-          {
-            "name": "pageable",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/Pageable"
-            }
           }
         ],
         "responses": {
@@ -1437,6 +1429,34 @@
         ]
       }
     },
+    "/masterdata/alive-statuses": {
+      "get": {
+        "tags": [
+          "StaticData"
+        ],
+        "operationId": "getAliveStatuses",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StaticDataDTO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      }
+    },
     "/masterdata/age-groups": {
       "get": {
         "tags": [
@@ -1583,10 +1603,10 @@
           "type": {
             "type": "string",
             "enum": [
-              "City",
-              "Village",
-              "Town",
-              "Hamlet"
+              "CITY",
+              "VILLAGE",
+              "TOWN",
+              "HAMLET"
             ]
           },
           "pincode": {
@@ -1633,10 +1653,10 @@
           "type": {
             "type": "string",
             "enum": [
-              "City",
-              "Village",
-              "Town",
-              "Hamlet"
+              "CITY",
+              "VILLAGE",
+              "TOWN",
+              "HAMLET"
             ]
           },
           "pincode": {
@@ -1674,12 +1694,12 @@
           "centerType": {
             "type": "string",
             "enum": [
-              "Subcenter",
-              "Primary Health Center",
-              "Community Health Center",
-              "Sub-district Hospital",
-              "District Hospital",
-              "Medical College"
+              "SUB_CENTER",
+              "PRIMARY_HEALTH_CENTER",
+              "COMMUNITY_HEALTH_CENTER",
+              "SUB_DISTRICT_HOSPITAL",
+              "DISTRICT_HOSPITAL",
+              "MEDICAL_COLLEGE"
             ]
           },
           "locationId": {
@@ -1713,12 +1733,12 @@
           "centerType": {
             "type": "string",
             "enum": [
-              "Subcenter",
-              "Primary Health Center",
-              "Community Health Center",
-              "Sub-district Hospital",
-              "District Hospital",
-              "Medical College"
+              "SUB_CENTER",
+              "PRIMARY_HEALTH_CENTER",
+              "COMMUNITY_HEALTH_CENTER",
+              "SUB_DISTRICT_HOSPITAL",
+              "DISTRICT_HOSPITAL",
+              "MEDICAL_COLLEGE"
             ]
           },
           "locationId": {
@@ -1768,10 +1788,10 @@
           "type": {
             "type": "string",
             "enum": [
-              "City",
-              "Village",
-              "Town",
-              "Hamlet"
+              "CITY",
+              "VILLAGE",
+              "TOWN",
+              "HAMLET"
             ]
           },
           "pincode": {
@@ -1815,12 +1835,12 @@
           "centerType": {
             "type": "string",
             "enum": [
-              "Subcenter",
-              "Primary Health Center",
-              "Community Health Center",
-              "Sub-district Hospital",
-              "District Hospital",
-              "Medical College"
+              "SUB_CENTER",
+              "PRIMARY_HEALTH_CENTER",
+              "COMMUNITY_HEALTH_CENTER",
+              "SUB_DISTRICT_HOSPITAL",
+              "DISTRICT_HOSPITAL",
+              "MEDICAL_COLLEGE"
             ]
           },
           "locationId": {
@@ -1854,27 +1874,6 @@
         }
       },
       "NCDFilterDTO": {},
-      "Pageable": {
-        "type": "object",
-        "properties": {
-          "page": {
-            "type": "integer",
-            "format": "int32",
-            "minimum": 0
-          },
-          "size": {
-            "type": "integer",
-            "format": "int32",
-            "minimum": 1
-          },
-          "sort": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        }
-      },
       "NCDPageResponseDTO": {
         "type": "object",
         "properties": {
@@ -1898,9 +1897,6 @@
           "last": {
             "type": "boolean"
           },
-          "first": {
-            "type": "boolean"
-          },
           "size": {
             "type": "integer",
             "format": "int32"
@@ -1915,6 +1911,9 @@
           "numberOfElements": {
             "type": "integer",
             "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
           },
           "empty": {
             "type": "boolean"
@@ -1935,15 +1934,15 @@
             "type": "integer",
             "format": "int32"
           },
-          "unpaged": {
-            "type": "boolean"
-          },
           "offset": {
             "type": "integer",
             "format": "int64"
           },
           "sort": {
             "$ref": "#/components/schemas/SortObject"
+          },
+          "unpaged": {
+            "type": "boolean"
           }
         }
       },
@@ -1953,10 +1952,10 @@
           "sorted": {
             "type": "boolean"
           },
-          "unsorted": {
+          "empty": {
             "type": "boolean"
           },
-          "empty": {
+          "unsorted": {
             "type": "boolean"
           }
         }
@@ -1967,10 +1966,10 @@
           "type": {
             "type": "string",
             "enum": [
-              "City",
-              "Village",
-              "Town",
-              "Hamlet"
+              "CITY",
+              "VILLAGE",
+              "TOWN",
+              "HAMLET"
             ]
           },
           "pincode": {
@@ -1987,6 +1986,27 @@
           },
           "country": {
             "type": "string"
+          }
+        }
+      },
+      "Pageable": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1
+          },
+          "sort": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
@@ -2013,9 +2033,6 @@
           "last": {
             "type": "boolean"
           },
-          "first": {
-            "type": "boolean"
-          },
           "size": {
             "type": "integer",
             "format": "int32"
@@ -2031,6 +2048,9 @@
             "type": "integer",
             "format": "int32"
           },
+          "first": {
+            "type": "boolean"
+          },
           "empty": {
             "type": "boolean"
           }
@@ -2042,12 +2062,12 @@
           "centerType": {
             "type": "string",
             "enum": [
-              "Subcenter",
-              "Primary Health Center",
-              "Community Health Center",
-              "Sub-district Hospital",
-              "District Hospital",
-              "Medical College"
+              "SUB_CENTER",
+              "PRIMARY_HEALTH_CENTER",
+              "COMMUNITY_HEALTH_CENTER",
+              "SUB_DISTRICT_HOSPITAL",
+              "DISTRICT_HOSPITAL",
+              "MEDICAL_COLLEGE"
             ]
           },
           "locationId": {
@@ -2087,9 +2107,6 @@
           "last": {
             "type": "boolean"
           },
-          "first": {
-            "type": "boolean"
-          },
           "size": {
             "type": "integer",
             "format": "int32"
@@ -2104,6 +2121,9 @@
           "numberOfElements": {
             "type": "integer",
             "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
           },
           "empty": {
             "type": "boolean"

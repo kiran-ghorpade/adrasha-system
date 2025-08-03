@@ -24,8 +24,8 @@ import {
 } from 'rxjs';
 
 import type {
-  GetAllMembersParams,
-  GetTotalCountParams,
+  GetMemberCountParams,
+  GetMemberPageParams,
   MemberCreateDTO,
   MemberDataPageResponseDTO,
   MemberDataResponseDTO,
@@ -104,21 +104,21 @@ export class MemberDataService {
       `http://localhost:8080/data/members/${id}`,options
     );
   }
- getAllMembers<TData = MemberDataPageResponseDTO>(
-    params: GetAllMembersParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+ getMemberPage<TData = MemberDataPageResponseDTO>(
+    params: GetMemberPageParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-    getAllMembers<TData = MemberDataPageResponseDTO>(
-    params: GetAllMembersParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+    getMemberPage<TData = MemberDataPageResponseDTO>(
+    params: GetMemberPageParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-    getAllMembers<TData = MemberDataPageResponseDTO>(
-    params: GetAllMembersParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;getAllMembers<TData = MemberDataPageResponseDTO>(
-    params: GetAllMembersParams, options?: HttpClientOptions
+    getMemberPage<TData = MemberDataPageResponseDTO>(
+    params: GetMemberPageParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getMemberPage<TData = MemberDataPageResponseDTO>(
+    params: GetMemberPageParams, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.get<TData>(
       `http://localhost:8080/data/members`,{
     ...options,
-        ...params, ...options?.params,}
+        params: {...params.filterDTO, ...params.pageable, ...options?.params},}
     );
   }
  createMember<TData = MemberDataResponseDTO>(
@@ -137,21 +137,21 @@ export class MemberDataService {
       memberCreateDTO,options
     );
   }
- getTotalCount<TData = string>(
-    params: GetTotalCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+ getMemberCount<TData = number>(
+    params: GetMemberCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-    getTotalCount<TData = string>(
-    params: GetTotalCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+    getMemberCount<TData = number>(
+    params: GetMemberCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-    getTotalCount<TData = string>(
-    params: GetTotalCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;getTotalCount<TData = string>(
-    params: GetTotalCountParams, options?: HttpClientOptions
+    getMemberCount<TData = number>(
+    params: GetMemberCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getMemberCount<TData = number>(
+    params: GetMemberCountParams, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.get<TData>(
       `http://localhost:8080/data/members/count`,{
     ...options,
-        ...params, ...options?.params,}
+        params: {...params.filterDTO, ...options?.params},}
     );
   }
 };
@@ -159,6 +159,6 @@ export class MemberDataService {
 export type GetMemberClientResult = NonNullable<MemberDataResponseDTO>
 export type UdpateMemberClientResult = NonNullable<MemberDataResponseDTO>
 export type DeleteMemberClientResult = NonNullable<void>
-export type GetAllMembersClientResult = NonNullable<MemberDataPageResponseDTO>
+export type GetMemberPageClientResult = NonNullable<MemberDataPageResponseDTO>
 export type CreateMemberClientResult = NonNullable<MemberDataResponseDTO>
-export type GetTotalCountClientResult = NonNullable<string>
+export type GetMemberCountClientResult = NonNullable<number>

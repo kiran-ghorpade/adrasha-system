@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import com.adrasha.core.model.AliveStatus;
 import com.adrasha.core.model.Gender;
 import com.adrasha.core.model.Name;
 
@@ -25,9 +26,8 @@ public class MemberDataResponseDTO {
 	private String adharNumber;
 	private String abhaNumber;
 	private String mobileNumber;
-	private Boolean alive = true;
+	private AliveStatus aliveStatus;
 	
 	private Instant createdAt;
-	
 	private Instant updatedAt;
 }

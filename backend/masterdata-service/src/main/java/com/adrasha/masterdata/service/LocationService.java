@@ -14,7 +14,7 @@ public interface LocationService {
 	
 	Page<Location> getAll(Example<Location> example, Pageable pageable);
 
-	long getCount(Example<Location> example);
+	Long getCount(Example<Location> example);
 	
 	Location get(UUID id) throws NotFoundException;
 	

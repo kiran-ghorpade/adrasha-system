@@ -1,12 +1,11 @@
 package com.adrasha.masterdata.service.impl;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.adrasha.core.exception.AlreadyExistsException;
@@ -28,13 +27,13 @@ public class NCDServiceImplementation  implements NCDService{
 	private ModelMapper mapper;
 
 	@Override
-	public Page<NCD> getAll(Example<NCD> example, Pageable pageable) {
+	public List<NCD> getAll(Example<NCD> example) {
 		
-		return ncdRepository.findAll(example, pageable);
+		return ncdRepository.findAll(example);
 	}
 
 	@Override
-	public long getCount(Example<NCD> example) {
+	public Long getCount(Example<NCD> example) {
 		return ncdRepository.count(example);
 	}
 

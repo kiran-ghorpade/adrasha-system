@@ -1,6 +1,5 @@
 package com.adrasha.user.service;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.domain.Example;
@@ -13,7 +12,9 @@ import com.adrasha.user.model.RoleRequest;
 
 public interface RoleRequestService {
 
-	Page<RoleRequest> getAllRoleRequest(Example<RoleRequest> example, Pageable pageable);
+	Page<RoleRequest> getRoleRequestPage(Example<RoleRequest> example, Pageable pageable);
+	
+	Long getRoleRequestCount(Example<RoleRequest> example);
     
 	RoleRequest getRoleRequest(UUID roleRequestId) throws NotFoundException;
 	    
@@ -22,9 +23,5 @@ public interface RoleRequestService {
 	RoleRequest updateRoleRequest(UUID roleRequesId, RoleRequest updatedRoleRequest) throws NotFoundException;
     
 	RoleRequest deleteRoleRequest(UUID roleRequestId) throws NotFoundException;
-
-	long getTotalRequestCount(Example<RoleRequest> example);
-
-	List<RoleRequest> getRoleRequestsByUserId(UUID userId);
   
 }

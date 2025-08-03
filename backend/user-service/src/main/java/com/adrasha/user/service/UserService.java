@@ -13,7 +13,9 @@ import com.adrasha.user.model.User;
 
 public interface UserService {
 
-	Page<User> getAllUsers(Example<User> example, Pageable pageable);
+	Page<User> getUserPage(Example<User> example, Pageable pageable);
+	
+	Long getUserCount(Example<User> example);
     
     User getUser(UUID id) throws NotFoundException;
     
@@ -22,8 +24,6 @@ public interface UserService {
     User updateUser(UUID userId, User updatedUser) throws NotFoundException;
     
     User deleteUser(UUID userId) throws NotFoundException;
-
-	long getTotalUserCount(Example<User> example);
 
 	void removeRoleFromUser(UUID id, Role role);
  }

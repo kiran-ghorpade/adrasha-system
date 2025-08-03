@@ -88,6 +88,7 @@ export class LoginComponent {
         if (!loginStatus) {
           const translatedMsg = this.translateService.instant('login.failed');
           this.alertService.showAlert(translatedMsg, 'error');
+          return;
         }
         
         const translatedMsg = this.translateService.instant('login.success');

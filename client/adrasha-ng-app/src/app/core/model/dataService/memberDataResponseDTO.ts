@@ -6,6 +6,7 @@
  */
 import type { Name } from './name';
 import type { MemberDataResponseDTOGender } from './memberDataResponseDTOGender';
+import type { MemberDataResponseDTOAliveStatus } from './memberDataResponseDTOAliveStatus';
 
 export interface MemberDataResponseDTO {
   id?: string;
@@ -19,7 +20,7 @@ export interface MemberDataResponseDTO {
   adharNumber?: string;
   abhaNumber?: string;
   mobileNumber?: string;
-  alive?: boolean;
+  aliveStatus?: MemberDataResponseDTOAliveStatus;
   createdAt?: string;
   updatedAt?: string;
 }

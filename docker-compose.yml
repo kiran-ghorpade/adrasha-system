@@ -1,0 +1,126 @@
+services:
+  # ==================== BACKEND SERVICES ====================
+  eureka-server:
+    build:
+      context: ./backend/eureka-server
+    ports:
+      - "8761:8761"
+
+  api-gateway:
+    build:
+      context: ./backend/api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - eureka-server
+
+  auth-service:
+    build:
+      context: ./backend/auth-service
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - mysql
+      - rabbitmq
+      - eureka-server
+
+  data-service:
+    build:
+      context: ./backend/data-service
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - mysql
+      - rabbitmq
+      - eureka-server
+
+  analytics-service:
+    build:
+      context: ./backend/analytics-service
+    ports:
+      - "8084:8084"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - mysql
+      - rabbitmq
+      - eureka-server
+
+  masterdata-service:
+    build:
+      context: ./backend/masterdata-service
+    ports:
+      - "8085:8085"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - mysql
+      - rabbitmq
+      - eureka-server
+
+  user-service:
+    build:
+      context: ./backend/user-service
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - mysql
+      - rabbitmq
+      - eureka-server
+
+  # ==================== FRONTEND ====================
+  # ng-app:
+  #   build:
+  #     context: ./client/adrasha-ng-app
+  #   container_name: angular_frontend
+  #   ports:
+  #     - "4200:80"
+  #   depends_on:
+  #     - api-gateway
+
+  # ==================== RABBITMQ ====================
+  rabbitmq:
+    image: rabbitmq:3.13.7-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+  # ==================== DATABASE ====================
+  mysql:
+    image: mysql:8.0-debian
+    container_name: mysql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d
+
+
+  phpmyadmin:
+    image: phpmyadmin:5.2.1-apache
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: ""
+    ports:
+      - "80:80"
+    depends_on:
+      - mysql
+      
+# ==================== VOLUMES ====================
+volumes:
+  mysql-data:

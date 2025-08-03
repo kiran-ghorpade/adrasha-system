@@ -2,21 +2,19 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   inject,
-  OutputEmitterRef,
   signal,
-  viewChildren,
-  WritableSignal,
+  WritableSignal
 } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { RouterModule } from '@angular/router';
 import { UserResponseDTORolesItem } from '@core/model/userService';
 import { AuthService, LoadingService } from '@core/services';
-import { map, Subscription } from 'rxjs';
+import { map } from 'rxjs';
 import { DashboardHeaderComponent } from '../../../shared/components/dashboard-header/dashboard-header.component';
 import { AdminDashboardComponent } from '../components/admin-dashboard/admin-dashboard.component';
 import { AshaDashboardComponent } from '../components/asha-dashboard/asha-dashboard.component';
 import { UserDashboardComponent } from '../components/user-dashboard/user-dashboard.component';
-import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-dashboard',
@@ -39,7 +37,7 @@ export class DashboardComponent {
   isAdmin = signal(false);
   isAsha = signal(false);
   isUser = signal(false);
-  
+
   isLoading = toSignal(this.loadingService.loading$, { initialValue: false });
 
   ngOnInit() {
@@ -66,5 +64,7 @@ export class DashboardComponent {
     } else {
       this.isUser.set(true);
     }
+
+    // this.isAdmin.set(true)
   }
 }

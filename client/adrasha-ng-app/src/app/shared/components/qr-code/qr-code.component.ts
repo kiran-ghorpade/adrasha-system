@@ -24,7 +24,7 @@ export interface FamilyQRType {
     AppLogoComponent,
   ],
   template: ` 
-    <div mat-dialog-content id="printSection">
+    <mat-dialog-content id="printSection">
       @if(data){
       <div class="text-center">
         <app-logo />
@@ -39,8 +39,8 @@ export interface FamilyQRType {
       }@else {
       <h4>Failed Load Information</h4>
       }
-    </div>
-    <div mat-dialog-actions>
+    </mat-dialog-content>
+    <mat-dialog-actions>
       <button matButton mat-dialog-close cdkFocusInitial>close</button>
       <button
         matButton="filled"
@@ -54,7 +54,7 @@ export interface FamilyQRType {
         <mat-icon> print </mat-icon>
         print
       </button>
-    </div>`,
+    </mat-dialog-actions>`,
 })
 export class QrCodeDialog {
   data: FamilyQRType = inject(MAT_DIALOG_DATA);

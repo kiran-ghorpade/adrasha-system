@@ -1,18 +1,5 @@
-import { Injectable, inject } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { AuthenticationService } from '@core/api/authentication/authentication.service';
-import { TokenService } from '@core/services';
-import {
-  BehaviorSubject,
-  catchError,
-  firstValueFrom,
-  map,
-  Observable,
-  of,
-  share,
-  switchMap,
-  tap,
-  throwError,
-} from 'rxjs';
 import {
   LoginRequest,
   RegistrationRequest,
@@ -20,6 +7,18 @@ import {
   UserDTORolesItem,
 } from '@core/model/authService';
 import { Token } from '@core/model/Token';
+import { TokenService } from '@core/services';
+import {
+  BehaviorSubject,
+  catchError,
+  map,
+  Observable,
+  of,
+  share,
+  switchMap,
+  tap,
+  throwError
+} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -31,9 +30,9 @@ export class AuthService {
   private currentUser$ = new BehaviorSubject<UserDTO | null>(null);
   private initialized$ = new BehaviorSubject<boolean>(false);
 
-  // construcor() {
-  //   this.init();
-  // }
+  construcor() {
+    this.init();
+  }
 
   init() {
     if (this.tokenService.valid()) {

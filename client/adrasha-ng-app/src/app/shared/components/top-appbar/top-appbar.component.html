@@ -55,3 +55,10 @@
     }
   </div>
 </div>
+@if (!isOnline()) {
+<app-alert
+  icon="info"
+  message="You are offline. Check your internet connection."
+/>
+
+}

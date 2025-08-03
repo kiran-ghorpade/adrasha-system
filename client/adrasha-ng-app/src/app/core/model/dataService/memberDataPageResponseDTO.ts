@@ -11,13 +11,13 @@ import type { SortObject } from './sortObject';
 export interface MemberDataPageResponseDTO {
   content?: MemberDataResponseDTO[];
   pageable?: PageableObject;
-  totalPages?: number;
-  totalElements?: number;
   last?: boolean;
-  first?: boolean;
+  totalElements?: number;
+  totalPages?: number;
   size?: number;
   number?: number;
   sort?: SortObject;
+  first?: boolean;
   numberOfElements?: number;
   empty?: boolean;
 }

@@ -5,12 +5,14 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { MemberDataFilterDTOGender } from './memberDataFilterDTOGender';
+import type { MemberDataFilterDTOAlive } from './memberDataFilterDTOAlive';
 
 export interface MemberDataFilterDTO {
   familyId?: string;
   ashaId?: string;
   gender?: MemberDataFilterDTOGender;
   dateOfBirth?: string;
-  age?: number;
-  alive?: boolean;
+  minAge?: number;
+  maxAge?: number;
+  alive?: MemberDataFilterDTOAlive;
 }

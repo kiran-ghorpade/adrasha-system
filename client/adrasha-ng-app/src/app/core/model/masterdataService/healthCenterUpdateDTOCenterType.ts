@@ -10,10 +10,10 @@ export type HealthCenterUpdateDTOCenterType = typeof HealthCenterUpdateDTOCenter
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const HealthCenterUpdateDTOCenterType = {
-  Subcenter: 'Subcenter',
-  Primary_Health_Center: 'Primary Health Center',
-  Community_Health_Center: 'Community Health Center',
-  'Sub-district_Hospital': 'Sub-district Hospital',
-  District_Hospital: 'District Hospital',
-  Medical_College: 'Medical College',
+  SUB_CENTER: 'SUB_CENTER',
+  PRIMARY_HEALTH_CENTER: 'PRIMARY_HEALTH_CENTER',
+  COMMUNITY_HEALTH_CENTER: 'COMMUNITY_HEALTH_CENTER',
+  SUB_DISTRICT_HOSPITAL: 'SUB_DISTRICT_HOSPITAL',
+  DISTRICT_HOSPITAL: 'DISTRICT_HOSPITAL',
+  MEDICAL_COLLEGE: 'MEDICAL_COLLEGE',
 } as const;

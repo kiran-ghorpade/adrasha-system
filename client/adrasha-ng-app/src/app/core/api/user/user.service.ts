@@ -25,7 +25,7 @@ import {
 
 import type {
   GetAllUsersParams,
-  GetTotalUsersParams,
+  GetCountParams,
   UserPageResponseDTO,
   UserResponseDTO,
   UserUpdateDTO
@@ -117,7 +117,7 @@ export class UserService {
     return this.http.get<TData>(
       `http://localhost:8080/users`,{
     ...options,
-        ...params, ...options?.params,}
+        params: {...params.filterDTO, ...params.pageable, ...options?.params},}
     );
   }
  getCurrentUser<TData = UserResponseDTO>(
@@ -135,21 +135,36 @@ export class UserService {
       `http://localhost:8080/users/me`,options
     );
   }
- getTotalUsers<TData = string>(
-    params: GetTotalUsersParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+ getCount<TData = string>(
+    params: GetCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-    getTotalUsers<TData = string>(
-    params: GetTotalUsersParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+    getCount<TData = string>(
+    params: GetCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-    getTotalUsers<TData = string>(
-    params: GetTotalUsersParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;getTotalUsers<TData = string>(
-    params: GetTotalUsersParams, options?: HttpClientOptions
+    getCount<TData = string>(
+    params: GetCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getCount<TData = string>(
+    params: GetCountParams, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.get<TData>(
-      `http://localhost:8080/users/count`,{
+      `http://localhost:8080/users/analytics/count`,{
     ...options,
-        ...params, ...options?.params,}
+        params: {...params.filterDTO, ...options?.params},}
+    );
+  }
+ getRoleCount<TData = string>(
+     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+  ): Observable<TData>;
+    getRoleCount<TData = string>(
+     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+  ): Observable<AngularHttpResponse<TData>>;
+    getRoleCount<TData = string>(
+     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getRoleCount<TData = string>(
+     options?: HttpClientOptions
+  ): Observable<TData>  {
+    return this.http.get<TData>(
+      `http://localhost:8080/users/analytics/count/role`,options
     );
   }
  removeRole<TData = void>(
@@ -178,5 +193,6 @@ export type UdpatedUserClientResult = NonNullable<UserResponseDTO>
 export type DeleteUserClientResult = NonNullable<void>
 export type GetAllUsersClientResult = NonNullable<UserPageResponseDTO>
 export type GetCurrentUserClientResult = NonNullable<UserResponseDTO>
-export type GetTotalUsersClientResult = NonNullable<string>
+export type GetCountClientResult = NonNullable<string>
+export type GetRoleCountClientResult = NonNullable<string>
 export type RemoveRoleClientResult = NonNullable<void>

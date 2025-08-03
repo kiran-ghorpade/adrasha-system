@@ -6,16 +6,12 @@ import { TopAppBarComponent } from '@shared/components';
 @Component({
   selector: 'blank-layout',
   template: `
-    <div
-      id="secondary-container"
-      class="h-[100vh] flex flex-col md:px-5 p-1 gap-2"
-    >
+    <div id="secondary-container" class="h-dvh flex flex-col md:px-5 gap-2">
       <app-top-appbar />
-      <div
-        class="h-full overflow-scroll mb-4 md:m-0 rounded-md md:p-2"
-        style="box-shadow: var(--mat-sys-level3)"
-      >
-        <router-outlet />
+      <div class="h-full md:pb-5 md:px-1">
+        <div class="h-full rounded-md" style="box-shadow: var(--mat-sys-level3)">
+          <router-outlet />
+        </div>
       </div>
     </div>
   `,

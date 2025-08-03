@@ -2,18 +2,19 @@
   "name": "adrasha-ng-app",
   "version": "0.0.0",
   "scripts": {
-    "v": "npm -v",
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
     "fetch-api-docs": "node ./openAPI/fetch-api-docs.js",
     "orval": " orval --config orval.config.ts",
-    "generate-api-client": "npm run fetch-api-docs && npm run orval"
+    "generate-api-client": "npm run fetch-api-docs && npm run orval",
+    "start": "ng serve",
+    "build": "ng build",
+    "v": "npm -v",
+    "ng": "ng",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
+    "@angular/animations": "^20.0.4",
     "@angular/cdk": "^20.0.3",
     "@angular/common": "^20.0.4",
     "@angular/compiler": "^20.0.4",

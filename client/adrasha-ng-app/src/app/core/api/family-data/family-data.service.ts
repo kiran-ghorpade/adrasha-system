@@ -28,8 +28,8 @@ import type {
   FamilyPageResponseDTO,
   FamilyRegistrationDTO,
   FamilyUpdateDTO,
-  GetAllFamiliesParams,
-  GetTotalCount2Params
+  GetFamilyCount1Params,
+  GetFamilyPageParams
 } from '../../model/dataService';
 
 
@@ -104,21 +104,21 @@ export class FamilyDataService {
       `http://localhost:8080/data/families/${id}`,options
     );
   }
- getAllFamilies<TData = FamilyPageResponseDTO>(
-    params: GetAllFamiliesParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+ getFamilyPage<TData = FamilyPageResponseDTO>(
+    params: GetFamilyPageParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-    getAllFamilies<TData = FamilyPageResponseDTO>(
-    params: GetAllFamiliesParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+    getFamilyPage<TData = FamilyPageResponseDTO>(
+    params: GetFamilyPageParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-    getAllFamilies<TData = FamilyPageResponseDTO>(
-    params: GetAllFamiliesParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;getAllFamilies<TData = FamilyPageResponseDTO>(
-    params: GetAllFamiliesParams, options?: HttpClientOptions
+    getFamilyPage<TData = FamilyPageResponseDTO>(
+    params: GetFamilyPageParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getFamilyPage<TData = FamilyPageResponseDTO>(
+    params: GetFamilyPageParams, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.get<TData>(
       `http://localhost:8080/data/families`,{
     ...options,
-        ...params, ...options?.params,}
+        params: {...params.filterDTO, ...params.pageable, ...options?.params},}
     );
   }
  createFamily<TData = FamilyDataResponseDTO>(
@@ -137,21 +137,21 @@ export class FamilyDataService {
       familyRegistrationDTO,options
     );
   }
- getTotalCount2<TData = string>(
-    params: GetTotalCount2Params, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+ getFamilyCount1<TData = number>(
+    params: GetFamilyCount1Params, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-    getTotalCount2<TData = string>(
-    params: GetTotalCount2Params, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+    getFamilyCount1<TData = number>(
+    params: GetFamilyCount1Params, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-    getTotalCount2<TData = string>(
-    params: GetTotalCount2Params, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;getTotalCount2<TData = string>(
-    params: GetTotalCount2Params, options?: HttpClientOptions
+    getFamilyCount1<TData = number>(
+    params: GetFamilyCount1Params, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getFamilyCount1<TData = number>(
+    params: GetFamilyCount1Params, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.get<TData>(
       `http://localhost:8080/data/families/count`,{
     ...options,
-        ...params, ...options?.params,}
+        params: {...params.filterDTO, ...options?.params},}
     );
   }
 };
@@ -159,6 +159,6 @@ export class FamilyDataService {
 export type GetFamilyClientResult = NonNullable<FamilyDataResponseDTO>
 export type UpdateFamilyClientResult = NonNullable<FamilyDataResponseDTO>
 export type DeleteFamilyClientResult = NonNullable<void>
-export type GetAllFamiliesClientResult = NonNullable<FamilyPageResponseDTO>
+export type GetFamilyPageClientResult = NonNullable<FamilyPageResponseDTO>
 export type CreateFamilyClientResult = NonNullable<FamilyDataResponseDTO>
-export type GetTotalCount2ClientResult = NonNullable<string>
+export type GetFamilyCount1ClientResult = NonNullable<number>

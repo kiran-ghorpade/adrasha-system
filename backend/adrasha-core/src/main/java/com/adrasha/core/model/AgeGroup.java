@@ -1,8 +1,12 @@
 package com.adrasha.core.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
+
+import java.util.stream.Stream;
 
 @Schema
+@Getter
 public enum AgeGroup {
 	
 	INFANT("Infant", 0, 1),
@@ -13,39 +17,30 @@ public enum AgeGroup {
 	SENIOR("Senior", 60, 200),
 	UNKNOWN("Unknown", -1, -1);
 	
-	private String displayName;
-	private int minAge;
-	private int maxAge;
+	private final String displayName;
+	private final int minAge;
+	private final int maxAge;
 	
 	private AgeGroup(String displayName, int minAge, int maxAge) {
 		this.displayName = displayName;
 		this.minAge = minAge;
 		this.maxAge = maxAge;
 	}
-
-	public String getDisplayName() {
-		return displayName;
-	}
-
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
-	}
-
-	public int getMinAge() {
-		return minAge;
-	}
-
-	public void setMinAge(int minAge) {
-		this.minAge = minAge;
-	}
-
-	public int getMaxAge() {
-		return maxAge;
-	}
-
-	public void setMaxAge(int maxAge) {
-		this.maxAge = maxAge;
-	}
 	
+    public static AgeGroup fromAge(Integer age) {
+        if (age == null) return AgeGroup.UNKNOWN;
+        return Stream.of(AgeGroup.values())
+                     .filter(g -> g.check(age))
+                     .findFirst()
+                     .orElse(AgeGroup.UNKNOWN);
+    }
+    
+	private boolean check(int age) {
+		
+		if (age >= this.minAge && age < this.maxAge) {
+			return true;
+		}
+		return false;
+	}
 	
 }

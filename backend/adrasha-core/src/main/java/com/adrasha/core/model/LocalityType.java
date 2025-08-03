@@ -1,8 +1,10 @@
 package com.adrasha.core.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
 
 @Schema
+@Getter
 public enum LocalityType {
 
 	CITY("City"),
@@ -14,14 +16,5 @@ public enum LocalityType {
 
 	LocalityType(String displayName) {
 		this.displayName = displayName;
-	}
-
-	public String getDisplayName() {
-		return displayName;
-	}
-
-	@Override
-	public String toString() {
-		return displayName;
 	}
 }

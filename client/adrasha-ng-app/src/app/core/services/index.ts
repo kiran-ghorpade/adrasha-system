@@ -1,7 +1,6 @@
 export * from './alert.service';
 export * from './auth.service';
 export * from './confirmation.service';
-export * from './dialog.service';
 export * from './loading.service';
 export * from './menu.service';
 export * from './theme.service';

@@ -8,7 +8,7 @@
 export interface HealthRecordCreateDTO {
   memberId: string;
   ashaId: string;
-  date?: string;
+  recordedAt?: string;
   pregnant?: boolean;
   height?: number;
   weight?: number;

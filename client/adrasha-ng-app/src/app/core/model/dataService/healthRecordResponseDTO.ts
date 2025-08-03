@@ -9,7 +9,7 @@ export interface HealthRecordResponseDTO {
   id?: string;
   memberId?: string;
   ashaId?: string;
-  date?: string;
+  recordedAt?: string;
   pregnant?: boolean;
   height?: number;
   weight?: number;

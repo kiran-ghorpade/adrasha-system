@@ -14,10 +14,10 @@ export interface HealthCenterPageResponseDTO {
   totalPages?: number;
   totalElements?: number;
   last?: boolean;
-  first?: boolean;
   size?: number;
   number?: number;
   sort?: SortObject;
   numberOfElements?: number;
+  first?: boolean;
   empty?: boolean;
 }

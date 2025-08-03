@@ -1,15 +1,12 @@
 package com.adrasha.masterdata.controller;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -40,9 +37,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/masterdata/ncd")
+@RequiredArgsConstructor
 @SecurityRequirement(name = "BearerAuthentication")
 @Tag(name = "NCD")
 @ApiResponses({
@@ -52,29 +51,23 @@ import jakarta.validation.Valid;
 @PreAuthorize("hasAnyRole('USER','SYSTEM')")
 public class NCDController {
 	
-
-	@Autowired
-    private NCDService ncdService;
-
-    @Autowired
-    private ModelMapper mapper;
+    private final NCDService ncdService;
+    private final ModelMapper mapper;
 
     @GetMapping
 	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = NCDPageResponseDTO.class)))
 	@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
-    public Page<NCDResponseDTO> getAllNCD(
-            NCDFilterDTO filterDTO,
-            @PageableDefault(page = 0, size = 5, sort = "name") 
-    		Pageable pageable
+    public List<NCDResponseDTO> getAllNCD(
+            NCDFilterDTO filterDTO
     	) {
 
         NCD exampleRecord = mapper.map(filterDTO, NCD.class);
 
         Example<NCD> example = Example.of(exampleRecord, ExampleMatcherUtils.getDefaultMatcher());
 
-        Page<NCD> healthPage = ncdService.getAll(example, pageable);
+        List<NCD> healthPage = ncdService.getAll(example);
 
-        return healthPage.map(record -> mapper.map(record, NCDResponseDTO.class));
+        return healthPage.stream().map(record -> mapper.map(record, NCDResponseDTO.class)).toList();
     }
     
 	@GetMapping("/count")

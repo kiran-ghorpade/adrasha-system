@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,9 +37,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/users")
+@RequiredArgsConstructor
 @SecurityRequirement(name = "BearerAuthentication")
 @Tag(name = "User")
 @ApiResponses({
@@ -50,11 +51,8 @@ import jakarta.validation.Valid;
 @PreAuthorize("hasAnyRole('ADMIN', 'SYSTEM')")
 public class UserController {
 	
-		@Autowired
-		private UserService userService;
-		
-		@Autowired
-		private ModelMapper mapper;
+		private final UserService userService;
+		private final ModelMapper mapper;
 
 		@GetMapping
 		@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = UserPageResponseDTO.class)))
@@ -69,7 +67,7 @@ public class UserController {
 			
 			Example<User> example = Example.of(searchTerms, ExampleMatcherUtils.getDefaultMatcher());
 	
-			Page<User> usersPage = userService.getAllUsers(example, pageable);
+			Page<User> usersPage = userService.getUserPage(example, pageable);
 			
 			Page<UserResponseDTO> dtoPage = usersPage.map(roleRequest -> mapper.map(roleRequest, UserResponseDTO.class));
 			
@@ -79,15 +77,12 @@ public class UserController {
 		@GetMapping("/count")
 		@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Map.class)))
 		@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
-		public Map<String, Long> getTotalUsers(UserFilterDTO filterDTO) {
-			User filter = mapper.map(filterDTO, User.class);
-
-			Example<User> example = Example.of(filter, ExampleMatcherUtils.getDefaultMatcher());
-
-			long total = userService.getTotalUserCount(example);
-			return Map.of("count", total);
+		private long getCount(UserFilterDTO filterDTO) {
+			Example<User> user = Example.of(mapper.map(filterDTO, User.class), ExampleMatcherUtils.getDefaultMatcher());
+			return userService.getUserCount(user);
 		}
 		
+
 		@GetMapping("/{id}")
 		@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = UserResponseDTO.class)))
 		@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))	
@@ -111,19 +106,12 @@ public class UserController {
 			return mapper.map(user, UserResponseDTO.class);
 			
 		}
-		
-//	    @PostMapping("/{id}/roles")
-//	    @PreAuthorize("hasAnyRole('SYSTEM')")
-//	    public ResponseEntity<?> addRole(@PathVariable UUID id, @RequestBody RoleRequest request) {
-//	        userService.addRoleToUser(id, request.getRole());
-//	        return ResponseEntity.created(null).build();
-//	    }
 
 	    @DeleteMapping("/{id}/roles/{role}")
 		@ApiResponse(responseCode = "204", content = @Content())
 		@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 	    @PreAuthorize("#id.toString() == authentication.principal.toString()")
-	    public ResponseEntity<?> removeRole(@PathVariable UUID id, @PathVariable Role role) {
+	    public ResponseEntity<Void> removeRole(@PathVariable UUID id, @PathVariable Role role) {
 	        userService.removeRoleFromUser(id, role);
 	        return ResponseEntity.noContent().build();
 	    }

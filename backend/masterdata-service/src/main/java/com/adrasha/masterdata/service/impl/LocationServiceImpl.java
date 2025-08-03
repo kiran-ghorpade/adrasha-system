@@ -34,7 +34,7 @@ public class LocationServiceImpl implements LocationService{
 	}
 	
 	@Override
-	public long getCount(Example<Location> example) {
+	public Long getCount(Example<Location> example) {
 		return locationRepository.count(example);
 	}
 

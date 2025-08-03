@@ -23,7 +23,7 @@ public class Location extends Auditable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
-	
+
 	private String name;
 	
 	@Enumerated(EnumType.STRING)

@@ -1,14 +1,12 @@
 package com.adrasha.user.controller;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +14,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +31,6 @@ import com.adrasha.core.dto.ValidationErrorResponse;
 import com.adrasha.core.dto.filter.RoleRequestFilterDTO;
 import com.adrasha.core.dto.page.RoleRequestPageResponseDTO;
 import com.adrasha.core.dto.response.RoleRequestResponseDTO;
-import com.adrasha.core.exception.UnAuthorizedException;
 import com.adrasha.core.model.RequestStatus;
 import com.adrasha.core.model.Role;
 import com.adrasha.user.dto.roleRequest.RoleRequestCreateDTO;
@@ -53,9 +49,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/roleRequests")
+@RequiredArgsConstructor
 @SecurityRequirement(name = "BearerAuthentication")
 @Tag(name = "RoleRequest")
 @ApiResponses({
@@ -65,17 +63,10 @@ import jakarta.validation.Valid;
 @PreAuthorize("hasAnyRole('ADMIN','SYSTEM')")
 public class RoleRequestController {
 	
-		@Autowired
-		private RoleRequestService roleRequestService;
-		
-		@Autowired
-		private UserService userService;
-		
-		@Autowired
-		private AuthService authService;
-		
-		@Autowired
-		private ModelMapper mapper;
+		private final RoleRequestService roleRequestService;
+		private final UserService userService;
+		private final AuthService authService;
+		private final ModelMapper mapper;
 
 		@GetMapping
 		@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = RoleRequestPageResponseDTO.class)))
@@ -91,7 +82,7 @@ public class RoleRequestController {
 			
 			Example<RoleRequest> example = Example.of(searchTerms, ExampleMatcherUtils.getDefaultMatcher());
 			
-			Page<RoleRequest> rolePages = roleRequestService.getAllRoleRequest(example, pageable);
+			Page<RoleRequest> rolePages = roleRequestService.getRoleRequestPage(example, pageable);
 			
 			Page<RoleRequestResponseDTO> roleRequestResponseDTOPage = rolePages.map(roleRequest -> mapper.map(roleRequest, RoleRequestResponseDTO.class));
 		
@@ -101,16 +92,11 @@ public class RoleRequestController {
 		@GetMapping("/count")
 		@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Map.class)))
 		@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
-		public Map<String, Long> getTotalRoleRequests(RoleRequestFilterDTO filterDTO) {
-			RoleRequest filter = mapper.map(filterDTO, RoleRequest.class);
-
-			Example<RoleRequest> example = Example.of(filter, ExampleMatcherUtils.getDefaultMatcher());
-
-			long total = roleRequestService.getTotalRequestCount(example);
-			return Map.of("count", total);
+		private long getCount(RoleRequestFilterDTO filterDTO) {
+			Example<RoleRequest> request = Example.of(mapper.map(filterDTO, RoleRequest.class), ExampleMatcherUtils.getDefaultMatcher());
+			return roleRequestService.getRoleRequestCount(request);
 		}
 
-		
 		@GetMapping("/{id}")
 		@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = RoleRequestResponseDTO.class)))
 		@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
@@ -120,23 +106,6 @@ public class RoleRequestController {
 			RoleRequest request = roleRequestService.getRoleRequest(id);
 			return mapper.map(request, RoleRequestResponseDTO.class);
 
-		}
-		
-		@GetMapping("/me")
-		@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = RoleRequestResponseDTO.class)))
-		@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
-		@PreAuthorize("hasAnyRole('USER', 'SYSTEM')")
-		public List<RoleRequest> getCurrentUserRoleRequest(Authentication authentication) {
-
-			if(authentication == null) {
-				throw new UnAuthorizedException();
-			}
-			
-			// if principal change, then please change this code.
-			UUID userId = UUID.fromString(authentication.getPrincipal().toString());
-			
-			return roleRequestService.getRoleRequestsByUserId(userId);
-						
 		}
 		
 		@PostMapping

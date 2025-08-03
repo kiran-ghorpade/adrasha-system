@@ -32,6 +32,8 @@ public class RoleRequestResponseDTO {
 	
 	private UUID healthCenterId;
 	
+	private String remark;
+	
 	private Instant createdAt;
 	
 	private Instant updatedAt;

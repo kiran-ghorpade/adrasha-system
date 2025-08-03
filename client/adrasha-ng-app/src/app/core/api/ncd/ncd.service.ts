@@ -118,7 +118,7 @@ export class NcdService {
     return this.http.get<TData>(
       `http://localhost:8080/masterdata/ncd`,{
     ...options,
-        ...params, ...options?.params,}
+        params: {...params.filterDTO, ...options?.params},}
     );
   }
  createNCD<TData = NCDResponseDTO>(
@@ -151,7 +151,7 @@ export class NcdService {
     return this.http.get<TData>(
       `http://localhost:8080/masterdata/ncd/count`,{
     ...options,
-        ...params, ...options?.params,}
+        params: {...params.filterDTO, ...options?.params},}
     );
   }
 };

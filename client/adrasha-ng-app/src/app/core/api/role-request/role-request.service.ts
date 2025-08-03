@@ -25,7 +25,6 @@ import {
 
 import type {
   GetAllRoleRequestsParams,
-  GetTotalRoleRequestsParams,
   RoleRequestCreateDTO,
   RoleRequestPageResponseDTO,
   RoleRequestResponseDTO,
@@ -148,12 +147,7 @@ export class RoleRequestService {
     return this.http.get<TData>(
       `http://localhost:8080/roleRequests`,{
     ...options,
-        params:{
-          ...params.filterDTO,
-          ...params.pageable,
-          ...options?.params,
-        }
-      }
+        params: {...params.filterDTO, ...params.pageable, ...options?.params},}
     );
   }
  createRoleRequest<TData = RoleRequestResponseDTO>(
@@ -172,38 +166,6 @@ export class RoleRequestService {
       roleRequestCreateDTO,options
     );
   }
- getCurrentUserRoleRequest<TData = RoleRequestResponseDTO>(
-     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
-  ): Observable<TData>;
-    getCurrentUserRoleRequest<TData = RoleRequestResponseDTO>(
-     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
-  ): Observable<AngularHttpResponse<TData>>;
-    getCurrentUserRoleRequest<TData = RoleRequestResponseDTO>(
-     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;getCurrentUserRoleRequest<TData = RoleRequestResponseDTO>(
-     options?: HttpClientOptions
-  ): Observable<TData>  {
-    return this.http.get<TData>(
-      `http://localhost:8080/roleRequests/me`,options
-    );
-  }
- getTotalRoleRequests<TData = string>(
-    params: GetTotalRoleRequestsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
-  ): Observable<TData>;
-    getTotalRoleRequests<TData = string>(
-    params: GetTotalRoleRequestsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
-  ): Observable<AngularHttpResponse<TData>>;
-    getTotalRoleRequests<TData = string>(
-    params: GetTotalRoleRequestsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;getTotalRoleRequests<TData = string>(
-    params: GetTotalRoleRequestsParams, options?: HttpClientOptions
-  ): Observable<TData>  {
-    return this.http.get<TData>(
-      `http://localhost:8080/roleRequests/count`,{
-    ...options,
-        params:{...params.filterDTO, ...options?.params},}
-    );
-  }
 };
 
 export type GetRoleRequestClientResult = NonNullable<RoleRequestResponseDTO>
@@ -213,5 +175,3 @@ export type RejectUserRequestClientResult = NonNullable<void>
 export type ApproveUserRequestClientResult = NonNullable<void>
 export type GetAllRoleRequestsClientResult = NonNullable<RoleRequestPageResponseDTO>
 export type CreateRoleRequestClientResult = NonNullable<RoleRequestResponseDTO>
-export type GetCurrentUserRoleRequestClientResult = NonNullable<RoleRequestResponseDTO>
-export type GetTotalRoleRequestsClientResult = NonNullable<string>

@@ -15,6 +15,7 @@ export interface RoleRequestResponseDTO {
   userId?: string;
   status?: RoleRequestResponseDTOStatus;
   healthCenterId?: string;
+  remark?: string;
   createdAt?: string;
   updatedAt?: string;
 }

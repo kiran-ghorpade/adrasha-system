@@ -18,7 +18,7 @@ public class HealthRecordResponseDTO {
     
 	private UUID ashaId;
 	
-	private Instant date;
+	private Instant recordedAt;
 	
     private Boolean pregnant;
     	

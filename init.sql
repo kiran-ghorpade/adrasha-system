@@ -1,0 +1,5 @@
+CREATE DATABASE IF NOT EXISTS adrasha_auth_db;
+CREATE DATABASE IF NOT EXISTS adrasha_user_db;
+CREATE DATABASE IF NOT EXISTS adrasha_analytics_db;
+CREATE DATABASE IF NOT EXISTS adrasha_data_db;
+CREATE DATABASE IF NOT EXISTS adrasha_masterdata_db;

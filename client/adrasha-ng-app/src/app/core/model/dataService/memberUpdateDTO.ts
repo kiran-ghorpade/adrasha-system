@@ -6,6 +6,7 @@
  */
 import type { Name } from './name';
 import type { MemberUpdateDTOGender } from './memberUpdateDTOGender';
+import type { MemberUpdateDTOAliveStatus } from './memberUpdateDTOAliveStatus';
 
 export interface MemberUpdateDTO {
   familyId: string;
@@ -21,5 +22,5 @@ export interface MemberUpdateDTO {
   abhaNumber?: string;
   /** @pattern ^[6-9]\d{9}$ */
   mobileNumber?: string;
-  alive?: boolean;
+  aliveStatus?: MemberUpdateDTOAliveStatus;
 }

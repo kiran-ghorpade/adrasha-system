@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.adrasha.core.model.AgeGroup;
+import com.adrasha.core.model.AliveStatus;
 import com.adrasha.core.model.Gender;
 import com.adrasha.core.model.HealthCenterType;
 import com.adrasha.core.model.LocalityType;
@@ -96,6 +97,17 @@ public class StaticDataController {
 	@GetMapping("/poverty-statuses")
 	public List<StaticDataDTO> getPovertyStatuses(){
 		return Arrays.stream(PovertyStatus.values())
+				.map(status -> 
+						StaticDataDTO.builder()
+						.code(status.name())
+						.label(status.getDisplayName())
+						.build())
+				.collect(Collectors.toList());
+	}
+	
+	@GetMapping("/alive-statuses")
+	public List<StaticDataDTO> getAliveStatuses(){
+		return Arrays.stream(AliveStatus.values())
 				.map(status -> 
 						StaticDataDTO.builder()
 						.code(status.name())

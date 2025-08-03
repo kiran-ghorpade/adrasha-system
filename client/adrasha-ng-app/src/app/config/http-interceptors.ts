@@ -1,4 +1,14 @@
 // src/app/config/http-interceptors.ts
-import { loadingInterceptor, loggingInterceptor, tokenInterceptor } from '@core/interceptors';
+import {
+  errorInterceptor,
+  loadingInterceptor,
+  loggingInterceptor,
+  tokenInterceptor,
+} from '@core/interceptors';
 
-export const interceptors = [tokenInterceptor, loggingInterceptor, loadingInterceptor];
+export const interceptors = [
+  tokenInterceptor,
+  errorInterceptor, 
+  loggingInterceptor,
+  loadingInterceptor,
+];

@@ -27,9 +27,14 @@ public class RoleRequestServiceImpl implements RoleRequestService {
 	private ModelMapper modelMapper;
 
 	@Override
-	public Page<RoleRequest> getAllRoleRequest(Example<RoleRequest> example, Pageable pageable) {
+	public Page<RoleRequest> getRoleRequestPage(Example<RoleRequest> example, Pageable pageable) {
 
 		return requestRepository.findAll(example, pageable);
+	}
+	
+	@Override
+	public Long getRoleRequestCount(Example<RoleRequest> example) {
+		return requestRepository.count(example);
 	}
 
 	@Override
@@ -66,16 +71,4 @@ public class RoleRequestServiceImpl implements RoleRequestService {
 		requestRepository.delete(request);
 		return request;
 	}
-
-	@Override
-	public List<RoleRequest> getRoleRequestsByUserId(UUID userId) {
-
-		return requestRepository.findByUserId(userId);
-	}
-
-	@Override
-	public long getTotalRequestCount(Example<RoleRequest> example) {
-		return requestRepository.count(example);
-	}
-
 }

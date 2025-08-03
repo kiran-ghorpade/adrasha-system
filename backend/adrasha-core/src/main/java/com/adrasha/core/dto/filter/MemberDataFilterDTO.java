@@ -3,6 +3,7 @@ package com.adrasha.core.dto.filter;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import com.adrasha.core.model.AliveStatus;
 import com.adrasha.core.model.Gender;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -18,8 +19,9 @@ public class MemberDataFilterDTO {
 	private UUID ashaId;
 	private Gender gender;
 	private LocalDate dateOfBirth;
-	private Integer age;
+	private Integer minAge;
+	private Integer maxAge;
 	
 	@Default
-	private Boolean alive = true;
+	private AliveStatus alive = AliveStatus.ALIVE;
 }

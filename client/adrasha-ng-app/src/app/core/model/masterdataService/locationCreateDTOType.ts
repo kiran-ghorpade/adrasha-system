@@ -10,8 +10,8 @@ export type LocationCreateDTOType = typeof LocationCreateDTOType[keyof typeof Lo
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const LocationCreateDTOType = {
-  City: 'City',
-  Village: 'Village',
-  Town: 'Town',
-  Hamlet: 'Hamlet',
+  CITY: 'CITY',
+  VILLAGE: 'VILLAGE',
+  TOWN: 'TOWN',
+  HAMLET: 'HAMLET',
 } as const;

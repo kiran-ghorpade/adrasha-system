@@ -14,7 +14,7 @@ public interface HealthCenterService{
 		
 	Page<HealthCenter> getAll(Example<HealthCenter> example, Pageable pageable);
 	
-	long getCount(Example<HealthCenter> example);
+	Long getCount(Example<HealthCenter> example);
 	
 	HealthCenter get(UUID id) throws NotFoundException;
 	
@@ -23,7 +23,4 @@ public interface HealthCenterService{
 	HealthCenter update(UUID id, HealthCenter entity) throws NotFoundException;
 	
 	void delete(UUID id) throws NotFoundException;
-
-
-
 }

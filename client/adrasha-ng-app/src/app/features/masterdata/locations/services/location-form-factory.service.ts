@@ -33,7 +33,7 @@ export class LocationFormFactoryService
         isLoading
       ),
       type: this.createControl(
-        initialData.type || LocationResponseDTOType.Hamlet,
+        initialData.type || LocationResponseDTOType.HAMLET,
         [Validators.required],
         isLoading
       ),

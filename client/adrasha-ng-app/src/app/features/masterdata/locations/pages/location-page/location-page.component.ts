@@ -4,6 +4,9 @@ import { LocationListComponent } from '../../components';
 import { LocationService } from '@core/api';
 import { LocationResponseDTO } from '@core/model/masterdataService';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-location-page',
@@ -12,6 +15,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     PageHeaderComponent,
     LocationListComponent,
     MatPaginatorModule,
+    MatButtonModule,
+    MatIconModule,
+    RouterModule
   ],
   templateUrl: './location-page.component.html',
 })

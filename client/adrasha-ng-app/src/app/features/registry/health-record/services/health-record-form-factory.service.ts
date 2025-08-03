@@ -29,7 +29,7 @@ export class HealthRecordFormFactoryService
   private step1(initialData: HealthRecordResponseDTO, isLoading: boolean) {
     return this.fb.group({
       date: this.createControl(
-        initialData.date ?? new Date(),
+        initialData.recordedAt ?? new Date(),
         [Validators.required],
         isLoading
       ),

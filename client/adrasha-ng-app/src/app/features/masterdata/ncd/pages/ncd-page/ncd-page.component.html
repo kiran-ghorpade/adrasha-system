@@ -1,5 +1,37 @@
 <app-page-wrapper>
-    <div top> 
-        <app-page-header title="NCD's"></app-page-header>
+  <div top>
+    <app-page-header title="NCD's"></app-page-header>
+  </div>
+  <div content>
+    <div class="h-full flex flex-col items-between">
+      <!-- Add Button -->
+      <div class="flex justify-center">
+        <button mat-fab extended [routerLink]="['new']">
+          <mat-icon>add</mat-icon>
+          Add New Diesease
+        </button>
+      </div>
+
+      <!-- Search -->
+      <!-- <div class="flex justify-center">
+        <mat-form-field class="md:w-1/3">
+          <mat-label>Search family by house id</mat-label>
+          <input matInput #input [disabled]="totalSize() == 0" />
+        </mat-form-field>
+      </div> -->
+
+      <div>
+        <app-ncd-list [ncdList]="ncdList()" />
+        <mat-paginator
+          [pageIndex]="page()"
+          [length]="totalSize()"
+          [pageSize]="10"
+          aria-label="Select page"
+          (page)="onPageChange($event)"
+          [disabled]="totalSize() == 0"
+        >
+        </mat-paginator>
+      </div>
     </div>
+  </div>
 </app-page-wrapper>

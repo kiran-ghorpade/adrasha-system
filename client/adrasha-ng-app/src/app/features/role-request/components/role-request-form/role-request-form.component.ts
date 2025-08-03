@@ -131,6 +131,7 @@ export class RoleRequestFormComponent extends BaseFormComponent<
       },
       healthCenterId: data.healthCenterId,
       role: data.role,
+      remark: '',
     };
   }
 }

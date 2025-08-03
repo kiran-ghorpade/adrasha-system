@@ -60,7 +60,7 @@ export class FamilyPageComponent {
 
   loadFamilies() {
     this.familyService
-      .getAllFamilies({
+      .getFamilyPage({
         filterDTO: {
           ashaId: this.userId() ?? '',
         },
@@ -100,6 +100,6 @@ export class FamilyPageComponent {
       });
   }
 
-  
+
 }
 

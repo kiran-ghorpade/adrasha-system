@@ -74,10 +74,10 @@ export class FamilyDetailsPageComponent {
       this.familyDetails.set(user);
     });
     this.memberService
-      .getAllMembers({
+      .getMemberPage({
         filterDTO: {
           familyId: this.familyId,
-          alive: true,
+          alive: 'ALIVE',
         },
         pageable: {
           page: 0,

@@ -61,7 +61,7 @@ export class MemberPageComponent implements OnInit {
 
   loadMemberDetails() {
     this.memberService
-      .getAllMembers({
+      .getMemberPage({
         filterDTO: {
           ashaId: this.userId() ?? '',
         },

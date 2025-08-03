@@ -37,7 +37,7 @@ export class HealthCenterFormFactoryService
         isLoading
       ),
       centerType: this.createControl(
-        initialData.centerType || HealthCenterCreateDTOCenterType.Subcenter,
+        initialData.centerType || HealthCenterCreateDTOCenterType.SUB_CENTER,
         [Validators.required],
         isLoading
       ),

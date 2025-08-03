@@ -31,7 +31,7 @@ export function memberToData(member: MemberDataResponseDTO): DataLabelType[] {
     { label: 'Last Updated', value: member.updatedAt, icon: 'update' },
     {
       label: 'Alive',
-      value: member.alive ? 'Yes' : 'No',
+      value: member.aliveStatus,
       icon: 'check_circle',
     },
   ];

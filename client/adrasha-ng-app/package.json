@@ -2,11 +2,11 @@
   "name": "adrasha-ng-app",
   "version": "0.0.0",
   "scripts": {
+    "start": "ng serve",
+    "build": "ng build",
     "fetch-api-docs": "node ./openAPI/fetch-api-docs.js",
     "orval": " orval --config orval.config.ts",
     "generate-api-client": "npm run fetch-api-docs && npm run orval",
-    "start": "ng serve",
-    "build": "ng build",
     "v": "npm -v",
     "ng": "ng",
     "watch": "ng build --watch --configuration development",

@@ -1,0 +1,26 @@
+<app-page-wrapper>
+  <div top>
+    <app-page-header title="Registered Users"></app-page-header>
+  </div>
+  <!-- records line charts -->
+  <div content>
+    <div class="flex">
+      <!-- <mat-form-field >
+        <mat-label>Filter</mat-label>
+        <input matInput />
+      </mat-form-field> -->
+    </div>
+
+    <div>
+      <app-user-list [userList]="userList()" />
+      <mat-paginator
+        [pageIndex]="pageIndex()"
+        [length]="totalSize()"
+        [pageSize]="pageSize()"
+        (page)="onPageChange($event)"
+        [disabled]="totalSize() == 0"
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</app-page-wrapper>

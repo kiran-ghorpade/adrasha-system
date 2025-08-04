@@ -1,12 +1,12 @@
 package com.adrasha.masterdata.controller;
 
 import java.net.URI;
-import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -57,29 +57,29 @@ public class NCDController {
     @GetMapping
 	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = NCDPageResponseDTO.class)))
 	@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
-    public List<NCDResponseDTO> getAllNCD(
-            NCDFilterDTO filterDTO
+    public Page<NCDResponseDTO> getAllNCD(
+            NCDFilterDTO filterDTO,
+            Pageable pageable
     	) {
 
         NCD exampleRecord = mapper.map(filterDTO, NCD.class);
 
         Example<NCD> example = Example.of(exampleRecord, ExampleMatcherUtils.getDefaultMatcher());
 
-        List<NCD> healthPage = ncdService.getAll(example);
-
-        return healthPage.stream().map(record -> mapper.map(record, NCDResponseDTO.class)).toList();
+        Page<NCD> ncdPage = ncdService.getAll(example, pageable);
+        
+        return ncdPage.map(record -> mapper.map(record, NCDResponseDTO.class));
     }
     
 	@GetMapping("/count")
-	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Map.class)))
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Long.class)))
 	@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
-	public Map<String, Long> getCount(NCDFilterDTO filterDTO) {
+	public Long getCount(NCDFilterDTO filterDTO) {
 		NCD filter = mapper.map(filterDTO, NCD.class);
 
 		Example<NCD> example = Example.of(filter, ExampleMatcherUtils.getDefaultMatcher());
 
-		long total = ncdService.getCount(example);
-		return Map.of("count", total);
+		return ncdService.getCount(example);
 	}
 
 

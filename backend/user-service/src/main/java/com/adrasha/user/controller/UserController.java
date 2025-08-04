@@ -1,6 +1,5 @@
 package com.adrasha.user.controller;
 
-import java.util.Map;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
@@ -75,9 +74,9 @@ public class UserController {
 		}
 		
 		@GetMapping("/count")
-		@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Map.class)))
+		@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Long.class)))
 		@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
-		private long getCount(UserFilterDTO filterDTO) {
+		private Long getCount(UserFilterDTO filterDTO) {
 			Example<User> user = Example.of(mapper.map(filterDTO, User.class), ExampleMatcherUtils.getDefaultMatcher());
 			return userService.getUserCount(user);
 		}

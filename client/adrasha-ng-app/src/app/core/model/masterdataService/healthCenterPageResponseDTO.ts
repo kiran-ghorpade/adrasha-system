@@ -4,20 +4,10 @@
  * ADRASHA MASTERDATA-SERVICE API Docs
  * OpenAPI spec version: 1.0.0
  */
+import { PageInfo } from '../PageInfo';
 import type { HealthCenterResponseDTO } from './healthCenterResponseDTO';
-import type { PageableObject } from './pageableObject';
-import type { SortObject } from './sortObject';
 
 export interface HealthCenterPageResponseDTO {
   content?: HealthCenterResponseDTO[];
-  pageable?: PageableObject;
-  totalPages?: number;
-  totalElements?: number;
-  last?: boolean;
-  size?: number;
-  number?: number;
-  sort?: SortObject;
-  numberOfElements?: number;
-  first?: boolean;
-  empty?: boolean;
+  page?: PageInfo;
 }

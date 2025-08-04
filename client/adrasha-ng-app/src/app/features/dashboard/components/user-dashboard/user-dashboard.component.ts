@@ -6,7 +6,7 @@ import { RoleRequestService } from '@core/api/role-request/role-request.service'
 import { RoleRequestResponseDTO } from '@core/model/userService';
 import { AuthService } from '@core/services';
 import { DataCardLabelComponent } from '@shared/components';
-import { map, take } from 'rxjs';
+import { map, take, tap } from 'rxjs';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -20,14 +20,21 @@ export class UserDashboardComponent {
   userId: string = '';
   latestRoleRequest = signal<RoleRequestResponseDTO | null>(null);
 
+  // paginated metadata
+  pageIndex = signal(0);
+  pageSize = signal(10);
+  totalSize = signal(0);
+
   ngOnInit(): void {
     this.loadUser();
-    this.loadRoleRequests();
+    this.loadPaginatedData();
     // this.latestRoleRequest.set(this.users);
   }
 
   onPageChange(event: any) {
-    this.loadRoleRequests();
+    this.pageIndex.set(event.pageIndex);
+    this.pageSize.set(event.pageSize);
+    this.loadPaginatedData();
   }
 
   loadUser() {
@@ -36,20 +43,29 @@ export class UserDashboardComponent {
     });
   }
 
-  loadRoleRequests() {
+  loadPaginatedData() {
     this.roleRequestService
       .getAllRoleRequests({
         filterDTO: {
           userId: this.userId,
-          status: 'PENDING'
+          status: 'PENDING',
         },
         pageable: {
-          page: 1,
-          size: 1,
+          page: this.pageIndex(),
+          size: this.pageSize(),
           sort: ['createdAt', 'desc'],
         },
       })
-      .pipe(map((response) => response.content))
+      .pipe(
+        tap((response) => {
+          this.pageIndex.set(response.page?.number ?? 0);
+          this.pageSize.set(response.page?.size ?? 0);
+          this.totalSize.set(response.page?.totalElements ?? 0);
+        }),
+        map((response) => {
+          return response.content;
+        })
+      )
       .pipe(map((rolerequests) => rolerequests?.at(0)))
       .subscribe((rolerequest) => {
         this.latestRoleRequest.set(rolerequest ?? null);

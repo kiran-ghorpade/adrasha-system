@@ -4,20 +4,10 @@
  * ADRASHA MASTERDATA-SERVICE API Docs
  * OpenAPI spec version: 1.0.0
  */
+import { PageInfo } from '../PageInfo';
 import type { NCDResponseDTO } from './nCDResponseDTO';
-import type { PageableObject } from './pageableObject';
-import type { SortObject } from './sortObject';
 
 export interface NCDPageResponseDTO {
   content?: NCDResponseDTO[];
-  pageable?: PageableObject;
-  totalPages?: number;
-  totalElements?: number;
-  last?: boolean;
-  size?: number;
-  number?: number;
-  sort?: SortObject;
-  numberOfElements?: number;
-  first?: boolean;
-  empty?: boolean;
+  page?: PageInfo;
 }

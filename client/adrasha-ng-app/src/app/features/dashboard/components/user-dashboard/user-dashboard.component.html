@@ -35,7 +35,15 @@
       label="Requested Role"
     />
   </div>
-  }@else {
+
+  @if(latestRoleRequest()?.remark){
+  <div class="row-span-2 col-span-12 p-2">
+    <app-data-card-label
+      [value]="latestRoleRequest()?.remark"
+      label="Remark"
+    />
+  </div>
+  } }@else {
   <div class="row-span-2 col-span-12 p-2">
     <app-data-card-label value="No Request Found" label="Message" />
   </div>

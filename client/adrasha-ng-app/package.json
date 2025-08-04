@@ -4,9 +4,9 @@
   "scripts": {
     "start": "ng serve",
     "build": "ng build",
+    "generate-api-client": "npm run fetch-api-docs && npm run orval",
     "fetch-api-docs": "node ./openAPI/fetch-api-docs.js",
     "orval": " orval --config orval.config.ts",
-    "generate-api-client": "npm run fetch-api-docs && npm run orval",
     "v": "npm -v",
     "ng": "ng",
     "watch": "ng build --watch --configuration development",

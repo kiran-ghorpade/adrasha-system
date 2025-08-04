@@ -4,8 +4,8 @@
  * ADRASHA DATA-SERVICE API Docs
  * OpenAPI spec version: 1.0.0
  */
-import type { HealthRecordFilterDTO } from './healthRecordFilterDTO';
+import type { FamilyDataFilterDTO } from './familyDataFilterDTO';
 
 export type GetFamilyCountParams = {
-filterDTO: HealthRecordFilterDTO;
+filterDTO: FamilyDataFilterDTO;
 };

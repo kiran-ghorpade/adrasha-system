@@ -81,7 +81,7 @@ public class HealthRecordController {
 	@GetMapping("/count")
 	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Long.class)))
 	@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
-	public Long getFamilyCount(HealthRecordFilterDTO filterDTO){
+	public Long getHealthRecordCount(HealthRecordFilterDTO filterDTO){
 		
 		HealthRecord searchTerms = mapper.map(filterDTO, HealthRecord.class);
 		

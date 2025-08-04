@@ -4,8 +4,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { ConfirmationComponent, DataLabelType, PageHeaderComponent, PageWrapperComponent } from '@shared/components';
-import { HealthCenterDetailsComponent } from "../../components";
+import {
+  ConfirmationComponent,
+  DataLabelType,
+  PageHeaderComponent,
+  PageWrapperComponent,
+} from '@shared/components';
+import { HealthCenterDetailsComponent } from '../../components';
 import { MatDialog } from '@angular/material/dialog';
 import { HealthCenterService as HealthCenterApiService } from '@core/api';
 import { HealthCenterService } from '../../services';
@@ -21,12 +26,11 @@ import { HealthCenterResponseDTO } from '@core/model/masterdataService';
     MatMenuModule,
     MatIconModule,
     RouterModule,
-    HealthCenterDetailsComponent
-],
+    HealthCenterDetailsComponent,
+  ],
   templateUrl: './health-center-details-page.component.html',
 })
 export class HealthCenterDetailsPageComponent {
-
   private readonly dialog = inject(MatDialog);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly healthCenterApiService = inject(HealthCenterApiService);
@@ -45,13 +49,8 @@ export class HealthCenterDetailsPageComponent {
     this.healthCenterApiService
       .getHealthCenter(this.healthCenterId)
       .subscribe((healthCenter) => {
-        if (healthCenter) {
-          this.data.set(healthCenterToData(healthCenter) ?? []);
-          this.healthCenterDetails.set(healthCenter);
-        } else {
-          this.data.set([]);
-          this.healthCenterDetails.set(null);
-        }
+        this.data.set(healthCenterToData(healthCenter) ?? []);
+        this.healthCenterDetails.set(healthCenter);
       });
   }
 
@@ -71,6 +70,41 @@ export class HealthCenterDetailsPageComponent {
   }
 }
 
-function healthCenterToData(healthCenter: HealthCenterResponseDTO): DataLabelType[] {
-  return [{ label: 'name', value: healthCenter.name, icon: 'healthCenter' }];
+function healthCenterToData(
+  healthCenter: HealthCenterResponseDTO
+): DataLabelType[] {
+  return [
+    {
+      label: 'Health Center ID',
+      value: healthCenter.id,
+      icon: 'local_hospital',
+    },
+    { label: 'Name', value: healthCenter.name, icon: 'badge' },
+    {
+      label: 'Center Type',
+      value: healthCenter.centerType || 'Not Available',
+      icon: 'business',
+    },
+    {
+      label: 'Location ID',
+      value: healthCenter.locationId,
+      icon: 'location_on',
+    },
+    {
+      label: 'Total Families',
+      value: healthCenter.totalFamilies?.toString(),
+      icon: 'groups',
+    },
+    {
+      label: 'Total Population',
+      value: healthCenter.totalPopulation?.toString(),
+      icon: 'people',
+    },
+    {
+      label: 'Created At',
+      value: healthCenter.createdAt,
+      icon: 'calendar_today',
+    },
+    { label: 'Updated At', value: healthCenter.updatedAt, icon: 'update' },
+  ];
 }

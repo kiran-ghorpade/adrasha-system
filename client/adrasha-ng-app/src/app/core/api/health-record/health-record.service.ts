@@ -24,7 +24,7 @@ import {
 } from 'rxjs';
 
 import type {
-  GetFamilyCountParams,
+  GetHealthRecordCountParams,
   GetHealthRecordPageParams,
   HealthRecordCreateDTO,
   HealthRecordPageResponseDTO,
@@ -137,16 +137,16 @@ export class HealthRecordService {
       healthRecordCreateDTO,options
     );
   }
- getFamilyCount<TData = number>(
-    params: GetFamilyCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+ getHealthRecordCount<TData = number>(
+    params: GetHealthRecordCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-    getFamilyCount<TData = number>(
-    params: GetFamilyCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+    getHealthRecordCount<TData = number>(
+    params: GetHealthRecordCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-    getFamilyCount<TData = number>(
-    params: GetFamilyCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;getFamilyCount<TData = number>(
-    params: GetFamilyCountParams, options?: HttpClientOptions
+    getHealthRecordCount<TData = number>(
+    params: GetHealthRecordCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getHealthRecordCount<TData = number>(
+    params: GetHealthRecordCountParams, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.get<TData>(
       `http://localhost:8080/data/health/records/count`,{
@@ -161,4 +161,4 @@ export type UpdateHealthRecordClientResult = NonNullable<HealthRecordResponseDTO
 export type DeleteHealthRecordClientResult = NonNullable<void>
 export type GetHealthRecordPageClientResult = NonNullable<HealthRecordPageResponseDTO>
 export type CreateHealthClientResult = NonNullable<HealthRecordResponseDTO>
-export type GetFamilyCountClientResult = NonNullable<number>
+export type GetHealthRecordCountClientResult = NonNullable<number>

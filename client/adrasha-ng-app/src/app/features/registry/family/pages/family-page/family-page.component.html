@@ -19,7 +19,7 @@
         <input matInput #input [disabled]="totalSize() == 0" />
       </mat-form-field>
     </div>
-    
+
 
     <!-- Family List -->
     <div class="">
@@ -29,7 +29,7 @@
     <!-- Pagination -->
     <div>
       <mat-paginator
-        [pageIndex]="page()"
+        [pageIndex]="pageIndex()"
         [length]="totalSize()"
         [pageSize]="pageSize()"
         (page)="onPageChange($event)"

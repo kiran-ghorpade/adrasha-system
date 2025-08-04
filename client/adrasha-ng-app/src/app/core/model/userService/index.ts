@@ -9,6 +9,7 @@ export * from './apiError';
 export * from './errorResponse';
 export * from './getAllRoleRequestsParams';
 export * from './getAllUsersParams';
+export * from './getCount1Params';
 export * from './getCountParams';
 export * from './getTotalRoleRequestsParams';
 export * from './getTotalUsersParams';

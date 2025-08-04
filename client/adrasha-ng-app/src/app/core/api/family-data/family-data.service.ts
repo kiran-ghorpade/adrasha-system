@@ -28,7 +28,7 @@ import type {
   FamilyPageResponseDTO,
   FamilyRegistrationDTO,
   FamilyUpdateDTO,
-  GetFamilyCount1Params,
+  GetFamilyCountParams,
   GetFamilyPageParams
 } from '../../model/dataService';
 
@@ -137,16 +137,16 @@ export class FamilyDataService {
       familyRegistrationDTO,options
     );
   }
- getFamilyCount1<TData = number>(
-    params: GetFamilyCount1Params, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+ getFamilyCount<TData = number>(
+    params: GetFamilyCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-    getFamilyCount1<TData = number>(
-    params: GetFamilyCount1Params, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+    getFamilyCount<TData = number>(
+    params: GetFamilyCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-    getFamilyCount1<TData = number>(
-    params: GetFamilyCount1Params, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;getFamilyCount1<TData = number>(
-    params: GetFamilyCount1Params, options?: HttpClientOptions
+    getFamilyCount<TData = number>(
+    params: GetFamilyCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getFamilyCount<TData = number>(
+    params: GetFamilyCountParams, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.get<TData>(
       `http://localhost:8080/data/families/count`,{
@@ -161,4 +161,4 @@ export type UpdateFamilyClientResult = NonNullable<FamilyDataResponseDTO>
 export type DeleteFamilyClientResult = NonNullable<void>
 export type GetFamilyPageClientResult = NonNullable<FamilyPageResponseDTO>
 export type CreateFamilyClientResult = NonNullable<FamilyDataResponseDTO>
-export type GetFamilyCount1ClientResult = NonNullable<number>
+export type GetFamilyCountClientResult = NonNullable<number>

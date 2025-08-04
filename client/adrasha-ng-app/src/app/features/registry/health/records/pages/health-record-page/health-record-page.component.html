@@ -1,0 +1,46 @@
+<app-page-wrapper>
+  <div top>
+    <app-page-header title="Health Details">
+      <mat-action-list>
+        <a matIconButton>
+          <mat-icon>more_vert</mat-icon>
+        </a>
+      </mat-action-list>
+    </app-page-header>
+  </div>
+
+  <div content class="w-full flex flex-wrap gap-3">
+    <!-- Health Details -->
+    @if(healthRecordList()){
+       <div class="h-max paper flex flex-wrap">
+      <app-health-record-details [healthRecord]="data()"></app-health-record-details>
+    </div>
+    }
+
+    <!-- List -->
+    @if(healthRecordList()){
+    <app-health-record-list
+      [healthRecordList]="healthRecordList()"
+      [route]="''"
+    />
+    }@else{
+    <div class="overflow-scroll flex justify-center items-center">
+      <mat-icon>search_off</mat-icon>
+      <h4 class="ml-4 text-wrap">
+        No HealthRecord found. Try adding a new one!
+      </h4>
+    </div>
+    }
+
+    <!-- Actions -->
+    <div class="flex-[1] flex flex-col p-2 gap-5">
+      <button matButton="filled" [routerLink]="'/registry/health/records/new'">
+        <mat-icon>add</mat-icon>
+        Add New Health Record
+      </button>
+      <a matButton="outlined" [routerLink]="`/registry/member/1`"
+        >View Member Profile
+      </a>
+    </div>
+  </div>
+</app-page-wrapper>

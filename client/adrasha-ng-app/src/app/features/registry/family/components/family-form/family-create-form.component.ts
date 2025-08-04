@@ -101,6 +101,7 @@ export class FamilyFormComponent {
       family: {
         ashaId: this.userId(),
         povertyStatus: data.povertyStatus,
+        houseId : data.houseId as number
       },
       headMember: {
         name: {

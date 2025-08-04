@@ -11,7 +11,9 @@
             "registry.member.firstnameLabel" | translate
           }}</mat-label>
           <input matInput formControlName="firstname" required />
-          <app-validation-error [control]="steps.personalDetails.controls.firstname" />
+          <app-validation-error
+            [control]="steps.personalDetails.controls.firstname"
+          />
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{
@@ -27,7 +29,9 @@
             "registry.member.lastnameLabel" | translate
           }}</mat-label>
           <input matInput formControlName="lastname" required />
-          <app-validation-error [control]="steps.personalDetails.controls.lastname" />
+          <app-validation-error
+            [control]="steps.personalDetails.controls.lastname"
+          />
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{ "registry.member.genderLabel" | translate }}</mat-label>
@@ -38,8 +42,25 @@
             }}</mat-option>
             }
           </mat-select>
-          <app-validation-error [control]="steps.personalDetails.controls.gender" />
+          <app-validation-error
+            [control]="steps.personalDetails.controls.gender"
+          />
         </mat-form-field>
+        @if(isUpdate()){
+        <mat-form-field>
+          <mat-label>{{ "registry.member.aliveStatusLabel" | translate }}</mat-label>
+          <mat-select required>
+            @for (aliveStatuse of aliveStatusOptions(); track aliveStatuse .code) {
+            <mat-option [value]="`${aliveStatuse .code}`">{{
+              aliveStatuse .label
+            }}</mat-option>
+            }
+          </mat-select>
+          <app-validation-error
+            [control]="steps.personalDetails.controls.aliveStatus"
+          />
+        </mat-form-field>
+        }
       </div>
       <div>
         <button matButton matStepperPrevious>Back</button>
@@ -58,14 +79,18 @@
         <mat-form-field>
           <mat-label>{{ "registry.member.dobLabel" | translate }}</mat-label>
           <input matInput type="date" formControlName="dateOfBirth" required />
-          <app-validation-error [control]="steps.birthDetails.controls.dateOfBirth" />
+          <app-validation-error
+            [control]="steps.birthDetails.controls.dateOfBirth"
+          />
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{
             "registry.member.birthPlaceLabel" | translate
           }}</mat-label>
           <input matInput formControlName="birthPlace" />
-          <app-validation-error [control]="steps.birthDetails.controls.birthPlace" />
+          <app-validation-error
+            [control]="steps.birthDetails.controls.birthPlace"
+          />
         </mat-form-field>
       </div>
       <div>

@@ -137,15 +137,15 @@ export class LocationService {
       locationCreateDTO,options
     );
   }
- getTotalCount<TData = string>(
+ getTotalCount<TData = number>(
     params: GetTotalCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-    getTotalCount<TData = string>(
+    getTotalCount<TData = number>(
     params: GetTotalCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-    getTotalCount<TData = string>(
+    getTotalCount<TData = number>(
     params: GetTotalCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;getTotalCount<TData = string>(
+  ): Observable<HttpEvent<TData>>;getTotalCount<TData = number>(
     params: GetTotalCountParams, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.get<TData>(
@@ -161,4 +161,4 @@ export type UpdateLocationClientResult = NonNullable<LocationResponseDTO>
 export type DeleteLocationClientResult = NonNullable<void>
 export type GetAllLocationsClientResult = NonNullable<LocationPageResponseDTO>
 export type CreateLocationClientResult = NonNullable<LocationResponseDTO>
-export type GetTotalCountClientResult = NonNullable<string>
+export type GetTotalCountClientResult = NonNullable<number>

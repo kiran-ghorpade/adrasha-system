@@ -70,7 +70,7 @@ export class MemberService {
         const translatedMsg = this.translateService.instant(
           'registry.member.deletion.success'
         );
-        this.alertService.showAlert(translatedMsg, 'success');  
+        this.alertService.showAlert(translatedMsg, 'success');
         this.router.navigateByUrl(`/registry/family/${familyId}`, {
           replaceUrl: true,
         });

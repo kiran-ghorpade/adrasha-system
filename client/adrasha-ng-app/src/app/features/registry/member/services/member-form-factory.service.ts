@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import {
+  MemberDataFilterDTOAlive,
   MemberDataResponseDTO,
   MemberDataResponseDTOGender,
 } from '@core/model/dataService';
@@ -58,6 +59,11 @@ export class MemberFormFactoryService
       gender: this.createControl(
         data.gender || MemberDataResponseDTOGender.MALE,
         [Validators.required],
+        isLoading
+      ),
+      aliveStatus: this.createControl(
+        data.aliveStatus || MemberDataFilterDTOAlive.ALIVE,
+        [],
         isLoading
       ),
     });

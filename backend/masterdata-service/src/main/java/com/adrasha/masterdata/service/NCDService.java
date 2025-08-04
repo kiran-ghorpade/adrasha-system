@@ -1,9 +1,10 @@
 package com.adrasha.masterdata.service;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.adrasha.core.exception.AlreadyExistsException;
 import com.adrasha.core.exception.NotFoundException;
@@ -11,7 +12,7 @@ import com.adrasha.masterdata.model.NCD;
 
 public interface NCDService{
 	
-	List<NCD> getAll(Example<NCD> example);
+	Page<NCD> getAll(Example<NCD> example, Pageable pageable);
 
 	Long getCount(Example<NCD> example);
 	

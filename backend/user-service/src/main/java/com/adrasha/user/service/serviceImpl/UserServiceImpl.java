@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User createUser(User user) {
 
-		if(userRepository.existsById(user.getUserId())) {
+		if(userRepository.existsById(user.getId())) {
 			
 			throw new AlreadyExistsException("error.user.alreadyExists");
 		}

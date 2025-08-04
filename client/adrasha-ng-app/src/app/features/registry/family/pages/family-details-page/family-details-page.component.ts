@@ -20,12 +20,14 @@ import {
 import {
   ConfirmationComponent,
   DataLabelComponent,
+  DataLabelType,
   PageHeaderComponent,
   PageWrapperComponent,
   QrCodeDialog,
 } from '@shared/components';
 import { map } from 'rxjs';
 import { FamilyService } from '../../services';
+import { FamilyDetailsComponent } from "../../components";
 
 @Component({
   selector: 'app-family-details-page',
@@ -36,13 +38,13 @@ import { FamilyService } from '../../services';
     MatIconModule,
     MatGridListModule,
     MatButtonModule,
-    DataLabelComponent,
     RouterModule,
     CommonModule,
     PageHeaderComponent,
     PageWrapperComponent,
     MatTooltipModule,
     MatMenuModule,
+    FamilyDetailsComponent
 ],
   templateUrl: './family-details-page.component.html',
 })
@@ -55,6 +57,7 @@ export class FamilyDetailsPageComponent {
 
   familyDetails = signal<FamilyDataResponseDTO>({});
   memberList = signal<MemberDataResponseDTO[]>([]);
+  data = signal<DataLabelType[]>([]);
   headMemberDetails = computed(
     () =>
       this.memberList().find(
@@ -89,6 +92,8 @@ export class FamilyDetailsPageComponent {
       .subscribe((list) => {
         this.memberList.set(list ?? []);
       });
+
+    this.data.set(familyToData(this.familyDetails(), this.headMemberDetails()));
   }
 
   handleQrClick() {
@@ -126,4 +131,29 @@ export class FamilyDetailsPageComponent {
 
     return 'No Name Found';
   }
+}
+
+function familyToData(
+  family: FamilyDataResponseDTO,
+  headMemberDetails: MemberDataResponseDTO
+): DataLabelType[] {
+  const headMemberName = headMemberDetails
+    ? `${headMemberDetails.name?.firstname ?? ''} ${
+        headMemberDetails.name?.middlename ?? ''
+      } ${headMemberDetails.name?.lastname ?? ''}`.trim()
+    : 'NOT FOUND';
+
+  return [
+    { label: 'Family ID', value: family.id, icon: 'group' },
+    { label: 'Head Member', value: headMemberName, icon: 'person' },
+    { label: 'ASHA ID', value: family.ashaId, icon: 'badge' },
+    { label: 'House ID', value: family.houseId?.toString(), icon: 'home' },
+    {
+      label: 'Poverty Status',
+      value: family.povertyStatus || 'Not Available',
+      icon: 'money_off',
+    },
+    { label: 'Created At', value: family.createdAt, icon: 'calendar_today' },
+    { label: 'Updated At', value: family.updatedAt, icon: 'update' },
+  ];
 }

@@ -54,6 +54,11 @@ export class FamilyFormFactoryService
         [Validators.required],
         isLoading
       ),
+      houseId: this.createControl(
+        data?.houseId ?? '',
+        [Validators.required],
+        isLoading
+      ),
     });
   }
 }

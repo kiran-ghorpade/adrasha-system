@@ -22,6 +22,15 @@
             [control]="steps.familyDetails.controls.povertyStatus"
           />
         </mat-form-field>
+        <mat-form-field>
+          <mat-label>{{
+            "registry.family.houseId" | translate
+          }}</mat-label>
+          <input matInput formControlName="houseId" required />
+          <app-validation-error
+            [control]="steps.familyDetails.controls.houseId"
+          />
+        </mat-form-field>
       </div>
       <div>
         <button matButton matStepperNext>Next</button>

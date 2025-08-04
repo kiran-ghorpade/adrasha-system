@@ -25,6 +25,7 @@ import {
 
 import type {
   GetAllRoleRequestsParams,
+  GetCount1Params,
   RoleRequestCreateDTO,
   RoleRequestPageResponseDTO,
   RoleRequestResponseDTO,
@@ -166,6 +167,23 @@ export class RoleRequestService {
       roleRequestCreateDTO,options
     );
   }
+ getCount1<TData = number>(
+    params: GetCount1Params, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+  ): Observable<TData>;
+    getCount1<TData = number>(
+    params: GetCount1Params, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+  ): Observable<AngularHttpResponse<TData>>;
+    getCount1<TData = number>(
+    params: GetCount1Params, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getCount1<TData = number>(
+    params: GetCount1Params, options?: HttpClientOptions
+  ): Observable<TData>  {
+    return this.http.get<TData>(
+      `http://localhost:8080/roleRequests/count`,{
+    ...options,
+        params: {...params.filterDTO, ...options?.params},}
+    );
+  }
 };
 
 export type GetRoleRequestClientResult = NonNullable<RoleRequestResponseDTO>
@@ -175,3 +193,4 @@ export type RejectUserRequestClientResult = NonNullable<void>
 export type ApproveUserRequestClientResult = NonNullable<void>
 export type GetAllRoleRequestsClientResult = NonNullable<RoleRequestPageResponseDTO>
 export type CreateRoleRequestClientResult = NonNullable<RoleRequestResponseDTO>
+export type GetCount1ClientResult = NonNullable<number>

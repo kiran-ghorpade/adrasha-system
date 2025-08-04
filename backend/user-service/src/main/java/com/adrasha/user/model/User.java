@@ -21,7 +21,7 @@ import lombok.EqualsAndHashCode;
 public class User extends Auditable{
 
 	@Id
-	private UUID userId;
+	private UUID id;
 	
 	private Name name;
 	

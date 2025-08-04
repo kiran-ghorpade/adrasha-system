@@ -18,8 +18,8 @@ import { LocationService } from '@core/api';
       <app-page-header
         [title]="
           (isUpdate()
-            ? 'location.updateLocationTitle'
-            : 'location.addLocationTitle'
+            ? 'masterdata.location.updateLocationTitle'
+            : 'masterdata.location.addLocationTitle'
           ) | translate
         "
       />

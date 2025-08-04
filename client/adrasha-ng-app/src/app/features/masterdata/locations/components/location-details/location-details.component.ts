@@ -9,8 +9,7 @@ import { DataLabelComponent, DataLabelType } from '@shared/components';
     <mat-list style="display:flex;flex-wrap:wrap; gap:8;">
       @if (!locationData() && locationData().length === 0) {
       <p>No details available.</p>
-      }
-      @for (data of locationData(); track $index) {
+      }@else { @for (data of locationData(); track $index) {
       <div class="w-full sm:w-1/2 box-border">
         <app-data-label
           [label]="data.label"
@@ -19,6 +18,7 @@ import { DataLabelComponent, DataLabelType } from '@shared/components';
         ></app-data-label>
       </div>
       }
+    }
     </mat-list>
   </ng-container>`,
 })

@@ -17,8 +17,8 @@ import { TranslatePipe } from '@ngx-translate/core';
       <app-page-header
         [title]="
           (isUpdate()
-            ? 'healthCenter.updateHealthCenterTitle'
-            : 'healthCenter.addHealthCenterTitle'
+            ? 'masterdata.healthCenter.updateHealthCenterTitle'
+            : 'masterdata.healthCenter.addHealthCenterTitle'
           ) | translate
         "
       />

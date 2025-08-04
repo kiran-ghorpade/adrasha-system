@@ -71,5 +71,11 @@ export class NcdDetailsPageComponent {
 }
 
 function ncdToData(ncd: NCDResponseDTO): DataLabelType[] {
-  return [{ label: 'name', value: ncd.name, icon: 'ncd' }];
+  return [
+    { label: 'ID', value: ncd.id, icon: 'badge' },
+    { label: 'Name', value: ncd.name, icon: 'medical_services' },
+    { label: 'Description', value: ncd.description, icon: 'description' },
+    { label: 'Created At', value: ncd.createdAt, icon: 'calendar_today' },
+    { label: 'Updated At', value: ncd.updatedAt, icon: 'update' },
+  ];
 }

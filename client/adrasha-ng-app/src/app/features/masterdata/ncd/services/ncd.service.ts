@@ -22,7 +22,7 @@ export class NcdService {
             'masterdata.ncd.registration.success'
           );
           this.alertService.showAlert(translatedMsg, 'success');
-          this.router.navigateByUrl(`/role-requests/${result.id}`, {
+          this.router.navigateByUrl(`/masterdata/ncd/${result.id}`, {
             replaceUrl: true,
           });
         }
@@ -47,7 +47,7 @@ export class NcdService {
             'masterdata.ncd.update.success'
           );
           this.alertService.showAlert(translatedMsg, 'success');
-          this.router.navigateByUrl(`/role-requests/${result.id}`, {
+          this.router.navigateByUrl(`/masterdata/ncd/${result.id}`, {
             replaceUrl: true,
           });
         }
@@ -71,7 +71,7 @@ export class NcdService {
           'masterdata.ncd.deletion.success'
         );
         this.alertService.showAlert(translatedMsg, 'success');
-        this.router.navigateByUrl(`/role-requests`, {
+        this.router.navigateByUrl(`/masterdata/ncd`, {
           replaceUrl: true,
         });
       },

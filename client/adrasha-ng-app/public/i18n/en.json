@@ -47,6 +47,7 @@
       "resetButton": "Reset",
 
       "povertyStatusLabel": "Select Poverty Status",
+      "houseIdLabel": "House Id",
       "firstnameLabel": "Firstname",
       "middlenameLabel": "Middlename",
       "lastnameLabel": "Lastname",
@@ -92,6 +93,7 @@
       "adharNumberLabel": "Aadhar Number",
       "abhaNumberLabel": "ABHA Number",
       "mobileNumberLabel": "Mobile Number",
+      "aliveStatusLabel": "Alive Status",
 
       "registration": {
         "success": "Member Registration successful",
@@ -166,6 +168,93 @@
     "deletion": {
       "success": "Role Request Deletion successful",
       "failed": "Role Request Deletion failed"
+    }
+  },
+  "masterdata": {
+    "healthCenter": {
+      "addHealthCenterTitle": "Add Health Center",
+      "updateHealthCenterTitle": "Update Health Center",
+      "step1Title": "Health Center Details",
+      "step3Title": "Address Details",
+      "doneTitle": "Done",
+      "doneMessage": "You are now done.",
+      "submitButton": "Submit",
+      "resetButton": "Reset",
+
+      "nameLabel": "Health Center Name",
+      "roleLabel": "Health Center Type",
+      "totalFamiliesLabel": "Total Families",
+      "totalPopulationLabel": "Total Population",
+      "healthCenterLabel": "Health Center",
+
+      "registration": {
+        "success": "Health Center Addition successful",
+        "failed": "Health Center Addition failed"
+      },
+      "update": {
+        "success": "Health Center Update successful",
+        "failed": "Health Center Update failed"
+      },
+      "deletion": {
+        "success": "Health Center Deletion successful",
+        "failed": "Health Center Deletion failed"
+      }
+    },
+    "location": {
+      "addLocationTitle": "Add Location",
+      "updateLocationTitle": "Update Location",
+      "step1Title": "Location Details",
+      "step2Title": "Address Details",
+      "doneTitle": "Done",
+      "doneMessage": "You are now done.",
+      "submitButton": "Submit",
+      "resetButton": "Reset",
+
+      "nameLabel": "Location Name",
+      "typeLabel": "Location Type",
+      "pincodeLabel": "Pincode",
+      "subdistrictLabel": "Subdistrict",
+      "districtLabel": "District",
+      "stateLabel": "State",
+      "countryLabel": "Country",
+
+      "registration": {
+        "success": "Location Addition successful",
+        "failed": "Location Addition failed"
+      },
+      "update": {
+        "success": "Location Update successful",
+        "failed": "Location Update failed"
+      },
+      "deletion": {
+        "success": "Location Deletion successful",
+        "failed": "Location Deletion failed"
+      }
+    },
+    "ncd": {
+      "addNCDTitle": "Add NCD",
+      "updateNCDTitle": "Update NCD",
+      "step1Title": "NCD Details",
+      "doneTitle": "Done",
+      "doneMessage": "You are now done.",
+      "submitButton": "Submit",
+      "resetButton": "Reset",
+
+      "nameLabel": "NCD Name",
+      "descriptionLabel": "Description",
+
+      "registration": {
+        "success": "NCD Addition successful",
+        "failed": "NCD Addition failed"
+      },
+      "update": {
+        "success": "NCD Update successful",
+        "failed": "NCD Update failed"
+      },
+      "deletion": {
+        "success": "NCD Deletion successful",
+        "failed": "NCD Deletion failed"
+      }
     }
   }
 }

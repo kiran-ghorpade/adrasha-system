@@ -821,7 +821,7 @@
         ]
       }
     },
-    "/users/analytics/count": {
+    "/users/count": {
       "get": {
         "tags": [
           "User"
@@ -843,7 +843,8 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "type": "string"
+                  "type": "integer",
+                  "format": "int64"
                 }
               }
             }
@@ -886,19 +887,30 @@
         ]
       }
     },
-    "/users/analytics/count/role": {
+    "/roleRequests/count": {
       "get": {
         "tags": [
-          "User"
+          "RoleRequest"
         ],
-        "operationId": "getRoleCount",
+        "operationId": "getCount_1",
+        "parameters": [
+          {
+            "name": "filterDTO",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/RoleRequestFilterDTO"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "*/*": {
                 "schema": {
-                  "type": "string"
+                  "type": "integer",
+                  "format": "int64"
                 }
               }
             }
@@ -1325,15 +1337,15 @@
             "type": "integer",
             "format": "int32"
           },
+          "unpaged": {
+            "type": "boolean"
+          },
           "offset": {
             "type": "integer",
             "format": "int64"
           },
           "sort": {
             "$ref": "#/components/schemas/SortObject"
-          },
-          "unpaged": {
-            "type": "boolean"
           }
         }
       },
@@ -1343,10 +1355,10 @@
           "sorted": {
             "type": "boolean"
           },
-          "empty": {
+          "unsorted": {
             "type": "boolean"
           },
-          "unsorted": {
+          "empty": {
             "type": "boolean"
           }
         }
@@ -1374,6 +1386,9 @@
           "last": {
             "type": "boolean"
           },
+          "first": {
+            "type": "boolean"
+          },
           "size": {
             "type": "integer",
             "format": "int32"
@@ -1388,9 +1403,6 @@
           "numberOfElements": {
             "type": "integer",
             "format": "int32"
-          },
-          "first": {
-            "type": "boolean"
           },
           "empty": {
             "type": "boolean"
@@ -1450,6 +1462,9 @@
           "last": {
             "type": "boolean"
           },
+          "first": {
+            "type": "boolean"
+          },
           "size": {
             "type": "integer",
             "format": "int32"
@@ -1464,9 +1479,6 @@
           "numberOfElements": {
             "type": "integer",
             "format": "int32"
-          },
-          "first": {
-            "type": "boolean"
           },
           "empty": {
             "type": "boolean"

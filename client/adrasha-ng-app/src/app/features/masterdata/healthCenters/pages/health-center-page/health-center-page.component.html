@@ -23,10 +23,9 @@
       <div>
         <app-health-center-list [healthCenterList]="healthCenterList()" />
         <mat-paginator
-          [pageIndex]="page()"
+          [pageIndex]="pageIndex()"
           [length]="totalSize()"
-          [pageSize]="10"
-          aria-label="Select page"
+          [pageSize]="pageSize()"
           (page)="onPageChange($event)"
           [disabled]="totalSize() == 0"
         >

@@ -23,6 +23,7 @@ export * from './getAllMembersParams';
 export * from './getFamilyCount1Params';
 export * from './getFamilyCountParams';
 export * from './getFamilyPageParams';
+export * from './getHealthRecordCountParams';
 export * from './getHealthRecordPageParams';
 export * from './getMemberCountParams';
 export * from './getMemberPageParams';

@@ -23,7 +23,7 @@ export class LocationService {
             'masterdata.location.registration.success'
           );
           this.alertService.showAlert(translatedMsg, 'success');
-          this.router.navigateByUrl(`/role-requests/${result.id}`, {
+          this.router.navigateByUrl(`/masterdata/locations/${result.id}`, {
             replaceUrl: true,
           });
         }
@@ -48,7 +48,7 @@ export class LocationService {
             'masterdata.location.update.success'
           );
           this.alertService.showAlert(translatedMsg, 'success');
-          this.router.navigateByUrl(`/role-requests/${result.id}`, {
+          this.router.navigateByUrl(`/masterdata/locations/${result.id}`, {
             replaceUrl: true,
           });
         }
@@ -72,7 +72,7 @@ export class LocationService {
           'masterdata.location.deletion.success'
         );
         this.alertService.showAlert(translatedMsg, 'success');
-        this.router.navigateByUrl(`/role-requests`, {
+        this.router.navigateByUrl(`/masterdata/locations`, {
           replaceUrl: true,
         });
       },

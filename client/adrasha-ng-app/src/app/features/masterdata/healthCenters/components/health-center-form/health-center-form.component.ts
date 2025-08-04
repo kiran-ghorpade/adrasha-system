@@ -1,8 +1,11 @@
-import { Component, inject, input, InputSignal, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component, inject, input, signal } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatStepperModule } from '@angular/material/stepper';
 import { LocationService } from '@core/api/location/location.service';
+import { StaticDataService } from '@core/api/static-data/static-data.service';
 import {
   HealthCenterCreateDTO,
   HealthCenterResponseDTO,
@@ -10,17 +13,12 @@ import {
   LocationResponseDTO,
   StaticDataDTO,
 } from '@core/model/masterdataService';
-import { LoadingService } from '@core/services';
+import { TranslatePipe } from '@ngx-translate/core';
+import { ValidationErrorComponent } from '@shared/components';
+import { BaseFormComponent } from '@shared/directives';
+import { map } from 'rxjs';
 import { HealthCenterService } from '../../services';
 import { HealthCenterFormFactoryService } from '../../services/health-center-form-factory.service';
-import { map } from 'rxjs';
-import { MatStepperModule } from '@angular/material/stepper';
-import { ReactiveFormsModule } from '@angular/forms';
-import { ValidationErrorComponent } from '@shared/components';
-import { MatSelectModule } from '@angular/material/select';
-import { TranslatePipe } from '@ngx-translate/core';
-import { StaticDataService } from '@core/api/static-data/static-data.service';
-import { BaseFormComponent } from '@shared/directives';
 
 @Component({
   selector: 'app-health-center-form',

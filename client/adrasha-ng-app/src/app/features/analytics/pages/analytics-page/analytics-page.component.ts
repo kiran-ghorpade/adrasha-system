@@ -18,8 +18,8 @@ import { PageWrapperComponent, PageHeaderComponent } from '@shared/components';
 export class AnalyticsPageComponent {
   analyticsTypes = [
     { label: 'Family Analytics', icon: 'show_chart', route: 'family' },
-    { label: 'Member Analytics', icon: 'show_chart', route: 'family' },
-    { label: 'Health Analytics', icon: 'show_chart', route: 'family' },
-    { label: 'NCD Analytics', icon: 'show_chart', route: 'family' },
+    { label: 'Member Analytics', icon: 'show_chart', route: 'member' },
+    { label: 'Health Analytics', icon: 'show_chart', route: 'health' },
+    { label: 'NCD Analytics', icon: 'show_chart', route: 'ncd' },
   ];
 }

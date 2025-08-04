@@ -18,7 +18,7 @@ import { HealthCenterResponseDTO } from '@core/model/masterdataService';
     }@else {
     <mat-action-list>
       @for (data of healthCenterList(); track $index) {
-      <a mat-list-item [routerLink]="['registry/members', data.id]">
+      <a mat-list-item [routerLink]="['/masterdata/healthCenters', data.id]">
         <div matListItemAvatar class="flex items-center justify-center">
           <mat-icon>person</mat-icon>
         </div>

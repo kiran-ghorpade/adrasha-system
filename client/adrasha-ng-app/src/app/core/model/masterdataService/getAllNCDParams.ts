@@ -7,5 +7,6 @@
 import type { NCDFilterDTO } from './nCDFilterDTO';
 
 export type GetAllNCDParams = {
-filterDTO: NCDFilterDTO;
+  filterDTO: NCDFilterDTO;
+  pageable: {};
 };

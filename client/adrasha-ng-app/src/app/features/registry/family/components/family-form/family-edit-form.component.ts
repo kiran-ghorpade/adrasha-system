@@ -95,6 +95,7 @@ export class FamilyFormComponent {
       ashaId: this.userId(),
       headMemberId: this.familyData()?.headMemberId ?? '',
       povertyStatus: data.povertyStatus,
+      houseId: data.houseId as number
     };
   }
 }

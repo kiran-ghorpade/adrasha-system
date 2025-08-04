@@ -1145,7 +1145,7 @@
         "tags": [
           "HealthRecord"
         ],
-        "operationId": "getFamilyCount",
+        "operationId": "getHealthRecordCount",
         "parameters": [
           {
             "name": "filterDTO",
@@ -1211,7 +1211,7 @@
         "tags": [
           "FamilyData"
         ],
-        "operationId": "getFamilyCount_1",
+        "operationId": "getFamilyCount",
         "parameters": [
           {
             "name": "filterDTO",
@@ -1859,16 +1859,19 @@
           "pageable": {
             "$ref": "#/components/schemas/PageableObject"
           },
-          "last": {
-            "type": "boolean"
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
           },
           "totalElements": {
             "type": "integer",
             "format": "int64"
           },
-          "totalPages": {
-            "type": "integer",
-            "format": "int32"
+          "last": {
+            "type": "boolean"
+          },
+          "first": {
+            "type": "boolean"
           },
           "size": {
             "type": "integer",
@@ -1880,9 +1883,6 @@
           },
           "sort": {
             "$ref": "#/components/schemas/SortObject"
-          },
-          "first": {
-            "type": "boolean"
           },
           "numberOfElements": {
             "type": "integer",
@@ -1907,15 +1907,15 @@
             "type": "integer",
             "format": "int32"
           },
+          "unpaged": {
+            "type": "boolean"
+          },
           "offset": {
             "type": "integer",
             "format": "int64"
           },
           "sort": {
             "$ref": "#/components/schemas/SortObject"
-          },
-          "unpaged": {
-            "type": "boolean"
           }
         }
       },
@@ -1925,10 +1925,10 @@
           "sorted": {
             "type": "boolean"
           },
-          "empty": {
+          "unsorted": {
             "type": "boolean"
           },
-          "unsorted": {
+          "empty": {
             "type": "boolean"
           }
         }
@@ -1977,16 +1977,19 @@
           "pageable": {
             "$ref": "#/components/schemas/PageableObject"
           },
-          "last": {
-            "type": "boolean"
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
           },
           "totalElements": {
             "type": "integer",
             "format": "int64"
           },
-          "totalPages": {
-            "type": "integer",
-            "format": "int32"
+          "last": {
+            "type": "boolean"
+          },
+          "first": {
+            "type": "boolean"
           },
           "size": {
             "type": "integer",
@@ -1998,9 +2001,6 @@
           },
           "sort": {
             "$ref": "#/components/schemas/SortObject"
-          },
-          "first": {
-            "type": "boolean"
           },
           "numberOfElements": {
             "type": "integer",
@@ -2039,16 +2039,19 @@
           "pageable": {
             "$ref": "#/components/schemas/PageableObject"
           },
-          "last": {
-            "type": "boolean"
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
           },
           "totalElements": {
             "type": "integer",
             "format": "int64"
           },
-          "totalPages": {
-            "type": "integer",
-            "format": "int32"
+          "last": {
+            "type": "boolean"
+          },
+          "first": {
+            "type": "boolean"
           },
           "size": {
             "type": "integer",
@@ -2060,9 +2063,6 @@
           },
           "sort": {
             "$ref": "#/components/schemas/SortObject"
-          },
-          "first": {
-            "type": "boolean"
           },
           "numberOfElements": {
             "type": "integer",

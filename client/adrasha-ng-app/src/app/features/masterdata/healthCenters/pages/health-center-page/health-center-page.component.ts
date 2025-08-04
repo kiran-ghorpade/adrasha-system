@@ -6,8 +6,9 @@ import { RouterModule } from '@angular/router';
 import { HealthCenterService } from '@core/api';
 import { HealthCenterResponseDTO } from '@core/model/masterdataService';
 import { LocationListComponent } from '@features/masterdata/locations/components';
-import { PageWrapperComponent, PageHeaderComponent } from "@shared/components";
-import { HealthCenterListComponent } from "../../components";
+import { PageWrapperComponent, PageHeaderComponent } from '@shared/components';
+import { HealthCenterListComponent } from '../../components';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-health-center-page',
@@ -18,8 +19,8 @@ import { HealthCenterListComponent } from "../../components";
     MatButtonModule,
     MatIconModule,
     RouterModule,
-    HealthCenterListComponent
-],
+    HealthCenterListComponent,
+  ],
   templateUrl: './health-center-page.component.html',
 })
 export class HealthCenterPageComponent {
@@ -29,30 +30,40 @@ export class HealthCenterPageComponent {
   healthCenterList = signal<HealthCenterResponseDTO[]>([]);
 
   // page metadata
+  // paginated metadata
+  pageIndex = signal(0);
+  pageSize = signal(10);
   totalSize = signal(0);
-  page = signal(0);
 
   ngOnInit(): void {
-    this.loadRoleRequests();
+    this.loadPaginatedData();
   }
 
   onPageChange(event: any) {
-    this.loadRoleRequests();
+    this.pageIndex.set(event.pageIndex);
+    this.pageSize.set(event.pageSize);
+    this.loadPaginatedData();
   }
 
-  loadRoleRequests() {
+  loadPaginatedData() {
     this.healthCenterService
       .getAllHealthCenters({
         filterDTO: {},
         pageable: {
-          page: 1,
-          size: 10,
+          page: this.pageIndex(),
+          size: this.pageSize(),
           sort: [],
         },
       })
+      .pipe(
+        tap((response) => {
+          this.pageIndex.set(response.page?.number ?? 0);
+          this.pageSize.set(response.page?.size ?? 0);
+          this.totalSize.set(response.page?.totalElements ?? 0);
+        })
+      )
       .subscribe((centers) => {
         this.healthCenterList.set(centers.content || []);
-        this.totalSize.set(centers.numberOfElements || 0);
       });
   }
 }

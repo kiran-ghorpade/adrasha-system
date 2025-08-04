@@ -24,7 +24,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.adrasha.core.dto.ErrorResponse;
 import com.adrasha.core.dto.ExampleMatcherUtils;
 import com.adrasha.core.dto.ValidationErrorResponse;
-import com.adrasha.core.dto.filter.FamilyDataFilterDTO;
 import com.adrasha.core.dto.filter.MemberDataFilterDTO;
 import com.adrasha.core.dto.page.MemberDataPageResponseDTO;
 import com.adrasha.core.dto.response.MemberDataResponseDTO;

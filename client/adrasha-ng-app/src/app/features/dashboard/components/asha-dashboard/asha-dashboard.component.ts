@@ -20,6 +20,7 @@ import { FamilyDataService } from '@core/api';
 import { AuthService } from '@core/services';
 import { MemberDataService } from '@core/api/member-data/member-data.service';
 import { HealthRecordService } from '@core/api/health-record/health-record.service';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-asha-dashboard',
@@ -41,7 +42,7 @@ export class AshaDashboardComponent {
   private readonly analyticsService = inject(AnalyticsService);
   private readonly familyService = inject(FamilyDataService);
   private readonly memberService = inject(MemberDataService);
-  private readonly healthRecordService = inject(HealthRecordService)
+  private readonly healthRecordService = inject(HealthRecordService);
 
   currentTime: WritableSignal<Date> = signal(new Date());
 
@@ -49,12 +50,10 @@ export class AshaDashboardComponent {
 
   familyCount = computed(() =>
     toSignal(
-      this.familyService.getFamilyCount1({
+      this.familyService.getFamilyCount({
         filterDTO: { ashaId: this.user()?.id },
       }),
-      {
-        initialValue: 0,
-      }
+      { initialValue: 0 }
     )
   );
 
@@ -63,19 +62,26 @@ export class AshaDashboardComponent {
       this.memberService.getMemberCount({
         filterDTO: { ashaId: this.user()?.id, alive: 'ALIVE' },
       }),
-      {
-        initialValue: 0,
-      }
+      { initialValue: 0 }
     )
   );
 
+  ncdCount = toSignal(
+    this.healthRecordService.getHealthRecordCount({ filterDTO: { ncdlist: [] } }),
+    { initialValue: 0 }
+  );
 
-  // TODO : NCDcount,pregnancyCount,genderdistribution,povertyChartData
+  pregnancyCount = toSignal(
+    this.healthRecordService.getHealthRecordCount({ filterDTO: { pregnant: true } }),
+    { initialValue: 0 }
+  );
+
+  // TODO : NCD count,genderdistribution,povertyChartData
 
   genderChartData = computed(() => {
     // const stats = this.memberStats();
     // if (!stats?.genderDistribution)
-       return { labels: [], datasets: [] };
+    return { labels: [], datasets: [] };
 
     // const ageDist = stats?.genderDistribution ?? [];
     // const labels = Object.keys(ageDist) ?? ([] as string[]);
@@ -97,22 +103,22 @@ export class AshaDashboardComponent {
   povertyChartData = computed(() => {
     // const stats = this.familyStats();
     // if (!stats?.povertyStats)
-      return { labels: [], datasets: [] };
+    return { labels: [], datasets: [] };
 
-  //   const povertyStats = stats.povertyStats ?? [];
-  //   const labels = Object.keys(povertyStats) ?? ([] as string[]);
-  //   const data = labels.map((label) => povertyStats[label] ?? 0);
+    //   const povertyStats = stats.povertyStats ?? [];
+    //   const labels = Object.keys(povertyStats) ?? ([] as string[]);
+    //   const data = labels.map((label) => povertyStats[label] ?? 0);
 
-  //   return {
-  //     labels,
-  //     datasets: [
-  //       {
-  //         data,
-  //         backgroundColor: ['#10b981', '#f59e0b', '#ef4444'],
-  //         hoverBackgroundColor: ['#059669', '#d97706', '#dc2626'],
-  //         borderWidth: 1,
-  //       },
-  //     ],
-  //   };
+    //   return {
+    //     labels,
+    //     datasets: [
+    //       {
+    //         data,
+    //         backgroundColor: ['#10b981', '#f59e0b', '#ef4444'],
+    //         hoverBackgroundColor: ['#059669', '#d97706', '#dc2626'],
+    //         borderWidth: 1,
+    //       },
+    //     ],
+    //   };
   });
 }

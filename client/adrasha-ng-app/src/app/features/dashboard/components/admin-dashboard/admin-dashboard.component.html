@@ -1,19 +1,19 @@
-<div class="h-full w-full grid md:grid-rows-10 grid-cols-12 gap-2">
+  <div class="h-full w-full grid md:grid-rows-10 grid-cols-12 gap-2">
   <!-- Values -->
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-4">
     <app-data-card-label
-      [value]="userStats()?.totalUsers ?? 0"
+      [value]="totalUsers()"
       [label]="`Users`"
     />
   </div>
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-5">
-    <app-data-card-label [value]="`1000`" [label]="`Pending Requests`" />
+    <app-data-card-label [value]="pendingRequestsCount()" [label]="`Pending Requests`" />
   </div>
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-6">
-    <app-data-card-label [value]="`1000`" [label]="`Health Centers`" />
+    <app-data-card-label [value]="totalHealthCenters()" [label]="`Health Centers`" />
   </div>
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-4">
-    <app-data-card-label [value]="`500`" [label]="`Locations`" />
+    <app-data-card-label [value]="totalLocations()" [label]="`Locations`" />
   </div>
 
   <!-- Charts -->

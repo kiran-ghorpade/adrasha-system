@@ -25,7 +25,7 @@ import {
 
 import type {
   GetAllHealthCentersParams,
-  GetTotalCount1Params,
+  GetHealthCenterCountParams,
   HealthCenterCreateDTO,
   HealthCenterPageResponseDTO,
   HealthCenterResponseDTO,
@@ -137,16 +137,16 @@ export class HealthCenterService {
       healthCenterCreateDTO,options
     );
   }
- getTotalCount1<TData = string>(
-    params: GetTotalCount1Params, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+ getHealthCenterCount<TData = number>(
+    params: GetHealthCenterCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-    getTotalCount1<TData = string>(
-    params: GetTotalCount1Params, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+    getHealthCenterCount<TData = number>(
+    params: GetHealthCenterCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-    getTotalCount1<TData = string>(
-    params: GetTotalCount1Params, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;getTotalCount1<TData = string>(
-    params: GetTotalCount1Params, options?: HttpClientOptions
+    getHealthCenterCount<TData = number>(
+    params: GetHealthCenterCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getHealthCenterCount<TData = number>(
+    params: GetHealthCenterCountParams, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.get<TData>(
       `http://localhost:8080/masterdata/healthCenters/count`,{
@@ -161,4 +161,4 @@ export type UpdateHealthCenterClientResult = NonNullable<HealthCenterResponseDTO
 export type DeleteHealthCenterClientResult = NonNullable<void>
 export type GetAllHealthCentersClientResult = NonNullable<HealthCenterPageResponseDTO>
 export type CreateHealthCenterClientResult = NonNullable<HealthCenterResponseDTO>
-export type GetTotalCount1ClientResult = NonNullable<string>
+export type GetHealthCenterCountClientResult = NonNullable<number>

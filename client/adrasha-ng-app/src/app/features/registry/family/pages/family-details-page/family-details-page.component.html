@@ -3,7 +3,11 @@
     <app-page-header title="Family Details">
       <mat-action-list>
         <div class="flex gap-2">
-          <button matIconButton (click)="handleQrClick()" matTooltip="Generate Qr">
+          <button
+            matIconButton
+            (click)="handleQrClick()"
+            matTooltip="Generate Qr"
+          >
             <mat-icon>qr_code</mat-icon>
           </button>
           <a matIconButton [matMenuTriggerFor]="menu" matTooltip="More">
@@ -31,38 +35,12 @@
 
   <div content class="flex flex-wrap justify-evenly gap-3">
     <!-- Family Details -->
-    <mat-card [appearance]="'filled'" class="w-full paper h-max flex-[3] flex flex-wrap">
+    <mat-card
+      [appearance]="'filled'"
+      class="w-full paper h-max flex-[3] flex flex-wrap"
+    >
       @if(familyDetails()){
-      <div class="flex-[2]">
-        <mat-list>
-          <!-- TODO : fullname -->
-          <app-data-label
-            label="HeadMember"
-            [value]="`${headMemberDetails().name?.firstname} ${headMemberDetails().name?.middlename}  ${headMemberDetails().name?.lastname} `|| 'NOT FOUND'"
-            icon="person"
-          ></app-data-label>
-          <app-data-label
-            label="Mobile Number"
-            [value]="headMemberDetails().mobileNumber || 'NOT FOUND'"
-            icon="phone"
-          ></app-data-label>
-        </mat-list>
-      </div>
-
-      <div class="flex-[2]">
-        <mat-list>
-          <app-data-label
-            label="Poverty Status"
-            [value]="familyDetails().povertyStatus || 'NOT FOUND'"
-            icon="home"
-          ></app-data-label>
-          <app-data-label
-            label="Registration Date"
-            [value]="headMemberDetails().createdAt || 'NOT FOUND'"
-            icon="event"
-          ></app-data-label>
-        </mat-list>
-      </div>
+      <app-family-details [familyData]="data()"></app-family-details>
       }@else {
       <div class="overflow-scroll flex justify-center items-center">
         <mat-icon>search_off</mat-icon>
@@ -72,7 +50,10 @@
     </mat-card>
 
     <!-- Member List -->
-    <mat-card [appearance]="'outlined'" class="w-full paper flex-[2] flex flex-col p-2 gap-5">
+    <mat-card
+      [appearance]="'outlined'"
+      class="w-full paper flex-[2] flex flex-col p-2 gap-5"
+    >
       <div class="flex justify-center">
         <button
           matFab

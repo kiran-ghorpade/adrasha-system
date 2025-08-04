@@ -5,7 +5,7 @@ import { MatList } from '@angular/material/list';
 @Component({
   selector: 'app-family-details',
   imports: [DataLabelComponent, MatList],
-  template: `<div class="w-full paper h-max flex-[3] flex flex-wrap">
+  template: `
     <div class="flex-[2]">
       <mat-list>
         @for (data of familyData(); track $index) {
@@ -17,7 +17,7 @@ import { MatList } from '@angular/material/list';
         }
       </mat-list>
     </div>
-  </div> `,
+  `,
 })
 export class FamilyDetailsComponent {
   familyData = input.required<DataLabelType[]>();

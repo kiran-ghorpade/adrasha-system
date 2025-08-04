@@ -11,6 +11,7 @@ export * from './getAllHealthCentersParams';
 export * from './getAllLocationsParams';
 export * from './getAllNCDParams';
 export * from './getCountParams';
+export * from './getHealthCenterCountParams';
 export * from './getTotalCount1Params';
 export * from './getTotalCountParams';
 export * from './healthCenterCreateDTO';

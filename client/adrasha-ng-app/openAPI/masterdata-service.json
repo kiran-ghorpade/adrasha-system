@@ -1172,7 +1172,8 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "type": "string"
+                  "type": "integer",
+                  "format": "int64"
                 }
               }
             }
@@ -1237,7 +1238,8 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "type": "string"
+                  "type": "integer",
+                  "format": "int64"
                 }
               }
             }
@@ -1313,7 +1315,7 @@
         "tags": [
           "HealthCenter"
         ],
-        "operationId": "getTotalCount_1",
+        "operationId": "getHealthCenterCount",
         "parameters": [
           {
             "name": "filterDTO",
@@ -1330,7 +1332,8 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "type": "string"
+                  "type": "integer",
+                  "format": "int64"
                 }
               }
             }
@@ -1897,6 +1900,9 @@
           "last": {
             "type": "boolean"
           },
+          "first": {
+            "type": "boolean"
+          },
           "size": {
             "type": "integer",
             "format": "int32"
@@ -1911,9 +1917,6 @@
           "numberOfElements": {
             "type": "integer",
             "format": "int32"
-          },
-          "first": {
-            "type": "boolean"
           },
           "empty": {
             "type": "boolean"
@@ -1934,15 +1937,15 @@
             "type": "integer",
             "format": "int32"
           },
+          "unpaged": {
+            "type": "boolean"
+          },
           "offset": {
             "type": "integer",
             "format": "int64"
           },
           "sort": {
             "$ref": "#/components/schemas/SortObject"
-          },
-          "unpaged": {
-            "type": "boolean"
           }
         }
       },
@@ -1952,10 +1955,10 @@
           "sorted": {
             "type": "boolean"
           },
-          "empty": {
+          "unsorted": {
             "type": "boolean"
           },
-          "unsorted": {
+          "empty": {
             "type": "boolean"
           }
         }
@@ -2033,6 +2036,9 @@
           "last": {
             "type": "boolean"
           },
+          "first": {
+            "type": "boolean"
+          },
           "size": {
             "type": "integer",
             "format": "int32"
@@ -2047,9 +2053,6 @@
           "numberOfElements": {
             "type": "integer",
             "format": "int32"
-          },
-          "first": {
-            "type": "boolean"
           },
           "empty": {
             "type": "boolean"
@@ -2107,6 +2110,9 @@
           "last": {
             "type": "boolean"
           },
+          "first": {
+            "type": "boolean"
+          },
           "size": {
             "type": "integer",
             "format": "int32"
@@ -2121,9 +2127,6 @@
           "numberOfElements": {
             "type": "integer",
             "format": "int32"
-          },
-          "first": {
-            "type": "boolean"
           },
           "empty": {
             "type": "boolean"

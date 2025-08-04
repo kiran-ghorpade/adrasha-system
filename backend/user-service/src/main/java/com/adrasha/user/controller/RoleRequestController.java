@@ -1,7 +1,6 @@
 package com.adrasha.user.controller;
 
 import java.net.URI;
-import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -90,9 +89,9 @@ public class RoleRequestController {
 		}
 		
 		@GetMapping("/count")
-		@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Map.class)))
+		@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Long.class)))
 		@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
-		private long getCount(RoleRequestFilterDTO filterDTO) {
+		private Long getCount(RoleRequestFilterDTO filterDTO) {
 			Example<RoleRequest> request = Example.of(mapper.map(filterDTO, RoleRequest.class), ExampleMatcherUtils.getDefaultMatcher());
 			return roleRequestService.getRoleRequestCount(request);
 		}

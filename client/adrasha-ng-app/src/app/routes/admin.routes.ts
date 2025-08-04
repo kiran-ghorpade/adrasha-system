@@ -8,6 +8,17 @@ import { AppLayout } from 'app/layout';
 
 export const adminRoutes: Routes = [
   {
+    path: 'users',
+    title: 'Users',
+    canActivate: [authGuard, roleGuard],
+    data: { roles: [UserResponseDTORolesItem.ADMIN] },
+    component: AppLayout,
+    loadChildren: () =>
+      import('@features/users/users.routes').then(
+        (route) => route.usersRoutes
+      ),
+  },
+  {
     path: 'masterdata',
     title: 'Masterdata',
     canActivate: [authGuard, roleGuard],

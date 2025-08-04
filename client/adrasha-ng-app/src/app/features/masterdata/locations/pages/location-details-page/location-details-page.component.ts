@@ -77,5 +77,17 @@ export class LocationDetailsPageComponent {
 }
 
 function locationToData(location: LocationResponseDTO): DataLabelType[] {
-  return [{ label: 'name', value: location.name, icon: 'location' }];
+  return [
+    { label: 'Location ID', value: location.id, icon: 'label' },
+    { label: 'Name', value: location.name, icon: 'place' },
+    { label: 'Type', value: location.type || 'Not Available', icon: 'category' },
+    { label: 'Pincode', value: location.pincode, icon: 'pin' },
+    { label: 'Subdistrict', value: location.subdistrict, icon: 'location_city' },
+    { label: 'District', value: location.district, icon: 'map' },
+    { label: 'State', value: location.state, icon: 'public' },
+    { label: 'Country', value: location.country, icon: 'flag' },
+    { label: 'Created At', value: location.createdAt, icon: 'calendar_today' },
+    { label: 'Updated At', value: location.updatedAt, icon: 'update' },
+  ];
 }
+

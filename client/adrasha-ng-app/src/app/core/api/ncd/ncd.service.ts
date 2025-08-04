@@ -118,7 +118,7 @@ export class NcdService {
     return this.http.get<TData>(
       `http://localhost:8080/masterdata/ncd`,{
     ...options,
-        params: {...params.filterDTO, ...options?.params},}
+        params: {...params.filterDTO, ...params.pageable, ...options?.params},}
     );
   }
  createNCD<TData = NCDResponseDTO>(
@@ -137,15 +137,15 @@ export class NcdService {
       nCDCreateDTO,options
     );
   }
- getCount<TData = string>(
+ getCount<TData = number>(
     params: GetCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-    getCount<TData = string>(
+    getCount<TData = number>(
     params: GetCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-    getCount<TData = string>(
+    getCount<TData = number>(
     params: GetCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;getCount<TData = string>(
+  ): Observable<HttpEvent<TData>>;getCount<TData = number>(
     params: GetCountParams, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.get<TData>(
@@ -161,4 +161,4 @@ export type UpdateNCDClientResult = NonNullable<NCDResponseDTO>
 export type DeleteNCDClientResult = NonNullable<void>
 export type GetAllNCDClientResult = NonNullable<NCDPageResponseDTO>
 export type CreateNCDClientResult = NonNullable<NCDResponseDTO>
-export type GetCountClientResult = NonNullable<string>
+export type GetCountClientResult = NonNullable<number>

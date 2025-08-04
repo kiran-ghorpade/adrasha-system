@@ -64,8 +64,8 @@ export class MemberFormComponent extends BaseFormComponent<
   familyId: InputSignal<string> = input.required();
 
   // default static data and states
-  povertyStatusList = signal<StaticDataDTO[]>([]);
   genderList = signal<StaticDataDTO[]>([]);
+  aliveStatusOptions = signal<StaticDataDTO[]>([]);
 
   // form data handling
   public get steps() {
@@ -94,6 +94,10 @@ export class MemberFormComponent extends BaseFormComponent<
     this.staticDataService
       .getGenders()
       .subscribe((genders) => this.genderList.set(genders));
+
+    this.staticDataService
+      .getAliveStatuses()
+      .subscribe((list) => this.aliveStatusOptions.set(list));
   }
 
   protected override prepareCreateData(): MemberCreateDTO {

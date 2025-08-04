@@ -7,6 +7,7 @@ import { NcdService } from '@core/api';
 import { NCDResponseDTO } from '@core/model/masterdataService';
 import { PageHeaderComponent, PageWrapperComponent } from '@shared/components';
 import { NcdListComponent } from '../../components';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-ncd-page',
@@ -17,8 +18,8 @@ import { NcdListComponent } from '../../components';
     MatButtonModule,
     MatIconModule,
     RouterModule,
-    NcdListComponent
-],
+    NcdListComponent,
+  ],
   templateUrl: './ncd-page.component.html',
 })
 export class NcdPageComponent {
@@ -28,25 +29,35 @@ export class NcdPageComponent {
   ncdList = signal<NCDResponseDTO[]>([]);
 
   // page metadata
+  pageIndex = signal(0);
+  pageSize = signal(10);
   totalSize = signal(0);
-  page = signal(0);
 
   ngOnInit(): void {
-    this.loadRoleRequests();
+    this.loadPaginatedData();
   }
 
   onPageChange(event: any) {
-    this.loadRoleRequests();
+    this.pageIndex.set(event.pageIndex);
+    this.pageSize.set(event.pageSize);
+    this.loadPaginatedData();
   }
 
-  loadRoleRequests() {
+  loadPaginatedData() {
     this.locationService
       .getAllNCD({
         filterDTO: {},
+        pageable: {},
       })
-      .subscribe((rolerequests) => {
-        this.ncdList.set(rolerequests.content || []);
-        this.totalSize.set(rolerequests.numberOfElements || 0);
+      .pipe(
+        tap((response) => {
+          this.pageIndex.set(response.page?.number ?? 0);
+          this.pageSize.set(response.page?.size ?? 0);
+          this.totalSize.set(response.page?.totalElements ?? 0);
+        })
+      )
+      .subscribe((response) => {
+        this.ncdList.set(response.content || []);
       });
   }
 }

@@ -1,0 +1,30 @@
+@if(userList().length == 0){
+<div class="flex justify-center items-center">
+  <mat-icon>search_off</mat-icon>
+  <h4 class="ml-4 text-wrap">No Users found!</h4>
+</div>
+}@else {
+<mat-action-list>
+  @for (user of userList(); track $index) {
+  <a mat-list-item [routerLink]="['/users', user?.id]">
+    <div matListItemIcon>
+      <mat-icon>person</mat-icon>
+    </div>
+    <h3 matListItemTitle>
+      {{ `${user.name?.firstname } ${user.name?.middlename } ${user.name?.lastname }`}}
+    </h3>
+    <p matListItemLine>
+      <em>
+        [@for(role of user.roles; track $index){
+        <strong> {{role}}, </strong>
+        }]
+      </em>
+    </p>
+
+    <p matListItemMeta class="mat-body-2 text-sm text-gray-500 mt-2">
+      {{ user.createdAt | date }}
+    </p>
+  </a>
+  }
+</mat-action-list>
+}

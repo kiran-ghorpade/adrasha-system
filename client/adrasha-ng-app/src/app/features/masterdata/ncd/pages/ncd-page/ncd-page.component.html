@@ -23,13 +23,12 @@
       <div>
         <app-ncd-list [ncdList]="ncdList()" />
         <mat-paginator
-          [pageIndex]="page()"
-          [length]="totalSize()"
-          [pageSize]="10"
-          aria-label="Select page"
-          (page)="onPageChange($event)"
-          [disabled]="totalSize() == 0"
-        >
+        [pageIndex]="pageIndex()"
+        [length]="totalSize()"
+        [pageSize]="pageSize()"
+        (page)="onPageChange($event)"
+        [disabled]="totalSize() == 0"
+      >
         </mat-paginator>
       </div>
     </div>

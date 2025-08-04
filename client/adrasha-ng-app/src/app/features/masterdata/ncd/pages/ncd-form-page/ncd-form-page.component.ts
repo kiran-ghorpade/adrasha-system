@@ -18,8 +18,8 @@ import { NcdFormComponent } from '../../components';
       <app-page-header
         [title]="
           (isUpdate()
-            ? 'location.updateLocationTitle'
-            : 'location.addLocationTitle'
+            ? 'masterdata.ncd.updateNCDTitle'
+            : 'masterdata.ncd.addNCDTitle'
           ) | translate
         "
       />

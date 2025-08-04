@@ -19,7 +19,7 @@ public class SwaggerConfig{
 	
 	@Value("${spring.application.name}")
 	private String applicationName;
-
+	
 	@Bean
 	protected OpenAPI customOpenAPI() {
 	    

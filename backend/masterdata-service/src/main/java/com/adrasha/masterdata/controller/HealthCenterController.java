@@ -1,11 +1,9 @@
 package com.adrasha.masterdata.controller;
 
 import java.net.URI;
-import java.util.Map;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,9 +38,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/masterdata/healthCenters")
+@RequiredArgsConstructor
 @SecurityRequirement(name = "BearerAuthentication")
 @Tag(name = "HealthCenter")
 @ApiResponses({
@@ -52,11 +52,8 @@ import jakarta.validation.Valid;
 @PreAuthorize("hasAnyRole('USER', 'SYSTEM')")
 public class HealthCenterController{
 
-	@Autowired
-    private HealthCenterService healthService;
-
-    @Autowired
-    private ModelMapper mapper;
+    private final HealthCenterService healthService;
+    private final ModelMapper mapper;
 
     @GetMapping
 	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = HealthCenterPageResponseDTO.class)))
@@ -77,15 +74,15 @@ public class HealthCenterController{
     }
     
 	@GetMapping("/count")
-	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Map.class)))
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Long.class)))
 	@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
-	public Map<String, Long> getTotalCount(HealthCenterFilterDTO filterDTO) {
+	public Long getHealthCenterCount(HealthCenterFilterDTO filterDTO) {
 		HealthCenter filter = mapper.map(filterDTO, HealthCenter.class);
 
 		Example<HealthCenter> example = Example.of(filter, ExampleMatcherUtils.getDefaultMatcher());
 
-		long total = healthService.getCount(example);
-		return Map.of("count", total);
+		return healthService.getCount(example);
+
 	}
 
 

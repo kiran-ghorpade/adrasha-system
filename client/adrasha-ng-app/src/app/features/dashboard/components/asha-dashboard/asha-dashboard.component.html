@@ -31,10 +31,10 @@
     </app-pie-chart>
   </mat-card>
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-6">
-    <app-data-card-label [value]="`1000`" [label]="`NCD Population`" />
+    <app-data-card-label [value]="ncdCount()" [label]="`NCD Population`" />
   </div>
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-7">
-    <app-data-card-label [value]="`1000`" [label]="`Pregnant Women`" />
+    <app-data-card-label [value]="pregnancyCount()" [label]="`Pregnant Women`" />
   </div>
 
   <!-- records line charts -->

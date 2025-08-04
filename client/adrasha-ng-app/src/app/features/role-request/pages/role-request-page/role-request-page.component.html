@@ -13,11 +13,10 @@
 
     <div>
       <app-role-request-list [roleRequestList]="roleRequestList()" />
-      <mat-paginator
-        [pageIndex]="0"
+     <mat-paginator
+        [pageIndex]="pageIndex()"
         [length]="totalSize()"
-        [pageSize]="0"
-        aria-label="Select page"
+        [pageSize]="pageSize()"
         (page)="onPageChange($event)"
         [disabled]="totalSize() == 0"
       >

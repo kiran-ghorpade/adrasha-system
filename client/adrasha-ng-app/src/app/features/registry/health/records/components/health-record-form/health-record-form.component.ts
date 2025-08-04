@@ -95,6 +95,7 @@ export class HealthRecordFormComponent extends BaseFormComponent<
     this.ncdService
       .getAllNCD({
         filterDTO: {},
+        pageable: {},
       })
       .pipe(map((ncd) => ncd.content))
       .subscribe((ncdList) => {

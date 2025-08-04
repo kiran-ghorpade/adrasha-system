@@ -44,11 +44,11 @@ const admin: Menu[] = [
     route: '/dashboard',
     icon: 'dashboard',
   },
-  // {
-  //   label: 'Users',
-  //   route: '/users',
-  //   icon: 'group',
-  // },
+  {
+    label: 'Users',
+    route: '/users',
+    icon: 'group',
+  },
   {
     label: 'RoleRequests',
     route: '/role-requests',

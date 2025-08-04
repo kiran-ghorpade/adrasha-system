@@ -135,36 +135,21 @@ export class UserService {
       `http://localhost:8080/users/me`,options
     );
   }
- getCount<TData = string>(
+ getCount<TData = number>(
     params: GetCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-    getCount<TData = string>(
+    getCount<TData = number>(
     params: GetCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-    getCount<TData = string>(
+    getCount<TData = number>(
     params: GetCountParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;getCount<TData = string>(
+  ): Observable<HttpEvent<TData>>;getCount<TData = number>(
     params: GetCountParams, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.get<TData>(
-      `http://localhost:8080/users/analytics/count`,{
+      `http://localhost:8080/users/count`,{
     ...options,
         params: {...params.filterDTO, ...options?.params},}
-    );
-  }
- getRoleCount<TData = string>(
-     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
-  ): Observable<TData>;
-    getRoleCount<TData = string>(
-     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
-  ): Observable<AngularHttpResponse<TData>>;
-    getRoleCount<TData = string>(
-     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;getRoleCount<TData = string>(
-     options?: HttpClientOptions
-  ): Observable<TData>  {
-    return this.http.get<TData>(
-      `http://localhost:8080/users/analytics/count/role`,options
     );
   }
  removeRole<TData = void>(
@@ -193,6 +178,5 @@ export type UdpatedUserClientResult = NonNullable<UserResponseDTO>
 export type DeleteUserClientResult = NonNullable<void>
 export type GetAllUsersClientResult = NonNullable<UserPageResponseDTO>
 export type GetCurrentUserClientResult = NonNullable<UserResponseDTO>
-export type GetCountClientResult = NonNullable<string>
-export type GetRoleCountClientResult = NonNullable<string>
+export type GetCountClientResult = NonNullable<number>
 export type RemoveRoleClientResult = NonNullable<void>

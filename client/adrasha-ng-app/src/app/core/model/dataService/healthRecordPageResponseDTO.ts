@@ -4,20 +4,10 @@
  * ADRASHA DATA-SERVICE API Docs
  * OpenAPI spec version: 1.0.0
  */
+import { PageInfo } from '../PageInfo';
 import type { HealthRecordResponseDTO } from './healthRecordResponseDTO';
-import type { PageableObject } from './pageableObject';
-import type { SortObject } from './sortObject';
 
 export interface HealthRecordPageResponseDTO {
   content?: HealthRecordResponseDTO[];
-  pageable?: PageableObject;
-  last?: boolean;
-  totalElements?: number;
-  totalPages?: number;
-  size?: number;
-  number?: number;
-  sort?: SortObject;
-  first?: boolean;
-  numberOfElements?: number;
-  empty?: boolean;
+  page?: PageInfo;
 }

@@ -26,12 +26,12 @@ import { FamilyHeadItem, FamilyListComponent } from '../../components';
     MatPaginatorModule,
     PageWrapperComponent,
     PageHeaderComponent,
-    FamilyListComponent
-],
-  templateUrl: './family-page.component.html'
+    FamilyListComponent,
+  ],
+  templateUrl: './family-page.component.html',
 })
 export class FamilyPageComponent {
- private readonly authService = inject(AuthService);
+  private readonly authService = inject(AuthService);
   private readonly familyService = inject(FamilyDataService);
   private readonly memberService = inject(MemberDataService);
 
@@ -43,37 +43,39 @@ export class FamilyPageComponent {
   );
 
   familyHeadList = signal<FamilyHeadItem[]>([]);
-  page = signal(1);
+
+// paginated metadata
+  pageIndex =signal(0);
   pageSize = signal(10);
   totalSize = signal(0);
 
   ngOnInit(): void {
-    this.loadFamilies();
+    this.loadPaginatedData();
   }
 
   onPageChange(event: any) {
-    this.page.set(event.pageIndex);
+    this.pageIndex.set(event.pageIndex);
     this.pageSize.set(event.pageSize);
-
-    this.loadFamilies();
+    this.loadPaginatedData();
   }
 
-  loadFamilies() {
+  loadPaginatedData() {
     this.familyService
       .getFamilyPage({
         filterDTO: {
           ashaId: this.userId() ?? '',
         },
         pageable: {
-          page: this.page(),
+          page: this.pageIndex(),
           size: this.pageSize(),
           sort: [],
         },
       })
       .pipe(
         tap((response) => {
-          this.page.set(response.number ?? 0);
-          this.totalSize.set(response.totalElements ?? 0);
+          this.pageIndex.set(response.page?.number ?? 0);
+          this.pageSize.set(response.page?.size ?? 0);
+          this.totalSize.set(response.page?.totalElements ?? 0);
         }),
         map((response) => response.content ?? []),
         switchMap((families) => {
@@ -99,7 +101,5 @@ export class FamilyPageComponent {
         console.log(this.familyHeadList());
       });
   }
-
-
 }
 

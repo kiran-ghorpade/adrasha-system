@@ -1,30 +1,19 @@
 import { CommonModule, DatePipe, JsonPipe } from '@angular/common';
-import {
-  Component,
-  forwardRef,
-  inject,
-  OnDestroy,
-  OnInit,
-  signal,
-} from '@angular/core';
-import {
-  MAT_BOTTOM_SHEET_DATA,
-  MatBottomSheet,
-  MatBottomSheetRef,
-} from '@angular/material/bottom-sheet';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatChip } from '@angular/material/chips';
 import {
   MAT_DIALOG_DATA,
   MatDialog,
   MatDialogModule,
-  MatDialogRef,
 } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { PageHeaderComponent } from '@shared/components';
 import { PageWrapperComponent } from '@shared/components/page-wrapper/page-wrapper.component';
 import { LogItem, LogService } from '@shared/services';
+import { log } from 'orval';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -38,13 +27,21 @@ import { Subscription } from 'rxjs';
     MatChip,
     PageHeaderComponent,
   ],
-  template: ` <div
-  >
+  template: ` <div>
     <app-page-wrapper>
       <div top><app-page-header title="Logs" icon="terminal" /></div>
       <div content class="h-full w-full">
         <!-- Sidebar: Logs List -->
         <button matButton (click)="clearLogs()">clear</button>
+        @if(loggingState()){
+        <button matButton="filled" (click)="toggleLogging()">
+          logging... (click to stop)
+        </button>
+        }@else {
+        <button matButton="outlined" (click)="toggleLogging()">
+          Start logging
+        </button>
+        }
 
         <mat-action-list>
           @for (log of logs(); track $index) {
@@ -88,6 +85,9 @@ export class LogsComponent implements OnInit, OnDestroy {
 
   logs = signal<LogItem[]>([]);
   selectedLog = signal<LogItem | null>(null);
+  loggingState = toSignal(this.logService.currentLoggingState(), {
+    initialValue: false,
+  });
 
   private refreshIntervalId: any;
 
@@ -121,6 +121,10 @@ export class LogsComponent implements OnInit, OnDestroy {
 
   clearLogs() {
     this.logService.clear();
+  }
+
+  toggleLogging() {
+    this.logService.toggleLogging();
   }
 }
 

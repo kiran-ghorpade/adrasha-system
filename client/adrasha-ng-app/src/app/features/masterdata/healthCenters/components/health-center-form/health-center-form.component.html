@@ -3,16 +3,16 @@
   <mat-step [stepControl]="steps.healthCenterDetails">
     <form [formGroup]="steps.healthCenterDetails">
       <ng-template matStepLabel>{{
-        "healthCenter.step1Title" | translate
+        "masterdata.healthCenter.step1Title" | translate
       }}</ng-template>
       <div class="flex gap-3 flex-wrap md:w-2/3">
         <mat-form-field>
-          <mat-label>{{ "healthCenter.nameLabel" | translate }}</mat-label>
+          <mat-label>{{ "masterdata.healthCenter.nameLabel" | translate }}</mat-label>
           <input matInput formControlName="name" required />
           <app-validation-error [control]="steps.healthCenterDetails.controls.name" />
         </mat-form-field>
         <mat-form-field>
-          <mat-label>{{ "healthCenter.roleLabel" | translate }}</mat-label>
+          <mat-label>{{ "masterdata.healthCenter.roleLabel" | translate }}</mat-label>
           <mat-select required formControlName="centerType">
             @for (type of healthCenterTypeList(); track $index) {
             <mat-option [value]="`${type.code}`">{{ type.label }}</mat-option>
@@ -24,7 +24,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{
-            "healthCenter.totalFamiliesLabel" | translate
+            "masterdata.healthCenter.totalFamiliesLabel" | translate
           }}</mat-label>
           <input matInput formControlName="totalFamilies" required />
           <app-validation-error
@@ -33,7 +33,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{
-            "healthCenter.totalPopulationLabel" | translate
+            "masterdata.healthCenter.totalPopulationLabel" | translate
           }}</mat-label>
           <input matInput formControlName="totalPopulation" required />
           <app-validation-error
@@ -52,12 +52,12 @@
   <mat-step [stepControl]="steps.addressDetails">
     <form [formGroup]="steps.addressDetails">
       <ng-template matStepLabel>{{
-        "healthCenter.step3Title" | translate
+        "masterdata.healthCenter.step3Title" | translate
       }}</ng-template>
       <div class="flex gap-3 flex-wrap md:w-2/3">
         <mat-form-field>
           <mat-label>{{
-            "healthCenter.healthCenterLabel" | translate
+            "masterdata.healthCenter.healthCenterLabel" | translate
           }}</mat-label>
           <mat-select required formControlName="healthCenterId">
             @for (location of locationList(); track $index) {
@@ -80,16 +80,16 @@
   <!-- Done -->
   <mat-step>
     <ng-template matStepLabel>{{
-      "healthCenter.doneTitle" | translate
+      "masterdata.healthCenter.doneTitle" | translate
     }}</ng-template>
-    <p>{{ "healthCenter.doneMessage" | translate }}</p>
+    <p>{{ "masterdata.healthCenter.doneMessage" | translate }}</p>
     <div>
       <button matButton matStepperPrevious>Back</button>
       <button matButton (click)="stepper.reset()">
-        {{ "healthCenter.resetButton" | translate }}
+        {{ "masterdata.healthCenter.resetButton" | translate }}
       </button>
       <button matButton="filled" (click)="onSubmit()">
-        {{ "healthCenter.submitButton" | translate }}
+        {{ "masterdata.healthCenter.submitButton" | translate }}
       </button>
     </div>
   </mat-step>

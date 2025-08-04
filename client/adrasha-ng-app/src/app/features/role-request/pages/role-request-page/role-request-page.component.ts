@@ -9,6 +9,7 @@ import { RoleRequestResponseDTO } from '@core/model/userService';
 import { AuthService } from '@core/services';
 import { RoleRequestListComponent } from '@features/role-request/components';
 import { PageHeaderComponent, PageWrapperComponent } from '@shared/components';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-role-request-page',
@@ -30,17 +31,23 @@ export class RoleRequestPageComponent {
 
   userId: string = '';
   roleRequestList = signal<RoleRequestResponseDTO[]>([]);
-  totalSize = signal(0);
 
   isAdmin = toSignal(this.authService.isAdmin(), { initialValue: false });
 
+  // paginated metadata
+  pageIndex = signal(0);
+  pageSize = signal(10);
+  totalSize = signal(0);
+
   ngOnInit(): void {
     this.loadUser();
-    this.loadRoleRequests();
+    this.loadPaginatedData();
   }
 
   onPageChange(event: any) {
-    this.loadRoleRequests();
+    this.pageIndex.set(event.pageIndex);
+    this.pageSize.set(event.pageSize);
+    this.loadPaginatedData();
   }
 
   loadUser() {
@@ -49,21 +56,27 @@ export class RoleRequestPageComponent {
     });
   }
 
-  loadRoleRequests() {
+  loadPaginatedData() {
     this.roleRequestService
       .getAllRoleRequests({
         filterDTO: {
           userId: this.userId,
         },
         pageable: {
-          page: 1,
-          size: 100,
+          page: this.pageIndex(),
+          size: this.pageSize(),
           sort: [],
         },
       })
+      .pipe(
+        tap((response) => {
+          this.pageIndex.set(response.page?.number ?? 0);
+          this.pageSize.set(response.page?.size ?? 0);
+          this.totalSize.set(response.page?.totalElements ?? 0);
+        })
+      )
       .subscribe((rolerequests) => {
         this.roleRequestList.set(rolerequests.content || []);
-        this.totalSize.set(rolerequests.totalElements || 0);
       });
   }
 

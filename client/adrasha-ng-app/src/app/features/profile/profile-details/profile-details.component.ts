@@ -3,12 +3,13 @@ import { MatList } from '@angular/material/list';
 import { DataLabelComponent, DataLabelType } from '@shared/components';
 
 @Component({
-  selector: 'app-health-center-details',
+  selector: 'app-profile-details',
   imports: [MatList, DataLabelComponent],
-  template: `<ng-container>
+  template: ` <ng-container>
     <mat-list style="display:flex;flex-wrap:wrap; gap:8;">
-      @if(safeHealthCenterData.length > 0) { @for (data of healthCenterData();
-      track $index) {
+      @if (!profileData() && profileData().length === 0) {
+      <p>No details available.</p>
+      }@else { @for (data of profileData(); track $index) {
       <div class="w-full sm:w-1/2 box-border">
         <app-data-label
           [label]="data.label"
@@ -16,16 +17,11 @@ import { DataLabelComponent, DataLabelType } from '@shared/components';
           [icon]="data.icon"
         ></app-data-label>
       </div>
-      } } @else {
-      <p>No details available.</p>
       }
+    }
     </mat-list>
   </ng-container>`,
 })
-export class HealthCenterDetailsComponent {
-  healthCenterData = input.required<DataLabelType[]>();
-
-  get safeHealthCenterData() {
-    return this.healthCenterData() ?? [];
-  }
+export class LocationDetailsComponent {
+  profileData = input.required<DataLabelType[]>();
 }

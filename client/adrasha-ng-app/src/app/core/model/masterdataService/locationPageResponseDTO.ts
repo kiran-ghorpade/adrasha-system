@@ -9,5 +9,5 @@ import type { LocationResponseDTO } from './locationResponseDTO';
 
 export interface LocationPageResponseDTO {
   content?: LocationResponseDTO[];
-  page?: PageInfo;
+  page?:PageInfo;
 }

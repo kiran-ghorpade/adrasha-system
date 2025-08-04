@@ -9,5 +9,5 @@ import type { NCDResponseDTO } from './nCDResponseDTO';
 
 export interface NCDPageResponseDTO {
   content?: NCDResponseDTO[];
-  page?: PageInfo;
+  page?:PageInfo;
 }

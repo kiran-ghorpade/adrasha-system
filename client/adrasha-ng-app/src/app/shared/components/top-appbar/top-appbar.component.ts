@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 // import { MatAvatarModule } from '@angular/material/avatar';
 import { CommonModule } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -11,7 +11,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService, ThemeService } from '@core/services';
 import { AppLogoComponent } from '../../widgets/logo.component';
-import { MatToolbar } from '@angular/material/toolbar';
 import { AlertComponent } from '../alert/alert.component';
 
 @Component({
@@ -51,9 +50,9 @@ export class TopAppBarComponent {
 
   readonly settings = computed(() => {
     const base = [{ label: 'Settings', toLink: '/settings', icon: 'settings' }];
-    // if (!this.isAdmin()) {
-    //   base.unshift({ label: 'Profile', toLink: '/profile', icon: 'person' });
-    // }
+    if (!this.isAdmin()) {
+      base.unshift({ label: 'Profile', toLink: '/profile', icon: 'person' });
+    }
     return base;
   });
 

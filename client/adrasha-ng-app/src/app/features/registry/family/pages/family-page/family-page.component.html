@@ -16,10 +16,14 @@
     <div class="flex justify-center">
       <mat-form-field class="md:w-1/3">
         <mat-label>Search family by house id</mat-label>
-        <input matInput #input [disabled]="totalSize() == 0" />
+        <input
+          matInput
+          [disabled]="totalSize() === 0"
+          [value]="searchTerm()"
+          (input)="onSearch($event.target.value)"
+        />
       </mat-form-field>
     </div>
-
 
     <!-- Family List -->
     <div class="">

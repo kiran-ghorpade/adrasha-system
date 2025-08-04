@@ -23,7 +23,7 @@ export class HealthCenterService {
       next: (result) => {
         if (result.id) {
           const translatedMsg = this.translateService.instant(
-            'healthCenter.registration.success'
+            'masterdata.healthCenter.registration.success'
           );
           this.alertService.showAlert(translatedMsg, 'success');
           this.router.navigateByUrl(`/masterdata/healthCenters/${result.id}`, {
@@ -36,7 +36,7 @@ export class HealthCenterService {
           console.log(err);
         }
         const translatedMsg = this.translateService.instant(
-          'healthCenter.registration.failed'
+          'masterdata.healthCenter.registration.failed'
         );
         this.alertService.showAlert(translatedMsg, 'error');
       },
@@ -48,7 +48,7 @@ export class HealthCenterService {
       next: (result) => {
         if (result.id) {
           const translatedMsg = this.translateService.instant(
-            'healthCenter.update.success'
+            'masterdata.healthCenter.update.success'
           );
           this.alertService.showAlert(translatedMsg, 'success');
           this.router.navigateByUrl(`/masterdata/healthCenters/${result.id}`, {
@@ -61,7 +61,7 @@ export class HealthCenterService {
           console.log(err);
         }
         const translatedMsg = this.translateService.instant(
-          'healthCenter.update.failed'
+          'masterdata.healthCenter.update.failed'
         );
         this.alertService.showAlert(translatedMsg, 'error');
       },
@@ -72,7 +72,7 @@ export class HealthCenterService {
     this.healthCenterApiService.deleteHealthCenter(id).subscribe({
       next: () => {
         const translatedMsg = this.translateService.instant(
-          'healthCenter.deletion.success'
+          'masterdata.healthCenter.deletion.success'
         );
         this.alertService.showAlert(translatedMsg, 'success');
         this.router.navigateByUrl(`/masterdata/healthCenters`, {
@@ -82,7 +82,7 @@ export class HealthCenterService {
       error: (err) => {
         console.log(err);
         const translatedMsg = this.translateService.instant(
-          'healthCenter.deletion.failed'
+          'masterdata.healthCenter.deletion.failed'
         );
         this.alertService.showAlert(translatedMsg, 'error');
       },

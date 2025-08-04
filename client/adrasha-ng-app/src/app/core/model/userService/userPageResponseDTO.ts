@@ -9,5 +9,5 @@ import type { UserResponseDTO } from './userResponseDTO';
 
 export interface UserPageResponseDTO {
   content?: UserResponseDTO[];
-  page?: PageInfo;
+  page?:PageInfo;
 }

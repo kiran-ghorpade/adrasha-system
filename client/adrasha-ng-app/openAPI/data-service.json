@@ -2024,6 +2024,10 @@
               "APL",
               "BPL"
             ]
+          },
+          "houseId": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },

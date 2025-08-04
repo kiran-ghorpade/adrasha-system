@@ -9,5 +9,5 @@ import type { RoleRequestResponseDTO } from './roleRequestResponseDTO';
 
 export interface RoleRequestPageResponseDTO {
   content?: RoleRequestResponseDTO[];
-  page?: PageInfo;
+  page?:PageInfo;
 }

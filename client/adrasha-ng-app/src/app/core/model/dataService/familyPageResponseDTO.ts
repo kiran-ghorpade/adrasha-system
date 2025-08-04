@@ -9,5 +9,5 @@ import type { FamilyDataResponseDTO } from './familyDataResponseDTO';
 
 export interface FamilyPageResponseDTO {
   content?: FamilyDataResponseDTO[];
-  page?: PageInfo;
+  page?:PageInfo;
 }

@@ -186,6 +186,7 @@
       "totalFamiliesLabel": "Total Families",
       "totalPopulationLabel": "Total Population",
       "healthCenterLabel": "Health Center",
+      "locationLabel":"City/Village",
 
       "registration": {
         "success": "Health Center Addition successful",

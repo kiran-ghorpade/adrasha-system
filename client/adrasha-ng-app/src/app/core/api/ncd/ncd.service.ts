@@ -118,7 +118,7 @@ export class NcdService {
     return this.http.get<TData>(
       `http://localhost:8080/masterdata/ncd`,{
     ...options,
-        params: {...params.filterDTO, ...params.pageable, ...options?.params},}
+        params: {...params.filterDTO, ...params.pageable ...options?.params},}
     );
   }
  createNCD<TData = NCDResponseDTO>(

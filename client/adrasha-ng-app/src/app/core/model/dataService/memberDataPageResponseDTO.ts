@@ -9,5 +9,5 @@ import type { MemberDataResponseDTO } from './memberDataResponseDTO';
 
 export interface MemberDataPageResponseDTO {
   content?: MemberDataResponseDTO[];
-  page?: PageInfo;
+  page?:PageInfo;
 }

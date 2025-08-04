@@ -9,5 +9,5 @@ import type { HealthRecordResponseDTO } from './healthRecordResponseDTO';
 
 export interface HealthRecordPageResponseDTO {
   content?: HealthRecordResponseDTO[];
-  page?: PageInfo;
+  page?:PageInfo;
 }

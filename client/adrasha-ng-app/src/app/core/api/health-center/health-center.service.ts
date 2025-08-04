@@ -118,7 +118,7 @@ export class HealthCenterService {
     return this.http.get<TData>(
       `http://localhost:8080/masterdata/healthCenters`,{
     ...options,
-        params: {...params.filterDTO, ...params.pageable, ...options?.params},}
+        params: {...params.filterDTO, ...params.pageable ...options?.params},}
     );
   }
  createHealthCenter<TData = HealthCenterResponseDTO>(

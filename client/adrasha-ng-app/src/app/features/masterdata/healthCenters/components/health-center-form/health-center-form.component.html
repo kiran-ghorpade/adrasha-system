@@ -57,11 +57,11 @@
       <div class="flex gap-3 flex-wrap md:w-2/3">
         <mat-form-field>
           <mat-label>{{
-            "masterdata.healthCenter.healthCenterLabel" | translate
+            "masterdata.healthCenter.locationLabel" | translate
           }}</mat-label>
-          <mat-select required formControlName="healthCenterId">
+          <mat-select required formControlName="locationId">
             @for (location of locationList(); track $index) {
-            <mat-option [value]="`${location.id}`">{{ location.id }}</mat-option>
+            <mat-option [value]="`${location.id}`">{{ location.name }}</mat-option>
             }
           </mat-select>
           <app-validation-error

@@ -15,5 +15,5 @@ public class FamilyDataFilterDTO {
 	
 	private UUID ashaId;
 	private PovertyStatus povertyStatus;
-
+	private Integer houseId;
 }

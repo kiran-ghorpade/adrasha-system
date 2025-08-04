@@ -9,4 +9,5 @@ import type { FamilyDataFilterDTOPovertyStatus } from './familyDataFilterDTOPove
 export interface FamilyDataFilterDTO {
   ashaId?: string;
   povertyStatus?: FamilyDataFilterDTOPovertyStatus;
+  houseId?: number;
 }

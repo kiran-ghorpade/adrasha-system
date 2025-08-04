@@ -19,12 +19,14 @@ import { BaseFormComponent } from '@shared/directives';
 import { map } from 'rxjs';
 import { HealthCenterService } from '../../services';
 import { HealthCenterFormFactoryService } from '../../services/health-center-form-factory.service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-health-center-form',
   imports: [
     MatInputModule,
     MatFormFieldModule,
+    MatButtonModule,
     MatStepperModule,
     MatSelectModule,
     ReactiveFormsModule,

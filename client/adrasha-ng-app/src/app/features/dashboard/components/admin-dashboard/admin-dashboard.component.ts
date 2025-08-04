@@ -38,6 +38,7 @@ export class AdminDashboardComponent {
   private readonly healthCenterService = inject(HealthCenterService);
   private readonly roleRequestService = inject(RoleRequestService);
   private readonly userService = inject(UserService);
+  private readonly analyticsService = inject(AnalyticsService);
 
   totalLocations = toSignal(
     this.locationService.getTotalCount({ filterDTO: {} }),
@@ -62,16 +63,24 @@ export class AdminDashboardComponent {
   );
 
   // roleDistribution?: UserStatsRoleDistribution;
+  roleDistribution = toSignal(
+    this.analyticsService.getRoleDistribution({
+      analyticsFilterDTO: {
+        // End is now
+        end: new Date().toISOString(),
+        // Start is 10 days ago
+        start: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+        userId: '',
+      },
+    })
+  );
 
   lineChartData = signal({
-    labels: Array.from({ length: 10 }, (_, i) => `Day ${i + 1}`),
+    labels: [] as string[],
     datasets: [
       {
         label: 'Requests Added',
-        data: Array.from(
-          { length: 30 },
-          () => Math.floor(Math.random() * 50) + 5
-        ),
+        data: [] as number[],
       },
     ],
   });
@@ -85,18 +94,71 @@ export class AdminDashboardComponent {
     ],
   });
 
-  updatePieChartData = effect(() => {
-    // const stats = this.userStats();
-    // const roleDist = stats?.roleDistribution ?? {};
-    const roleDist = {};
+  updateLineChartData = effect(() => {
+    const roleDist = this.roleDistribution() ?? {};
 
-    this.pieChartData.update((data) => ({
-      ...data,
-      labels: Object.keys(roleDist),
+    // Generate last 10 days in yyyy-MM-dd format
+    const days = Array.from({ length: 10 }, (_, i) => {
+      const date = new Date(Date.now() - (9 - i) * 24 * 60 * 60 * 1000);
+      return {
+        key: date.toISOString().slice(0, 10), // 'YYYY-MM-DD'
+        label: new Date(date).toLocaleString(), // Optional: 'Aug 1'
+      };
+    });
+
+    // Initialize counts
+    const dailyCountMap: Record<string, number> = {};
+    for (const day of days) {
+      dailyCountMap[day.key] = 0;
+    }
+
+    // Aggregate counts by createdAt date
+    for (const statusCounts of Object.values(roleDist)) {
+      for (const entry of statusCounts) {
+        if (!entry.createdAt) continue;
+        const dateKey = entry.createdAt.slice(0, 10);
+        if (dailyCountMap[dateKey] !== undefined) {
+          dailyCountMap[dateKey] += entry.count ?? 0;
+        }
+      }
+    }
+
+    // Update chart
+    this.lineChartData.set({
+      labels: days.map((d) => d.label),
       datasets: [
         {
-          ...data.datasets[0],
-          data: Object.values(roleDist),
+          label: 'Requests Added',
+          data: days.map((d) => dailyCountMap[d.key]),
+        },
+      ],
+    });
+  });
+
+  updatePieChartData = effect(() => {
+    const roleDist = this.roleDistribution() ?? {};
+
+    const labels: string[] = [];
+    const data: number[] = [];
+
+    for (const [role, statusCounts] of Object.entries(roleDist)) {
+      labels.push(role);
+
+      // Sum the counts for each status (PENDING, APPROVED, REJECTED)
+      const totalCount = statusCounts.reduce(
+        (sum, item) => sum + (item.count ?? 0),
+        0
+      );
+      data.push(totalCount);
+    }
+
+    this.pieChartData.update((chartData) => ({
+      ...chartData,
+      labels,
+      datasets: [
+        {
+          ...chartData.datasets[0],
+          data,
         },
       ],
     }));

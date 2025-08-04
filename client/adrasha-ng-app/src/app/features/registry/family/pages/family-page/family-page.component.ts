@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, signal, viewChild, ViewChild } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -11,7 +11,7 @@ import { FamilyDataService } from '@core/api/family-data/family-data.service';
 import { MemberDataService } from '@core/api/member-data/member-data.service';
 import { AuthService } from '@core/services';
 import { PageHeaderComponent, PageWrapperComponent } from '@shared/components';
-import { forkJoin, map, switchMap, tap } from 'rxjs';
+import { debounceTime, forkJoin, fromEvent, map, switchMap, tap } from 'rxjs';
 import { FamilyHeadItem, FamilyListComponent } from '../../components';
 
 @Component({
@@ -31,6 +31,8 @@ import { FamilyHeadItem, FamilyListComponent } from '../../components';
   templateUrl: './family-page.component.html',
 })
 export class FamilyPageComponent {
+  @ViewChild('input') inputRef!: ElementRef;
+
   private readonly authService = inject(AuthService);
   private readonly familyService = inject(FamilyDataService);
   private readonly memberService = inject(MemberDataService);
@@ -43,9 +45,10 @@ export class FamilyPageComponent {
   );
 
   familyHeadList = signal<FamilyHeadItem[]>([]);
+  searchTerm = signal(0);
 
-// paginated metadata
-  pageIndex =signal(0);
+  // paginated metadata
+  pageIndex = signal(0);
   pageSize = signal(10);
   totalSize = signal(0);
 
@@ -59,11 +62,25 @@ export class FamilyPageComponent {
     this.loadPaginatedData();
   }
 
+  setupSearchListener() {
+    fromEvent(this.inputRef.nativeElement, 'input')
+      .pipe(
+        map((event: any) => event.target.value.trim()),
+        debounceTime(300) // wait 300ms after the last keypress
+      )
+      .subscribe((searchValue: number) => {
+        this.searchTerm.set(searchValue);
+        this.pageIndex.set(0); // reset page index when searching
+        this.loadPaginatedData();
+      });
+  }
+
   loadPaginatedData() {
     this.familyService
       .getFamilyPage({
         filterDTO: {
           ashaId: this.userId() ?? '',
+          houseId: this.searchTerm() || undefined,
         },
         pageable: {
           page: this.pageIndex(),
@@ -98,8 +115,6 @@ export class FamilyPageComponent {
       )
       .subscribe((headList) => {
         this.familyHeadList.set(headList);
-        console.log(this.familyHeadList());
       });
   }
 }
-

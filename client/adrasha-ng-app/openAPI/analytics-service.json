@@ -15,39 +15,35 @@
     }
   ],
   "paths": {
-    "/analytics/user/stats": {
+    "/analytics/roles": {
       "get": {
         "tags": [
           "Analytics"
         ],
-        "operationId": "getUserStats",
+        "operationId": "getRoleDistribution",
+        "parameters": [
+          {
+            "name": "analyticsFilterDTO",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/AnalyticsFilterDTO"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserStats"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/RoleRequestStatusCount"
+                    }
+                  }
                 }
               }
             }
@@ -60,39 +56,35 @@
         ]
       }
     },
-    "/analytics/member/stats": {
+    "/analytics/poverty": {
       "get": {
         "tags": [
           "Analytics"
         ],
-        "operationId": "getMemberStats",
+        "operationId": "getPovertyDistribution",
+        "parameters": [
+          {
+            "name": "analyticsFilterDTO",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/AnalyticsFilterDTO"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/MemberStats"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/PovertyStatusCount"
+                    }
+                  }
                 }
               }
             }
@@ -105,39 +97,35 @@
         ]
       }
     },
-    "/analytics/masterdata/stats": {
+    "/analytics/gender": {
       "get": {
         "tags": [
           "Analytics"
         ],
-        "operationId": "getMasterDataStats",
+        "operationId": "getGenderDistribution",
+        "parameters": [
+          {
+            "name": "analyticsFilterDTO",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/AnalyticsFilterDTO"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/MasterdataStats"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/GenderCount"
+                    }
+                  }
                 }
               }
             }
@@ -150,39 +138,76 @@
         ]
       }
     },
-    "/analytics/family/stats": {
+    "/analytics/alive": {
       "get": {
         "tags": [
           "Analytics"
         ],
-        "operationId": "getFamilyStats",
+        "operationId": "getAliveStatusDistribution",
+        "parameters": [
+          {
+            "name": "analyticsFilterDTO",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/AnalyticsFilterDTO"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/FamilyStats"
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/AliveStatusCount"
+                    }
+                  }
                 }
               }
             }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      }
+    },
+    "/analytics/age": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "operationId": "getAgeDistribution",
+        "parameters": [
+          {
+            "name": "analyticsFilterDTO",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/AnalyticsFilterDTO"
             }
-          },
-          "403": {
-            "description": "Forbidden",
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/AgeGroupCount"
+                    }
+                  }
                 }
               }
             }
@@ -198,104 +223,164 @@
   },
   "components": {
     "schemas": {
-      "ErrorResponse": {
+      "AnalyticsFilterDTO": {
         "type": "object",
         "properties": {
-          "success": {
-            "type": "boolean"
+          "userId": {
+            "type": "string",
+            "format": "uuid"
           },
-          "status": {
-            "type": "integer",
-            "format": "int32"
+          "start": {
+            "type": "string",
+            "format": "date-time"
           },
-          "error": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          },
-          "path": {
-            "type": "string"
-          },
-          "timestamp": {
+          "end": {
             "type": "string",
             "format": "date-time"
           }
         }
       },
-      "UserStats": {
+      "RoleRequestStatusCount": {
         "type": "object",
         "properties": {
-          "totalUsers": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "APPROVED",
+              "REJECTED"
+            ]
+          },
+          "count": {
             "type": "integer",
             "format": "int64"
           },
-          "roleDistribution": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "integer",
-              "format": "int64"
-            }
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
-      "MemberStats": {
+      "PovertyStatusCount": {
         "type": "object",
         "properties": {
-          "totalMembers": {
+          "ashaId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "povertyStatus": {
+            "type": "string",
+            "enum": [
+              "APL",
+              "BPL"
+            ]
+          },
+          "count": {
             "type": "integer",
             "format": "int64"
           },
-          "averageMembersPerFamily": {
-            "type": "number",
-            "format": "double"
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
           },
-          "genderDistribution": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          "ageDistribution": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "integer",
-              "format": "int64"
-            }
+          "uuid": {
+            "type": "string",
+            "format": "uuid"
           }
         }
       },
-      "MasterdataStats": {
+      "GenderCount": {
         "type": "object",
         "properties": {
-          "totalLocations": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ashaId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "gender": {
+            "type": "string",
+            "enum": [
+              "MALE",
+              "FEMALE",
+              "OTHER"
+            ]
+          },
+          "count": {
             "type": "integer",
             "format": "int64"
           },
-          "totalHealthCenters": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "totalNCD": {
-            "type": "integer",
-            "format": "int64"
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
-      "FamilyStats": {
+      "AliveStatusCount": {
         "type": "object",
         "properties": {
-          "totalFamilies": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ashaId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "aliveStatus": {
+            "type": "string",
+            "enum": [
+              "ALIVE",
+              "DECEASED",
+              "UNKNOWN"
+            ]
+          },
+          "count": {
             "type": "integer",
             "format": "int64"
           },
-          "povertyStats": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "integer",
-              "format": "int64"
-            }
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "AgeGroupCount": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ashaId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ageGroup": {
+            "type": "string",
+            "enum": [
+              "INFANT",
+              "CHILD",
+              "TEEN",
+              "ADULT",
+              "MID_AGED_ADULT",
+              "SENIOR",
+              "UNKNOWN"
+            ]
+          },
+          "count": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       }

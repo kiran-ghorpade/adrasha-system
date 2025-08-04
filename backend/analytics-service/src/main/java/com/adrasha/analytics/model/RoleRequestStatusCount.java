@@ -11,18 +11,21 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Builder;
 import lombok.Data;
 
 @Entity
 @Data
+@Builder
 public class RoleRequestStatusCount {
- @Id @GeneratedValue(strategy = GenerationType.UUID)
- private UUID id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.UUID)
+	private UUID id;
 
- @Enumerated(EnumType.STRING)
- private RequestStatus status;
+	@Enumerated(EnumType.STRING)
+	private RequestStatus status;
 
- private Long count;
- 
- private Instant createdAt;
+	private Long count;
+
+	private Instant createdAt;
 }

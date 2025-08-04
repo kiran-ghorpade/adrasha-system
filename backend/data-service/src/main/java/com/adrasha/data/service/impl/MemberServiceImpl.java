@@ -26,7 +26,6 @@ public class MemberServiceImpl implements MemberDataService {
 	private final MemberRepository memberRepository;
 	private final FamilyRepository familyRepository;
 	private final MemberEventProducer eventProducer;
-	
 	private final ModelMapper modelMapper;
 	
 	@Override
@@ -64,14 +63,7 @@ public class MemberServiceImpl implements MemberDataService {
 		
 		Member createdMember = memberRepository.save(member);
 
-//		eventProducer.sendCreatedEvent(MemberCreatedEvent.builder()
-//				.ashaId(createdMember.getAshaId())
-//				.familyId(createdMember.getFamilyId())
-//				.memberId(createdMember.getId())
-//				.ageGroup(AgeGroup.fromAge(createdMember.getAge()))
-//				.gender(createdMember.getGender())
-//				.createdAt(createdMember.getCreatedAt())
-//				.build());
+		eventProducer.sendCreatedEvent(createdMember);
 		
 		return createdMember;
 	}
@@ -79,8 +71,13 @@ public class MemberServiceImpl implements MemberDataService {
 	@Override
 	public Member updateMember(UUID memberId, Member updatedMemberDetails) {
 		Member member = getMember(memberId);
+	    
 		modelMapper.map(updatedMemberDetails, member);
-		return memberRepository.save(member);
+		Member updatedMember = memberRepository.save(member);
+				
+		eventProducer.sendUpdatedEvent(updatedMemberDetails, updatedMember);	        
+		
+		return updatedMember;	
 	}
 
 	@Override
@@ -88,15 +85,9 @@ public class MemberServiceImpl implements MemberDataService {
 		Member member = getMember(memberId);
 		memberRepository.delete(member);
 		
-//		eventProducer.sendMemberDeletedEvente(MemberCreatedEvent.builder()
-//				.ashaId(createdMember.getAshaId())
-//				.familyId(createdMember.getFamilyId())
-//				.memberId(createdMember.getId())
-//				.ageGroup(AgeGroup.fromAge(createdMember.getAge()))
-//				.gender(createdMember.getGender())
-//				.createdAt(createdMember.getCreatedAt())
-//				.build());
-//		
+		eventProducer.sendDeletedEvent(member);
+
 		return member;
 	}
+
 }

@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,18 +12,20 @@ import org.springframework.stereotype.Service;
 
 import com.adrasha.core.exception.AlreadyExistsException;
 import com.adrasha.core.exception.NotFoundException;
+import com.adrasha.user.event.RoleRequestEventProducer;
 import com.adrasha.user.model.RoleRequest;
 import com.adrasha.user.repository.RoleRequestRepository;
 import com.adrasha.user.service.RoleRequestService;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class RoleRequestServiceImpl implements RoleRequestService {
 
-	@Autowired
-	private RoleRequestRepository  requestRepository;
-	
-	@Autowired
-	private ModelMapper modelMapper;
+	private final RoleRequestRepository  requestRepository;
+	private final ModelMapper modelMapper;
+	private final RoleRequestEventProducer eventProducer;
 
 	@Override
 	public Page<RoleRequest> getRoleRequestPage(Example<RoleRequest> example, Pageable pageable) {
@@ -55,20 +56,31 @@ public class RoleRequestServiceImpl implements RoleRequestService {
 	  		throw new AlreadyExistsException("error.roleRequest.alreadyExists");
 	  	}
 
-		return requestRepository.save(request);
+		RoleRequest createdRequest = requestRepository.save(request);
+		
+		eventProducer.sendCreatedEvent(createdRequest);
+		
+		return createdRequest;
 	}
 
 	@Override
 	public RoleRequest updateRoleRequest(UUID requestId, RoleRequest updatedRoleRequest) {
 		RoleRequest request = getRoleRequest(requestId);
 		modelMapper.map(updatedRoleRequest, request);
-		return requestRepository.save(request);
+		
+		RoleRequest savedRequest = requestRepository.save(request);
+		
+		eventProducer.sendUpdatedEvent(updatedRoleRequest, savedRequest);
+		
+		return savedRequest;
 	}
 
 	@Override
 	public RoleRequest deleteRoleRequest(UUID requestId) {
 		RoleRequest request = getRoleRequest(requestId);
 		requestRepository.delete(request);
+		
+		eventProducer.sendDeletedEvent(request);
 		return request;
 	}
 }

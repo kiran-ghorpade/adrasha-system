@@ -48,31 +48,31 @@ export class AshaDashboardComponent {
 
   user = toSignal(this.authService.currentUser, { initialValue: null });
 
-  familyCount = computed(() =>
-    toSignal(
-      this.familyService.getFamilyCount({
-        filterDTO: { ashaId: this.user()?.id },
-      }),
-      { initialValue: 0 }
-    )
+  familyCount = toSignal(
+    this.familyService.getFamilyCount({
+      filterDTO: { ashaId: this.user()?.id },
+    }),
+    { initialValue: 0 }
   );
 
-  memberCount = computed(() =>
-    toSignal(
-      this.memberService.getMemberCount({
-        filterDTO: { ashaId: this.user()?.id, alive: 'ALIVE' },
-      }),
-      { initialValue: 0 }
-    )
+  memberCount = toSignal(
+    this.memberService.getMemberCount({
+      filterDTO: { ashaId: this.user()?.id, alive: 'ALIVE' },
+    }),
+    { initialValue: 0 }
   );
 
   ncdCount = toSignal(
-    this.healthRecordService.getHealthRecordCount({ filterDTO: { ncdlist: [] } }),
+    this.healthRecordService.getHealthRecordCount({
+      filterDTO: { ncdlist: [] },
+    }),
     { initialValue: 0 }
   );
 
   pregnancyCount = toSignal(
-    this.healthRecordService.getHealthRecordCount({ filterDTO: { pregnant: true } }),
+    this.healthRecordService.getHealthRecordCount({
+      filterDTO: { pregnant: true },
+    }),
     { initialValue: 0 }
   );
 

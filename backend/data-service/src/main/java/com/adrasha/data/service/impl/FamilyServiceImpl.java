@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.adrasha.core.exception.NotFoundException;
+import com.adrasha.data.event.FamilyEventProducer;
 import com.adrasha.data.integration.RemoteDataService;
 import com.adrasha.data.model.Family;
 import com.adrasha.data.model.Member;
@@ -19,20 +19,17 @@ import com.adrasha.data.repository.FamilyRepository;
 import com.adrasha.data.repository.MemberRepository;
 import com.adrasha.data.service.FamilyDataService;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class FamilyServiceImpl implements FamilyDataService {
 
-	@Autowired
-	private FamilyRepository familyRepository;
-
-	@Autowired
-	private MemberRepository memberRepository;
-	
-	@Autowired
-	private RemoteDataService remoteDataService;
-
-	@Autowired
-	private ModelMapper modelMapper;
+	private final FamilyRepository familyRepository;
+	private final MemberRepository memberRepository;
+	private final RemoteDataService remoteDataService;
+	private final  ModelMapper modelMapper;
+	private final FamilyEventProducer eventProducer;
 
 	@Override
 	public Page<Family> getFamilyPage(Example<Family> example, Pageable pageable) {
@@ -71,6 +68,8 @@ public class FamilyServiceImpl implements FamilyDataService {
 		
 		newMember.setFamilyId(newFamily.getId());
 		memberRepository.save(newMember);
+		
+		eventProducer.sendCreatedEvent(newFamily);
 
 		return newFamily;
 	}
@@ -87,13 +86,18 @@ public class FamilyServiceImpl implements FamilyDataService {
 		
 		remoteDataService.verifyUserExist(updatedFamilyDetails.getAshaId());
 		
-		return familyRepository.save(family);
+		Family savedFamily = familyRepository.save(family);
+		
+		eventProducer.sendUpdatedEvent(updatedFamilyDetails, savedFamily);
+		
+		return savedFamily;
 	}
 
 	@Override
 	public Family deleteFamily(UUID familyId) {
 		Family family = getFamily(familyId);
 		familyRepository.delete(family);
+		eventProducer.sendDeletedEvent(family);
 		return family;
 	}
 

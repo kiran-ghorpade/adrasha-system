@@ -12,14 +12,18 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 @Entity
 public class PovertyStatusCount {
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID UUID;
+	
+    private UUID ashaId;
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)

@@ -3,8 +3,7 @@ package com.adrasha.core.dto.event;
 import java.time.Instant;
 import java.util.UUID;
 
-import com.adrasha.core.model.AgeGroup;
-import com.adrasha.core.model.Gender;
+import com.adrasha.core.model.PovertyStatus;
 
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +12,6 @@ import lombok.Data;
 @Builder
 public class FamilyCreatedEvent {
 	private UUID ashaId;
-    private Gender gender;
-    private AgeGroup ageGroup;
+    private PovertyStatus povertyStatus;
     private Instant createdAt;
 }

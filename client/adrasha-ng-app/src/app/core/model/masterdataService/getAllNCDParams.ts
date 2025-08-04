@@ -5,8 +5,9 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { NCDFilterDTO } from './nCDFilterDTO';
+import type { Pageable } from './pageable';
 
 export type GetAllNCDParams = {
-  filterDTO: NCDFilterDTO;
-  pageable: {};
+filterDTO: NCDFilterDTO;
+pageable: Pageable;
 };

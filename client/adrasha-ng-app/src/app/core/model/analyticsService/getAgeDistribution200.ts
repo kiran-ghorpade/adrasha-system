@@ -4,5 +4,6 @@
  * ADRASHA ANALYTICS-SERVICE API Docs
  * OpenAPI spec version: 1.0.0
  */
+import type { AgeGroupCount } from './ageGroupCount';
 
-export type FamilyStatsPovertyStats = {[key: string]: number};
+export type GetAgeDistribution200 = {[key: string]: AgeGroupCount[]};

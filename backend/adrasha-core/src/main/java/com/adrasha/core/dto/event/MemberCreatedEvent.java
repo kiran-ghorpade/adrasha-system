@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 import com.adrasha.core.model.AgeGroup;
+import com.adrasha.core.model.AliveStatus;
 import com.adrasha.core.model.Gender;
 
 import lombok.Builder;
@@ -15,5 +16,6 @@ public class MemberCreatedEvent {
 	private UUID ashaId;
     private Gender gender;
     private AgeGroup ageGroup;
+    private AliveStatus aliveStatus;
     private Instant createdAt;
 }

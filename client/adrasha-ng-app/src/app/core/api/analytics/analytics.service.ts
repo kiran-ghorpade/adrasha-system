@@ -24,10 +24,16 @@ import {
 } from 'rxjs';
 
 import type {
-  FamilyStats,
-  MasterdataStats,
-  MemberStats,
-  UserStats
+  GetAgeDistribution200,
+  GetAgeDistributionParams,
+  GetAliveStatusDistribution200,
+  GetAliveStatusDistributionParams,
+  GetGenderDistribution200,
+  GetGenderDistributionParams,
+  GetPovertyDistribution200,
+  GetPovertyDistributionParams,
+  GetRoleDistribution200,
+  GetRoleDistributionParams
 } from '../../model/analyticsService';
 
 
@@ -52,69 +58,95 @@ type HttpClientOptions = {
 export class AnalyticsService {
   constructor(
     private http: HttpClient,
-  ) {} getUserStats<TData = UserStats>(
-     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+  ) {} getRoleDistribution<TData = GetRoleDistribution200>(
+    params: GetRoleDistributionParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-    getUserStats<TData = UserStats>(
-     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+    getRoleDistribution<TData = GetRoleDistribution200>(
+    params: GetRoleDistributionParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-    getUserStats<TData = UserStats>(
-     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;getUserStats<TData = UserStats>(
-     options?: HttpClientOptions
+    getRoleDistribution<TData = GetRoleDistribution200>(
+    params: GetRoleDistributionParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getRoleDistribution<TData = GetRoleDistribution200>(
+    params: GetRoleDistributionParams, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.get<TData>(
-      `http://localhost:8080/analytics/user/stats`,options
+      `http://localhost:8080/analytics/roles`,{
+    ...options,
+        params: {...params.analyticsFilterDTO, ...options?.params},}
     );
   }
- getMemberStats<TData = MemberStats>(
-     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+ getPovertyDistribution<TData = GetPovertyDistribution200>(
+    params: GetPovertyDistributionParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-    getMemberStats<TData = MemberStats>(
-     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+    getPovertyDistribution<TData = GetPovertyDistribution200>(
+    params: GetPovertyDistributionParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-    getMemberStats<TData = MemberStats>(
-     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;getMemberStats<TData = MemberStats>(
-     options?: HttpClientOptions
+    getPovertyDistribution<TData = GetPovertyDistribution200>(
+    params: GetPovertyDistributionParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getPovertyDistribution<TData = GetPovertyDistribution200>(
+    params: GetPovertyDistributionParams, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.get<TData>(
-      `http://localhost:8080/analytics/member/stats`,options
+      `http://localhost:8080/analytics/poverty`,{
+    ...options,
+        params: {...params.analyticsFilterDTO, ...options?.params},}
     );
   }
- getMasterDataStats<TData = MasterdataStats>(
-     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+ getGenderDistribution<TData = GetGenderDistribution200>(
+    params: GetGenderDistributionParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-    getMasterDataStats<TData = MasterdataStats>(
-     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+    getGenderDistribution<TData = GetGenderDistribution200>(
+    params: GetGenderDistributionParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-    getMasterDataStats<TData = MasterdataStats>(
-     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;getMasterDataStats<TData = MasterdataStats>(
-     options?: HttpClientOptions
+    getGenderDistribution<TData = GetGenderDistribution200>(
+    params: GetGenderDistributionParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getGenderDistribution<TData = GetGenderDistribution200>(
+    params: GetGenderDistributionParams, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.get<TData>(
-      `http://localhost:8080/analytics/masterdata/stats`,options
+      `http://localhost:8080/analytics/gender`,{
+    ...options,
+        params: {...params.analyticsFilterDTO, ...options?.params},}
     );
   }
- getFamilyStats<TData = FamilyStats>(
-     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+ getAliveStatusDistribution<TData = GetAliveStatusDistribution200>(
+    params: GetAliveStatusDistributionParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-    getFamilyStats<TData = FamilyStats>(
-     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+    getAliveStatusDistribution<TData = GetAliveStatusDistribution200>(
+    params: GetAliveStatusDistributionParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-    getFamilyStats<TData = FamilyStats>(
-     options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;getFamilyStats<TData = FamilyStats>(
-     options?: HttpClientOptions
+    getAliveStatusDistribution<TData = GetAliveStatusDistribution200>(
+    params: GetAliveStatusDistributionParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getAliveStatusDistribution<TData = GetAliveStatusDistribution200>(
+    params: GetAliveStatusDistributionParams, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.get<TData>(
-      `http://localhost:8080/analytics/family/stats`,options
+      `http://localhost:8080/analytics/alive`,{
+    ...options,
+        params: {...params.analyticsFilterDTO, ...options?.params},}
+    );
+  }
+ getAgeDistribution<TData = GetAgeDistribution200>(
+    params: GetAgeDistributionParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+  ): Observable<TData>;
+    getAgeDistribution<TData = GetAgeDistribution200>(
+    params: GetAgeDistributionParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+  ): Observable<AngularHttpResponse<TData>>;
+    getAgeDistribution<TData = GetAgeDistribution200>(
+    params: GetAgeDistributionParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getAgeDistribution<TData = GetAgeDistribution200>(
+    params: GetAgeDistributionParams, options?: HttpClientOptions
+  ): Observable<TData>  {
+    return this.http.get<TData>(
+      `http://localhost:8080/analytics/age`,{
+    ...options,
+        params: {...params.analyticsFilterDTO, ...options?.params},}
     );
   }
 };
 
-export type GetUserStatsClientResult = NonNullable<UserStats>
-export type GetMemberStatsClientResult = NonNullable<MemberStats>
-export type GetMasterDataStatsClientResult = NonNullable<MasterdataStats>
-export type GetFamilyStatsClientResult = NonNullable<FamilyStats>
+export type GetRoleDistributionClientResult = NonNullable<GetRoleDistribution200>
+export type GetPovertyDistributionClientResult = NonNullable<GetPovertyDistribution200>
+export type GetGenderDistributionClientResult = NonNullable<GetGenderDistribution200>
+export type GetAliveStatusDistributionClientResult = NonNullable<GetAliveStatusDistribution200>
+export type GetAgeDistributionClientResult = NonNullable<GetAgeDistribution200>

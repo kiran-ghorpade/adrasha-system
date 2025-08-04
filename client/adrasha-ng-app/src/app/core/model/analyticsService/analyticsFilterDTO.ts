@@ -5,8 +5,8 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export interface MasterdataStats {
-  totalLocations?: number;
-  totalHealthCenters?: number;
-  totalNCD?: number;
+export interface AnalyticsFilterDTO {
+  userId?: string;
+  start?: string;
+  end?: string;
 }

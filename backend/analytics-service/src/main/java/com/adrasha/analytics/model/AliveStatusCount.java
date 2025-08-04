@@ -22,6 +22,8 @@ public class AliveStatusCount {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+    
+    private UUID ashaId;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

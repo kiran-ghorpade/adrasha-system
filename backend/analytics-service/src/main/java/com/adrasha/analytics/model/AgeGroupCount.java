@@ -22,6 +22,8 @@ public class AgeGroupCount {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+    
+    private UUID ashaId;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

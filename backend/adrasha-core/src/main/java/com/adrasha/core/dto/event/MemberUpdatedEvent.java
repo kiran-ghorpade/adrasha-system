@@ -14,11 +14,15 @@ import lombok.Data;
 @Builder
 public class MemberUpdatedEvent {
 	private UUID ashaId;
-    private UUID memberId;
-    private UUID familyId;
-    private Gender gender;
-    private AgeGroup ageGroup;
-    private AliveStatus alive;
-    
-    private Instant createdAt;
+
+	private AliveStatus oldAliveStatus;
+	private AliveStatus newAliveStatus;
+
+	private AgeGroup oldAgeGroup;
+	private AgeGroup newAgeGroup;
+
+	private Gender oldGender;
+	private Gender newGender;
+
+	private Instant createdAt;
 }

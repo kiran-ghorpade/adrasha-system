@@ -4,6 +4,5 @@
  * ADRASHA ANALYTICS-SERVICE API Docs
  * OpenAPI spec version: 1.0.0
  */
-import type { RoleRequestStatusCount } from './roleRequestStatusCount';
 
-export type GetRoleDistribution200 = {[key: string]: RoleRequestStatusCount[]};
+export type GetRoleDistribution200 = {[key: string]: number};

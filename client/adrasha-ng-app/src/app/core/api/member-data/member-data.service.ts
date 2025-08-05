@@ -118,7 +118,7 @@ export class MemberDataService {
     return this.http.get<TData>(
       `http://localhost:8080/data/members`,{
     ...options,
-        params: {...params.filterDTO, ...params.pageable ...options?.params},}
+        params: {...params.filterDTO, ...params.pageable, ...options?.params},}
     );
   }
  createMember<TData = MemberDataResponseDTO>(

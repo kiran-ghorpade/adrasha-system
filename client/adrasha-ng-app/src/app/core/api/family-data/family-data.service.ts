@@ -118,7 +118,7 @@ export class FamilyDataService {
     return this.http.get<TData>(
       `http://localhost:8080/data/families`,{
     ...options,
-        params: {...params.filterDTO, ...params.pageable ...options?.params},}
+        params: {...params.filterDTO, ...params.pageable, ...options?.params},}
     );
   }
  createFamily<TData = FamilyDataResponseDTO>(

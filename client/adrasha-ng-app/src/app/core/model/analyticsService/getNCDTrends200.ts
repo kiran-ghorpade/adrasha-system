@@ -4,5 +4,6 @@
  * ADRASHA ANALYTICS-SERVICE API Docs
  * OpenAPI spec version: 1.0.0
  */
+import type { NcdCount } from './ncdCount';
 
-export type GetGenderDistribution200 = {[key: string]: number};
+export type GetNCDTrends200 = {[key: string]: NcdCount[]};

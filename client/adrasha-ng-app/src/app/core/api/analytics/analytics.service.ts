@@ -26,14 +26,28 @@ import {
 import type {
   GetAgeDistribution200,
   GetAgeDistributionParams,
+  GetAgeTrends200,
+  GetAgeTrendsParams,
   GetAliveStatusDistribution200,
   GetAliveStatusDistributionParams,
+  GetAliveStatusTrends200,
+  GetAliveStatusTrendsParams,
   GetGenderDistribution200,
   GetGenderDistributionParams,
+  GetGenderTrends200,
+  GetGenderTrendsParams,
+  GetNCDDistribution200,
+  GetNCDDistributionParams,
+  GetNCDTrends200,
+  GetNCDTrendsParams,
   GetPovertyDistribution200,
   GetPovertyDistributionParams,
+  GetPovertyTrends200,
+  GetPovertyTrendsParams,
   GetRoleDistribution200,
-  GetRoleDistributionParams
+  GetRoleDistributionParams,
+  GetRoleTrends200,
+  GetRoleTrendsParams
 } from '../../model/analyticsService';
 
 
@@ -58,7 +72,109 @@ type HttpClientOptions = {
 export class AnalyticsService {
   constructor(
     private http: HttpClient,
-  ) {} getRoleDistribution<TData = GetRoleDistribution200>(
+  ) {} getRoleTrends<TData = GetRoleTrends200>(
+    params: GetRoleTrendsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+  ): Observable<TData>;
+    getRoleTrends<TData = GetRoleTrends200>(
+    params: GetRoleTrendsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+  ): Observable<AngularHttpResponse<TData>>;
+    getRoleTrends<TData = GetRoleTrends200>(
+    params: GetRoleTrendsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getRoleTrends<TData = GetRoleTrends200>(
+    params: GetRoleTrendsParams, options?: HttpClientOptions
+  ): Observable<TData>  {
+    return this.http.get<TData>(
+      `http://localhost:8080/analytics/trends/roles`,{
+    ...options,
+        params: {...params.analyticsFilterDTO, ...options?.params},}
+    );
+  }
+ getPovertyTrends<TData = GetPovertyTrends200>(
+    params: GetPovertyTrendsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+  ): Observable<TData>;
+    getPovertyTrends<TData = GetPovertyTrends200>(
+    params: GetPovertyTrendsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+  ): Observable<AngularHttpResponse<TData>>;
+    getPovertyTrends<TData = GetPovertyTrends200>(
+    params: GetPovertyTrendsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getPovertyTrends<TData = GetPovertyTrends200>(
+    params: GetPovertyTrendsParams, options?: HttpClientOptions
+  ): Observable<TData>  {
+    return this.http.get<TData>(
+      `http://localhost:8080/analytics/trends/poverty`,{
+    ...options,
+        params: {...params.analyticsFilterDTO, ...options?.params},}
+    );
+  }
+ getNCDTrends<TData = GetNCDTrends200>(
+    params: GetNCDTrendsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+  ): Observable<TData>;
+    getNCDTrends<TData = GetNCDTrends200>(
+    params: GetNCDTrendsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+  ): Observable<AngularHttpResponse<TData>>;
+    getNCDTrends<TData = GetNCDTrends200>(
+    params: GetNCDTrendsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getNCDTrends<TData = GetNCDTrends200>(
+    params: GetNCDTrendsParams, options?: HttpClientOptions
+  ): Observable<TData>  {
+    return this.http.get<TData>(
+      `http://localhost:8080/analytics/trends/ncd`,{
+    ...options,
+        params: {...params.analyticsFilterDTO, ...options?.params},}
+    );
+  }
+ getGenderTrends<TData = GetGenderTrends200>(
+    params: GetGenderTrendsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+  ): Observable<TData>;
+    getGenderTrends<TData = GetGenderTrends200>(
+    params: GetGenderTrendsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+  ): Observable<AngularHttpResponse<TData>>;
+    getGenderTrends<TData = GetGenderTrends200>(
+    params: GetGenderTrendsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getGenderTrends<TData = GetGenderTrends200>(
+    params: GetGenderTrendsParams, options?: HttpClientOptions
+  ): Observable<TData>  {
+    return this.http.get<TData>(
+      `http://localhost:8080/analytics/trends/gender`,{
+    ...options,
+        params: {...params.analyticsFilterDTO, ...options?.params},}
+    );
+  }
+ getAliveStatusTrends<TData = GetAliveStatusTrends200>(
+    params: GetAliveStatusTrendsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+  ): Observable<TData>;
+    getAliveStatusTrends<TData = GetAliveStatusTrends200>(
+    params: GetAliveStatusTrendsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+  ): Observable<AngularHttpResponse<TData>>;
+    getAliveStatusTrends<TData = GetAliveStatusTrends200>(
+    params: GetAliveStatusTrendsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getAliveStatusTrends<TData = GetAliveStatusTrends200>(
+    params: GetAliveStatusTrendsParams, options?: HttpClientOptions
+  ): Observable<TData>  {
+    return this.http.get<TData>(
+      `http://localhost:8080/analytics/trends/alive`,{
+    ...options,
+        params: {...params.analyticsFilterDTO, ...options?.params},}
+    );
+  }
+ getAgeTrends<TData = GetAgeTrends200>(
+    params: GetAgeTrendsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+  ): Observable<TData>;
+    getAgeTrends<TData = GetAgeTrends200>(
+    params: GetAgeTrendsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+  ): Observable<AngularHttpResponse<TData>>;
+    getAgeTrends<TData = GetAgeTrends200>(
+    params: GetAgeTrendsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getAgeTrends<TData = GetAgeTrends200>(
+    params: GetAgeTrendsParams, options?: HttpClientOptions
+  ): Observable<TData>  {
+    return this.http.get<TData>(
+      `http://localhost:8080/analytics/trends/age`,{
+    ...options,
+        params: {...params.analyticsFilterDTO, ...options?.params},}
+    );
+  }
+ getRoleDistribution<TData = GetRoleDistribution200>(
     params: GetRoleDistributionParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
     getRoleDistribution<TData = GetRoleDistribution200>(
@@ -70,7 +186,7 @@ export class AnalyticsService {
     params: GetRoleDistributionParams, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.get<TData>(
-      `http://localhost:8080/analytics/roles`,{
+      `http://localhost:8080/analytics/distribution/roles`,{
     ...options,
         params: {...params.analyticsFilterDTO, ...options?.params},}
     );
@@ -87,7 +203,24 @@ export class AnalyticsService {
     params: GetPovertyDistributionParams, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.get<TData>(
-      `http://localhost:8080/analytics/poverty`,{
+      `http://localhost:8080/analytics/distribution/poverty`,{
+    ...options,
+        params: {...params.analyticsFilterDTO, ...options?.params},}
+    );
+  }
+ getNCDDistribution<TData = GetNCDDistribution200>(
+    params: GetNCDDistributionParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+  ): Observable<TData>;
+    getNCDDistribution<TData = GetNCDDistribution200>(
+    params: GetNCDDistributionParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+  ): Observable<AngularHttpResponse<TData>>;
+    getNCDDistribution<TData = GetNCDDistribution200>(
+    params: GetNCDDistributionParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getNCDDistribution<TData = GetNCDDistribution200>(
+    params: GetNCDDistributionParams, options?: HttpClientOptions
+  ): Observable<TData>  {
+    return this.http.get<TData>(
+      `http://localhost:8080/analytics/distribution/ncd`,{
     ...options,
         params: {...params.analyticsFilterDTO, ...options?.params},}
     );
@@ -104,7 +237,7 @@ export class AnalyticsService {
     params: GetGenderDistributionParams, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.get<TData>(
-      `http://localhost:8080/analytics/gender`,{
+      `http://localhost:8080/analytics/distribution/gender`,{
     ...options,
         params: {...params.analyticsFilterDTO, ...options?.params},}
     );
@@ -121,7 +254,7 @@ export class AnalyticsService {
     params: GetAliveStatusDistributionParams, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.get<TData>(
-      `http://localhost:8080/analytics/alive`,{
+      `http://localhost:8080/analytics/distribution/alive`,{
     ...options,
         params: {...params.analyticsFilterDTO, ...options?.params},}
     );
@@ -138,15 +271,22 @@ export class AnalyticsService {
     params: GetAgeDistributionParams, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.get<TData>(
-      `http://localhost:8080/analytics/age`,{
+      `http://localhost:8080/analytics/distribution/age`,{
     ...options,
         params: {...params.analyticsFilterDTO, ...options?.params},}
     );
   }
 };
 
+export type GetRoleTrendsClientResult = NonNullable<GetRoleTrends200>
+export type GetPovertyTrendsClientResult = NonNullable<GetPovertyTrends200>
+export type GetNCDTrendsClientResult = NonNullable<GetNCDTrends200>
+export type GetGenderTrendsClientResult = NonNullable<GetGenderTrends200>
+export type GetAliveStatusTrendsClientResult = NonNullable<GetAliveStatusTrends200>
+export type GetAgeTrendsClientResult = NonNullable<GetAgeTrends200>
 export type GetRoleDistributionClientResult = NonNullable<GetRoleDistribution200>
 export type GetPovertyDistributionClientResult = NonNullable<GetPovertyDistribution200>
+export type GetNCDDistributionClientResult = NonNullable<GetNCDDistribution200>
 export type GetGenderDistributionClientResult = NonNullable<GetGenderDistribution200>
 export type GetAliveStatusDistributionClientResult = NonNullable<GetAliveStatusDistribution200>
 export type GetAgeDistributionClientResult = NonNullable<GetAgeDistribution200>

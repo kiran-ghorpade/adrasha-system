@@ -4,5 +4,6 @@
  * ADRASHA ANALYTICS-SERVICE API Docs
  * OpenAPI spec version: 1.0.0
  */
+import type { PovertyStatusCount } from './povertyStatusCount';
 
-export type GetGenderDistribution200 = {[key: string]: number};
+export type GetPovertyTrends200 = {[key: string]: PovertyStatusCount[]};

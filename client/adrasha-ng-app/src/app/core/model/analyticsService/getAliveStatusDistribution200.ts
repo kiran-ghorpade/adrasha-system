@@ -4,6 +4,5 @@
  * ADRASHA ANALYTICS-SERVICE API Docs
  * OpenAPI spec version: 1.0.0
  */
-import type { AliveStatusCount } from './aliveStatusCount';
 
-export type GetAliveStatusDistribution200 = {[key: string]: AliveStatusCount[]};
+export type GetAliveStatusDistribution200 = {[key: string]: number};

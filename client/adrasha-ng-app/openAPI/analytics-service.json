@@ -15,12 +15,12 @@
     }
   ],
   "paths": {
-    "/analytics/roles": {
+    "/analytics/trends/roles": {
       "get": {
         "tags": [
           "Analytics"
         ],
-        "operationId": "getRoleDistribution",
+        "operationId": "getRoleTrends",
         "parameters": [
           {
             "name": "analyticsFilterDTO",
@@ -56,12 +56,12 @@
         ]
       }
     },
-    "/analytics/poverty": {
+    "/analytics/trends/poverty": {
       "get": {
         "tags": [
           "Analytics"
         ],
-        "operationId": "getPovertyDistribution",
+        "operationId": "getPovertyTrends",
         "parameters": [
           {
             "name": "analyticsFilterDTO",
@@ -97,12 +97,53 @@
         ]
       }
     },
-    "/analytics/gender": {
+    "/analytics/trends/ncd": {
       "get": {
         "tags": [
           "Analytics"
         ],
-        "operationId": "getGenderDistribution",
+        "operationId": "getNCDTrends",
+        "parameters": [
+          {
+            "name": "analyticsFilterDTO",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/AnalyticsFilterDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/NcdCount"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      }
+    },
+    "/analytics/trends/gender": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "operationId": "getGenderTrends",
         "parameters": [
           {
             "name": "analyticsFilterDTO",
@@ -138,12 +179,12 @@
         ]
       }
     },
-    "/analytics/alive": {
+    "/analytics/trends/alive": {
       "get": {
         "tags": [
           "Analytics"
         ],
-        "operationId": "getAliveStatusDistribution",
+        "operationId": "getAliveStatusTrends",
         "parameters": [
           {
             "name": "analyticsFilterDTO",
@@ -179,7 +220,243 @@
         ]
       }
     },
-    "/analytics/age": {
+    "/analytics/trends/age": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "operationId": "getAgeTrends",
+        "parameters": [
+          {
+            "name": "analyticsFilterDTO",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/AnalyticsFilterDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/AgeGroupCount"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      }
+    },
+    "/analytics/distribution/roles": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "operationId": "getRoleDistribution",
+        "parameters": [
+          {
+            "name": "analyticsFilterDTO",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/AnalyticsFilterDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "integer",
+                    "format": "int64"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      }
+    },
+    "/analytics/distribution/poverty": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "operationId": "getPovertyDistribution",
+        "parameters": [
+          {
+            "name": "analyticsFilterDTO",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/AnalyticsFilterDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "integer",
+                    "format": "int64"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      }
+    },
+    "/analytics/distribution/ncd": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "operationId": "getNCDDistribution",
+        "parameters": [
+          {
+            "name": "analyticsFilterDTO",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/AnalyticsFilterDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "integer",
+                    "format": "int64"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      }
+    },
+    "/analytics/distribution/gender": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "operationId": "getGenderDistribution",
+        "parameters": [
+          {
+            "name": "analyticsFilterDTO",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/AnalyticsFilterDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "integer",
+                    "format": "int64"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      }
+    },
+    "/analytics/distribution/alive": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "operationId": "getAliveStatusDistribution",
+        "parameters": [
+          {
+            "name": "analyticsFilterDTO",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/AnalyticsFilterDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "integer",
+                    "format": "int64"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      }
+    },
+    "/analytics/distribution/age": {
       "get": {
         "tags": [
           "Analytics"
@@ -203,10 +480,8 @@
                 "schema": {
                   "type": "object",
                   "additionalProperties": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/AgeGroupCount"
-                    }
+                    "type": "integer",
+                    "format": "int64"
                   }
                 }
               }
@@ -290,6 +565,30 @@
           "uuid": {
             "type": "string",
             "format": "uuid"
+          }
+        }
+      },
+      "NcdCount": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ashaId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ncdName": {
+            "type": "string"
+          },
+          "count": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },

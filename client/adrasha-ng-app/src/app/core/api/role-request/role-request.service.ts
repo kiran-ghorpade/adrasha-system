@@ -148,7 +148,7 @@ export class RoleRequestService {
     return this.http.get<TData>(
       `http://localhost:8080/roleRequests`,{
     ...options,
-        params: {...params.filterDTO, ...params.pageable ...options?.params},}
+        params: {...params.filterDTO, ...params.pageable, ...options?.params},}
     );
   }
  createRoleRequest<TData = RoleRequestResponseDTO>(

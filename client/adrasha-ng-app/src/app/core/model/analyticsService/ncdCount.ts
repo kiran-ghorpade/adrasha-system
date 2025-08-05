@@ -5,4 +5,10 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type GetGenderDistribution200 = {[key: string]: number};
+export interface NcdCount {
+  id?: string;
+  ashaId?: string;
+  ncdName?: string;
+  count?: number;
+  createdAt?: string;
+}

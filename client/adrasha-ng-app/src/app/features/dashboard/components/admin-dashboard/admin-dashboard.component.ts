@@ -9,14 +9,12 @@ import {
   AnalyticsService,
   HealthCenterService,
   LocationService,
-  NcdService,
-  RoleRequestService,
+  RoleRequestService
 } from '@core/api';
 import { UserService } from '@core/api/user/user.service';
 import { DataCardLabelComponent } from '@shared/components';
 import { LineChartComponent } from '@shared/components/line-chart/line-chart.component';
 import { PieChartComponent } from '@shared/components/pie-chart/pie-chart.component';
-import { map } from 'rxjs';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -63,8 +61,20 @@ export class AdminDashboardComponent {
   );
 
   // roleDistribution?: UserStatsRoleDistribution;
-  roleDistribution = toSignal(
+  requestDistribution = toSignal(
     this.analyticsService.getRoleDistribution({
+      analyticsFilterDTO: {
+        // End is now
+        end: new Date().toISOString(),
+        // Start is 10 days ago
+        start: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+        userId: '',
+      },
+    })
+  );
+
+  requestTrends = toSignal(
+    this.analyticsService.getRoleTrends({
       analyticsFilterDTO: {
         // End is now
         end: new Date().toISOString(),
@@ -95,7 +105,7 @@ export class AdminDashboardComponent {
   });
 
   updateLineChartData = effect(() => {
-    const roleDist = this.roleDistribution() ?? {};
+    const roleDist = this.requestTrends() ?? {};
 
     // Generate last 10 days in yyyy-MM-dd format
     const days = Array.from({ length: 10 }, (_, i) => {
@@ -136,21 +146,10 @@ export class AdminDashboardComponent {
   });
 
   updatePieChartData = effect(() => {
-    const roleDist = this.roleDistribution() ?? {};
+    const roleDist = this.requestDistribution() ?? {};
 
-    const labels: string[] = [];
-    const data: number[] = [];
-
-    for (const [role, statusCounts] of Object.entries(roleDist)) {
-      labels.push(role);
-
-      // Sum the counts for each status (PENDING, APPROVED, REJECTED)
-      const totalCount = statusCounts.reduce(
-        (sum, item) => sum + (item.count ?? 0),
-        0
-      );
-      data.push(totalCount);
-    }
+    const labels: string[] = Object.keys(roleDist) ?? [];
+    const data: number[] = Object.values(roleDist) ?? [];
 
     this.pieChartData.update((chartData) => ({
       ...chartData,

@@ -5,4 +5,4 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type GetGenderDistribution200 = {[key: string]: number};
+export type GetNCDDistribution200 = {[key: string]: number};

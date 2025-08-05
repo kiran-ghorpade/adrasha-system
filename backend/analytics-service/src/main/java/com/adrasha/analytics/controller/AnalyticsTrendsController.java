@@ -12,6 +12,7 @@ import com.adrasha.analytics.dto.AnalyticsFilterDTO;
 import com.adrasha.analytics.model.AgeGroupCount;
 import com.adrasha.analytics.model.AliveStatusCount;
 import com.adrasha.analytics.model.GenderCount;
+import com.adrasha.analytics.model.NcdCount;
 import com.adrasha.analytics.model.PovertyStatusCount;
 import com.adrasha.analytics.model.RoleRequestStatusCount;
 import com.adrasha.analytics.service.AnalyticsAggregatorService;
@@ -26,49 +27,48 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/analytics")
+@RequestMapping("/analytics/trends")
 @RequiredArgsConstructor
 @SecurityRequirement(name = "BearerAuthentication")
 @Tag(name = "Analytics")
-public class AnalyticsController {
+public class AnalyticsTrendsController {
 	private final AnalyticsAggregatorService aggregatorService;
 
 //
 	@GetMapping("/roles")
 	@PreAuthorize("hasRole('ADMIN')")
-	public Map<RequestStatus, List<RoleRequestStatusCount>> getRoleDistribution(AnalyticsFilterDTO analyticsFilterDTO) {
-		return aggregatorService.getRoleRequestStatusDistributionBetween(analyticsFilterDTO);
+	public Map<RequestStatus, List<RoleRequestStatusCount>> getRoleTrends(AnalyticsFilterDTO analyticsFilterDTO) {
+		return aggregatorService.getRoleRequestStatusTrendsBetween(analyticsFilterDTO);
 	}
 
 	@GetMapping("/age")
 	@PreAuthorize("hasRole('ASHA')")
-	public Map<AgeGroup, List<AgeGroupCount>> getAgeDistribution(AnalyticsFilterDTO analyticsFilterDTO) {
-        return aggregatorService.getAgeGroupDistributionBetween(analyticsFilterDTO);
+	public Map<AgeGroup, List<AgeGroupCount>> getAgeTrends(AnalyticsFilterDTO analyticsFilterDTO) {
+        return aggregatorService.getAgeGroupTrendsBetween(analyticsFilterDTO);
 	}
 	
 	@GetMapping("/alive")
 	@PreAuthorize("hasRole('ASHA')")
-	public Map<AliveStatus, List<AliveStatusCount>> getAliveStatusDistribution(AnalyticsFilterDTO analyticsFilterDTO) {
-        return aggregatorService.getAliveStatusDistributionBetween(analyticsFilterDTO);
+	public Map<AliveStatus, List<AliveStatusCount>> getAliveStatusTrends(AnalyticsFilterDTO analyticsFilterDTO) {
+        return aggregatorService.getAliveStatusTrendsBetween(analyticsFilterDTO);
 	}
 
 
 	@GetMapping("/poverty")
 	@PreAuthorize("hasRole('ASHA')")
-	public Map<PovertyStatus, List<PovertyStatusCount>> getPovertyDistribution(AnalyticsFilterDTO analyticsFilterDTO) {
-        return aggregatorService.getPovertyStatusDistributionBetween(analyticsFilterDTO);
+	public Map<PovertyStatus, List<PovertyStatusCount>> getPovertyTrends(AnalyticsFilterDTO analyticsFilterDTO) {
+        return aggregatorService.getPovertyStatusTrendsBetween(analyticsFilterDTO);
 	}
 
 	@GetMapping("/gender")
 	@PreAuthorize("hasRole('ASHA')")
-	public Map<Gender, List<GenderCount>> getGenderDistribution(AnalyticsFilterDTO analyticsFilterDTO) {
-        return aggregatorService.getGenderDistributionBetween(analyticsFilterDTO);
+	public Map<Gender, List<GenderCount>> getGenderTrends(AnalyticsFilterDTO analyticsFilterDTO) {
+        return aggregatorService.getGenderTrendsBetween(analyticsFilterDTO);
 	}
 
-//	@GetMapping("/ncd")
-//	@PreAuthorize("hasRole('ADMIN')")
-//	public Map<String, Object> getNCDDistribution(AnalyticsFilterDTO analyticsFilterDTO) {
-//        return aggregatorService.getAdminAnalyticsOverview();
-//		return null;
-//	}
+	@GetMapping("/ncd")
+	@PreAuthorize("hasRole('ASHA')")
+	public Map<String, List<NcdCount>> getNCDTrends(AnalyticsFilterDTO analyticsFilterDTO) {
+        return aggregatorService.getNcdTrendsBetween(analyticsFilterDTO);
+	}
 }

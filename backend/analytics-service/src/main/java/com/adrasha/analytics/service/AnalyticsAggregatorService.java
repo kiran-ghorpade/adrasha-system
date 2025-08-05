@@ -30,7 +30,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class AnalyticsAggregatorService {
-
+	
 	private final AgeGroupCountRepository ageGroupCountRepository;
 	private final AliveStatusCountRepository aliveStatusCountRepository;
 	private final GenderCountRepository genderCountRepository;
@@ -38,49 +38,101 @@ public class AnalyticsAggregatorService {
 	private final RoleRequestStatusCountRepository roleRequestStatusCountRepository;
 	private final NCDCountRepository ncdCountRepository;
 
-	public Map<AgeGroup, List<AgeGroupCount>> getAgeGroupDistributionBetween(AnalyticsFilterDTO analyticsFilterDTO) {
+	// AgeGroup
+	public Map<AgeGroup, List<AgeGroupCount>> getAgeGroupTrendsBetween(AnalyticsFilterDTO analyticsFilterDTO) {
 		List<AgeGroupCount> list = ageGroupCountRepository.findByAshaIdAndCreatedAtBetweenOrderByCreatedAtAsc(
 				analyticsFilterDTO.getUserId(), analyticsFilterDTO.getStart(), analyticsFilterDTO.getEnd());
 
 		return list.stream().collect(Collectors.groupingBy(AgeGroupCount::getAgeGroup));
 	}
 
-	public Map<AliveStatus, List<AliveStatusCount>> getAliveStatusDistributionBetween(
+	public Map<AgeGroup, Long> getAgeGroupDistributionBetween(AnalyticsFilterDTO analyticsFilterDTO) {
+		List<AgeGroupCount> list = ageGroupCountRepository.findByAshaIdAndCreatedAtBetweenOrderByCreatedAtAsc(
+				analyticsFilterDTO.getUserId(), analyticsFilterDTO.getStart(), analyticsFilterDTO.getEnd());
+
+		return list.stream().collect(
+				Collectors.groupingBy(AgeGroupCount::getAgeGroup, Collectors.summingLong(AgeGroupCount::getCount)));
+	}
+
+	// Alive Status
+	public Map<AliveStatus, List<AliveStatusCount>> getAliveStatusTrendsBetween(
 			AnalyticsFilterDTO analyticsFilterDTO) {
 		List<AliveStatusCount> list = aliveStatusCountRepository.findByAshaIdAndCreatedAtBetweenOrderByCreatedAtAsc(
 				analyticsFilterDTO.getUserId(), analyticsFilterDTO.getStart(), analyticsFilterDTO.getEnd());
 
 		return list.stream().collect(Collectors.groupingBy(AliveStatusCount::getAliveStatus));
 	}
+	
+	public Map<AliveStatus, Long> getAliveStatusDistributionBetween(
+			AnalyticsFilterDTO analyticsFilterDTO) {
+		List<AliveStatusCount> list = aliveStatusCountRepository.findByAshaIdAndCreatedAtBetweenOrderByCreatedAtAsc(
+				analyticsFilterDTO.getUserId(), analyticsFilterDTO.getStart(), analyticsFilterDTO.getEnd());
 
-	public Map<Gender, List<GenderCount>> getGenderDistributionBetween(AnalyticsFilterDTO analyticsFilterDTO) {
+		return list.stream().collect(Collectors.groupingBy(AliveStatusCount::getAliveStatus, Collectors.summingLong(AliveStatusCount::getCount)));
+	}
+
+	// Gender
+	public Map<Gender, List<GenderCount>> getGenderTrendsBetween(AnalyticsFilterDTO analyticsFilterDTO) {
 		List<GenderCount> list = genderCountRepository.findByAshaIdAndCreatedAtBetweenOrderByCreatedAtAsc(
 				analyticsFilterDTO.getUserId(), analyticsFilterDTO.getStart(), analyticsFilterDTO.getEnd());
 
 		return list.stream().collect(Collectors.groupingBy(GenderCount::getGender));
 	}
+	
+	public Map<Gender, Long> getGenderDistributionBetween(AnalyticsFilterDTO analyticsFilterDTO) {
+		List<GenderCount> list = genderCountRepository.findByAshaIdAndCreatedAtBetweenOrderByCreatedAtAsc(
+				analyticsFilterDTO.getUserId(), analyticsFilterDTO.getStart(), analyticsFilterDTO.getEnd());
 
-	public Map<PovertyStatus, List<PovertyStatusCount>> getPovertyStatusDistributionBetween(
+		return list.stream().collect(Collectors.groupingBy(GenderCount::getGender, Collectors.summingLong(GenderCount::getCount)));
+	}
+
+
+	// Poverty
+	public Map<PovertyStatus, List<PovertyStatusCount>> getPovertyStatusTrendsBetween(
 			AnalyticsFilterDTO analyticsFilterDTO) {
 		List<PovertyStatusCount> list = povertyStatusCountRepository.findByAshaIdAndCreatedAtBetweenOrderByCreatedAtAsc(
 				analyticsFilterDTO.getUserId(), analyticsFilterDTO.getStart(), analyticsFilterDTO.getEnd());
 
 		return list.stream().collect(Collectors.groupingBy(PovertyStatusCount::getPovertyStatus));
 	}
+	
+	public Map<PovertyStatus, Long> getPovertyStatusDistributionBetween(
+			AnalyticsFilterDTO analyticsFilterDTO) {
+		List<PovertyStatusCount> list = povertyStatusCountRepository.findByAshaIdAndCreatedAtBetweenOrderByCreatedAtAsc(
+				analyticsFilterDTO.getUserId(), analyticsFilterDTO.getStart(), analyticsFilterDTO.getEnd());
 
-	public Map<RequestStatus, List<RoleRequestStatusCount>> getRoleRequestStatusDistributionBetween(
+		return list.stream().collect(Collectors.groupingBy(PovertyStatusCount::getPovertyStatus, Collectors.summingLong(PovertyStatusCount::getCount)));
+	}
+
+	// Request Status
+	public Map<RequestStatus, List<RoleRequestStatusCount>> getRoleRequestStatusTrendsBetween(
 			AnalyticsFilterDTO analyticsFilterDTO) {
 		List<RoleRequestStatusCount> list = roleRequestStatusCountRepository
 				.findByCreatedAtBetweenOrderByCreatedAtAsc(analyticsFilterDTO.getStart(), analyticsFilterDTO.getEnd());
 
 		return list.stream().collect(Collectors.groupingBy(RoleRequestStatusCount::getStatus));
 	}
-
-	public Map<String, List<NcdCount>> getNcdDistributionBetween(
+	
+	public Map<RequestStatus, Long> getRoleRequestStatusDistributionBetween(
 			AnalyticsFilterDTO analyticsFilterDTO) {
+		List<RoleRequestStatusCount> list = roleRequestStatusCountRepository
+				.findByCreatedAtBetweenOrderByCreatedAtAsc(analyticsFilterDTO.getStart(), analyticsFilterDTO.getEnd());
+
+		return list.stream().collect(Collectors.groupingBy(RoleRequestStatusCount::getStatus, Collectors.summingLong(RoleRequestStatusCount::getCount)));
+	}
+
+	// NCD
+	public Map<String, List<NcdCount>> getNcdTrendsBetween(AnalyticsFilterDTO analyticsFilterDTO) {
 		List<NcdCount> list = ncdCountRepository.findByAshaIdAndCreatedAtBetweenOrderByCreatedAtAsc(
 				analyticsFilterDTO.getUserId(), analyticsFilterDTO.getStart(), analyticsFilterDTO.getEnd());
 
 		return list.stream().collect(Collectors.groupingBy(NcdCount::getNcdName));
+	}
+	
+	public Map<String, Long> getNcdDistributionBetween(AnalyticsFilterDTO analyticsFilterDTO) {
+		List<NcdCount> list = ncdCountRepository.findByAshaIdAndCreatedAtBetweenOrderByCreatedAtAsc(
+				analyticsFilterDTO.getUserId(), analyticsFilterDTO.getStart(), analyticsFilterDTO.getEnd());
+
+		return list.stream().collect(Collectors.groupingBy(NcdCount::getNcdName, Collectors.summingLong(NcdCount::getCount)));
 	}
 }

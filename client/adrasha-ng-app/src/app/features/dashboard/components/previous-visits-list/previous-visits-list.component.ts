@@ -1,27 +1,32 @@
-import { Component, input } from '@angular/core';
+import { Component, effect, inject, input, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
-import { MemberDataResponseDTO } from '@core/model/dataService';
+import { HealthRecordService, MemberDataService } from '@core/api';
+import { map, switchMap } from 'rxjs/operators';
+import { of, forkJoin } from 'rxjs';
+import { AuthService } from '@core/services';
 
 @Component({
   selector: 'app-previous-visits-list',
+  standalone: true,
   imports: [RouterModule, MatListModule, MatIconModule],
   template: `
-    @if(memberList().length == 0){
+    @if (recordList().length === 0) {
     <div class="flex justify-center items-center">
       <mat-icon>search_off</mat-icon>
       <h4 class="ml-4 text-wrap">Data Not Found!</h4>
     </div>
-    }@else {
+    } @else {
     <mat-action-list>
-      @for (data of memberList(); track $index) {
-      <a mat-list-item [routerLink]="['registry/members', data.id]">
+      @for (data of recordList(); track $index) {
+      <a mat-list-item [routerLink]="['/registry/members', data.member.id]">
         <div matListItemAvatar class="flex items-center justify-center">
           <mat-icon>person</mat-icon>
         </div>
-        <h3 matListItemTitle>{{ data.name }}</h3>
-        <p matListItemLine>{{ data.age }}</p>
+        <h3 matListItemTitle>{{ data.member.name || 'Unknown' }}</h3>
+        <p matListItemLine>{{ data.createdAt }}</p>
       </a>
       }
     </mat-action-list>
@@ -29,5 +34,48 @@ import { MemberDataResponseDTO } from '@core/model/dataService';
   `,
 })
 export class PreviousVisitsListComponent {
-  memberList = input.required<MemberDataResponseDTO[]>();
+  ashaId = input.required<string>();
+
+  private readonly authService = inject(AuthService);
+  private readonly healthRecordService = inject(HealthRecordService);
+  private readonly memberService = inject(MemberDataService);
+
+  recordList = toSignal(
+    this.authService.currentUser.pipe(
+      map((user) => user?.id),
+      switchMap((id) => {
+        if (!id) return of([]);
+
+        return this.healthRecordService
+          .getHealthRecordPage({
+            filterDTO: {
+              ashaId: id,
+            },
+            pageable: {
+              page: 0,
+              size: 10,
+              sort: ['createdAt', 'desc'],
+            },
+          })
+          .pipe(
+            switchMap((recordPage) => {
+              const records = recordPage.content ?? [];
+              if (records.length === 0) return of([]);
+
+              const enrichedRecords$ = records.map((record) =>
+                this.memberService.getMember(record.memberId ?? '').pipe(
+                  map((member) => ({
+                    ...record,
+                    member,
+                  }))
+                )
+              );
+
+              return forkJoin(enrichedRecords$);
+            })
+          );
+      })
+    ),
+    { initialValue: [] }
+  );
 }

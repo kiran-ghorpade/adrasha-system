@@ -44,10 +44,10 @@ import type {
   GetPovertyDistributionParams,
   GetPovertyTrends200,
   GetPovertyTrendsParams,
-  GetRoleDistribution200,
-  GetRoleDistributionParams,
-  GetRoleTrends200,
-  GetRoleTrendsParams
+  GetRequestDistribution200,
+  GetRequestDistributionParams,
+  GetRequestTrends200,
+  GetRequestTrendsParams
 } from '../../model/analyticsService';
 
 
@@ -72,19 +72,19 @@ type HttpClientOptions = {
 export class AnalyticsService {
   constructor(
     private http: HttpClient,
-  ) {} getRoleTrends<TData = GetRoleTrends200>(
-    params: GetRoleTrendsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+  ) {} getRequestTrends<TData = GetRequestTrends200>(
+    params: GetRequestTrendsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-    getRoleTrends<TData = GetRoleTrends200>(
-    params: GetRoleTrendsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+    getRequestTrends<TData = GetRequestTrends200>(
+    params: GetRequestTrendsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-    getRoleTrends<TData = GetRoleTrends200>(
-    params: GetRoleTrendsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;getRoleTrends<TData = GetRoleTrends200>(
-    params: GetRoleTrendsParams, options?: HttpClientOptions
+    getRequestTrends<TData = GetRequestTrends200>(
+    params: GetRequestTrendsParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getRequestTrends<TData = GetRequestTrends200>(
+    params: GetRequestTrendsParams, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.get<TData>(
-      `http://localhost:8080/analytics/trends/roles`,{
+      `http://localhost:8080/analytics/trends/requests`,{
     ...options,
         params: {...params.analyticsFilterDTO, ...options?.params},}
     );
@@ -174,19 +174,19 @@ export class AnalyticsService {
         params: {...params.analyticsFilterDTO, ...options?.params},}
     );
   }
- getRoleDistribution<TData = GetRoleDistribution200>(
-    params: GetRoleDistributionParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+ getRequestDistribution<TData = GetRequestDistribution200>(
+    params: GetRequestDistributionParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-    getRoleDistribution<TData = GetRoleDistribution200>(
-    params: GetRoleDistributionParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+    getRequestDistribution<TData = GetRequestDistribution200>(
+    params: GetRequestDistributionParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-    getRoleDistribution<TData = GetRoleDistribution200>(
-    params: GetRoleDistributionParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;getRoleDistribution<TData = GetRoleDistribution200>(
-    params: GetRoleDistributionParams, options?: HttpClientOptions
+    getRequestDistribution<TData = GetRequestDistribution200>(
+    params: GetRequestDistributionParams, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;getRequestDistribution<TData = GetRequestDistribution200>(
+    params: GetRequestDistributionParams, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.get<TData>(
-      `http://localhost:8080/analytics/distribution/roles`,{
+      `http://localhost:8080/analytics/distribution/requests`,{
     ...options,
         params: {...params.analyticsFilterDTO, ...options?.params},}
     );
@@ -278,13 +278,13 @@ export class AnalyticsService {
   }
 };
 
-export type GetRoleTrendsClientResult = NonNullable<GetRoleTrends200>
+export type GetRequestTrendsClientResult = NonNullable<GetRequestTrends200>
 export type GetPovertyTrendsClientResult = NonNullable<GetPovertyTrends200>
 export type GetNCDTrendsClientResult = NonNullable<GetNCDTrends200>
 export type GetGenderTrendsClientResult = NonNullable<GetGenderTrends200>
 export type GetAliveStatusTrendsClientResult = NonNullable<GetAliveStatusTrends200>
 export type GetAgeTrendsClientResult = NonNullable<GetAgeTrends200>
-export type GetRoleDistributionClientResult = NonNullable<GetRoleDistribution200>
+export type GetRequestDistributionClientResult = NonNullable<GetRequestDistribution200>
 export type GetPovertyDistributionClientResult = NonNullable<GetPovertyDistribution200>
 export type GetNCDDistributionClientResult = NonNullable<GetNCDDistribution200>
 export type GetGenderDistributionClientResult = NonNullable<GetGenderDistribution200>

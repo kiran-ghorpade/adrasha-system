@@ -2,9 +2,7 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   inject,
-  OnInit,
-  signal,
-  WritableSignal,
+  OnInit
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
@@ -16,13 +14,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MemberDataService } from '@core/api/member-data/member-data.service';
-import { MemberDataResponseDTO } from '@core/model/dataService';
 import { AlertService, AuthService } from '@core/services';
-import {
-  PageHeaderComponent,
-  PageWrapperComponent
-} from '@shared/components';
-import { map } from 'rxjs';
+import { PageHeaderComponent, PageWrapperComponent } from '@shared/components';
+import { map, of, switchMap } from 'rxjs';
 import { MemberListComponent } from '../../components';
 
 @Component({
@@ -39,41 +33,41 @@ import { MemberListComponent } from '../../components';
     PageHeaderComponent,
     PageWrapperComponent,
     MemberListComponent,
-],
+  ],
   templateUrl: './member-page.component.html',
 })
 export class MemberPageComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly authService = inject(AuthService);
-  private readonly dialog = inject(MatDialog);
-  private readonly alertService = inject(AlertService);
   private readonly memberService = inject(MemberDataService);
 
-  memberList: WritableSignal<MemberDataResponseDTO[]> = signal([]);
   memberId: string = '';
-  userId = toSignal(this.authService.currentUser.pipe(map((user) => user?.id)));
 
   ngOnInit(): void {
     this.memberId = this.activatedRoute.snapshot.paramMap.get('id') || '';
-    this.loadMemberDetails();
   }
 
-  loadMemberDetails() {
-    this.memberService
-      .getMemberPage({
-        filterDTO: {
-          ashaId: this.userId() ?? '',
-        },
-        pageable: {
-          page: 1,
-          size: 100,
-          sort: [],
-        },
+  memberList = toSignal(
+    this.authService.currentUser.pipe(
+      map((user) => user?.id),
+      switchMap((id) => {
+        if (!id) return of([]);
+
+        return this.memberService
+          .getMemberPage({
+            filterDTO: {
+              ashaId: id ?? '',
+            },
+            pageable: {
+              page: 1,
+              size: 100,
+              sort: [],
+            },
+          })
+          .pipe(map((response) => response.content ?? []));
       })
-      .pipe(map((response) => response.content))
-      .subscribe((list) => {
-        this.memberList.set(list ?? []);
-      });
-  }
+    ),
+    { initialValue: [] }
+  );
 }

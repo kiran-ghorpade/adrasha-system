@@ -8,21 +8,20 @@ import org.springframework.stereotype.Service;
 import com.adrasha.core.exception.NotFoundException;
 import com.adrasha.data.client.UserClient;
 
+import feign.FeignException;
+
 @Service
-public class RemoteDataService {
+public class UserDataService {
 
 	@Autowired
 	private UserClient userClient;
-	
+
 	public void verifyUserExist(UUID userId) {
-		
-		boolean status = userClient.getUser(userId).getStatusCode().is2xxSuccessful();
-		
-		if(!status) {
+		try {
+			userClient.headUser(userId);
+		} catch (FeignException.NotFound e) {
 			throw new NotFoundException("error.user.notFound");
 		}
-	
 	}
 
-	
 }

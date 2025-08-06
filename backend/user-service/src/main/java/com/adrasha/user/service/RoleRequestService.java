@@ -2,26 +2,32 @@ package com.adrasha.user.service;
 
 import java.util.UUID;
 
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.adrasha.core.dto.filter.RoleRequestFilterDTO;
 import com.adrasha.core.exception.AlreadyExistsException;
 import com.adrasha.core.exception.NotFoundException;
-import com.adrasha.user.model.RoleRequest;
+import com.adrasha.user.dto.roleRequest.RoleRequestCreateDTO;
+import com.adrasha.user.dto.roleRequest.RoleRequestDTO;
+import com.adrasha.user.dto.roleRequest.RoleRequestUpdateDTO;
 
 public interface RoleRequestService {
 
-	Page<RoleRequest> getRoleRequestPage(Example<RoleRequest> example, Pageable pageable);
+	Page<RoleRequestDTO> getRoleRequestPage(RoleRequestFilterDTO filterDTO, Pageable pageable);
 	
-	Long getRoleRequestCount(Example<RoleRequest> example);
+	Long getRoleRequestCount(RoleRequestFilterDTO filterDTO);
     
-	RoleRequest getRoleRequest(UUID roleRequestId) throws NotFoundException;
+	RoleRequestDTO getRoleRequest(UUID roleRequestId) throws NotFoundException;
 	    
-	RoleRequest createRoleRequest(RoleRequest roleRequest) throws AlreadyExistsException;
+	RoleRequestDTO createRoleRequest(RoleRequestCreateDTO createDTO) throws AlreadyExistsException;
     
-	RoleRequest updateRoleRequest(UUID roleRequesId, RoleRequest updatedRoleRequest) throws NotFoundException;
+	RoleRequestDTO updateRoleRequest(UUID roleRequesId, RoleRequestUpdateDTO updateDTO) throws NotFoundException;
     
-	RoleRequest deleteRoleRequest(UUID roleRequestId) throws NotFoundException;
+	RoleRequestDTO deleteRoleRequest(UUID roleRequestId) throws NotFoundException;
+
+	void approveRoleRequest(UUID requestId);
+
+	void rejectRoleRequest(UUID requestId);
   
 }

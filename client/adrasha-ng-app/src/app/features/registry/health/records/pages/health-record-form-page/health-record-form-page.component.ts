@@ -1,12 +1,11 @@
-import { Component, computed, inject, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component, computed, inject } from '@angular/core';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { HealthRecordService } from '@core/api';
-import { MemberDataResponseDTO } from '@core/model/dataService';
 import { AuthService } from '@core/services';
 import { TranslatePipe } from '@ngx-translate/core';
 import { PageHeaderComponent } from '@shared/components';
-import { map } from 'rxjs';
+import { map, of, switchMap } from 'rxjs';
 import { HealthRecordFormComponent } from '../../components';
 
 @Component({
@@ -24,7 +23,7 @@ import { HealthRecordFormComponent } from '../../components';
       />
       }
       <app-health-record-form
-        [userId]="userId() ?? ''"
+        [userId]="userId()"
         [id]="healthRecordId() ?? ''"
         [memberId]="memberId() ?? ''"
         [isUpdate]="isUpdate()"
@@ -41,31 +40,30 @@ export class HealthRecordFormPageComponent {
 
   // states
   userId = toSignal(
-    this.authService.currentUser.pipe(map((user) => user?.id ?? null)),
+    this.authService.currentUser.pipe(map((user) => user?.id ?? '')),
+    { initialValue: '' }
+  );
+
+  healthRecordId = toSignal(
+    this.activatedRoute.paramMap.pipe(map((p) => p.get('id'))),
+    {
+      initialValue: null,
+    }
+  );
+
+  memberId = toSignal(
+    this.activatedRoute.queryParamMap.pipe(map((q) => q.get('memberId'))),
     { initialValue: null }
   );
 
-  healthRecordId = signal<string | null>(null);
-  memberId = signal<string | null>(null);
-  healthRecordData = signal<MemberDataResponseDTO | null>(null);
-  isUpdate = computed(() => this.healthRecordId() !== null);
+  isUpdate = computed(() => !!this.healthRecordId());
 
-  // initilize states
-  ngOnInit() {
-    this.healthRecordId.set(this.activatedRoute.snapshot.paramMap.get('id') ?? null);
-    this.memberId.set(
-      this.activatedRoute.snapshot.queryParamMap.get('memberId') ?? null
-    );
-
-    if (this.healthRecordId()) {
-      this.loadMemberData(this.healthRecordId()!);
-    }
-  }
-
-  // helpers
-  private loadMemberData(id: string): void {
-    this.healthRecordService.getHealthRecord(id).subscribe((healthRecord) => {
-      this.healthRecordData.set(healthRecord);
-    });
-  }
+  healthRecordData = toSignal(
+    toObservable(this.healthRecordId).pipe(
+      switchMap((id) =>
+        id ? this.healthRecordService.getHealthRecord(id) : of(null)
+      )
+    ),
+    { initialValue: {} }
+  );
 }

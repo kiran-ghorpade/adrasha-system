@@ -1,47 +1,36 @@
 <div class="h-full w-full grid md:grid-rows-10 grid-cols-12 gap-2">
   <!-- Values -->
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-4">
-    <app-data-card-label
-      [value]="`${familyCount()}`"
-      [label]="`Families`"
-    />
+    <app-data-card-label [value]="`${familyCount()}`" [label]="`Families`" />
   </div>
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-5">
-    <app-data-card-label
-      [value]="`${memberCount()}`"
-      [label]="`Population`"
-    />
+    <app-data-card-label [value]="`${memberCount()}`" [label]="`Population`" />
   </div>
   <mat-card
     class="row-span-5 col-span-12 md:col-span-3 paper md:order-none order-8 flex justify-center items-center"
   >
-    <app-pie-chart
-      [labels]="genderChartData().labels"
-      [datasets]="genderChartData().datasets"
-    >
-    </app-pie-chart>
+    <app-asha-dashboard-gender-chart></app-asha-dashboard-gender-chart>
   </mat-card>
   <mat-card
     class="row-span-5 col-span-12 md:col-span-3 paper md:order-none order-9 flex justify-center items-center"
   >
-    <app-pie-chart
-      [labels]="povertyChartData().labels"
-      [datasets]="povertyChartData().datasets"
-    >
-    </app-pie-chart>
+    <app-asha-dashboard-poverty-chart></app-asha-dashboard-poverty-chart>
   </mat-card>
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-6">
-    <app-data-card-label [value]="ncdCount()" [label]="`NCD Population`" />
+    <app-data-card-label [value]="childrenCount()" [label]="`Childrens`" />
   </div>
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-7">
-    <app-data-card-label [value]="pregnancyCount()" [label]="`Pregnant Women`" />
+    <app-data-card-label
+      [value]="pregnancyCount()"
+      [label]="`Pregnant Women`"
+    />
   </div>
 
   <!-- records line charts -->
   <mat-card
     class="row-span-6 col-span-12 md:col-span-6 md:order-none order-11 paper p-2 flex justify-center"
   >
-    <app-line-chart [labels]="[]" [datasets]="[]"></app-line-chart>
+    <app-line-chart></app-line-chart>
   </mat-card>
 
   <mat-card
@@ -49,7 +38,7 @@
   >
     <mat-card-header>Last Visits</mat-card-header>
     <mat-card-content>
-      <app-previous-visits-list [memberList]="[]" />
+      <app-previous-visits-list />
     </mat-card-content>
   </mat-card>
 </div>

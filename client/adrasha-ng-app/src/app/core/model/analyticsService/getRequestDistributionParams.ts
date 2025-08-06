@@ -6,6 +6,6 @@
  */
 import type { AnalyticsFilterDTO } from './analyticsFilterDTO';
 
-export type GetRoleDistributionParams = {
-analyticsFilterDTO: AnalyticsFilterDTO;
+export type GetRequestDistributionParams = {
+  analyticsFilterDTO: AnalyticsFilterDTO;
 };

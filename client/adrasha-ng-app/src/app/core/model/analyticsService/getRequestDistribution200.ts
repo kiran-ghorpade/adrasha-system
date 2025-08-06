@@ -5,4 +5,4 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type GetRoleDistribution200 = {[key: string]: number};
+export type GetRequestDistribution200 = {[key: string]: number};

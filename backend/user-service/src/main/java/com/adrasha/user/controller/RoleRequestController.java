@@ -1,12 +1,9 @@
 package com.adrasha.user.controller;
 
 import java.net.URI;
-import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -24,21 +21,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.adrasha.core.dto.ErrorResponse;
-import com.adrasha.core.dto.ExampleMatcherUtils;
-import com.adrasha.core.dto.JwtUser;
 import com.adrasha.core.dto.ValidationErrorResponse;
 import com.adrasha.core.dto.filter.RoleRequestFilterDTO;
 import com.adrasha.core.dto.page.RoleRequestPageResponseDTO;
 import com.adrasha.core.dto.response.RoleRequestResponseDTO;
 import com.adrasha.core.model.RequestStatus;
-import com.adrasha.core.model.Role;
 import com.adrasha.user.dto.roleRequest.RoleRequestCreateDTO;
+import com.adrasha.user.dto.roleRequest.RoleRequestDTO;
 import com.adrasha.user.dto.roleRequest.RoleRequestUpdateDTO;
-import com.adrasha.user.integration.AuthService;
-import com.adrasha.user.model.RoleRequest;
-import com.adrasha.user.model.User;
 import com.adrasha.user.service.RoleRequestService;
-import com.adrasha.user.service.UserService;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -54,7 +45,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/roleRequests")
 @RequiredArgsConstructor
 @SecurityRequirement(name = "BearerAuthentication")
-@Tag(name = "RoleRequest")
+@Tag(name = "RoleRequestDTO")
 @ApiResponses({
 	@ApiResponse(responseCode = "401", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),	
 	@ApiResponse(responseCode = "403", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
@@ -63,8 +54,6 @@ import lombok.RequiredArgsConstructor;
 public class RoleRequestController {
 	
 		private final RoleRequestService roleRequestService;
-		private final UserService userService;
-		private final AuthService authService;
 		private final ModelMapper mapper;
 
 		@GetMapping
@@ -76,24 +65,17 @@ public class RoleRequestController {
 			    @PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.DESC)
 				Pageable pageable
 				){
-
-			RoleRequest searchTerms = mapper.map(filterDTO, RoleRequest.class);
+			Page<RoleRequestDTO> page = roleRequestService.getRoleRequestPage(filterDTO, pageable);
 			
-			Example<RoleRequest> example = Example.of(searchTerms, ExampleMatcherUtils.getDefaultMatcher());
-			
-			Page<RoleRequest> rolePages = roleRequestService.getRoleRequestPage(example, pageable);
-			
-			Page<RoleRequestResponseDTO> roleRequestResponseDTOPage = rolePages.map(roleRequest -> mapper.map(roleRequest, RoleRequestResponseDTO.class));
+			return page.map(roleRequest -> mapper.map(roleRequest, RoleRequestResponseDTO.class));
 		
-			return roleRequestResponseDTOPage;
 		}
 		
 		@GetMapping("/count")
 		@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Long.class)))
 		@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
 		private Long getCount(RoleRequestFilterDTO filterDTO) {
-			Example<RoleRequest> request = Example.of(mapper.map(filterDTO, RoleRequest.class), ExampleMatcherUtils.getDefaultMatcher());
-			return roleRequestService.getRoleRequestCount(request);
+			return roleRequestService.getRoleRequestCount(filterDTO);
 		}
 
 		@GetMapping("/{id}")
@@ -102,7 +84,7 @@ public class RoleRequestController {
 		@PreAuthorize("hasAnyRole('ADMIN','USER','SYSTEM')")
 		public RoleRequestResponseDTO getRoleRequest(@PathVariable UUID id){
 			
-			RoleRequest request = roleRequestService.getRoleRequest(id);
+			RoleRequestDTO request = roleRequestService.getRoleRequest(id);
 			return mapper.map(request, RoleRequestResponseDTO.class);
 
 		}
@@ -114,12 +96,12 @@ public class RoleRequestController {
 		@PreAuthorize("hasRole('USER')")
 		public ResponseEntity<RoleRequestResponseDTO> createRoleRequest(@Valid @RequestBody RoleRequestCreateDTO requestDTO){
 			
-			RoleRequest request = mapper.map(requestDTO, RoleRequest.class);
+			RoleRequestDTO request = mapper.map(requestDTO, RoleRequestDTO.class);
 			request.setId(null);
 			request.setUserId(requestDTO.getUserId());
 			request.setStatus(RequestStatus.PENDING);
 			
-			request = roleRequestService.createRoleRequest(request);
+			request = roleRequestService.createRoleRequest(requestDTO);
 			RoleRequestResponseDTO dto = mapper.map(request, RoleRequestResponseDTO.class);
 
 			URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -141,8 +123,7 @@ public class RoleRequestController {
 				UUID id,
 				@Valid @RequestBody RoleRequestUpdateDTO updatedRequest){
 			
-			RoleRequest request = mapper.map(updatedRequest, RoleRequest.class);
-			request = roleRequestService.updateRoleRequest(id, request);
+			RoleRequestDTO request = roleRequestService.updateRoleRequest(id, updatedRequest);
 			return mapper.map(request, RoleRequestResponseDTO.class);
 			
 		}
@@ -164,22 +145,7 @@ public class RoleRequestController {
 		@PreAuthorize("hasRole('ADMIN')")
 		public ResponseEntity<Void> approveUserRequest(@PathVariable UUID id)
 		{
-			RoleRequest request = roleRequestService.getRoleRequest(id);
-			
-			// auth service call
-			JwtUser user = authService.addRole(request);
-			
-			Set<Role> roles =  user.getRoles().stream()
-									.map(Role::valueOf)
-									.collect(Collectors.toSet());
-			
-			User newUser = mapper.map(request, User.class);
-			newUser.setRoles(roles);
-			userService.createUser(newUser);
-			
-			request.setStatus(RequestStatus.APPROVED);
-			roleRequestService.updateRoleRequest(id, request);
-			
+			roleRequestService.approveRoleRequest(id);
 			return ResponseEntity.ok().build();			
 			
 		}
@@ -190,10 +156,7 @@ public class RoleRequestController {
 		@PreAuthorize("hasRole('ADMIN')")
 		public ResponseEntity<Void> rejectUserRequest(@PathVariable UUID id)
 		{
-			RoleRequest request = roleRequestService.getRoleRequest(id);
-			request.setStatus(RequestStatus.REJECTED);
-			roleRequestService.updateRoleRequest(id, request);
-			
+			roleRequestService.rejectRoleRequest(id);
 			return ResponseEntity.ok().build();			
 		}
 

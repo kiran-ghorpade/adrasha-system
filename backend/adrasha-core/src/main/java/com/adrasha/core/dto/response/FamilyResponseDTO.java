@@ -10,7 +10,7 @@ import lombok.Data;
 
 @Data
 @Schema
-public class FamilyDataResponseDTO {
+public class FamilyResponseDTO {
 	
 	private UUID id;
 

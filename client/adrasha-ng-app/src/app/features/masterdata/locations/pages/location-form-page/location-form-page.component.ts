@@ -1,14 +1,11 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 
+import { LocationService } from '@core/api';
 import { LocationResponseDTO } from '@core/model/masterdataService';
-import { AuthService } from '@core/services';
 import { TranslatePipe } from '@ngx-translate/core';
 import { PageHeaderComponent } from '@shared/components';
-import { map } from 'rxjs';
 import { LocationFormComponent } from '../../components';
-import { LocationService } from '@core/api';
 
 @Component({
   selector: 'app-location-form-page',
@@ -34,15 +31,9 @@ import { LocationService } from '@core/api';
 export class LocationFormPageComponent {
   // depedencies
   private readonly activatedRoute = inject(ActivatedRoute);
-  private readonly authService = inject(AuthService);
   private readonly locationService = inject(LocationService);
 
   // states
-  userId = toSignal(
-    this.authService.currentUser.pipe(map((user) => user?.id ?? null)),
-    { initialValue: null }
-  );
-
   locationId = signal<string | null>(null);
   data = signal<LocationResponseDTO | null>(null);
   isUpdate = computed(() => this.locationId() !== null);

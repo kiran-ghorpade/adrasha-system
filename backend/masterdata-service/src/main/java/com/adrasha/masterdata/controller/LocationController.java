@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.adrasha.core.dto.ErrorResponse;
-import com.adrasha.core.dto.ExampleMatcherUtils;
 import com.adrasha.core.dto.ValidationErrorResponse;
 import com.adrasha.core.dto.filter.LocationFilterDTO;
 import com.adrasha.core.dto.page.LocationPageResponseDTO;
 import com.adrasha.core.dto.response.LocationResponseDTO;
+import com.adrasha.core.utils.ExampleMatcherUtils;
 import com.adrasha.masterdata.dto.LocationCreateDTO;
 import com.adrasha.masterdata.dto.LocationUpdateDTO;
 import com.adrasha.masterdata.model.Location;

@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 @Builder
 @Schema
-public class FamilyDataFilterDTO {
+public class FamilyFilterDTO {
 	
 	private UUID ashaId;
 	private PovertyStatus povertyStatus;

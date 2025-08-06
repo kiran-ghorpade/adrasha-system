@@ -14,7 +14,7 @@ import lombok.Data;
 @Data
 @Builder
 @Schema
-public class MemberDataFilterDTO {
+public class MemberFilterDTO {
 	private UUID familyId;
 	private UUID ashaId;
 	private Gender gender;
@@ -23,5 +23,5 @@ public class MemberDataFilterDTO {
 	private Integer maxAge;
 	
 	@Default
-	private AliveStatus alive = AliveStatus.ALIVE;
+	private AliveStatus aliveStatus = AliveStatus.ALIVE;
 }

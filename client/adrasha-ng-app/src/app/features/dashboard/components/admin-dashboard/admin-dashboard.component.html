@@ -1,16 +1,19 @@
-  <div class="h-full w-full grid md:grid-rows-10 grid-cols-12 gap-2">
+<div class="h-full w-full grid md:grid-rows-10 grid-cols-12 gap-2">
   <!-- Values -->
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-4">
-    <app-data-card-label
-      [value]="totalUsers()"
-      [label]="`Users`"
-    />
+    <app-data-card-label [value]="totalUsers()" [label]="`Users`" />
   </div>
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-5">
-    <app-data-card-label [value]="pendingRequestsCount()" [label]="`Pending Requests`" />
+    <app-data-card-label
+      [value]="pendingRequestsCount()"
+      [label]="`Pending Requests`"
+    />
   </div>
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-6">
-    <app-data-card-label [value]="totalHealthCenters()" [label]="`Health Centers`" />
+    <app-data-card-label
+      [value]="totalHealthCenters()"
+      [label]="`Health Centers`"
+    />
   </div>
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-4">
     <app-data-card-label [value]="totalLocations()" [label]="`Locations`" />
@@ -20,20 +23,14 @@
   <mat-card
     class="row-span-6 col-span-12 md:col-span-6 md:order-none order-8 flex justify-center items-center"
   >
-    <app-pie-chart
-      [labels]="pieChartData().labels"
-      [datasets]="pieChartData().datasets"
-    />
+    <app-admin-dashboard-pie-chart></app-admin-dashboard-pie-chart>
   </mat-card>
 
   <!-- records line charts -->
   <mat-card
     class="row-span-6 col-span-12 md:col-span-6 md:order-none order-11 flex justify-center"
   >
-    <app-line-chart
-      [labels]="lineChartData().labels"
-      [datasets]="lineChartData().datasets"
-    />
+    <app-admin-dashboard-line-chart></app-admin-dashboard-line-chart>
   </mat-card>
 
   <!-- <div

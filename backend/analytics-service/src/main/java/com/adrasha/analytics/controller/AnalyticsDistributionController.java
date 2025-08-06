@@ -28,9 +28,9 @@ public class AnalyticsDistributionController {
 	private final AnalyticsAggregatorService aggregatorService;
 
 //
-	@GetMapping("/roles")
+	@GetMapping("/requests")
 	@PreAuthorize("hasRole('ADMIN')")
-	public Map<RequestStatus, Long> getRoleDistribution(AnalyticsFilterDTO analyticsFilterDTO) {
+	public Map<RequestStatus, Long> getRequestDistribution(AnalyticsFilterDTO analyticsFilterDTO) {
 		return aggregatorService.getRoleRequestStatusDistributionBetween(analyticsFilterDTO);
 	}
 

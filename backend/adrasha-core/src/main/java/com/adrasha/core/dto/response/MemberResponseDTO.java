@@ -13,7 +13,7 @@ import lombok.Data;
 
 @Data
 @Schema
-public class MemberDataResponseDTO {
+public class MemberResponseDTO {
 	
 	private UUID id;
 	private UUID familyId;

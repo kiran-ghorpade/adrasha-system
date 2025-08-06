@@ -1,5 +1,5 @@
 import { Component, ElementRef, inject, OnInit, signal, viewChild, ViewChild } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,7 +11,7 @@ import { FamilyDataService } from '@core/api/family-data/family-data.service';
 import { MemberDataService } from '@core/api/member-data/member-data.service';
 import { AuthService } from '@core/services';
 import { PageHeaderComponent, PageWrapperComponent } from '@shared/components';
-import { debounceTime, forkJoin, fromEvent, map, switchMap, tap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, forkJoin, fromEvent, map, switchMap, tap } from 'rxjs';
 import { FamilyHeadItem, FamilyListComponent } from '../../components';
 
 @Component({
@@ -30,7 +30,7 @@ import { FamilyHeadItem, FamilyListComponent } from '../../components';
   ],
   templateUrl: './family-page.component.html',
 })
-export class FamilyPageComponent {
+export class FamilyPageComponent implements OnInit {
   @ViewChild('input') inputRef!: ElementRef;
 
   private readonly authService = inject(AuthService);
@@ -53,6 +53,7 @@ export class FamilyPageComponent {
   totalSize = signal(0);
 
   ngOnInit(): void {
+    this.setupSearchListener();
     this.loadPaginatedData();
   }
 
@@ -66,7 +67,9 @@ export class FamilyPageComponent {
     fromEvent(this.inputRef.nativeElement, 'input')
       .pipe(
         map((event: any) => event.target.value.trim()),
-        debounceTime(300) // wait 300ms after the last keypress
+        distinctUntilChanged(),
+        debounceTime(300), // wait 300ms after the last keypress
+        takeUntilDestroyed()
       )
       .subscribe((searchValue: number) => {
         this.searchTerm.set(searchValue);
@@ -111,7 +114,8 @@ export class FamilyPageComponent {
           );
 
           return forkJoin(memberRequests);
-        })
+        }),
+        takeUntilDestroyed()
       )
       .subscribe((headList) => {
         this.familyHeadList.set(headList);

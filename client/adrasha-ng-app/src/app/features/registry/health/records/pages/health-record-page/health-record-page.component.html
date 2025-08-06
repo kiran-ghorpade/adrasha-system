@@ -10,13 +10,6 @@
   </div>
 
   <div content class="w-full flex flex-wrap gap-3">
-    <!-- Health Details -->
-    @if(healthRecordList()){
-       <div class="h-max paper flex flex-wrap">
-      <app-health-record-details [healthRecord]="data()"></app-health-record-details>
-    </div>
-    }
-
     <!-- List -->
     @if(healthRecordList()){
     <app-health-record-list

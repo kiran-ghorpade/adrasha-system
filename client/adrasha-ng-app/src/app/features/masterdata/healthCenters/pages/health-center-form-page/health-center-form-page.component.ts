@@ -23,8 +23,8 @@ import { TranslatePipe } from '@ngx-translate/core';
         "
       />
       <app-health-center-form
-        [userId]="userId() ?? ''"
-        [id]="healthCenterId() ?? ''"
+        [userId]="userId()"
+        [id]="healthCenterId()"
         [isUpdate]="isUpdate()"
         [entity]="data() ?? {}"
       />
@@ -39,18 +39,18 @@ export class HealthCenterFormPageComponent {
 
   // states
   userId = toSignal(
-    this.authService.currentUser.pipe(map((user) => user?.id ?? null)),
-    { initialValue: null }
+    this.authService.currentUser.pipe(map((user) => user?.id ?? '')),
+    { initialValue: '' }
   );
 
-  healthCenterId = signal<string | null>(null);
+  healthCenterId = signal<string>('');
   data = signal<HealthCenterResponseDTO | null>(null);
   isUpdate = computed(() => this.healthCenterId() !== null);
 
   // initilize states
   ngOnInit() {
     this.healthCenterId.set(
-      this.activatedRoute.snapshot.paramMap.get('id') ?? null
+      this.activatedRoute.snapshot.paramMap.get('id') ?? ''
     );
 
     if (this.healthCenterId()) {

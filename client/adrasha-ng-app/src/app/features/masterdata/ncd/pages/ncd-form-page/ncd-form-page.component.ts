@@ -1,13 +1,10 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 
 import { NcdService } from '@core/api';
 import { LocationResponseDTO } from '@core/model/masterdataService';
-import { AuthService } from '@core/services';
 import { TranslatePipe } from '@ngx-translate/core';
 import { PageHeaderComponent } from '@shared/components';
-import { map } from 'rxjs';
 import { NcdFormComponent } from '../../components';
 
 @Component({
@@ -34,15 +31,9 @@ import { NcdFormComponent } from '../../components';
 export class NcdFormPageComponent {
   // depedencies
   private readonly activatedRoute = inject(ActivatedRoute);
-  private readonly authService = inject(AuthService);
   private readonly ncdService = inject(NcdService);
 
   // states
-  userId = toSignal(
-    this.authService.currentUser.pipe(map((user) => user?.id ?? null)),
-    { initialValue: null }
-  );
-
   ncdId = signal<string | null>(null);
   data = signal<LocationResponseDTO | null>(null);
   isUpdate = computed(() => this.ncdId() !== null);

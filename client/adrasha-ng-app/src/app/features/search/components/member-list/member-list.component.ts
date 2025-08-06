@@ -5,20 +5,22 @@ import { RouterModule } from '@angular/router';
 import { MemberDataResponseDTO } from '@core/model/dataService';
 
 @Component({
-  selector: 'app-member-list',
+  selector: 'app-search-member-list',
   imports: [RouterModule, MatListModule, MatIconModule],
   template: `
     @if(memberList().length == 0){
     <div class="flex justify-center items-center">
       <mat-icon>search_off</mat-icon>
-      <h4 class="ml-4 text-wrap">
-        No Member found. Try adding a new one!
-      </h4>
+      <h4 class="ml-4 text-wrap">No Member found. Try adding a new one!</h4>
     </div>
     }@else {
     <mat-action-list>
       @for (data of memberList(); track $index) {
-      <a mat-list-item [routerLink]="['registry/members', data.id]">
+      <a
+        mat-list-item
+        [routerLink]="['registry/health/records']"
+        [queryParams]="[{ memberId: data.id }]"
+      >
         <div matListItemAvatar class="flex items-center justify-center">
           <mat-icon>person</mat-icon>
         </div>

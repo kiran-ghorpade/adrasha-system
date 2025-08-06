@@ -1,9 +1,4 @@
-import {
-  Component,
-  computed,
-  input,
-  ViewChild
-} from '@angular/core';
+import { Component, computed, input, ViewChild } from '@angular/core';
 import { ChartConfiguration, ChartDataset, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 
@@ -11,6 +6,8 @@ import { BaseChartDirective } from 'ng2-charts';
   selector: 'app-pie-chart',
   imports: [BaseChartDirective],
   template: `
+    @if(labels()?.length === 0 && data()?.length==0){ No Data Available
+    }@else {
     <canvas
       baseChart
       [data]="chartData()"
@@ -18,23 +15,21 @@ import { BaseChartDirective } from 'ng2-charts';
       [options]="chartOptions"
     >
     </canvas>
+    }
   `,
 })
 export class PieChartComponent {
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
   labels = input<string[]>();
-  datasets = input<ChartDataset[]>();
+  data = input<number[]>();
 
   // chart config
   chartData = computed<ChartConfiguration['data']>(() => ({
-    labels: this.labels() ?? ['lable1','lable2','lable3'],
-    datasets: this.datasets() ?? [
+    labels: this.labels(),
+    datasets: [
       {
-        data: [45, 50, 5], // Example percentages or counts
-        backgroundColor: ['#3b82f6', '#ec4899', '#a78bfa'],
-        hoverBackgroundColor: ['#2563eb', '#db2777', '#7c3aed'],
-        borderWidth: 1,
+        data : this.data() ?? [],
       },
     ],
   }));
@@ -46,8 +41,8 @@ export class PieChartComponent {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        title:{
-          text:'jkl'
+        title: {
+          text: 'jkl',
         },
         position: 'bottom',
         labels: {

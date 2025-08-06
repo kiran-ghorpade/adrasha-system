@@ -35,9 +35,9 @@ public class AnalyticsTrendsController {
 	private final AnalyticsAggregatorService aggregatorService;
 
 //
-	@GetMapping("/roles")
+	@GetMapping("/request")
 	@PreAuthorize("hasRole('ADMIN')")
-	public Map<RequestStatus, List<RoleRequestStatusCount>> getRoleTrends(AnalyticsFilterDTO analyticsFilterDTO) {
+	public Map<RequestStatus, List<RoleRequestStatusCount>> getRequestTrends(AnalyticsFilterDTO analyticsFilterDTO) {
 		return aggregatorService.getRoleRequestStatusTrendsBetween(analyticsFilterDTO);
 	}
 

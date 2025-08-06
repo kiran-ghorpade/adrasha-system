@@ -1,4 +1,4 @@
-package com.adrasha.core.dto;
+package com.adrasha.core.utils;
 
 import org.springframework.data.domain.ExampleMatcher;
 

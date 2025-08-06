@@ -6,6 +6,6 @@
  */
 import type { AnalyticsFilterDTO } from './analyticsFilterDTO';
 
-export type GetRoleTrendsParams = {
-analyticsFilterDTO: AnalyticsFilterDTO;
+export type GetRequestTrendsParams = {
+  analyticsFilterDTO: AnalyticsFilterDTO;
 };

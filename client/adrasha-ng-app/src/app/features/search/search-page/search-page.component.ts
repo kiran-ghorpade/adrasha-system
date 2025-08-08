@@ -1,47 +1,33 @@
 import {
   Component,
-  ElementRef,
   inject,
-  OnInit,
-  signal,
-  ViewChild
+  signal
 } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
-import { FamilyDataService } from '@core/api/family-data/family-data.service';
 import { MemberDataService } from '@core/api/member-data/member-data.service';
-import { AuthService } from '@core/services';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  forkJoin,
-  fromEvent,
-  map,
-  switchMap,
-  tap,
-} from 'rxjs';
-import { MemberListComponent } from "../components";
 import { MemberDataResponseDTO } from '@core/model/dataService';
+import { AuthService } from '@core/services';
+import { MemberListComponent } from '@features/registry/member/components';
+import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs';
 
 @Component({
   selector: 'app-search-page',
   imports: [
     MatIconModule,
-    MatFormFieldModule,
     MatInputModule,
+    ReactiveFormsModule,
     RouterModule,
     MatListModule,
-    MemberListComponent
-],
+    MemberListComponent,
+  ],
   templateUrl: './search-page.component.html',
 })
-export class SearchPageComponent implements OnInit {
-  @ViewChild('input') inputRef!: ElementRef;
-
+export class SearchPageComponent {
   private readonly authService = inject(AuthService);
   private readonly memberService = inject(MemberDataService);
 
@@ -53,17 +39,12 @@ export class SearchPageComponent implements OnInit {
   );
 
   memberList = signal<MemberDataResponseDTO[]>([]);
-  searchTerm = signal(0);
+  searchControl = new FormControl('');
 
   // paginated metadata
   pageIndex = signal(0);
   pageSize = signal(10);
   totalSize = signal(0);
-
-  ngOnInit(): void {
-    this.setupSearchListener();
-    this.loadPaginatedData();
-  }
 
   onPageChange(event: any) {
     this.pageIndex.set(event.pageIndex);
@@ -71,19 +52,16 @@ export class SearchPageComponent implements OnInit {
     this.loadPaginatedData();
   }
 
-  setupSearchListener() {
-    fromEvent(this.inputRef.nativeElement, 'input')
+  constructor() {
+    this.searchControl.valueChanges
       .pipe(
-        map((event: any) => event.target.value.trim()),
+        debounceTime(300),
         distinctUntilChanged(),
-        debounceTime(300), // wait 300ms after the last keypress
+        tap(() => this.pageIndex.set(0)), // reset page on search
+        tap(() => this.loadPaginatedData()),
         takeUntilDestroyed()
       )
-      .subscribe((searchValue: number) => {
-        this.searchTerm.set(searchValue);
-        this.pageIndex.set(0); // reset page index when searching
-        this.loadPaginatedData();
-      });
+      .subscribe();
   }
 
   loadPaginatedData() {
@@ -92,6 +70,8 @@ export class SearchPageComponent implements OnInit {
         filterDTO: {
           ashaId: this.userId() ?? '',
           // filter logic
+          // TODO
+          // add search term here
         },
         pageable: {
           page: this.pageIndex(),

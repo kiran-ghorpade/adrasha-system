@@ -1,13 +1,12 @@
 import { Component, computed, input, ViewChild } from '@angular/core';
-import { ChartConfiguration, ChartDataset, ChartType } from 'chart.js';
+import { ChartConfiguration, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 
 @Component({
   selector: 'app-pie-chart',
+  standalone: true,
   imports: [BaseChartDirective],
   template: `
-    @if(labels()?.length === 0 && data()?.length==0){ No Data Available
-    }@else {
     <canvas
       baseChart
       [data]="chartData()"
@@ -15,7 +14,6 @@ import { BaseChartDirective } from 'ng2-charts';
       [options]="chartOptions"
     >
     </canvas>
-    }
   `,
 })
 export class PieChartComponent {
@@ -24,26 +22,28 @@ export class PieChartComponent {
   labels = input<string[]>();
   data = input<number[]>();
 
-  // chart config
-  chartData = computed<ChartConfiguration['data']>(() => ({
-    labels: this.labels(),
-    datasets: [
-      {
-        data : this.data() ?? [],
-      },
-    ],
-  }));
+  readonly chartData = computed<ChartConfiguration['data']>(() => {
+    const hasData = (this.data()?.length ?? 0) > 0;
 
-  chartType: ChartType = 'doughnut';
+    return {
+      labels: hasData ? this.labels() : ['No Data'],
+      datasets: [
+        {
+          data: hasData ? this.data() ?? [1]: [1],
+          backgroundColor: hasData ? undefined : ['#e0e0e0'], // gray fill for placeholder
+          borderWidth: 1,
+        },
+      ],
+    };
+  });
 
-  chartOptions: ChartConfiguration['options'] = {
+  readonly chartType: ChartType = 'doughnut';
+
+  readonly chartOptions: ChartConfiguration['options'] = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        title: {
-          text: 'jkl',
-        },
         position: 'bottom',
         labels: {
           color: '#374151',

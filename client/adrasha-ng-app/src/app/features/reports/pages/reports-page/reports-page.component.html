@@ -8,7 +8,7 @@
 
     <mat-action-list>
       @for (data of reportsTypes; track $index) {
-      <a mat-list-item [routerLink]="`${data.route}`">
+      <a mat-list-item [routerLink]="['/reports', data.type]">
         <div matListItemIcon>
           <mat-icon>{{ data.icon }}</mat-icon>
         </div>

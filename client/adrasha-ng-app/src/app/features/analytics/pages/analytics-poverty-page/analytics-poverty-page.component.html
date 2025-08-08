@@ -1,0 +1,47 @@
+<app-page-wrapper>
+  <div top>
+    <app-page-header title="Poverty Analytics"></app-page-header>
+  </div>
+
+  <div content class="h-full flex flex-col gap-6">
+    <!-- Date Filters -->
+    <form [formGroup]="dateForm" class="flex justify-center gap-4">
+      <mat-form-field class="md:w-1/3">
+        <mat-label>From</mat-label>
+        <input
+          matInput
+          type="date"
+          formControlName="startDate"
+          [max]="today | date : 'yyyy-MM-dd'"
+        />
+      </mat-form-field>
+
+      <mat-form-field class="md:w-1/3">
+        <mat-label>To</mat-label>
+        <input
+          matInput
+          type="date"
+          formControlName="endDate"
+          [min]="dateForm.value.startDate"
+          [max]="today | date : 'yyyy-MM-dd'"
+        />
+      </mat-form-field>
+    </form>
+
+    <!-- Pie Chart -->
+    <div>
+      <app-analytics-family-poverty-dist-chart
+        [searchStartDate]="searchStartDate()"
+        [searchEndDate]="searchEndDate()"
+      ></app-analytics-family-poverty-dist-chart>
+    </div>
+
+    <!-- Line Chart -->
+    <div>
+      <app-analytics-family-poverty-line-chart
+        [searchStartDate]="searchStartDate()"
+        [searchEndDate]="searchEndDate()"
+      ></app-analytics-family-poverty-line-chart>
+    </div>
+  </div>
+</app-page-wrapper>

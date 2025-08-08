@@ -20,7 +20,10 @@ import { DataCardLabelComponent } from '@shared/components';
 import { LineChartComponent } from '@shared/components/line-chart/line-chart.component';
 import { combineLatest, map, of, switchMap } from 'rxjs';
 import { PreviousVisitsListComponent } from '../previous-visits-list/previous-visits-list.component';
-import { AshaDashboardGenderChartComponent, AshaDashboardPovertyChartComponent } from '../charts';
+import {
+  AshaDashboardGenderChartComponent,
+  AshaDashboardPovertyChartComponent,
+} from '../charts';
 
 @Component({
   selector: 'app-asha-dashboard',
@@ -34,8 +37,8 @@ import { AshaDashboardGenderChartComponent, AshaDashboardPovertyChartComponent }
     LineChartComponent,
     PreviousVisitsListComponent,
     AshaDashboardPovertyChartComponent,
-    AshaDashboardGenderChartComponent
-],
+    AshaDashboardGenderChartComponent,
+  ],
   templateUrl: './asha-dashboard.component.html',
 })
 export class AshaDashboardComponent {
@@ -44,18 +47,26 @@ export class AshaDashboardComponent {
   private readonly memberService = inject(MemberDataService);
   private readonly healthRecordService = inject(HealthRecordService);
 
+  ashaId = toSignal(this.authService.currentUser.pipe(map((user) => user?.id)));
+
   // Combine and load all counts into one signal
   counts = toSignal(
     this.authService.currentUser.pipe(
-      map(user => user?.id),
+      map((user) => user?.id),
       switchMap((id) => {
         if (!id) return of([0, 0, 0, 0]);
 
         return combineLatest([
           this.familyService.getFamilyCount({ filterDTO: { ashaId: id } }),
-          this.memberService.getMemberCount({ filterDTO: { ashaId: id, alive: 'ALIVE' } }),
-          this.memberService.getMemberCount({ filterDTO: { minAge: 0, maxAge: 5 } }),
-          this.healthRecordService.getHealthRecordCount({ filterDTO: { pregnant: true } }),
+          this.memberService.getMemberCount({
+            filterDTO: { ashaId: id, alive: 'ALIVE' },
+          }),
+          this.memberService.getMemberCount({
+            filterDTO: { minAge: 0, maxAge: 5 },
+          }),
+          this.healthRecordService.getHealthRecordCount({
+            filterDTO: { pregnant: true },
+          }),
         ]);
       })
     ),
@@ -68,4 +79,3 @@ export class AshaDashboardComponent {
   childrenCount = computed(() => this.counts()[2]);
   pregnancyCount = computed(() => this.counts()[3]);
 }
-

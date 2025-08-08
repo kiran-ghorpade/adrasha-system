@@ -1,0 +1,50 @@
+<app-page-wrapper>
+  <div top>
+    <app-page-header title="Age Analytics"> </app-page-header>
+  </div>
+
+  <div content class="h-full flex flex-col">
+    <!-- Date Filters -->
+    <div class="md:flex w-full justify-around">
+      <form [formGroup]="dateForm" class="w-full flex flex-col justify-center items-center gap-4">
+        <mat-form-field class="md:w-1/3">
+          <mat-label>From</mat-label>
+          <input
+            matInput
+            type="date"
+            formControlName="startDate"
+            [max]="today | date : 'yyyy-MM-dd'"
+          />
+        </mat-form-field>
+
+        <mat-form-field class="md:w-1/3">
+          <mat-label>To</mat-label>
+          <input
+            matInput
+            type="date"
+            formControlName="endDate"
+            [min]="dateForm.value.startDate"
+            [max]="today | date : 'yyyy-MM-dd'"
+          />
+        </mat-form-field>
+      </form>
+
+      <!-- Pie Chart -->
+      <div class="w-full flex justify-center items-center">
+        <app-analytics-member-age-dist
+          [searchStartDate]="searchStartDate()"
+          [searchEndDate]="searchEndDate()"
+        ></app-analytics-member-age-dist>
+      </div>
+    </div>
+
+    <!-- Line Chart -->
+    <div class="">
+      <app-anlaytics-member-age-line-chart
+        [searchStartDate]="searchStartDate()"
+        [searchEndDate]="searchEndDate()"
+      >
+      </app-anlaytics-member-age-line-chart>
+    </div>
+  </div>
+</app-page-wrapper>

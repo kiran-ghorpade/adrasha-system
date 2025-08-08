@@ -2,28 +2,29 @@ package com.adrasha.user.service;
 
 import java.util.UUID;
 
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.adrasha.core.dto.filter.UserFilterDTO;
+import com.adrasha.core.dto.response.UserResponseDTO;
 import com.adrasha.core.exception.AlreadyExistsException;
 import com.adrasha.core.exception.NotFoundException;
 import com.adrasha.core.model.Role;
-import com.adrasha.user.model.User;
+import com.adrasha.user.dto.user.UserUpdateDTO;
 
 public interface UserService {
 
-	Page<User> getUserPage(Example<User> example, Pageable pageable);
+	Page<UserResponseDTO> getUserPage(UserFilterDTO filterDTO, Pageable pageable);
 	
-	Long getUserCount(Example<User> example);
+	Long getUserCount(UserFilterDTO filterDTO);
     
-    User getUser(UUID id) throws NotFoundException;
+    UserResponseDTO getUser(UUID id) throws NotFoundException;
     
-    User createUser(User user) throws AlreadyExistsException;
+    UserResponseDTO createUser(UserResponseDTO user) throws AlreadyExistsException;
     
-    User updateUser(UUID userId, User updatedUser) throws NotFoundException;
+    UserResponseDTO updateUser(UUID userId, UserUpdateDTO updateDTO) throws NotFoundException;
     
-    User deleteUser(UUID userId) throws NotFoundException;
+    UserResponseDTO deleteUser(UUID userId) throws NotFoundException;
 
 	void removeRoleFromUser(UUID id, Role role);
  }

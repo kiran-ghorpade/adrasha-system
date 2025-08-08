@@ -1,0 +1,34 @@
+<app-page-wrapper>
+  <div top>
+    <app-page-header title="Report View"> </app-page-header>
+  </div>
+
+  <div content class="h-full flex justify-center items-center">
+    @if (!base64PDF()) {
+    <div class="flex justify-center items-center">
+      <mat-icon>search_off</mat-icon>
+      <h4 class="ml-4 text-wrap">
+        Something went wrong , please try again later !
+      </h4>
+    </div>
+    }@else{
+    <button matButton="filled" (click)="showPdf()">
+      <mat-icon>picture_as_pdf</mat-icon>
+      <span>View Report</span>
+    </button>
+    }
+
+    <!-- @if (pdfUrl) {
+    <object [data]="pdfUrl" class="h-full w-full border-none">
+      <p>
+        Your browser does not support PDFs.
+        <a [href]="pdfUrl" target="_blank" title="ADRASHA Report"  matButton="filled">
+          <mat-icon>picture_as_pdf</mat-icon>
+          <span>Download Report</span>
+        </a>
+      </p>
+    </object>
+
+    } -->
+  </div>
+</app-page-wrapper>

@@ -17,7 +17,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -47,13 +46,12 @@ public class Member extends Auditable{
 
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
+	
+	private Integer age;
 
 	private LocalDate dateOfBirth;
 
 	private String birthPlace;
-	
-	@Transient
-	private Integer age;
 
 	@Column(unique = true)
 	private String adharNumber;
@@ -65,9 +63,8 @@ public class Member extends Auditable{
 	@Enumerated
 	private AliveStatus aliveStatus;
 	
-	
 	public Integer getAge() {
-		return Period.between(dateOfBirth, LocalDate.now()).getYears();
+		this.age = Period.between(this.dateOfBirth, LocalDate.now()).getYears();
+		return this.age;
 	}
-
 }

@@ -1,12 +1,12 @@
-import { Component, effect, inject, input, signal } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { HealthRecordService, MemberDataService } from '@core/api';
-import { map, switchMap } from 'rxjs/operators';
-import { of, forkJoin } from 'rxjs';
 import { AuthService } from '@core/services';
+import { forkJoin, of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-previous-visits-list',
@@ -21,7 +21,7 @@ import { AuthService } from '@core/services';
     } @else {
     <mat-action-list>
       @for (data of recordList(); track $index) {
-      <a mat-list-item [routerLink]="['/registry/members', data.member.id]">
+      <a mat-list-item [routerLink]="['/registry/health', data.id]">
         <div matListItemAvatar class="flex items-center justify-center">
           <mat-icon>person</mat-icon>
         </div>

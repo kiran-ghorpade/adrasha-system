@@ -3,29 +3,31 @@ package com.adrasha.data.service;
 import java.util.List;
 import java.util.UUID;
 
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.adrasha.core.dto.filter.HealthRecordFilterDTO;
+import com.adrasha.core.dto.response.HealthRecordResponseDTO;
 import com.adrasha.core.exception.AlreadyExistsException;
 import com.adrasha.core.exception.NotFoundException;
-import com.adrasha.data.model.HealthRecord;
+import com.adrasha.data.health.records.dto.HealthRecordCreateDTO;
+import com.adrasha.data.health.records.dto.HealthRecordUpdateDTO;
 
 public interface HealthRecordService {
 
-    Page<HealthRecord> getHealthRecordPage(Example<HealthRecord> example, Pageable pageable);
+    Page<HealthRecordResponseDTO> getHealthRecordPage(HealthRecordFilterDTO filterDTO, Pageable pageable);
         
-	List<HealthRecord> getHealthRecordList(Example<HealthRecord> example);
+	List<HealthRecordResponseDTO> getHealthRecordList(HealthRecordFilterDTO filterDTO);
 	
-	Long getHealthRecordCount(Example<HealthRecord> example);
+	Long getHealthRecordCount(HealthRecordFilterDTO filterDTO);
 	
 	// CRUD
 	
-    HealthRecord getHealthRecord(UUID HealthRecordId) throws NotFoundException;
+    HealthRecordResponseDTO getHealthRecord(UUID HealthRecordId) throws NotFoundException;
     
-    HealthRecord createHealthRecord(HealthRecord HealthRecord) throws AlreadyExistsException;
+    HealthRecordResponseDTO createHealthRecord(HealthRecordCreateDTO createDTO) throws AlreadyExistsException;
     
-    HealthRecord updateHealthRecord(UUID HealthRecordId, HealthRecord updatedHealthRecordDetails) throws NotFoundException;
+    HealthRecordResponseDTO updateHealthRecord(UUID HealthRecordId, HealthRecordUpdateDTO updateDTO) throws NotFoundException;
     
-    HealthRecord deleteHealthRecord(UUID HealthRecordId) throws NotFoundException;
+    HealthRecordResponseDTO deleteHealthRecord(UUID HealthRecordId) throws NotFoundException;
 }

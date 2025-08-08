@@ -1,14 +1,19 @@
-<div id="searchPage" class="w-full h-full flex flex-col justify-center md:items-center">
+<div
+  id="searchPage"
+  class="w-full h-full flex flex-col justify-center md:items-center"
+>
   <div class="flex flex-col md:w-1/3 gap-5 p-2">
-    <mat-form-field >
-      <mat-label>Search Member</mat-label>
-      <input  matInput #input />
+    <mat-form-field>
+      <mat-label
+        >Search Member with name or adharnumber or abhanumber</mat-label
+      >
+      <input matInput [formControl]="searchControl" />
     </mat-form-field>
   </div>
 
   <div class="md:w-1/2 h-1/2 paper">
     <div class="h-full overflow-auto">
-      <app-search-member-list [memberList]="filteredMemberList"></app-search-member-list>
+      <app-member-list [memberList]="memberList()"></app-member-list>
     </div>
   </div>
 </div>

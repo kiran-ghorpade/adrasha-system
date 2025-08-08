@@ -24,7 +24,7 @@ import { LineChartComponent } from '@shared/components/line-chart/line-chart.com
   template: `
     <app-line-chart
       [labels]="lineChartData().labels"
-      [datasets]="lineChartData().datasets"
+      [data]="lineChartData().datasets"
     />
   `,
 })

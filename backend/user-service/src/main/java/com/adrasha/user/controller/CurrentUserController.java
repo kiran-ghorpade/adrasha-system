@@ -2,7 +2,6 @@ package com.adrasha.user.controller;
 
 import java.util.UUID;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.adrasha.core.dto.ErrorResponse;
 import com.adrasha.core.dto.response.UserResponseDTO;
 import com.adrasha.core.exception.UnAuthorizedException;
-import com.adrasha.user.model.User;
 import com.adrasha.user.service.UserService;
 
 import io.swagger.v3.oas.annotations.media.Content;
@@ -30,7 +28,6 @@ import lombok.RequiredArgsConstructor;
 public class CurrentUserController {
 
 	private final UserService userService;
-	private final ModelMapper mapper;
 
 	@GetMapping
 	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = UserResponseDTO.class)))
@@ -47,9 +44,6 @@ public class CurrentUserController {
 		// Assuming Principle is UUID , if principle changes, please change this code
 		UUID id = UUID.fromString(authentication.getPrincipal().toString());
 
-		User user = userService.getUser(id);
-
-		return mapper.map(user, UserResponseDTO.class);
-
+		return userService.getUser(id);
 	}
 }

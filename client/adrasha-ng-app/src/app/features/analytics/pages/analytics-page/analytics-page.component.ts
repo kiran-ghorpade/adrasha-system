@@ -17,9 +17,10 @@ import { PageWrapperComponent, PageHeaderComponent } from '@shared/components';
 })
 export class AnalyticsPageComponent {
   analyticsTypes = [
-    { label: 'Family Analytics', icon: 'show_chart', route: 'family' },
-    { label: 'Member Analytics', icon: 'show_chart', route: 'member' },
-    { label: 'Health Analytics', icon: 'show_chart', route: 'health' },
-    { label: 'NCD Analytics', icon: 'show_chart', route: 'ncd' },
+    { label: 'Age', icon: 'show_chart', route: 'age' },
+    { label: 'Gender', icon: 'show_chart', route: 'gender' },
+    { label: 'Poverty', icon: 'show_chart', route: 'poverty' },
+    { label: 'Alive Status', icon: 'show_chart', route: 'aliveStatus' },
+    { label: 'NCD', icon: 'show_chart', route: 'ncd' },
   ];
 }

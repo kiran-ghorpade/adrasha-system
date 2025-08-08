@@ -19,6 +19,19 @@ export const ashaRoutes: Routes = [
       ),
   },
   {
+    path: 'search',
+    title: 'Search',
+    // canActivate: [authGuard, roleGuard],
+    data: {
+      roles: [UserResponseDTORolesItem.ASHA],
+    },
+    component: AppLayout,
+    loadChildren: () =>
+      import('@features/search/search.routes').then(
+        (route) => route.searchPageRoutes
+      ),
+  },
+  {
     path: 'reports',
     title: 'Reports',
     // canActivate: [authGuard, roleGuard],

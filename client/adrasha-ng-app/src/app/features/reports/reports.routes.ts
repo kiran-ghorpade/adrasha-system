@@ -1,11 +1,7 @@
 import { Routes } from '@angular/router';
-import { ReportsPageComponent } from './pages';
+import { ReportsPageComponent, ReportViewPageComponent } from './pages';
 
 export const reportsRoutes: Routes = [
   { path: '', component: ReportsPageComponent },
-//   {
-//     path: 'families',
-//     loadChildren: () =>
-//       import('./family/family.routes').then((m) => m.familyRoutes),
-//   },
+  { path: ':type', component: ReportViewPageComponent },
 ];

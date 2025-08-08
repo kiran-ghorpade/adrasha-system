@@ -9,8 +9,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.adrasha.core.dto.filter.HealthRecordFilterDTO;
+import com.adrasha.core.dto.response.HealthRecordResponseDTO;
 import com.adrasha.core.exception.NotFoundException;
+import com.adrasha.core.utils.ExampleMatcherUtils;
 import com.adrasha.data.event.HealthRecordEventProducer;
+import com.adrasha.data.health.records.dto.HealthRecordCreateDTO;
+import com.adrasha.data.health.records.dto.HealthRecordUpdateDTO;
 import com.adrasha.data.model.HealthRecord;
 import com.adrasha.data.repository.HealthRecordRepository;
 import com.adrasha.data.repository.MemberRepository;
@@ -24,56 +29,84 @@ public class HealthRecordServiceImpl implements HealthRecordService {
 
 	private final HealthRecordRepository healthRecordRepository;
 	private final MemberRepository memberRepository;
-	private final ModelMapper modelMapper;
+	private final ModelMapper mapper;
 	private final HealthRecordEventProducer eventProducer;
-	
+
 	@Override
-	public Page<HealthRecord> getHealthRecordPage(Example<HealthRecord> example, Pageable pageable) {
-		return healthRecordRepository.findAll(example, pageable);
+	public Page<HealthRecordResponseDTO> getHealthRecordPage(HealthRecordFilterDTO filterDTO, Pageable pageable) {
+
+		HealthRecord exampleRecord = mapper.map(filterDTO, HealthRecord.class);
+
+		Example<HealthRecord> example = Example.of(exampleRecord, ExampleMatcherUtils.getDefaultMatcher());
+
+		Page<HealthRecord> page = healthRecordRepository.findAll(example, pageable);
+
+		return page.map(record -> mapper.map(record, HealthRecordResponseDTO.class));
 	}
-	
+
 	@Override
-	public List<HealthRecord> getHealthRecordList(Example<HealthRecord> example){
-		return healthRecordRepository.findAll(example);
+	public List<HealthRecordResponseDTO> getHealthRecordList(HealthRecordFilterDTO filterDTO) {
+		HealthRecord exampleRecord = mapper.map(filterDTO, HealthRecord.class);
+
+		Example<HealthRecord> example = Example.of(exampleRecord, ExampleMatcherUtils.getDefaultMatcher());
+
+		List<HealthRecord> list = healthRecordRepository.findAll(example);
+		
+		return list.stream().map(record-> mapper.map(record, HealthRecordResponseDTO.class)).toList();
 	}
-	
+
 	@Override
-	public Long getHealthRecordCount(Example<HealthRecord> example){
+	public Long getHealthRecordCount(HealthRecordFilterDTO filterDTO) {
+		HealthRecord exampleRecord = mapper.map(filterDTO, HealthRecord.class);
+
+		Example<HealthRecord> example = Example.of(exampleRecord, ExampleMatcherUtils.getDefaultMatcher());
+		
 		return healthRecordRepository.count(example);
 	}
 
 	@Override
-	public HealthRecord getHealthRecord(UUID memberId) {
-		return healthRecordRepository.findByMemberId(memberId)
+	public HealthRecordResponseDTO getHealthRecord(UUID healthRecordId) {
+		return healthRecordRepository.findById(healthRecordId)
+				.map(record -> mapper.map(record, HealthRecordResponseDTO.class))
 				.orElseThrow(() -> new NotFoundException("error.healthRecord.notFound"));
 	}
 
 	@Override
-	public HealthRecord createHealthRecord(HealthRecord healthRecord) {
-		
-		if(!memberRepository.existsById(healthRecord.getMemberId())) {
+	public HealthRecordResponseDTO createHealthRecord(HealthRecordCreateDTO createDTO) {
+
+		if (!memberRepository.existsById(createDTO.getMemberId())) {
 			throw new NotFoundException("error.healthRecord.notFound");
 		}
-
+		
+		HealthRecord healthRecord = mapper.map(createDTO, HealthRecord.class);
 		HealthRecord newRecord = healthRecordRepository.save(healthRecord);
+		
 		eventProducer.sendCreatedEvent(newRecord);
-		return newRecord;
+		return mapper.map(newRecord, HealthRecordResponseDTO.class);
 	}
 
 	@Override
-	public HealthRecord updateHealthRecord(UUID healthRecordId, HealthRecord updatedHealthRecordDetails) {
-		HealthRecord healthRecord = getHealthRecord(healthRecordId);
-		modelMapper.map(updatedHealthRecordDetails, healthRecord);
+	public HealthRecordResponseDTO updateHealthRecord(UUID healthRecordId, HealthRecordUpdateDTO updateDTO) {
+		HealthRecord healthRecord = healthRecordRepository.findById(healthRecordId)
+				.orElseThrow(() -> new NotFoundException("error.healthRecord.notFound"));
+
+		HealthRecord oldHealthRecord = healthRecord;
+		
+		mapper.map(updateDTO, healthRecord);
 		HealthRecord savedRecord = healthRecordRepository.save(healthRecord);
-		eventProducer.sendUpdatedEvents(updatedHealthRecordDetails, savedRecord);
-		return savedRecord;
+		eventProducer.sendUpdatedEvents(oldHealthRecord, savedRecord);
+		
+		return mapper.map(savedRecord, HealthRecordResponseDTO.class);
 	}
 
 	@Override
-	public HealthRecord deleteHealthRecord(UUID healthRecordId) {
-		HealthRecord healthRecord = getHealthRecord(healthRecordId);
+	public HealthRecordResponseDTO deleteHealthRecord(UUID healthRecordId) {
+		HealthRecord healthRecord = healthRecordRepository.findById(healthRecordId)
+				.orElseThrow(() -> new NotFoundException("error.healthRecord.notFound"));
+
 		healthRecordRepository.delete(healthRecord);
 		eventProducer.sendDeletedEvents(healthRecord);
-		return healthRecord;
+		
+		return mapper.map(healthRecord, HealthRecordResponseDTO.class);
 	}
 }

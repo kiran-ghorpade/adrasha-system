@@ -12,13 +12,13 @@ import org.springframework.stereotype.Service;
 
 import com.adrasha.core.dto.JwtUser;
 import com.adrasha.core.dto.filter.RoleRequestFilterDTO;
+import com.adrasha.core.dto.response.RoleRequestResponseDTO;
 import com.adrasha.core.exception.AlreadyExistsException;
 import com.adrasha.core.exception.NotFoundException;
 import com.adrasha.core.model.RequestStatus;
 import com.adrasha.core.model.Role;
 import com.adrasha.core.utils.ExampleMatcherUtils;
 import com.adrasha.user.dto.roleRequest.RoleRequestCreateDTO;
-import com.adrasha.user.dto.roleRequest.RoleRequestDTO;
 import com.adrasha.user.dto.roleRequest.RoleRequestUpdateDTO;
 import com.adrasha.user.event.RoleRequestEventProducer;
 import com.adrasha.user.integration.AuthService;
@@ -45,7 +45,7 @@ public class RoleRequestServiceImpl implements RoleRequestService {
 
 
 	@Override
-	public Page<RoleRequestDTO> getRoleRequestPage(RoleRequestFilterDTO filterDTO, Pageable pageable) {
+	public Page<RoleRequestResponseDTO> getRoleRequestPage(RoleRequestFilterDTO filterDTO, Pageable pageable) {
 
 		RoleRequest searchTerms = mapper.map(filterDTO, RoleRequest.class);
 		
@@ -53,7 +53,7 @@ public class RoleRequestServiceImpl implements RoleRequestService {
 		
 		Page<RoleRequest> page =  requestRepository.findAll(example, pageable);
 		
-		return page.map(request-> mapper.map(request, RoleRequestDTO.class));
+		return page.map(request-> mapper.map(request, RoleRequestResponseDTO.class));
 	}
 	
 	@Override
@@ -67,15 +67,15 @@ public class RoleRequestServiceImpl implements RoleRequestService {
 	}
 
 	@Override
-	public RoleRequestDTO getRoleRequest(UUID roleRequestId) {
+	public RoleRequestResponseDTO getRoleRequest(UUID roleRequestId) {
 
 		return requestRepository.findById(roleRequestId)
-				.map(request-> mapper.map(request, RoleRequestDTO.class))
+				.map(request-> mapper.map(request, RoleRequestResponseDTO.class))
 				.orElseThrow(() -> new NotFoundException("error.roleRequest.notFound"));
 	}
 
 	@Override
-	public RoleRequestDTO createRoleRequest(RoleRequestCreateDTO createDTO) {
+	public RoleRequestResponseDTO createRoleRequest(RoleRequestCreateDTO createDTO) {
 				
 	  	if(requestRepository.existsByUserIdAndStatus(createDTO.getUserId(), RequestStatus.PENDING)) {
 	  		throw new AlreadyExistsException("error.roleRequest.alreadyExists");
@@ -83,15 +83,19 @@ public class RoleRequestServiceImpl implements RoleRequestService {
 
 	  	RoleRequest request = mapper.map(createDTO, RoleRequest.class);
 	  	
+		request.setId(null);
+		request.setUserId(createDTO.getUserId());
+		request.setStatus(RequestStatus.PENDING);
+		
 		RoleRequest createdRequest = requestRepository.save(request);
 		
 		eventProducer.sendCreatedEvent(createdRequest);
 		
-		return mapper.map(createdRequest, RoleRequestDTO.class);
+		return mapper.map(createdRequest, RoleRequestResponseDTO.class);
 	}
 
 	@Override
-	public RoleRequestDTO updateRoleRequest(UUID requestId, RoleRequestUpdateDTO updatedRoleRequest) {
+	public RoleRequestResponseDTO updateRoleRequest(UUID requestId, RoleRequestUpdateDTO updatedRoleRequest) {
 		RoleRequest request = requestRepository.findById(requestId)
 				.orElseThrow(() -> new NotFoundException("error.roleRequest.notFound"));
 		
@@ -103,18 +107,18 @@ public class RoleRequestServiceImpl implements RoleRequestService {
 		
 		eventProducer.sendUpdatedEvent(oldRequest, savedRequest);
 		
-		return mapper.map(savedRequest, RoleRequestDTO.class);
+		return mapper.map(savedRequest, RoleRequestResponseDTO.class);
 	}
 
 	@Override
-	public RoleRequestDTO deleteRoleRequest(UUID requestId) {
+	public RoleRequestResponseDTO deleteRoleRequest(UUID requestId) {
 		RoleRequest request = requestRepository.findById(requestId)
 				.orElseThrow(() -> new NotFoundException("error.roleRequest.notFound"));
 		
 		requestRepository.delete(request);
 		
 		eventProducer.sendDeletedEvent(request);
-		return mapper.map(request, RoleRequestDTO.class);
+		return mapper.map(request, RoleRequestResponseDTO.class);
 	}
 
 	@Override

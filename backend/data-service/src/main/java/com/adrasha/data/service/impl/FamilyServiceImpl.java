@@ -10,9 +10,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.adrasha.core.dto.filter.FamilyFilterDTO;
+import com.adrasha.core.dto.reports.FamilyReportDTO;
+import com.adrasha.core.dto.response.FamilyResponseDTO;
 import com.adrasha.core.exception.NotFoundException;
+import com.adrasha.core.utils.ExampleMatcherUtils;
 import com.adrasha.data.event.FamilyEventProducer;
-import com.adrasha.data.integration.RemoteDataService;
+import com.adrasha.data.family.dto.FamilyRegistrationDTO;
+import com.adrasha.data.family.dto.FamilyUpdateDTO;
+import com.adrasha.data.integration.UserDataService;
 import com.adrasha.data.model.Family;
 import com.adrasha.data.model.Member;
 import com.adrasha.data.repository.FamilyRepository;
@@ -27,78 +33,117 @@ public class FamilyServiceImpl implements FamilyDataService {
 
 	private final FamilyRepository familyRepository;
 	private final MemberRepository memberRepository;
-	private final RemoteDataService remoteDataService;
-	private final  ModelMapper modelMapper;
+	private final UserDataService userDataService;
 	private final FamilyEventProducer eventProducer;
+	private final ModelMapper mapper;
 
 	@Override
-	public Page<Family> getFamilyPage(Example<Family> example, Pageable pageable) {
+	public Page<FamilyResponseDTO> getFamilyPage(FamilyFilterDTO filterDTO, Pageable pageable) {
 
-		return familyRepository.findAll(example, pageable);
+		Family searchTerms = mapper.map(filterDTO, Family.class);
+		
+		Example<Family> example = Example.of(searchTerms, ExampleMatcherUtils.getDefaultMatcher());
+		
+		Page<Family> page = familyRepository.findAll(example, pageable);
+		
+		return page.map(family-> mapper.map(family, FamilyResponseDTO.class));
 	}
 	
 	@Override
-	public List<Family> getFamilyList(Example<Family> example){
-		return familyRepository.findAll(example);
+	public List<FamilyReportDTO> getFamilyList(FamilyFilterDTO filterDTO){
+		
+		Family searchTerms = mapper.map(filterDTO, Family.class);
+		
+		Example<Family> example = Example.of(searchTerms, ExampleMatcherUtils.getDefaultMatcher());
+
+		List<Family> list = familyRepository.findAll(example);
+		
+		return list.stream().map(family-> mapper.map(family, FamilyReportDTO.class)).toList();
 	}
 	
 	@Override
-	public Long getFamilyCount(Example<Family> example){
+	public Long getFamilyCount(FamilyFilterDTO filterDTO){
+		
+		Family searchTerms = mapper.map(filterDTO, Family.class);
+
+		Example<Family> example = Example.of(searchTerms, ExampleMatcherUtils.getDefaultMatcher());
+
 		return familyRepository.count(example);
 	}
 
 	@Override
-	public Family getFamily(UUID familyId) {
+	public FamilyResponseDTO getFamily(UUID familyId) {
 		return familyRepository.findById(familyId)
+				.map(family-> mapper.map(family, FamilyResponseDTO.class))
 				.orElseThrow(() -> new NotFoundException("error.family.notFound"));
 	}
 
 	@Override
 	@Transactional
-	public Family createFamily(Family family, Member headMember) {
-		
-		remoteDataService.verifyUserExist(family.getAshaId());
+	public FamilyResponseDTO createFamily(FamilyRegistrationDTO registrationDTO) {
 
+		// check asha exist
+		userDataService.verifyUserExist(registrationDTO.getFamily().getAshaId());
+		
+		// map to family
+		Family family = mapper.map(registrationDTO.getFamily(), Family.class);
+		
+		// save member
+		Member headMember = mapper.map(registrationDTO.getHeadMember(), Member.class);
+		
 		headMember.setAshaId(family.getAshaId());
 		headMember.setFamilyId(family.getAshaId()); // temp value
+	
 		Member newMember = memberRepository.save(headMember);
 		
+		// save family
 		family.setHeadMemberId(newMember.getId());
 		Family newFamily = familyRepository.save(family);
 		
+		// update member		
 		newMember.setFamilyId(newFamily.getId());
+		
 		memberRepository.save(newMember);
 		
 		eventProducer.sendCreatedEvent(newFamily);
 
-		return newFamily;
+		return mapper.map(newFamily, FamilyResponseDTO.class);
 	}
 
 	@Override
-	public Family updateFamily(UUID familyId, Family updatedFamilyDetails) {
+	public FamilyResponseDTO updateFamily(UUID familyId, FamilyUpdateDTO updatedFamilyDetails) {
 
-		Family family = getFamily(familyId);
-		modelMapper.map(updatedFamilyDetails, family);
+		Family oldFamily = familyRepository.findById(familyId)
+				.orElseThrow(()-> new NotFoundException("error.family.notFound"));
 		
-		if(!memberRepository.existsById(family.getHeadMemberId())){
+		if(!memberRepository.existsById(updatedFamilyDetails.getHeadMemberId())){
 			throw new NotFoundException("error.headMember.notFound");
 		}
 		
-		remoteDataService.verifyUserExist(updatedFamilyDetails.getAshaId());
+		Family updatedFamily = mapper.map(updatedFamilyDetails, Family.class);
 		
-		Family savedFamily = familyRepository.save(family);
+		mapper.map(updatedFamily, oldFamily);
 		
-		eventProducer.sendUpdatedEvent(updatedFamilyDetails, savedFamily);
+		userDataService.verifyUserExist(updatedFamilyDetails.getAshaId());
 		
-		return savedFamily;
+		Family savedFamily = familyRepository.save(oldFamily);
+		
+		eventProducer.sendUpdatedEvent(oldFamily, savedFamily);
+		
+		return mapper.map(savedFamily, FamilyResponseDTO.class);
 	}
 
 	@Override
-	public Family deleteFamily(UUID familyId) {
-		Family family = getFamily(familyId);
+	public FamilyResponseDTO deleteFamily(UUID familyId) {
+		Family family = familyRepository.findById(familyId)
+				.orElseThrow(()-> new NotFoundException("error.family.notFound"));
+		
 		familyRepository.delete(family);
+		memberRepository.deleteByFamilyId(familyId);
+		
 		eventProducer.sendDeletedEvent(family);
-		return family;
+		
+		return mapper.map(family, FamilyResponseDTO.class);
 	}
 
 }

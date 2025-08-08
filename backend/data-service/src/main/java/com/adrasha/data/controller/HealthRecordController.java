@@ -3,8 +3,6 @@ package com.adrasha.data.controller;
 import java.net.URI;
 import java.util.UUID;
 
-import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -21,18 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.adrasha.core.dto.ErrorResponse;
-import com.adrasha.core.dto.ExampleMatcherUtils;
 import com.adrasha.core.dto.ValidationErrorResponse;
-import com.adrasha.core.dto.filter.FamilyDataFilterDTO;
 import com.adrasha.core.dto.filter.HealthRecordFilterDTO;
 import com.adrasha.core.dto.page.HealthRecordPageResponseDTO;
 import com.adrasha.core.dto.response.HealthRecordResponseDTO;
 import com.adrasha.data.health.records.dto.HealthRecordCreateDTO;
 import com.adrasha.data.health.records.dto.HealthRecordUpdateDTO;
-import com.adrasha.data.model.Family;
-import com.adrasha.data.model.HealthRecord;
 import com.adrasha.data.service.HealthRecordService;
-
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -46,97 +39,77 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/data/health/records")
 @SecurityRequirement(name = "BearerAuthentication")
-@Tag(name = "HealthRecord")
+@Tag(name = "HealthRecordDTO")
 @ApiResponses({
-	@ApiResponse(responseCode = "401", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),	
-	@ApiResponse(responseCode = "403", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
-})
+		@ApiResponse(responseCode = "401", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+		@ApiResponse(responseCode = "403", content = @Content(schema = @Schema(implementation = ErrorResponse.class))) })
 @PreAuthorize("hasAnyRole('ASHA','SYSTEM')")
 public class HealthRecordController {
 
 	// Dependencies
-    private HealthRecordService healthService;
-    private ModelMapper mapper;
+	private HealthRecordService healthService;
 
-    // Get All Records
-    @GetMapping
+	// Get All Records
+	@GetMapping
 	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = HealthRecordPageResponseDTO.class)))
 	@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
-    public Page<HealthRecordResponseDTO> getHealthRecordPage(
-            HealthRecordFilterDTO filterDTO,
-            @PageableDefault(page = 0, size = 5, sort = "createdAt") 
-    		Pageable pageable
-    	) {
+	public Page<HealthRecordResponseDTO> getHealthRecordPage(HealthRecordFilterDTO filterDTO,
+			@PageableDefault(page = 0, size = 5, sort = "createdAt") Pageable pageable) {
 
-        HealthRecord exampleRecord = mapper.map(filterDTO, HealthRecord.class);
+		return healthService.getHealthRecordPage(filterDTO, pageable);
+	}
 
-        Example<HealthRecord> example = Example.of(exampleRecord, ExampleMatcherUtils.getDefaultMatcher());
-
-        Page<HealthRecord> healthPage = healthService.getHealthRecordPage(example, pageable);
-
-        return healthPage.map(record -> mapper.map(record, HealthRecordResponseDTO.class));
-    }
-    
-    // Get Count
+	// Get Count
 	@GetMapping("/count")
 	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Long.class)))
 	@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
-	public Long getHealthRecordCount(HealthRecordFilterDTO filterDTO){
-		
-		HealthRecord searchTerms = mapper.map(filterDTO, HealthRecord.class);
-		
-		Example<HealthRecord> exampleHealthRecord = Example.of(searchTerms, ExampleMatcherUtils.getDefaultMatcher());
+	public Long getHealthRecordCount(HealthRecordFilterDTO filterDTO) {
 
-		Long count = healthService.getHealthRecordCount(exampleHealthRecord);
-				
+		Long count = healthService.getHealthRecordCount(filterDTO);
+
 		return count;
 	}
-	
 
-    // Get a Record    
-    @GetMapping("/{id}")
+	// Get a Record
+	@GetMapping("/{id}")
 	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = HealthRecordResponseDTO.class)))
 	@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
-    public HealthRecordResponseDTO getHealthRecord(@PathVariable UUID id) {
-        HealthRecord health = healthService.getHealthRecord(id);
-        return mapper.map(health, HealthRecordResponseDTO.class);
-    }
+	public HealthRecordResponseDTO getHealthRecord(@PathVariable UUID id) {
+		return healthService.getHealthRecord(id);
+	}
 
-    // Create new Record
-    @PostMapping
+	// Create new Record
+	@PostMapping
 	@ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = HealthRecordResponseDTO.class)))
 	@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
 	@ApiResponse(responseCode = "409", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
-    public ResponseEntity<HealthRecordResponseDTO> createHealth(@Valid @RequestBody HealthRecordCreateDTO healthCreateDTO) {
-        HealthRecord health = mapper.map(healthCreateDTO, HealthRecord.class);
-        HealthRecord created = healthService.createHealthRecord(health);
-        HealthRecordResponseDTO dto = mapper.map(created, HealthRecordResponseDTO.class);
+	public ResponseEntity<HealthRecordResponseDTO> createHealth(
+			@Valid @RequestBody HealthRecordCreateDTO healthCreateDTO) {
 
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(dto.getId())
-                .toUri();
+		HealthRecordResponseDTO dto = healthService.createHealthRecord(healthCreateDTO);
 
-        return ResponseEntity.created(location).body(dto);
-    }
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId())
+				.toUri();
 
-    // Update a Record
-    @PutMapping("/{id}")	
-    @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = HealthRecordResponseDTO.class)))
+		return ResponseEntity.created(location).body(dto);
+	}
+
+	// Update a Record
+	@PutMapping("/{id}")
+	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = HealthRecordResponseDTO.class)))
 	@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
-	@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))	
-    public HealthRecordResponseDTO updateHealthRecord(@PathVariable UUID id, @Valid @RequestBody HealthRecordUpdateDTO updatedHealth) {
-        HealthRecord health = mapper.map(updatedHealth, HealthRecord.class);
-        HealthRecord updated = healthService.updateHealthRecord(id, health);
-        return mapper.map(updated, HealthRecordResponseDTO.class);
-    }
+	@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+	public HealthRecordResponseDTO updateHealthRecord(@PathVariable UUID id,
+			@Valid @RequestBody HealthRecordUpdateDTO updatedHealth) {
+		return healthService.updateHealthRecord(id, updatedHealth);
+	}
 
-    // Delete a Record
-    @DeleteMapping("/{id}")
+	// Delete a Record
+	@DeleteMapping("/{id}")
 	@ApiResponse(responseCode = "204", content = @Content())
-	@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))	
-    public ResponseEntity<Void> deleteHealthRecord(@PathVariable UUID id) {
-        healthService.deleteHealthRecord(id);
-        return ResponseEntity.noContent().build();
-    }
+	@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+	public ResponseEntity<Void> deleteHealthRecord(@PathVariable UUID id) {
+		healthService.deleteHealthRecord(id);
+		return ResponseEntity.noContent().build();
+	}
 }

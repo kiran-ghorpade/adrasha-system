@@ -17,10 +17,10 @@ import { PageWrapperComponent, PageHeaderComponent } from '@shared/components';
 })
 export class ReportsPageComponent {
   reportsTypes = [
-    { label: 'Generate Family Report', icon: 'picture_as_pdf', route: 'family' },
-    { label: 'Generate Member Report', icon: 'picture_as_pdf', route: 'family' },
-    { label: 'Generate Health Report', icon: 'picture_as_pdf', route: 'family' },
-    { label: 'Generate NCD Report', icon: 'picture_as_pdf', route: 'family' },
-    { label: 'Generate Pregnancy Report', icon: 'picture_as_pdf', route: 'family' },
+    { label: 'Generate Family Report', icon: 'picture_as_pdf', type: 'family' },
+    { label: 'Generate Member Report', icon: 'picture_as_pdf', type: 'member' },
+    { label: 'Generate Health Report', icon: 'picture_as_pdf', type: 'health' },
+    { label: 'Generate NCD Report', icon: 'picture_as_pdf', type: 'ncd' },
+    { label: 'Generate Pregnancy Report', icon: 'picture_as_pdf', type: 'pregnacy' },
   ];
 }

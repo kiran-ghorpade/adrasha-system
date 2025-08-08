@@ -1,44 +1,51 @@
-import { Component, input, ViewChild } from '@angular/core';
+import { Component, computed, input, ViewChild } from '@angular/core';
 import { ChartConfiguration, ChartDataset, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 
 @Component({
   selector: 'app-line-chart',
+  standalone: true,
   imports: [BaseChartDirective],
   template: `
-    <div class="h-full w-full">
       <canvas
         baseChart
-        class="w-full h-full"
-        [data]="lineChartData"
+        [data]="lineChartData()"
         [type]="lineChartType"
         [options]="lineChartOptions"
       ></canvas>
-    </div>
   `,
 })
 export class LineChartComponent {
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
+  // Input signals
   labels = input<string[]>();
-  datasets = input<ChartDataset[]>();
+  data = input<ChartDataset[]>();
 
-  // chart config
-  lineChartData: ChartConfiguration['data'] = {
-    labels:
-      this.labels() ?? Array.from({ length: 10 }, (_, i) => `Day ${i + 1}`),
-    datasets: this.datasets() ?? [
-      {
-        label: 'Requests Added',
-        data: Array.from(
-          { length: 30 },
-          () => Math.floor(Math.random() * 50) + 5
-        ),
-      },
-    ],
-  };
+  // Computed reactive chart data
+  lineChartData = computed<ChartConfiguration['data']>(() => {
+    const hasData =
+      (this.data()?.length ?? 0) > 0 &&
+      this.data()?.some((d) => (d.data?.length ?? 0) > 0);
+
+    return {
+      labels: hasData ? this.labels() : ['No Data'],
+      datasets: hasData
+        ? this.data() ?? []
+        : [
+            {
+              label: 'No Data',
+              data: [0],
+              borderColor: '#ccc',
+              backgroundColor: '#eee',
+              fill: true,
+            },
+          ],
+    };
+  });
 
   lineChartType: ChartType = 'line';
+
   lineChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     maintainAspectRatio: false,
@@ -48,13 +55,23 @@ export class LineChartComponent {
     },
     plugins: {
       legend: { display: true },
+      tooltip: {
+        callbacks: {
+          label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y}`,
+        },
+      },
     },
     scales: {
-      x: {},
+      x: {
+        ticks: {
+          color: '#6b7280', // optional styling
+        },
+      },
       y: {
         beginAtZero: true,
         ticks: {
           callback: (value) => `${value}`,
+          color: '#6b7280', // optional styling
         },
       },
     },

@@ -66,7 +66,7 @@ type AboutAppType = {
         <ng-container >
             <app-pie-chart
               [labels]="githubLanguagesKeys()"
-              [datasets]="githubLanguagesValues()"
+              [data]="githubLanguagesValues()"
             />
         </ng-container>
         }
@@ -96,7 +96,7 @@ export class AboutComponent implements OnInit {
   githubRepo = signal<any>(null);
   githubLanguages = signal<Record<string, number>>({});
   githubLanguagesKeys = signal<string[]>([]);
-  githubLanguagesValues = signal<ChartDataset[]>([]);
+  githubLanguagesValues = signal<number[]>([]);
 
   ngOnInit() {
     this.github.user$.subscribe((user) => {
@@ -129,12 +129,7 @@ export class AboutComponent implements OnInit {
         )
       );
 
-      this.githubLanguagesValues.set([
-        {
-          data: percentageData,
-          borderWidth: 1,
-        },
-      ]);
+      this.githubLanguagesValues.set(percentageData);
     });
   }
 }

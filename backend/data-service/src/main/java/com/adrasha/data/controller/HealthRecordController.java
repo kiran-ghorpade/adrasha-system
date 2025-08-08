@@ -51,7 +51,7 @@ import lombok.RequiredArgsConstructor;
 public class HealthRecordController {
 
 	// Dependencies
-	private HealthRecordService healthService;
+	private final HealthRecordService healthService;
 
 	// Get All Records
 	@GetMapping

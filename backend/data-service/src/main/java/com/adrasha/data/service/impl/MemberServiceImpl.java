@@ -10,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.adrasha.core.dto.filter.MemberFilterDTO;
-import com.adrasha.core.dto.reports.FamilyReportDTO;
 import com.adrasha.core.dto.reports.MemberReportDTO;
 import com.adrasha.core.dto.response.MemberResponseDTO;
 import com.adrasha.core.exception.AlreadyExistsException;

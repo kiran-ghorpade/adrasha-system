@@ -1,4 +1,4 @@
-package com.adrasha.reports.controller;
+package com.adrasha.analytics.reports.controller;
 
 import java.util.UUID;
 
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.adrasha.analytics.reports.services.ReportService;
 import com.adrasha.core.dto.ErrorResponse;
-import com.adrasha.reports.services.ReportService;
 
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

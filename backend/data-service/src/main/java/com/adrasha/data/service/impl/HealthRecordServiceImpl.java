@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.adrasha.core.dto.filter.HealthRecordFilterDTO;
 import com.adrasha.core.dto.reports.HealthRecordReportDTO;
-import com.adrasha.core.dto.reports.MemberReportDTO;
 import com.adrasha.core.dto.response.HealthRecordResponseDTO;
 import com.adrasha.core.exception.NotFoundException;
 import com.adrasha.core.utils.ExampleMatcherUtils;

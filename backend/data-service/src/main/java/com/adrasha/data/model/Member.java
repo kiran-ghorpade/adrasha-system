@@ -64,7 +64,11 @@ public class Member extends Auditable{
 	private AliveStatus aliveStatus;
 	
 	public Integer getAge() {
-		this.age = Period.between(this.dateOfBirth, LocalDate.now()).getYears();
-		return this.age;
+	    if (this.dateOfBirth == null) {
+	        return null;
+	    }
+	    this.age = Period.between(this.dateOfBirth, LocalDate.now()).getYears();
+	    return this.age;
 	}
+
 }

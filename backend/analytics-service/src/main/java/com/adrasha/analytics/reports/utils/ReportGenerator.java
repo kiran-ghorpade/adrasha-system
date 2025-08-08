@@ -1,4 +1,4 @@
-package com.adrasha.reports.utils;
+package com.adrasha.analytics.reports.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
@@ -51,7 +51,7 @@ public class ReportGenerator implements AutoCloseable{
 	
 	private void addElement(Element element) {
         try {
-            addElement(element);
+        	document.add(element); 
         } catch (Exception e) {
             throw new RuntimeException("Failed to add element to PDF document", e);
         }
@@ -92,7 +92,6 @@ public class ReportGenerator implements AutoCloseable{
 	
 	// TODO : add Header
 	
-	// TODO : add Footer
 	public ReportGenerator addFooter() {
 	    writer.setPageEvent(new PdfPageEventHelper() {
 	        Font footerFont = FontFactory.getFont(FontFactory.HELVETICA_OBLIQUE, 10);

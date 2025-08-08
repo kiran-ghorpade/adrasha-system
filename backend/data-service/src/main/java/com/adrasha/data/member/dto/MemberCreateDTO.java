@@ -32,6 +32,7 @@ public class MemberCreateDTO {
 	private Gender gender;
 
 	@Past
+	@NotNull
 	private LocalDate dateOfBirth;
 
 	private String birthPlace;

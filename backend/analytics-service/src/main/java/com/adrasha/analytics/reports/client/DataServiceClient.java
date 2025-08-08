@@ -1,4 +1,4 @@
-package com.adrasha.reports.client;
+package com.adrasha.analytics.reports.client;
 
 import java.util.List;
 

@@ -1,10 +1,10 @@
-package com.adrasha.reports.services;
+package com.adrasha.analytics.reports.services;
 
 import org.springframework.stereotype.Service;
 
-import com.adrasha.reports.dto.ReportData;
-import com.adrasha.reports.utils.ReportGenerator;
-import com.adrasha.reports.utils.ReportTableGenerator;
+import com.adrasha.analytics.reports.dto.ReportData;
+import com.adrasha.analytics.reports.utils.ReportGenerator;
+import com.adrasha.analytics.reports.utils.ReportTableGenerator;
 
 @Service
 public class ReportFormattingService {

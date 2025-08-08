@@ -1,4 +1,4 @@
-package com.adrasha.reports.dto;
+package com.adrasha.analytics.reports.dto;
 
 import java.util.List;
 

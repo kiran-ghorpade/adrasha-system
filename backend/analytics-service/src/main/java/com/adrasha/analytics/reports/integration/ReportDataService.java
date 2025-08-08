@@ -1,4 +1,4 @@
-package com.adrasha.reports.integration;
+package com.adrasha.analytics.reports.integration;
 
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -11,14 +11,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.adrasha.analytics.reports.client.DataServiceClient;
+import com.adrasha.analytics.reports.dto.ReportData;
 import com.adrasha.core.dto.filter.FamilyFilterDTO;
 import com.adrasha.core.dto.filter.HealthRecordFilterDTO;
 import com.adrasha.core.dto.filter.MemberFilterDTO;
 import com.adrasha.core.dto.reports.FamilyReportDTO;
 import com.adrasha.core.dto.reports.HealthRecordReportDTO;
 import com.adrasha.core.dto.reports.MemberReportDTO;
-import com.adrasha.reports.client.DataServiceClient;
-import com.adrasha.reports.dto.ReportData;
 
 @Service
 public class ReportDataService {

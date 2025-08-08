@@ -1,12 +1,12 @@
-package com.adrasha.reports.services;
+package com.adrasha.analytics.reports.services;
 
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.adrasha.reports.dto.ReportData;
-import com.adrasha.reports.integration.ReportDataService;
+import com.adrasha.analytics.reports.dto.ReportData;
+import com.adrasha.analytics.reports.integration.ReportDataService;
 
 @Service
 public class ReportService {
@@ -19,7 +19,7 @@ public class ReportService {
 
 	public byte[] generateFamilyReport(UUID ashaId) {
 		ReportData reportData = dataService.fetchFamilyData(ashaId);
-		return formattingService.formatReport(reportData, "Member Report");
+		return formattingService.formatReport(reportData, "Family Report");
 	}
 
 	public byte[] generateMemberReport(UUID ashaId) {

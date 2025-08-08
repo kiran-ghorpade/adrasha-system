@@ -1,4 +1,4 @@
-package com.adrasha.reports.utils;
+package com.adrasha.analytics.reports.utils;
 
 import java.util.List;
 

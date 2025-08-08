@@ -18,7 +18,7 @@ public interface FamilyDataService {
 
 	Page<FamilyResponseDTO> getFamilyPage(FamilyFilterDTO filterDTO, Pageable pageable);
 	
-	List<FamilyReportDTO> getFamilyList(FamilyFilterDTO example);
+	List<FamilyReportDTO> getFamilyList(FamilyFilterDTO filterDTO);
 	
 	Long getFamilyCount(FamilyFilterDTO example);
 		
@@ -30,5 +30,4 @@ public interface FamilyDataService {
 	FamilyResponseDTO updateFamily(UUID familyId, FamilyUpdateDTO updateDTO) throws NotFoundException;
 
 	FamilyResponseDTO deleteFamily(UUID familyId) throws NotFoundException;
-
 }

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.adrasha.core.dto.filter.HealthRecordFilterDTO;
+import com.adrasha.core.dto.reports.HealthRecordReportDTO;
 import com.adrasha.core.dto.response.HealthRecordResponseDTO;
 import com.adrasha.core.exception.AlreadyExistsException;
 import com.adrasha.core.exception.NotFoundException;
@@ -17,7 +18,7 @@ public interface HealthRecordService {
 
     Page<HealthRecordResponseDTO> getHealthRecordPage(HealthRecordFilterDTO filterDTO, Pageable pageable);
         
-	List<HealthRecordResponseDTO> getHealthRecordList(HealthRecordFilterDTO filterDTO);
+	List<HealthRecordReportDTO> getHealthRecordList(HealthRecordFilterDTO filterDTO);
 	
 	Long getHealthRecordCount(HealthRecordFilterDTO filterDTO);
 	

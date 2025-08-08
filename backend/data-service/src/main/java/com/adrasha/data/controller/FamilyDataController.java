@@ -1,6 +1,7 @@
 package com.adrasha.data.controller;
 
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
@@ -23,11 +24,13 @@ import com.adrasha.core.dto.ErrorResponse;
 import com.adrasha.core.dto.ValidationErrorResponse;
 import com.adrasha.core.dto.filter.FamilyFilterDTO;
 import com.adrasha.core.dto.page.FamilyPageResponseDTO;
+import com.adrasha.core.dto.reports.FamilyReportDTO;
 import com.adrasha.core.dto.response.FamilyResponseDTO;
 import com.adrasha.data.family.dto.FamilyRegistrationDTO;
 import com.adrasha.data.family.dto.FamilyUpdateDTO;
 import com.adrasha.data.service.FamilyDataService;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -59,6 +62,14 @@ public class FamilyDataController {
 			@PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
 
 		return familyService.getFamilyPage(filterDTO, pageable);
+	}
+	
+	// Get All Families Data For Report
+	@GetMapping
+	@Hidden
+	public List<FamilyReportDTO> getFamilyList(FamilyFilterDTO filterDTO) {
+
+		return familyService.getFamilyList(filterDTO);
 	}
 
 	// Get All Count

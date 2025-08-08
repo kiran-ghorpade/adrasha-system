@@ -27,4 +27,9 @@ public class Name {
 	@Size(min = 2, max=100)
 	@Convert(converter = UpperCaseConverter.class)
 	private String lastname;
+	
+	
+	public String getFullName() {
+		return firstname+" "+middlename+" "+lastname;
+	}
 }

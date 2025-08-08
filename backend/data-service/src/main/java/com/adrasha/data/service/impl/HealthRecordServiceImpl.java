@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.adrasha.core.dto.filter.HealthRecordFilterDTO;
+import com.adrasha.core.dto.reports.HealthRecordReportDTO;
+import com.adrasha.core.dto.reports.MemberReportDTO;
 import com.adrasha.core.dto.response.HealthRecordResponseDTO;
 import com.adrasha.core.exception.NotFoundException;
 import com.adrasha.core.utils.ExampleMatcherUtils;
@@ -45,15 +47,21 @@ public class HealthRecordServiceImpl implements HealthRecordService {
 	}
 
 	@Override
-	public List<HealthRecordResponseDTO> getHealthRecordList(HealthRecordFilterDTO filterDTO) {
+	public List<HealthRecordReportDTO> getHealthRecordList(HealthRecordFilterDTO filterDTO) {
 		HealthRecord exampleRecord = mapper.map(filterDTO, HealthRecord.class);
 
 		Example<HealthRecord> example = Example.of(exampleRecord, ExampleMatcherUtils.getDefaultMatcher());
 
 		List<HealthRecord> list = healthRecordRepository.findAll(example);
 		
-		return list.stream().map(record-> mapper.map(record, HealthRecordResponseDTO.class)).toList();
-	}
+		return list.stream()
+				.map(record ->{
+					HealthRecordReportDTO out = mapper.map(record, HealthRecordReportDTO.class);
+					out.setMemberName(memberRepository.findById(record.getMemberId())
+									.map(member -> member.getName().getFullName()).orElse("Name Not Found"));
+					return out;
+				})
+				.toList();	}
 
 	@Override
 	public Long getHealthRecordCount(HealthRecordFilterDTO filterDTO) {

@@ -6,9 +6,11 @@ import java.util.UUID;
 import com.adrasha.core.model.AliveStatus;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 @AllArgsConstructor
 public class MemberReportDTO {
     private UUID id;

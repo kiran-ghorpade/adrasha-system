@@ -1,6 +1,7 @@
 package com.adrasha.data.controller;
 
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
@@ -23,11 +24,13 @@ import com.adrasha.core.dto.ErrorResponse;
 import com.adrasha.core.dto.ValidationErrorResponse;
 import com.adrasha.core.dto.filter.MemberFilterDTO;
 import com.adrasha.core.dto.page.MemberDataPageResponseDTO;
+import com.adrasha.core.dto.reports.MemberReportDTO;
 import com.adrasha.core.dto.response.MemberResponseDTO;
 import com.adrasha.data.member.dto.MemberCreateDTO;
 import com.adrasha.data.member.dto.MemberUpdateDTO;
 import com.adrasha.data.service.MemberDataService;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -62,6 +65,15 @@ public class MemberDataController {
 			){
 		
 		return memberService.getMemberPage(filterDTO, pageable);
+	}
+	
+	
+	// Get All Families Data For Report
+	@GetMapping
+	@Hidden
+	public List<MemberReportDTO> getFamilyList(MemberFilterDTO filterDTO) {
+
+		return memberService.getMemberList(filterDTO);
 	}
 	
 	// Get Count

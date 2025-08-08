@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.adrasha.core.dto.filter.MemberFilterDTO;
+import com.adrasha.core.dto.reports.MemberReportDTO;
 import com.adrasha.core.dto.response.MemberResponseDTO;
 import com.adrasha.core.exception.AlreadyExistsException;
 import com.adrasha.core.exception.NotFoundException;
@@ -18,7 +19,7 @@ public interface MemberDataService {
 
 	Page<MemberResponseDTO> getMemberPage(MemberFilterDTO filterDTO, Pageable pageable);
 
-	List<MemberResponseDTO> getMemberList(MemberFilterDTO filterDTO);
+	List<MemberReportDTO> getMemberList(MemberFilterDTO filterDTO);
 
 	Long getMemberCount(MemberFilterDTO filterDTO);
 	

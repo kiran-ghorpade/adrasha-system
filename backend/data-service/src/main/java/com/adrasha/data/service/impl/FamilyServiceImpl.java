@@ -58,7 +58,15 @@ public class FamilyServiceImpl implements FamilyDataService {
 
 		List<Family> list = familyRepository.findAll(example);
 		
-		return list.stream().map(family-> mapper.map(family, FamilyReportDTO.class)).toList();
+		
+		return list.stream().map(family-> 
+					FamilyReportDTO.builder()
+					.houseId(family.getHouseId())
+							.headMemberName(memberRepository.findById(family.getHeadMemberId())
+									.map(member -> member.getName().getFullName()).orElse("Name Not Found"))
+					.povertyStatus(family.getPovertyStatus())
+					.build()
+				).toList();
 	}
 	
 	@Override

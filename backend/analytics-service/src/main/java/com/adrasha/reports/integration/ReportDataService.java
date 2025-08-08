@@ -15,7 +15,7 @@ import com.adrasha.core.dto.filter.FamilyFilterDTO;
 import com.adrasha.core.dto.filter.HealthRecordFilterDTO;
 import com.adrasha.core.dto.filter.MemberFilterDTO;
 import com.adrasha.core.dto.reports.FamilyReportDTO;
-import com.adrasha.core.dto.reports.HealthReportDTO;
+import com.adrasha.core.dto.reports.HealthRecordReportDTO;
 import com.adrasha.core.dto.reports.MemberReportDTO;
 import com.adrasha.reports.client.DataServiceClient;
 import com.adrasha.reports.dto.ReportData;
@@ -113,7 +113,7 @@ public class ReportDataService {
 	// health
 	public ReportData fetchHealthData(UUID ashaId) {
 	    
-	    List<HealthReportDTO> reportData = Optional.ofNullable(
+	    List<HealthRecordReportDTO> reportData = Optional.ofNullable(
 	        dataClient.getAll(HealthRecordFilterDTO.builder()
 	            .ashaId(ashaId)
 	            .build())
@@ -141,7 +141,7 @@ public class ReportDataService {
 	        .build();
 	}
 
-	private List<Object> mapHealthToRow(HealthReportDTO health, int serialNumber) {
+	private List<Object> mapHealthToRow(HealthRecordReportDTO health, int serialNumber) {
 	    return List.of(
 	        serialNumber,
 	        health.getMemberName(),

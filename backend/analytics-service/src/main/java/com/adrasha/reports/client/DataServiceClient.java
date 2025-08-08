@@ -10,7 +10,7 @@ import com.adrasha.core.dto.filter.FamilyFilterDTO;
 import com.adrasha.core.dto.filter.HealthRecordFilterDTO;
 import com.adrasha.core.dto.filter.MemberFilterDTO;
 import com.adrasha.core.dto.reports.FamilyReportDTO;
-import com.adrasha.core.dto.reports.HealthReportDTO;
+import com.adrasha.core.dto.reports.HealthRecordReportDTO;
 import com.adrasha.core.dto.reports.MemberReportDTO;
 
 @FeignClient(name = "data-service" , contextId = "DataServiceClient")
@@ -23,6 +23,6 @@ public interface DataServiceClient {
 		List<MemberReportDTO> getAll(@SpringQueryMap MemberFilterDTO filterDTO);
 
 		@GetMapping("/data/health/records/list")
-		List<HealthReportDTO> getAll(@SpringQueryMap HealthRecordFilterDTO filterDTO);
+		List<HealthRecordReportDTO> getAll(@SpringQueryMap HealthRecordFilterDTO filterDTO);
 
 }

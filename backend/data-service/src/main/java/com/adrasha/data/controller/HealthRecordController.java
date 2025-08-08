@@ -21,11 +21,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.adrasha.core.dto.ErrorResponse;
 import com.adrasha.core.dto.ValidationErrorResponse;
-import com.adrasha.core.dto.filter.FamilyFilterDTO;
 import com.adrasha.core.dto.filter.HealthRecordFilterDTO;
 import com.adrasha.core.dto.page.HealthRecordPageResponseDTO;
-import com.adrasha.core.dto.reports.FamilyReportDTO;
-import com.adrasha.core.dto.reports.HealthReportDTO;
+import com.adrasha.core.dto.reports.HealthRecordReportDTO;
 import com.adrasha.core.dto.response.HealthRecordResponseDTO;
 import com.adrasha.data.health.records.dto.HealthRecordCreateDTO;
 import com.adrasha.data.health.records.dto.HealthRecordUpdateDTO;
@@ -66,10 +64,10 @@ public class HealthRecordController {
 	}
 	
 	
-	// Get All Families Data For Report
-	@GetMapping
+	// Get All Records Data For Report
+	@GetMapping("/list")
 	@Hidden
-	public List<HealthReportDTO> getHealthRecordList(HealthRecordFilterDTO filterDTO) {
+	public List<HealthRecordReportDTO> getHealthRecordList(HealthRecordFilterDTO filterDTO) {
 
 		return healthService.getHealthRecordList(filterDTO);
 	}

@@ -65,7 +65,7 @@ public class FamilyDataController {
 	}
 	
 	// Get All Families Data For Report
-	@GetMapping
+	@GetMapping("/list")
 	@Hidden
 	public List<FamilyReportDTO> getFamilyList(FamilyFilterDTO filterDTO) {
 

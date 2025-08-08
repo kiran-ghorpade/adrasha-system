@@ -68,10 +68,10 @@ public class MemberDataController {
 	}
 	
 	
-	// Get All Families Data For Report
-	@GetMapping
+	// Get All Members Data For Report
+	@GetMapping("/list")
 	@Hidden
-	public List<MemberReportDTO> getFamilyList(MemberFilterDTO filterDTO) {
+	public List<MemberReportDTO> getMemberList(MemberFilterDTO filterDTO) {
 
 		return memberService.getMemberList(filterDTO);
 	}

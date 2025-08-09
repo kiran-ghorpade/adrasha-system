@@ -4,8 +4,8 @@
  * ADRASHA DATA-SERVICE API Docs
  * OpenAPI spec version: 1.0.0
  */
-import type { MemberDataFilterDTO } from './memberDataFilterDTO';
+import type { MemberFilterDTO } from './memberFilterDTO';
 
 export type GetMemberCountParams = {
-filterDTO: MemberDataFilterDTO;
+filterDTO: MemberFilterDTO;
 };

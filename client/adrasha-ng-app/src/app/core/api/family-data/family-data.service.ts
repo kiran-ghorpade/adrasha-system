@@ -24,9 +24,9 @@ import {
 } from 'rxjs';
 
 import type {
-  FamilyDataResponseDTO,
   FamilyPageResponseDTO,
   FamilyRegistrationDTO,
+  FamilyResponseDTO,
   FamilyUpdateDTO,
   GetFamilyCountParams,
   GetFamilyPageParams
@@ -54,33 +54,33 @@ type HttpClientOptions = {
 export class FamilyDataService {
   constructor(
     private http: HttpClient,
-  ) {} getFamily<TData = FamilyDataResponseDTO>(
+  ) {} getFamily<TData = FamilyResponseDTO>(
     id: string, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-    getFamily<TData = FamilyDataResponseDTO>(
+    getFamily<TData = FamilyResponseDTO>(
     id: string, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-    getFamily<TData = FamilyDataResponseDTO>(
+    getFamily<TData = FamilyResponseDTO>(
     id: string, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;getFamily<TData = FamilyDataResponseDTO>(
+  ): Observable<HttpEvent<TData>>;getFamily<TData = FamilyResponseDTO>(
     id: string, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.get<TData>(
       `http://localhost:8080/data/families/${id}`,options
     );
   }
- updateFamily<TData = FamilyDataResponseDTO>(
+ updateFamily<TData = FamilyResponseDTO>(
     id: string,
     familyUpdateDTO: FamilyUpdateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-    updateFamily<TData = FamilyDataResponseDTO>(
+    updateFamily<TData = FamilyResponseDTO>(
     id: string,
     familyUpdateDTO: FamilyUpdateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-    updateFamily<TData = FamilyDataResponseDTO>(
+    updateFamily<TData = FamilyResponseDTO>(
     id: string,
     familyUpdateDTO: FamilyUpdateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;updateFamily<TData = FamilyDataResponseDTO>(
+  ): Observable<HttpEvent<TData>>;updateFamily<TData = FamilyResponseDTO>(
     id: string,
     familyUpdateDTO: FamilyUpdateDTO, options?: HttpClientOptions
   ): Observable<TData>  {
@@ -121,15 +121,15 @@ export class FamilyDataService {
         params: {...params.filterDTO, ...params.pageable, ...options?.params},}
     );
   }
- createFamily<TData = FamilyDataResponseDTO>(
+ createFamily<TData = FamilyResponseDTO>(
     familyRegistrationDTO: FamilyRegistrationDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-    createFamily<TData = FamilyDataResponseDTO>(
+    createFamily<TData = FamilyResponseDTO>(
     familyRegistrationDTO: FamilyRegistrationDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-    createFamily<TData = FamilyDataResponseDTO>(
+    createFamily<TData = FamilyResponseDTO>(
     familyRegistrationDTO: FamilyRegistrationDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;createFamily<TData = FamilyDataResponseDTO>(
+  ): Observable<HttpEvent<TData>>;createFamily<TData = FamilyResponseDTO>(
     familyRegistrationDTO: FamilyRegistrationDTO, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.post<TData>(
@@ -156,9 +156,9 @@ export class FamilyDataService {
   }
 };
 
-export type GetFamilyClientResult = NonNullable<FamilyDataResponseDTO>
-export type UpdateFamilyClientResult = NonNullable<FamilyDataResponseDTO>
+export type GetFamilyClientResult = NonNullable<FamilyResponseDTO>
+export type UpdateFamilyClientResult = NonNullable<FamilyResponseDTO>
 export type DeleteFamilyClientResult = NonNullable<void>
 export type GetFamilyPageClientResult = NonNullable<FamilyPageResponseDTO>
-export type CreateFamilyClientResult = NonNullable<FamilyDataResponseDTO>
+export type CreateFamilyClientResult = NonNullable<FamilyResponseDTO>
 export type GetFamilyCountClientResult = NonNullable<number>

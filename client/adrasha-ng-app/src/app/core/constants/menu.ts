@@ -29,7 +29,7 @@ const asha: Menu[] = [
   {
     label: 'Analytics',
     icon: 'show_chart',
-    route: '/anaytics',
+    route: '/analytics',
   },
   {
     label: 'Reports',

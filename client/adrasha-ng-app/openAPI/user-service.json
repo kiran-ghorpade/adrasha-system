@@ -1046,6 +1046,9 @@
             "type": "string",
             "maxLength": 100,
             "minLength": 2
+          },
+          "fullName": {
+            "type": "string"
           }
         },
         "required": [
@@ -1386,6 +1389,9 @@
           "last": {
             "type": "boolean"
           },
+          "first": {
+            "type": "boolean"
+          },
           "size": {
             "type": "integer",
             "format": "int32"
@@ -1396,9 +1402,6 @@
           },
           "sort": {
             "$ref": "#/components/schemas/SortObject"
-          },
-          "first": {
-            "type": "boolean"
           },
           "numberOfElements": {
             "type": "integer",
@@ -1462,6 +1465,9 @@
           "last": {
             "type": "boolean"
           },
+          "first": {
+            "type": "boolean"
+          },
           "size": {
             "type": "integer",
             "format": "int32"
@@ -1472,9 +1478,6 @@
           },
           "sort": {
             "$ref": "#/components/schemas/SortObject"
-          },
-          "first": {
-            "type": "boolean"
           },
           "numberOfElements": {
             "type": "integer",

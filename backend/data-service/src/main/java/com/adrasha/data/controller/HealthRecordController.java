@@ -43,7 +43,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/data/health/records")
 @SecurityRequirement(name = "BearerAuthentication")
-@Tag(name = "HealthRecordDTO")
+@Tag(name = "HealthRecords")
 @ApiResponses({
 		@ApiResponse(responseCode = "401", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
 		@ApiResponse(responseCode = "403", content = @Content(schema = @Schema(implementation = ErrorResponse.class))) })

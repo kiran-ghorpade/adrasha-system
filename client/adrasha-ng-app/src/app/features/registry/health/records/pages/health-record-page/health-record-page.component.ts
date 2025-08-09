@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { HealthRecordService } from '@core/api';
+import { HealthRecordsService } from '@core/api';
 import { AuthService } from '@core/services';
 import {
   PageHeaderComponent,
@@ -39,7 +39,7 @@ export class HealthRecordPageComponent {
   // --- Services ---
   private readonly route = inject(ActivatedRoute);
   private readonly authService = inject(AuthService);
-  private readonly healthRecordService = inject(HealthRecordService);
+  private readonly healthRecordService = inject(HealthRecordsService);
 
   // --- Route Param (memberId) ---
   readonly memberId = this.route.snapshot.queryParamMap.get('memberId') ?? '';

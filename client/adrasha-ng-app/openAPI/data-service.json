@@ -38,7 +38,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/MemberDataResponseDTO"
+                  "$ref": "#/components/schemas/MemberResponseDTO"
                 }
               }
             }
@@ -112,7 +112,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/MemberDataResponseDTO"
+                  "$ref": "#/components/schemas/MemberResponseDTO"
                 }
               }
             }
@@ -225,7 +225,7 @@
     "/data/health/records/{id}": {
       "get": {
         "tags": [
-          "HealthRecord"
+          "HealthRecords"
         ],
         "operationId": "getHealthRecord",
         "parameters": [
@@ -289,7 +289,7 @@
       },
       "put": {
         "tags": [
-          "HealthRecord"
+          "HealthRecords"
         ],
         "operationId": "updateHealthRecord",
         "parameters": [
@@ -373,7 +373,7 @@
       },
       "delete": {
         "tags": [
-          "HealthRecord"
+          "HealthRecords"
         ],
         "operationId": "deleteHealthRecord",
         "parameters": [
@@ -452,7 +452,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/FamilyDataResponseDTO"
+                  "$ref": "#/components/schemas/FamilyResponseDTO"
                 }
               }
             }
@@ -526,7 +526,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/FamilyDataResponseDTO"
+                  "$ref": "#/components/schemas/FamilyResponseDTO"
                 }
               }
             }
@@ -648,7 +648,7 @@
             "in": "query",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/MemberDataFilterDTO"
+              "$ref": "#/components/schemas/MemberFilterDTO"
             }
           },
           {
@@ -729,7 +729,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/MemberDataResponseDTO"
+                  "$ref": "#/components/schemas/MemberResponseDTO"
                 }
               }
             }
@@ -785,7 +785,7 @@
     "/data/health/records": {
       "get": {
         "tags": [
-          "HealthRecord"
+          "HealthRecords"
         ],
         "operationId": "getHealthRecordPage",
         "parameters": [
@@ -856,7 +856,7 @@
       },
       "post": {
         "tags": [
-          "HealthRecord"
+          "HealthRecords"
         ],
         "operationId": "createHealth",
         "requestBody": {
@@ -940,7 +940,7 @@
             "in": "query",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/FamilyDataFilterDTO"
+              "$ref": "#/components/schemas/FamilyFilterDTO"
             }
           },
           {
@@ -1021,7 +1021,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/FamilyDataResponseDTO"
+                  "$ref": "#/components/schemas/FamilyResponseDTO"
                 }
               }
             }
@@ -1086,7 +1086,7 @@
             "in": "query",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/MemberDataFilterDTO"
+              "$ref": "#/components/schemas/MemberFilterDTO"
             }
           }
         ],
@@ -1143,7 +1143,7 @@
     "/data/health/records/count": {
       "get": {
         "tags": [
-          "HealthRecord"
+          "HealthRecords"
         ],
         "operationId": "getHealthRecordCount",
         "parameters": [
@@ -1218,7 +1218,7 @@
             "in": "query",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/FamilyDataFilterDTO"
+              "$ref": "#/components/schemas/FamilyFilterDTO"
             }
           }
         ],
@@ -1344,6 +1344,9 @@
             "type": "string",
             "maxLength": 100,
             "minLength": 2
+          },
+          "fullName": {
+            "type": "string"
           }
         },
         "required": [
@@ -1351,7 +1354,7 @@
           "lastname"
         ]
       },
-      "MemberDataResponseDTO": {
+      "MemberResponseDTO": {
         "type": "object",
         "properties": {
           "id": {
@@ -1586,7 +1589,7 @@
           "headMemberId"
         ]
       },
-      "FamilyDataResponseDTO": {
+      "FamilyResponseDTO": {
         "type": "object",
         "properties": {
           "id": {
@@ -1667,6 +1670,7 @@
         "required": [
           "adharNumber",
           "ashaId",
+          "dateOfBirth",
           "familyId",
           "gender"
         ]
@@ -1785,7 +1789,7 @@
           "gender"
         ]
       },
-      "MemberDataFilterDTO": {
+      "MemberFilterDTO": {
         "type": "object",
         "properties": {
           "familyId": {
@@ -1816,7 +1820,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "alive": {
+          "aliveStatus": {
             "type": "string",
             "enum": [
               "ALIVE",
@@ -1853,7 +1857,7 @@
           "content": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/MemberDataResponseDTO"
+              "$ref": "#/components/schemas/MemberResponseDTO"
             }
           },
           "pageable": {
@@ -1870,6 +1874,9 @@
           "last": {
             "type": "boolean"
           },
+          "first": {
+            "type": "boolean"
+          },
           "size": {
             "type": "integer",
             "format": "int32"
@@ -1880,9 +1887,6 @@
           },
           "sort": {
             "$ref": "#/components/schemas/SortObject"
-          },
-          "first": {
-            "type": "boolean"
           },
           "numberOfElements": {
             "type": "integer",
@@ -1988,6 +1992,9 @@
           "last": {
             "type": "boolean"
           },
+          "first": {
+            "type": "boolean"
+          },
           "size": {
             "type": "integer",
             "format": "int32"
@@ -1999,9 +2006,6 @@
           "sort": {
             "$ref": "#/components/schemas/SortObject"
           },
-          "first": {
-            "type": "boolean"
-          },
           "numberOfElements": {
             "type": "integer",
             "format": "int32"
@@ -2011,7 +2015,7 @@
           }
         }
       },
-      "FamilyDataFilterDTO": {
+      "FamilyFilterDTO": {
         "type": "object",
         "properties": {
           "ashaId": {
@@ -2037,7 +2041,7 @@
           "content": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/FamilyDataResponseDTO"
+              "$ref": "#/components/schemas/FamilyResponseDTO"
             }
           },
           "pageable": {
@@ -2054,6 +2058,9 @@
           "last": {
             "type": "boolean"
           },
+          "first": {
+            "type": "boolean"
+          },
           "size": {
             "type": "integer",
             "format": "int32"
@@ -2064,9 +2071,6 @@
           },
           "sort": {
             "$ref": "#/components/schemas/SortObject"
-          },
-          "first": {
-            "type": "boolean"
           },
           "numberOfElements": {
             "type": "integer",

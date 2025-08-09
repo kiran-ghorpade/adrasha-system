@@ -6,4 +6,4 @@
  */
 import type { RoleRequestStatusCount } from './roleRequestStatusCount';
 
-export type GetRequestTrends200 = {[key: string]: RoleRequestStatusCount[]};
+export type GetRoleTrends200 = {[key: string]: RoleRequestStatusCount[]};

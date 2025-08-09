@@ -1,7 +1,7 @@
 import { Component, computed, inject } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
-import { HealthRecordService } from '@core/api';
+import { HealthRecordsService } from '@core/api';
 import { AuthService } from '@core/services';
 import { TranslatePipe } from '@ngx-translate/core';
 import { PageHeaderComponent } from '@shared/components';
@@ -36,7 +36,7 @@ export class HealthRecordFormPageComponent {
   // depedencies
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly authService = inject(AuthService);
-  private readonly healthRecordService = inject(HealthRecordService);
+  private readonly healthRecordService = inject(HealthRecordsService);
 
   // states
   userId = toSignal(

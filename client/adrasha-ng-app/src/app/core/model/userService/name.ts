@@ -21,4 +21,5 @@ export interface Name {
    * @maxLength 100
    */
   lastname: string;
+  fullName?: string;
 }

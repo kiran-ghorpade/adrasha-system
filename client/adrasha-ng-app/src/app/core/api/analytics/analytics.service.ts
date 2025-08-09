@@ -84,7 +84,7 @@ export class AnalyticsService {
     params: GetRequestTrendsParams, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.get<TData>(
-      `http://localhost:8080/analytics/trends/requests`,{
+      `http://localhost:8080/analytics/trends/request`,{
     ...options,
         params: {...params.analyticsFilterDTO, ...options?.params},}
     );

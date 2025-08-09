@@ -28,7 +28,7 @@ import type {
   GetMemberPageParams,
   MemberCreateDTO,
   MemberDataPageResponseDTO,
-  MemberDataResponseDTO,
+  MemberResponseDTO,
   MemberUpdateDTO
 } from '../../model/dataService';
 
@@ -54,33 +54,33 @@ type HttpClientOptions = {
 export class MemberDataService {
   constructor(
     private http: HttpClient,
-  ) {} getMember<TData = MemberDataResponseDTO>(
+  ) {} getMember<TData = MemberResponseDTO>(
     id: string, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-    getMember<TData = MemberDataResponseDTO>(
+    getMember<TData = MemberResponseDTO>(
     id: string, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-    getMember<TData = MemberDataResponseDTO>(
+    getMember<TData = MemberResponseDTO>(
     id: string, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;getMember<TData = MemberDataResponseDTO>(
+  ): Observable<HttpEvent<TData>>;getMember<TData = MemberResponseDTO>(
     id: string, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.get<TData>(
       `http://localhost:8080/data/members/${id}`,options
     );
   }
- udpateMember<TData = MemberDataResponseDTO>(
+ udpateMember<TData = MemberResponseDTO>(
     id: string,
     memberUpdateDTO: MemberUpdateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-    udpateMember<TData = MemberDataResponseDTO>(
+    udpateMember<TData = MemberResponseDTO>(
     id: string,
     memberUpdateDTO: MemberUpdateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-    udpateMember<TData = MemberDataResponseDTO>(
+    udpateMember<TData = MemberResponseDTO>(
     id: string,
     memberUpdateDTO: MemberUpdateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;udpateMember<TData = MemberDataResponseDTO>(
+  ): Observable<HttpEvent<TData>>;udpateMember<TData = MemberResponseDTO>(
     id: string,
     memberUpdateDTO: MemberUpdateDTO, options?: HttpClientOptions
   ): Observable<TData>  {
@@ -121,15 +121,15 @@ export class MemberDataService {
         params: {...params.filterDTO, ...params.pageable, ...options?.params},}
     );
   }
- createMember<TData = MemberDataResponseDTO>(
+ createMember<TData = MemberResponseDTO>(
     memberCreateDTO: MemberCreateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
   ): Observable<TData>;
-    createMember<TData = MemberDataResponseDTO>(
+    createMember<TData = MemberResponseDTO>(
     memberCreateDTO: MemberCreateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
   ): Observable<AngularHttpResponse<TData>>;
-    createMember<TData = MemberDataResponseDTO>(
+    createMember<TData = MemberResponseDTO>(
     memberCreateDTO: MemberCreateDTO, options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
-  ): Observable<HttpEvent<TData>>;createMember<TData = MemberDataResponseDTO>(
+  ): Observable<HttpEvent<TData>>;createMember<TData = MemberResponseDTO>(
     memberCreateDTO: MemberCreateDTO, options?: HttpClientOptions
   ): Observable<TData>  {
     return this.http.post<TData>(
@@ -156,9 +156,9 @@ export class MemberDataService {
   }
 };
 
-export type GetMemberClientResult = NonNullable<MemberDataResponseDTO>
-export type UdpateMemberClientResult = NonNullable<MemberDataResponseDTO>
+export type GetMemberClientResult = NonNullable<MemberResponseDTO>
+export type UdpateMemberClientResult = NonNullable<MemberResponseDTO>
 export type DeleteMemberClientResult = NonNullable<void>
 export type GetMemberPageClientResult = NonNullable<MemberDataPageResponseDTO>
-export type CreateMemberClientResult = NonNullable<MemberDataResponseDTO>
+export type CreateMemberClientResult = NonNullable<MemberResponseDTO>
 export type GetMemberCountClientResult = NonNullable<number>

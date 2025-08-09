@@ -4,10 +4,10 @@
  * ADRASHA USER-SERVICE API Docs
  * OpenAPI spec version: 1.0.0
  */
-import { PageInfo } from '../PageInfo';
 import type { RoleRequestResponseDTO } from './roleRequestResponseDTO';
+import { PageInfo } from '../PageInfo';
 
 export interface RoleRequestPageResponseDTO {
   content?: RoleRequestResponseDTO[];
-  page?:PageInfo;
+  page : PageInfo;
 }

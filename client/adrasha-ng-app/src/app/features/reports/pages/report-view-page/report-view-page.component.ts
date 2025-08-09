@@ -1,46 +1,76 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { ReportsService } from '@core/api';
+import { AuthService } from '@core/services';
 import { PageHeaderComponent, PageWrapperComponent } from '@shared/components';
-import { map } from 'rxjs';
+import { map, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-report-view-page',
+  standalone: true,
   imports: [
-    PageWrapperComponent,
-    PageHeaderComponent,
     MatButtonModule,
     MatIconModule,
+    PageWrapperComponent,
+    PageHeaderComponent,
   ],
   templateUrl: './report-view-page.component.html',
 })
 export class ReportViewPageComponent {
-  private readonly activatedRoute = inject(ActivatedRoute);
-  // private readonly reportService = inject(ReportService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly authService = inject(AuthService);
+  private readonly reportService = inject(ReportsService);
 
-  // base64PDF = toSignal(this.reportService.)
+  type = toSignal(this.route.paramMap.pipe(map((p) => p.get('type'))));
+  pdfUrl = signal<string | null>(null);
 
-  type = toSignal(this.activatedRoute.paramMap.pipe(map((p) => p.get('type'))));
+  constructor() {
+    effect(() => {
+      const type = this.type();
+      if (!type) {
+        this.pdfUrl.set(null);
+        return;
+      }
 
-  base64PDF = signal(
-    `JVBERi0xLjUKJeLjz9MKMSAwIG9iago8PC9UeXBlIC9DYXRhbG9nL1BhZ2VzIDIgMCBSCj4+CmVuZG9iagoKMiAwIG9iago8PC9UeXBlIC9QYWdlcy9LaWRzIFsgMyAwIFIgXS9Db3VudCAxCj4+CmVuZG9iagoKMyAwIG9iago8PC9UeXBlIC9QYWdlL1BhcmVudCAyIDAgUi9SZXNvdXJjZXMgPDwvRm9udCA8PC9GMCA0IDAgUj4+Pj4KL0NvbnRlbnRzIDUgMCBSCj4+CmVuZG9iagoKNCAwIG9iago8PC9UeXBlIC9Gb250L1N1YnR5cGUgL1R5cGUxL05hbWUgL0YwL0Jhc2VGb250IC9IZWx2ZXRpY2EvRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZwo+PgplbmRvYmoKCjUgMCBvYmoKPDwvTGVuZ3RoIDY0Pj4Kc3RyZWFtCkJUIAovRjAgMTIgVGYKNTAgNzUwIFRECi9IZWxsbywgUERGIFdvcmxkIQplbmRzdHJlYW0KZW5kb2JqCgp4cmVmCjAgNgowMDAwMDAwMDAwIDY1NTM1IGYgCjAwMDAwMDAxMTAgMDAwMDAgbiAKMDAwMDAwMDA4NSAwMDAwMCBuIAowMDAwMDAwMjUyIDAwMDAwIG4gCjAwMDAwMDAzMTEgMDAwMDAgbiAKMDAwMDAwMDM5NiAwMDAwMCBuIAp0cmFpbGVyCjw8L1Jvb3QgMSAwIFIKL0luZm8gNyAwIFIKPj4Kc3RhcnR4cmVmCjQxMwpFT0YK`
-  );
+      this.authService.currentUser
+        .pipe(
+          map((user) => user?.id),
+          switchMap((id) => {
+            if (!id) return of(null);
 
-  blobUrl : string = '';
+            switch (type) {
+              case 'family':
+                return this.reportService.generateFamilyReport(
+                  { ashaId: id },
+                  { responseType: 'blob' as const }
+                );
+              case 'health':
+                return this.reportService.generateHealthRecordsReport(
+                  { ashaId: id },
+                  { responseType: 'blob' as const }
+                );
+              case 'member':
+                return this.reportService.generateMemberReport(
+                  { ashaId: id },
+                  { responseType: 'blob' as const }
+                );
+              default:
+                return of(null);
+            }
+          })
+        )
+        .subscribe((blob) => {
+          if (!blob) {
+            this.pdfUrl.set(null);
+            return;
+          }
 
-  showPdf() {
-    const byteCharacters = atob(this.base64PDF());
-    const byteNumbers = new Array(byteCharacters.length)
-      .fill(0)
-      .map((_, i) => byteCharacters.charCodeAt(i));
-    const byteArray = new Uint8Array(byteNumbers);
-
-    const blob = new Blob([byteArray], { type: 'application/pdf' });
-    this.blobUrl = URL.createObjectURL(blob);
-
-    window.open(this.blobUrl);
+          const url = URL.createObjectURL(blob);
+          this.pdfUrl.set(url);
+        });
+    });
   }
 }

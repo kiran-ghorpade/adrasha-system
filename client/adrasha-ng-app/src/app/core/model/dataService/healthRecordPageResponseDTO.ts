@@ -4,10 +4,10 @@
  * ADRASHA DATA-SERVICE API Docs
  * OpenAPI spec version: 1.0.0
  */
-import { PageInfo } from '../PageInfo';
 import type { HealthRecordResponseDTO } from './healthRecordResponseDTO';
+import { PageInfo } from '../PageInfo';
 
 export interface HealthRecordPageResponseDTO {
   content?: HealthRecordResponseDTO[];
-  page?:PageInfo;
+  page : PageInfo;
 }

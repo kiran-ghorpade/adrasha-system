@@ -4,10 +4,10 @@
  * ADRASHA MASTERDATA-SERVICE API Docs
  * OpenAPI spec version: 1.0.0
  */
-import { PageInfo } from '../PageInfo';
 import type { LocationResponseDTO } from './locationResponseDTO';
+import { PageInfo } from '../PageInfo';
 
 export interface LocationPageResponseDTO {
   content?: LocationResponseDTO[];
-  page?:PageInfo;
+  page : PageInfo;
 }

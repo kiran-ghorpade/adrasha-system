@@ -7,5 +7,5 @@
 import type { AnalyticsFilterDTO } from './analyticsFilterDTO';
 
 export type GetRequestDistributionParams = {
-  analyticsFilterDTO: AnalyticsFilterDTO;
+analyticsFilterDTO: AnalyticsFilterDTO;
 };

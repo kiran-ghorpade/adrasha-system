@@ -42,7 +42,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/roleRequests")
 @RequiredArgsConstructor
 @SecurityRequirement(name = "BearerAuthentication")
-@Tag(name = "RoleRequestDTO")
+@Tag(name = "RoleRequest")
 @ApiResponses({
 		@ApiResponse(responseCode = "401", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
 		@ApiResponse(responseCode = "403", content = @Content(schema = @Schema(implementation = ErrorResponse.class))) })

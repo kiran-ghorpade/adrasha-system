@@ -4,10 +4,10 @@
  * ADRASHA DATA-SERVICE API Docs
  * OpenAPI spec version: 1.0.0
  */
+import type { MemberResponseDTO } from './memberResponseDTO';
 import { PageInfo } from '../PageInfo';
-import type { MemberDataResponseDTO } from './memberDataResponseDTO';
 
 export interface MemberDataPageResponseDTO {
-  content?: MemberDataResponseDTO[];
-  page?:PageInfo;
+  content?: MemberResponseDTO[];
+  page : PageInfo;
 }

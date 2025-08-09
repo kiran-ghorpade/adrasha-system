@@ -1,7 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
-import { RoleRequestService } from '@core/api/role-request/role-request.service';
+import { RoleRequestService } from '@core/api';
 import { RoleRequestResponseDTO } from '@core/model/userService';
 import { AuthService } from '@core/services';
 import { RoleRequestFormComponent } from '@features/role-request/components';

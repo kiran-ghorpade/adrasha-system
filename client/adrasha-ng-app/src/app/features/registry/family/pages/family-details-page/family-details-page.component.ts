@@ -80,7 +80,7 @@ export class FamilyDetailsPageComponent {
       .getMemberPage({
         filterDTO: {
           familyId: this.familyId,
-          alive: 'ALIVE',
+          aliveStatus: 'ALIVE',
         },
         pageable: {
           page: 0,

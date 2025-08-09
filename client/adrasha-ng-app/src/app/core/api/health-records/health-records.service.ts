@@ -51,7 +51,7 @@ type HttpClientOptions = {
 
 
 @Injectable({ providedIn: 'root' })
-export class HealthRecordService {
+export class HealthRecordsService {
   constructor(
     private http: HttpClient,
   ) {} getHealthRecord<TData = HealthRecordResponseDTO>(

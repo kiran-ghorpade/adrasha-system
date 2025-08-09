@@ -13,7 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { FamilyDataService } from '@core/api';
-import { HealthRecordService } from '@core/api/health-record/health-record.service';
+import { HealthRecordsService } from '@core/api';
 import { MemberDataService } from '@core/api/member-data/member-data.service';
 import { AuthService } from '@core/services';
 import { DataCardLabelComponent } from '@shared/components';
@@ -45,7 +45,7 @@ export class AshaDashboardComponent {
   private readonly authService = inject(AuthService);
   private readonly familyService = inject(FamilyDataService);
   private readonly memberService = inject(MemberDataService);
-  private readonly healthRecordService = inject(HealthRecordService);
+  private readonly healthRecordService = inject(HealthRecordsService);
 
   ashaId = toSignal(this.authService.currentUser.pipe(map((user) => user?.id)));
 
@@ -59,7 +59,7 @@ export class AshaDashboardComponent {
         return combineLatest([
           this.familyService.getFamilyCount({ filterDTO: { ashaId: id } }),
           this.memberService.getMemberCount({
-            filterDTO: { ashaId: id, alive: 'ALIVE' },
+            filterDTO: { ashaId: id, aliveStatus: 'ALIVE' },
           }),
           this.memberService.getMemberCount({
             filterDTO: { minAge: 0, maxAge: 5 },

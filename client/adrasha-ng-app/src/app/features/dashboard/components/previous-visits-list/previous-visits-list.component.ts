@@ -3,7 +3,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
-import { HealthRecordService, MemberDataService } from '@core/api';
+import { HealthRecordsService, MemberDataService } from '@core/api';
 import { AuthService } from '@core/services';
 import { forkJoin, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -37,7 +37,7 @@ export class PreviousVisitsListComponent {
   ashaId = input.required<string>();
 
   private readonly authService = inject(AuthService);
-  private readonly healthRecordService = inject(HealthRecordService);
+  private readonly healthRecordService = inject(HealthRecordsService);
   private readonly memberService = inject(MemberDataService);
 
   recordList = toSignal(

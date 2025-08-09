@@ -15,12 +15,150 @@
     }
   ],
   "paths": {
-    "/analytics/trends/roles": {
+    "/reports/member": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "generateMemberReport",
+        "parameters": [
+          {
+            "name": "ashaId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      }
+    },
+    "/reports/health": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "generateHealthRecordsReport",
+        "parameters": [
+          {
+            "name": "ashaId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      }
+    },
+    "/reports/family": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "generateFamilyReport",
+        "parameters": [
+          {
+            "name": "ashaId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuthentication": []
+          }
+        ]
+      }
+    },
+    "/analytics/trends/request": {
       "get": {
         "tags": [
           "Analytics"
         ],
-        "operationId": "getRoleTrends",
+        "operationId": "getRequestTrends",
         "parameters": [
           {
             "name": "analyticsFilterDTO",
@@ -261,12 +399,12 @@
         ]
       }
     },
-    "/analytics/distribution/roles": {
+    "/analytics/distribution/requests": {
       "get": {
         "tags": [
           "Analytics"
         ],
-        "operationId": "getRoleDistribution",
+        "operationId": "getRequestDistribution",
         "parameters": [
           {
             "name": "analyticsFilterDTO",
@@ -498,6 +636,31 @@
   },
   "components": {
     "schemas": {
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
       "AnalyticsFilterDTO": {
         "type": "object",
         "properties": {

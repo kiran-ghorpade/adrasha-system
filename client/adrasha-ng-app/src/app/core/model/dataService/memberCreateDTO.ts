@@ -12,7 +12,7 @@ export interface MemberCreateDTO {
   ashaId: string;
   name?: Name;
   gender: MemberCreateDTOGender;
-  dateOfBirth?: string;
+  dateOfBirth: string;
   birthPlace?: string;
   /**
    * @minLength 10

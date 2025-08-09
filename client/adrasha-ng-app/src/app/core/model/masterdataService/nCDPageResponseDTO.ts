@@ -4,10 +4,10 @@
  * ADRASHA MASTERDATA-SERVICE API Docs
  * OpenAPI spec version: 1.0.0
  */
-import { PageInfo } from '../PageInfo';
 import type { NCDResponseDTO } from './nCDResponseDTO';
+import { PageInfo } from '../PageInfo';
 
 export interface NCDPageResponseDTO {
   content?: NCDResponseDTO[];
-  page?:PageInfo;
+  page : PageInfo;
 }

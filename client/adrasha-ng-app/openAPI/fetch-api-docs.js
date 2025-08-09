@@ -19,7 +19,7 @@ const fetchApiDocs = async () => {
     try {
       const response = await axios.get(url);
       console.log(__dirname);
-      
+
       const outputpath = path.join(__dirname, `./${service.name}.json`);
 
       fs.writeFileSync(outputpath, JSON.stringify(response.data, null, 2));

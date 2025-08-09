@@ -5,11 +5,11 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type MemberDataResponseDTOAliveStatus = typeof MemberDataResponseDTOAliveStatus[keyof typeof MemberDataResponseDTOAliveStatus];
+export type MemberResponseDTOAliveStatus = typeof MemberResponseDTOAliveStatus[keyof typeof MemberResponseDTOAliveStatus];
 
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-export const MemberDataResponseDTOAliveStatus = {
+export const MemberResponseDTOAliveStatus = {
   aliveStatus: 'ALIVE',
   DECEASED: 'DECEASED',
   UNKNOWN: 'UNKNOWN',

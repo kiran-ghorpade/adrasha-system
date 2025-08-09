@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HealthRecordService as HealthApiService } from '@core/api/health-record/health-record.service';
+import { HealthRecordsService as HealthApiService } from '@core/api';
 import { HealthCreateDTO, HealthUpdateDTO } from '@core/model/dataService';
 import { AlertService } from '@core/services';
 import { TranslateService } from '@ngx-translate/core';

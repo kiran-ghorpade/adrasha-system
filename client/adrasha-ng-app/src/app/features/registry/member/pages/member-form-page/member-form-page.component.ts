@@ -4,7 +4,7 @@ import { AuthService } from '@core/services';
 import { TranslatePipe } from '@ngx-translate/core';
 import { PageHeaderComponent } from '@shared/components';
 import { MemberDataService } from '@core/api/member-data/member-data.service';
-import { MemberDataResponseDTO } from '@core/model/dataService';
+import { MemberResponseDTO } from '@core/model/dataService';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 import { MemberFormComponent } from '../../components';
@@ -47,7 +47,7 @@ export class MemberFormPageComponent {
 
   memberId = signal<string | null>(null);
   familyId = signal<string | null>(null);
-  memberData = signal<MemberDataResponseDTO | null>(null);
+  memberData = signal<MemberResponseDTO | null>(null);
   isUpdate = computed(() => this.memberId() !== null);
 
   // initilize states

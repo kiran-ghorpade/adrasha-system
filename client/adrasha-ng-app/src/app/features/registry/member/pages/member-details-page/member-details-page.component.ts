@@ -5,7 +5,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MemberDataService } from '@core/api/member-data/member-data.service';
-import { MemberDataResponseDTO } from '@core/model/dataService';
+import { MemberResponseDTO } from '@core/model/dataService';
 import {
   ConfirmationComponent,
   DataLabelType,
@@ -38,7 +38,7 @@ export class MemberDetailsPageComponent {
   private readonly memberService = inject(MemberService);
 
   data = signal<DataLabelType[]>([]);
-  memberData = signal<MemberDataResponseDTO | null>(null);
+  memberData = signal<MemberResponseDTO | null>(null);
   memberId: string = '';
 
   ngOnInit(): void {

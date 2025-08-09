@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HealthRecordsService as HealthApiService } from '@core/api';
-import { HealthCreateDTO, HealthUpdateDTO } from '@core/model/dataService';
+import { HealthRecordCreateDTO, HealthRecordUpdateDTO } from '@core/model/dataService';
 import { AlertService } from '@core/services';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -14,7 +14,7 @@ export class HealthRecordService {
   private readonly alertService = inject(AlertService);
   private readonly translateService = inject(TranslateService);
 
-  add(formData: HealthCreateDTO) {
+  add(formData: HealthRecordCreateDTO) {
     this.memberService.createHealth(formData).subscribe({
       next: (result) => {
         if (result.id) {
@@ -39,7 +39,7 @@ export class HealthRecordService {
     });
   }
 
-  update(memberId: string, formData: HealthUpdateDTO) {
+  update(memberId: string, formData: HealthRecordUpdateDTO) {
     this.memberService.updateHealthRecord(memberId, formData).subscribe({
       next: (result) => {
         if (result.id) {

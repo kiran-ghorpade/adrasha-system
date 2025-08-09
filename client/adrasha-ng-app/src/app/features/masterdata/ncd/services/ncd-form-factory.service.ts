@@ -11,9 +11,9 @@ export class NcdFormFactoryService
   extends BaseFormFactory
   implements CreateFormOnly<NCDResponseDTO>
 {
-  createForm(initialData: NCDResponseDTO, isLoading: boolean) {
+  createForm(initialData: NCDResponseDTO) {
     // form groups
-    const ncdDetails = this.step1(initialData, isLoading);
+    const ncdDetails = this.step1(initialData);
 
     return this.fb.group({
       ncdDetails,
@@ -21,17 +21,15 @@ export class NcdFormFactoryService
   }
 
   // form steps
-  private step1(initialData: NCDResponseDTO, isLoading: boolean) {
+  private step1(initialData: NCDResponseDTO) {
     return this.fb.group({
       name: this.createControl(
         initialData.name ?? '',
         [Validators.required],
-        isLoading
       ),
       description: this.createControl(
         initialData.description ?? '',
         [Validators.required],
-        isLoading
       ),
     });
   }

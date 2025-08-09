@@ -10,7 +10,7 @@ export type MemberFilterDTOAliveStatus = typeof MemberFilterDTOAliveStatus[keyof
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const MemberFilterDTOAliveStatus = {
-  aliveStatus: 'ALIVE',
+  ALIVE: 'ALIVE',
   DECEASED: 'DECEASED',
   UNKNOWN: 'UNKNOWN',
 } as const;

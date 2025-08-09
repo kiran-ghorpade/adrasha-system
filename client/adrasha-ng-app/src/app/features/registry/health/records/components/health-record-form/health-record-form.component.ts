@@ -1,4 +1,5 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -9,11 +10,10 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NcdService } from '@core/api';
 import {
-  HealthCreateDTO,
+  HealthRecordCreateDTO,
   HealthRecordResponseDTO,
-  HealthUpdateDTO,
+  HealthRecordUpdateDTO,
 } from '@core/model/dataService';
-import { NCDResponseDTO } from '@core/model/masterdataService';
 import { TranslatePipe } from '@ngx-translate/core';
 import {
   PageHeaderComponent,
@@ -46,8 +46,8 @@ import {
 })
 export class HealthRecordFormComponent extends BaseFormComponent<
   HealthRecordFormFactoryService,
-  HealthCreateDTO,
-  HealthUpdateDTO,
+  HealthRecordCreateDTO,
+  HealthRecordUpdateDTO,
   HealthRecordResponseDTO
 > {
   // overrides
@@ -55,7 +55,7 @@ export class HealthRecordFormComponent extends BaseFormComponent<
   override id = input.required<string>();
   override entity = input<HealthRecordResponseDTO>({});
   override isUpdate = input.required<boolean>();
-  override form = this.formFactory.createForm(this.entity(), this.isLoading());
+  override form = this.formFactory.createForm(this.entity());
 
   // dependencies
   private readonly healthRecordService = inject(HealthRecordService);
@@ -66,14 +66,19 @@ export class HealthRecordFormComponent extends BaseFormComponent<
   userId = input.required<string>();
 
   // default static data and states
-  ncdOptions = signal<NCDResponseDTO[]>([]);
+  ncdOptions = toSignal(
+    this.ncdService
+      .getAllNCD({ filterDTO: {}, pageable: {} })
+      .pipe(map((response) => response.content)),
+    { initialValue: [] }
+  );
 
   // form data handling
-  public get steps() {
+  override get steps() {
     return { ...this.form.controls };
   }
 
-  private getRawValues() {
+  override get rawValues() {
     return {
       ...this.steps.basicDetails.getRawValue(),
       ...this.steps.healthStatus.getRawValue(),
@@ -91,20 +96,8 @@ export class HealthRecordFormComponent extends BaseFormComponent<
   }
 
   // helpers
-  override loadStaticData() {
-    this.ncdService
-      .getAllNCD({
-        filterDTO: {},
-        pageable: {},
-      })
-      .pipe(map((ncd) => ncd.content))
-      .subscribe((ncdList) => {
-        this.ncdOptions.set(ncdList || []);
-      });
-  }
-
-  protected override prepareCreateData(): HealthCreateDTO {
-    const data = this.getRawValues();
+  protected override prepareCreateData(): HealthRecordCreateDTO {
+    const data = this.rawValues
     return {
       ashaId: this.userId() || '',
       memberId: this.memberId(),
@@ -112,14 +105,14 @@ export class HealthRecordFormComponent extends BaseFormComponent<
     };
   }
 
-  protected override prepareUpdateData(): HealthUpdateDTO {
+  protected override prepareUpdateData(): HealthRecordUpdateDTO {
     return {
       ...this.prepareCommonData(),
     };
   }
 
   private prepareCommonData() {
-    const data = this.getRawValues();
+    const data = this.rawValues
     return {
       date: data.date.toString(),
       pregnant: data.pregnant,

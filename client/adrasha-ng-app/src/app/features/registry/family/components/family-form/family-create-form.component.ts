@@ -1,7 +1,8 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -9,13 +10,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { StaticDataService } from '@core/api/static-data/static-data.service';
-import { LoadingService } from '@core/services';
+import { FamilyRegistrationDTO } from '@core/model/dataService';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ValidationErrorComponent } from '@shared/components';
+import { BaseCreateFormComponent } from '@shared/directives/BaseCreateFormComponent';
 import { FamilyFormFactoryService, FamilyService } from '../../services';
-import { StaticDataDTO } from '@core/model/masterdataService';
-import { FamilyRegistrationDTO } from '@core/model/dataService';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-family-create-form',
@@ -35,56 +34,39 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
   ],
   templateUrl: './family-create-form.component.html',
 })
-export class FamilyFormComponent {
+export class FamilyFormComponent extends BaseCreateFormComponent<
+  FamilyFormFactoryService,
+  FamilyRegistrationDTO
+> {
   // dependencies
-  private readonly formFactory = inject(FamilyFormFactoryService);
+  readonly formFactory = inject(FamilyFormFactoryService);
   private readonly staticDataService = inject(StaticDataService);
   private readonly familyService = inject(FamilyService);
-  private readonly loadingService = inject(LoadingService);
 
   // states
-  readonly userId = input.required<string>();
-  readonly isLoading = toSignal(this.loadingService.loading$, {
-    initialValue: false,
+  readonly id = input.required<string>();
+  readonly povertyStatusList = toSignal(
+    this.staticDataService.getPovertyStatuses(),
+    {
+      initialValue: [],
+    }
+  );
+
+  readonly genderList = toSignal(this.staticDataService.getGenders(), {
+    initialValue: [],
   });
-  povertyStatusList = signal<StaticDataDTO[]>([]);
-  genderList = signal<StaticDataDTO[]>([]);
-  todayDate: Date = new Date();
+
+  readonly todayDate: Date = new Date();
 
   // form
-  readonly formGroup = this.formFactory.createForm(this.isLoading());
-
-  ngOnInit() {
-    this.loadStaticData();
-  }
+  readonly form = this.formFactory.createForm();
 
   // getters
-  public get steps() {
-    return { ...this.formGroup.controls };
+  override get steps() {
+    return { ...this.form.controls };
   }
 
-  // logic
-  onSubmit() {
-    if (this.formGroup.invalid) {
-      this.formGroup.markAllAsTouched();
-      return;
-    }
-
-    this.familyService.add(this.prepareRegistrationFormData());
-  }
-
-  // Helper Methods
-  private loadStaticData() {
-    this.staticDataService
-      .getPovertyStatuses()
-      .subscribe((status) => this.povertyStatusList.set(status));
-
-    this.staticDataService
-      .getGenders()
-      .subscribe((genders) => this.genderList.set(genders));
-  }
-
-  private getRawValues() {
+  override get rawValues() {
     return {
       ...this.steps.familyDetails.getRawValue(),
       ...this.steps.headPersonalDetails.getRawValue(),
@@ -94,14 +76,20 @@ export class FamilyFormComponent {
     };
   }
 
-  public prepareRegistrationFormData(): FamilyRegistrationDTO {
-    const data = this.getRawValues();
+  // logic
+  protected override add(): void {
+    this.familyService.add(this.prepareCreateData());
+  }
+
+  // Helper Methods
+  override prepareCreateData(): FamilyRegistrationDTO {
+    const data = this.rawValues;
 
     return {
       family: {
-        ashaId: this.userId(),
+        ashaId: this.id(),
         povertyStatus: data.povertyStatus,
-        houseId : data.houseId as number
+        houseId: data.houseId as number,
       },
       headMember: {
         name: {

@@ -14,13 +14,10 @@ export class HealthCenterFormFactoryService
   extends BaseFormFactory
   implements CreateFormOnly<HealthCenterResponseDTO>
 {
-  createForm(
-    initialData: HealthCenterResponseDTO,
-    isLoading: boolean
-  ) {
+  createForm(initialData: HealthCenterResponseDTO) {
     // form groups
-    const healthCenterDetails = this.step1(initialData, isLoading);
-    const addressDetails = this.step2(initialData, isLoading);
+    const healthCenterDetails = this.step1(initialData);
+    const addressDetails = this.step2(initialData);
 
     return this.fb.group({
       healthCenterDetails,
@@ -29,38 +26,27 @@ export class HealthCenterFormFactoryService
   }
 
   // form steps
-  private step1(initialData: HealthCenterResponseDTO, isLoading: boolean) {
+  private step1(initialData: HealthCenterResponseDTO) {
     return this.fb.group({
-      name: this.createControl(
-        initialData.name || '',
-        [Validators.required],
-        isLoading
-      ),
+      name: this.createControl(initialData.name || '', [Validators.required]),
       centerType: this.createControl(
         initialData.centerType || HealthCenterCreateDTOCenterType.SUB_CENTER,
-        [Validators.required],
-        isLoading
+        [Validators.required]
       ),
-      totalFamilies: this.createControl(
-        initialData.totalFamilies || 0,
-        [Validators.required],
-        isLoading
-      ),
-      totalPopulation: this.createControl(
-        initialData.totalPopulation || 0,
-        [Validators.required],
-        isLoading
-      ),
+      totalFamilies: this.createControl(initialData.totalFamilies || 0, [
+        Validators.required,
+      ]),
+      totalPopulation: this.createControl(initialData.totalPopulation || 0, [
+        Validators.required,
+      ]),
     });
   }
 
-  private step2(initialData: HealthCenterResponseDTO, isLoading: boolean) {
+  private step2(initialData: HealthCenterResponseDTO) {
     return this.fb.group({
-      locationId: this.createControl(
-        initialData.name || '',
-        [Validators.required],
-        isLoading
-      ),
+      locationId: this.createControl(initialData.name || '', [
+        Validators.required,
+      ]),
     });
   }
 }

@@ -26,11 +26,13 @@ import { map, of, switchMap } from 'rxjs';
   template: ` <app-line-chart [labels]="labels()" [data]="data()" /> `,
 })
 export class AnalyticsHealthNCDLineChartComponent {
-  searchStartDate = input.required<Date>();
-  searchEndDate = input.required<Date>();
 
   private readonly authService = inject(AuthService);
   private readonly analyticsService = inject(AnalyticsService);
+
+  today = new Date();
+  searchStartDate = input<Date>(this.today);
+  searchEndDate = input<Date>(this.today);
 
   labels = signal<string[]>([]);
   data = signal<ChartDataset[]>([]);
@@ -49,7 +51,7 @@ export class AnalyticsHealthNCDLineChartComponent {
           },
         });
       })
-    ),
+    )
   );
 
   constructor() {

@@ -1,14 +1,11 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
-  AbstractControlOptions,
-  FormBuilder,
-  FormControl,
-  Validators,
+  Validators
 } from '@angular/forms';
 import {
-  MemberDataFilterDTOAlive,
-  MemberDataResponseDTO,
-  MemberDataResponseDTOGender,
+  MemberResponseDTO,
+  MemberResponseDTOAliveStatus,
+  MemberResponseDTOGender
 } from '@core/model/dataService';
 import { BaseFormFactory } from '@shared/directives';
 import { CreateFormOnly } from '@shared/interfaces';
@@ -21,14 +18,14 @@ import {
 @Injectable({ providedIn: 'root' })
 export class MemberFormFactoryService
   extends BaseFormFactory
-  implements CreateFormOnly<MemberDataResponseDTO>
+  implements CreateFormOnly<MemberResponseDTO>
 {
-  createForm(initialData: MemberDataResponseDTO, isLoading: boolean) {
+  createForm(initialData: MemberResponseDTO) {
     // form groups
-    const personalDetails = this.step1(initialData, isLoading);
-    const birthDetails = this.step2(initialData, isLoading);
-    const identificationDetails = this.step3(initialData, isLoading);
-    const contactDetails = this.step4(initialData, isLoading);
+    const personalDetails = this.step1(initialData);
+    const birthDetails = this.step2(initialData);
+    const identificationDetails = this.step3(initialData);
+    const contactDetails = this.step4(initialData);
 
     return this.fb.group({
       personalDetails,
@@ -39,68 +36,59 @@ export class MemberFormFactoryService
   }
 
   // steps
-  public step1(data: MemberDataResponseDTO, isLoading: boolean) {
+  public step1(data: MemberResponseDTO) {
     return this.fb.group({
       firstname: this.createControl(
         data.name?.firstname || '',
         [Validators.required],
-        isLoading
       ),
       middlename: this.createControl(
         data.name?.middlename || '',
         [Validators.required],
-        isLoading
       ),
       lastname: this.createControl(
         data.name?.lastname || '',
         [Validators.required],
-        isLoading
       ),
       gender: this.createControl(
-        data.gender || MemberDataResponseDTOGender.MALE,
+        data.gender || MemberResponseDTOGender.MALE,
         [Validators.required],
-        isLoading
       ),
       aliveStatus: this.createControl(
-        data.aliveStatus || MemberDataFilterDTOAlive.ALIVE,
+        data.aliveStatus || MemberResponseDTOAliveStatus.ALIVE,
         [],
-        isLoading
       ),
     });
   }
 
-  public step2(data: MemberDataResponseDTO, isLoading: boolean) {
+  public step2(data: MemberResponseDTO) {
     return this.fb.group({
       dateOfBirth: this.createControl(
         data.dateOfBirth || '',
         [Validators.required],
-        isLoading
       ),
-      birthPlace: this.createControl(data.birthPlace || '', [], isLoading),
+    birthPlace: this.createControl(data.birthPlace || '', [], ),
     });
   }
 
-  public step3(data: MemberDataResponseDTO, isLoading: boolean) {
+  public step3(data: MemberResponseDTO) {
     return this.fb.group({
       adharNumber: this.createControl(
         data.adharNumber || '',
         adharNumberValidation,
-        isLoading
       ),
       abhaNumber: this.createControl(
         data.abhaNumber || '',
         abhaNumberValidation,
-        isLoading
       ),
     });
   }
 
-  public step4(data: MemberDataResponseDTO, isLoading: boolean) {
+  public step4(data: MemberResponseDTO) {
     return this.fb.group({
       mobileNumber: this.createControl(
         data.mobileNumber || '',
         mobileNumberValidation,
-        isLoading
       ),
     });
   }

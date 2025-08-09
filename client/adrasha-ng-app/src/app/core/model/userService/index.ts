@@ -11,8 +11,6 @@ export * from './getAllRoleRequestsParams';
 export * from './getAllUsersParams';
 export * from './getCount1Params';
 export * from './getCountParams';
-export * from './getTotalRoleRequestsParams';
-export * from './getTotalUsersParams';
 export * from './name';
 export * from './pageable';
 export * from './pageableObject';

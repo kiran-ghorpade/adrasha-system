@@ -11,11 +11,11 @@ export class HealthRecordFormFactoryService
   extends BaseFormFactory
   implements CreateFormOnly<HealthRecordResponseDTO>
 {
-  createForm(initialData: HealthRecordResponseDTO, isLoading: boolean) {
-    const basicDetails = this.step1(initialData, isLoading);
-    const healthStatus = this.step2(initialData, isLoading);
-    const pregnancyStatus = this.step3(initialData, isLoading);
-    const ncdStatus = this.step4(initialData, isLoading);
+  createForm(initialData: HealthRecordResponseDTO) {
+    const basicDetails = this.step1(initialData);
+    const healthStatus = this.step2(initialData);
+    const pregnancyStatus = this.step3(initialData);
+    const ncdStatus = this.step4(initialData);
 
     return this.fb.group({
       basicDetails,
@@ -26,36 +26,36 @@ export class HealthRecordFormFactoryService
   }
 
   // form steps
-  private step1(initialData: HealthRecordResponseDTO, isLoading: boolean) {
+  private step1(initialData: HealthRecordResponseDTO) {
     return this.fb.group({
       date: this.createControl(
         initialData.recordedAt ?? new Date(),
         [Validators.required],
-        isLoading
+
       ),
     });
   }
 
-  private step2(initialData: HealthRecordResponseDTO, isLoading: boolean) {
+  private step2(initialData: HealthRecordResponseDTO) {
     return this.fb.group({
-      height: this.createControl(initialData.height ?? 0.0, [], isLoading),
-      weight: this.createControl(initialData.weight ?? 0.0, [], isLoading),
+      height: this.createControl(initialData.height ?? 0.0, []),
+      weight: this.createControl(initialData.weight ?? 0.0, []),
     });
   }
 
-  private step3(initialData: HealthRecordResponseDTO, isLoading: boolean) {
+  private step3(initialData: HealthRecordResponseDTO) {
     return this.fb.group({
       pregnant: this.createControl(
         initialData.pregnant ?? false,
         [Validators.required],
-        isLoading
+
       ),
     });
   }
 
-  private step4(initialData: HealthRecordResponseDTO, isLoading: boolean) {
+  private step4(initialData: HealthRecordResponseDTO) {
     return this.fb.group({
-      ncdlist: this.createControl(initialData.ncdlist ?? [], [], isLoading),
+      ncdlist: this.createControl(initialData.ncdlist ?? [], []),
     });
   }
 }

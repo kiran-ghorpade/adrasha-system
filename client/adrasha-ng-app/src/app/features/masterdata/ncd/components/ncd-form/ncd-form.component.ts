@@ -43,19 +43,16 @@ export class NcdFormComponent extends BaseFormComponent<
   override readonly id = input.required<string>();
   override readonly isUpdate = input.required<boolean>();
   override readonly entity = input<NCDResponseDTO>({});
-  override readonly form = this.formFactory.createForm(
-    this.entity(),
-    this.isLoading()
-  );
+  override readonly form = this.formFactory.createForm(this.entity());
 
   // states
 
   // form data handling
-  public get steps() {
+  override get steps() {
     return { ...this.form.controls };
   }
 
-  private getRawValues() {
+  override get rawValues() {
     return {
       ...this.steps.ncdDetails.getRawValue(),
     };
@@ -71,10 +68,8 @@ export class NcdFormComponent extends BaseFormComponent<
   }
 
   // Helper Methods
-  override loadStaticData() {}
-
   override prepareCreateData(): NCDCreateDTO {
-    const data = this.getRawValues();
+    const data = this.rawValues
 
     return {
       name: data.name,
@@ -83,7 +78,7 @@ export class NcdFormComponent extends BaseFormComponent<
   }
 
   override prepareUpdateData(): NCDUpdateDTO {
-    const data = this.getRawValues();
+    const data = this.rawValues
 
     return {
       name: data.name,

@@ -1,16 +1,14 @@
 // base-form.component.ts
-import { Directive, effect, inject, InputSignal, OnInit } from '@angular/core';
+import { Directive, effect, inject, InputSignal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormGroup } from '@angular/forms';
 import { LoadingService } from '@core/services';
 import { BaseFormFactory } from './BaseFormFactory';
 
 @Directive()
-export abstract class BaseFormComponent<
+export abstract class BaseCreateFormComponent<
   TFormFactory extends BaseFormFactory,
-  TCreate,
-  TUpdate,
-  TResponse
+  TCreate
 > {
   constructor() {
     effect(() => {
@@ -30,13 +28,11 @@ export abstract class BaseFormComponent<
 
   // states
   abstract readonly id: InputSignal<string>;
-  abstract readonly isUpdate: InputSignal<boolean>;
-  abstract readonly entity: InputSignal<TResponse>;
 
   // form data handling
   abstract readonly form: FormGroup;
-  protected abstract get steps():any;
-  protected abstract get rawValues() : any;
+  protected abstract get steps(): any;
+  protected abstract get rawValues(): any;
 
   // Loading Logic
   readonly isLoading = toSignal(this.loadingService.loading$, {
@@ -50,13 +46,11 @@ export abstract class BaseFormComponent<
       return;
     }
 
-    this.isUpdate() ? this.update() : this.add();
+    this.add();
   }
 
   protected abstract add(): void;
-  protected abstract update(): void;
 
   // helpers
   protected abstract prepareCreateData(): TCreate;
-  protected abstract prepareUpdateData(): TUpdate;
 }

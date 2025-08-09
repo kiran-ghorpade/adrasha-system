@@ -1,25 +1,23 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService, LoadingService } from '@core/services';
 import { LoginRequest } from '@core/model/authService';
+import { AuthService, LoadingService } from '@core/services';
 import { AlertService } from '@core/services/alert.service';
-import { ValidationErrorComponent } from '../../../shared/components/validation-error/validation-error.component';
 import {
-  TranslateDirective,
   TranslateModule,
   TranslatePipe,
   TranslateService,
 } from '@ngx-translate/core';
-import { finalize } from 'rxjs';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { ValidationErrorComponent } from '../../../shared/components/validation-error/validation-error.component';
 
 @Component({
   selector: 'app-login',
@@ -53,15 +51,27 @@ export class LoginComponent {
 
   // form
   readonly loginForm = this.fb.nonNullable.group({
-    username: this.fb.nonNullable.control(
-      { value: '', disabled: this.isLoading() },
-      [Validators.required, Validators.minLength(3)]
-    ),
-    password: this.fb.nonNullable.control(
-      { value: '', disabled: this.isLoading() },
-      [Validators.required, Validators.minLength(8)]
-    ),
+    username: this.fb.nonNullable.control('', [
+      Validators.required,
+      Validators.minLength(3),
+    ]),
+    password: this.fb.nonNullable.control('', [
+      Validators.required,
+      Validators.minLength(8),
+    ]),
   });
+
+  constructor() {
+    effect(() => {
+      const loading = this.isLoading();
+
+      if (loading) {
+        this.loginForm.disable();
+      } else {
+        this.loginForm.enable();
+      }
+    });
+  }
 
   hidePassword(event: MouseEvent) {
     event.preventDefault();
@@ -90,11 +100,17 @@ export class LoginComponent {
           this.alertService.showAlert(translatedMsg, 'error');
           return;
         }
-        
+
         const translatedMsg = this.translateService.instant('login.success');
         this.alertService.showAlert(translatedMsg, 'success');
         this.router.navigateByUrl('/dashboard', { replaceUrl: true });
-        this.loginForm.reset();
+        this.loginForm.reset({
+          username: '',
+          password: '',
+        });
+        this.loginForm.enable();
+        this.loginForm.markAsPristine();
+        this.loginForm.markAsUntouched();
       },
       error: () => {
         const translatedMsg = this.translateService.instant('login.failed');

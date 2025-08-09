@@ -1,5 +1,7 @@
 import { Component, inject, input, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -9,9 +11,7 @@ import { StaticDataService } from '@core/api/static-data/static-data.service';
 import {
   HealthCenterCreateDTO,
   HealthCenterResponseDTO,
-  HealthCenterUpdateDTO,
-  LocationResponseDTO,
-  StaticDataDTO,
+  HealthCenterUpdateDTO
 } from '@core/model/masterdataService';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ValidationErrorComponent } from '@shared/components';
@@ -19,7 +19,6 @@ import { BaseFormComponent } from '@shared/directives';
 import { map } from 'rxjs';
 import { HealthCenterService } from '../../services';
 import { HealthCenterFormFactoryService } from '../../services/health-center-form-factory.service';
-import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-health-center-form',
@@ -55,20 +54,28 @@ export class HealthCenterFormComponent extends BaseFormComponent<
   // states
   readonly userId = input.required<string>();
   healthCenter = signal<HealthCenterResponseDTO | null>(null);
-  healthCenterTypeList = signal<StaticDataDTO[]>([]);
-  locationList = signal<LocationResponseDTO[]>([]);
-
-  // form data handling
-  readonly form = this.formFactory.createForm(
-    this.healthCenter() ?? {},
-    this.isLoading()
+  healthCenterTypeList = toSignal(
+    this.staticDataService.getHealthCenterTypes(),
+    { initialValue: [] }
   );
 
-  public get steps() {
+  locationList = toSignal(
+    this.locationService
+      .getAllLocations({ filterDTO: {}, pageable: {} })
+      .pipe(map((response) => response.content)),
+    {
+      initialValue: [],
+    }
+  );
+
+  // form data handling
+  readonly form = this.formFactory.createForm(this.healthCenter() ?? {});
+
+  override get steps() {
     return { ...this.form.controls };
   }
 
-  private getRawValues() {
+  override get rawValues() {
     return {
       ...this.steps.healthCenterDetails.getRawValue(),
       ...this.steps.addressDetails.getRawValue(),
@@ -85,22 +92,8 @@ export class HealthCenterFormComponent extends BaseFormComponent<
   }
 
   // Helper Methods
-  override loadStaticData() {
-    this.staticDataService
-      .getHealthCenterTypes()
-      .subscribe((types) => this.healthCenterTypeList.set(types));
-
-    this.locationService
-      .getAllLocations({
-        filterDTO: {},
-        pageable: {},
-      })
-      .pipe(map((response) => response.content))
-      .subscribe((list) => this.locationList.set(list ?? []));
-  }
-
   override prepareCreateData(): HealthCenterCreateDTO {
-    const data = this.getRawValues();
+    const data = this.rawValues;
     return {
       centerType: data.centerType,
       locationId: data.locationId,
@@ -111,7 +104,7 @@ export class HealthCenterFormComponent extends BaseFormComponent<
   }
 
   override prepareUpdateData(): HealthCenterUpdateDTO {
-    const data = this.getRawValues();
+    const data = this.rawValues;
     return {
       centerType: data.centerType,
       locationId: data.locationId,

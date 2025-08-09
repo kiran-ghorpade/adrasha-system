@@ -1,13 +1,13 @@
 import {
-  FamilyDataResponseDTO,
+  FamilyResponseDTO,
   MemberCreateDTO,
-  MemberDataResponseDTO,
+  MemberResponseDTO,
 } from '@core/model/dataService';
 import { DataLabelType } from '@shared/components';
 
 export function familyToData(
-  family: FamilyDataResponseDTO,
-  headMember: MemberDataResponseDTO
+  family: FamilyResponseDTO,
+  headMember: MemberResponseDTO
 ): DataLabelType[] {
   return [
     { label: 'Family ID', value: family.id, icon: 'family' },

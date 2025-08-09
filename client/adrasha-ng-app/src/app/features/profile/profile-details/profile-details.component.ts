@@ -13,7 +13,7 @@ import { DataLabelComponent, DataLabelType } from '@shared/components';
       <div class="w-full sm:w-1/2 box-border">
         <app-data-label
           [label]="data.label"
-          [value]="data.value"
+          [value]="data.value ?? 'Not Found'"
           [icon]="data.icon"
         ></app-data-label>
       </div>
@@ -23,5 +23,5 @@ import { DataLabelComponent, DataLabelType } from '@shared/components';
   </ng-container>`,
 })
 export class LocationDetailsComponent {
-  profileData = input.required<DataLabelType[]>();
+  profileData = input<DataLabelType[]>([]);
 }

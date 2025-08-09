@@ -26,12 +26,13 @@ import { map, of, switchMap } from 'rxjs';
   `,
 })
 export class AnalyticsMemberGenderChartComponent {
-  searchStartDate = input.required<Date>();
-  searchEndDate = input.required<Date>();
-
   private readonly authService = inject(AuthService);
-
   private readonly analyticsService = inject(AnalyticsService);
+
+  today = new Date();
+  searchStartDate = input<Date>(this.today);
+  searchEndDate = input<Date>(this.today);
+
 
   labels = signal<string[]>([]);
   data = signal<number[]>([]);
@@ -50,7 +51,7 @@ export class AnalyticsMemberGenderChartComponent {
           },
         });
       })
-    ),
+    )
   );
 
   constructor() {

@@ -13,8 +13,8 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FamilyDataService } from '@core/api/family-data/family-data.service';
 import { MemberDataService } from '@core/api/member-data/member-data.service';
 import {
-  FamilyDataResponseDTO,
-  MemberDataResponseDTO,
+  FamilyResponseDTO,
+  MemberResponseDTO,
   Name,
 } from '@core/model/dataService';
 import {
@@ -55,8 +55,8 @@ export class FamilyDetailsPageComponent {
   private readonly memberService = inject(MemberDataService);
   private readonly dialog = inject(MatDialog);
 
-  familyDetails = signal<FamilyDataResponseDTO>({});
-  memberList = signal<MemberDataResponseDTO[]>([]);
+  familyDetails = signal<FamilyResponseDTO>({});
+  memberList = signal<MemberResponseDTO[]>([]);
   data = signal<DataLabelType[]>([]);
   headMemberDetails = computed(
     () =>
@@ -134,8 +134,8 @@ export class FamilyDetailsPageComponent {
 }
 
 function familyToData(
-  family: FamilyDataResponseDTO,
-  headMemberDetails: MemberDataResponseDTO
+  family: FamilyResponseDTO,
+  headMemberDetails: MemberResponseDTO
 ): DataLabelType[] {
   const headMemberName = headMemberDetails
     ? `${headMemberDetails.name?.firstname ?? ''} ${

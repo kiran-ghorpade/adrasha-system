@@ -1,4 +1,4 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,14 +10,13 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { StaticDataService } from '@core/api/static-data/static-data.service';
 import {
-  FamilyDataResponseDTO,
-  FamilyUpdateDTO,
+  FamilyResponseDTO,
+  FamilyUpdateDTO
 } from '@core/model/dataService';
-import { StaticDataDTO } from '@core/model/masterdataService';
-import { LoadingService } from '@core/services';
-import { FamilyFormFactoryService, FamilyService } from '../../services';
-import { ValidationErrorComponent } from '@shared/components';
 import { TranslatePipe } from '@ngx-translate/core';
+import { ValidationErrorComponent } from '@shared/components';
+import { BaseEditFormComponent } from '@shared/directives/BaseEditFormComponent';
+import { FamilyFormFactoryService, FamilyService } from '../../services';
 
 @Component({
   selector: 'app-family-edit-form',
@@ -36,66 +35,53 @@ import { TranslatePipe } from '@ngx-translate/core';
   ],
   templateUrl: './family-edit-form.component.html',
 })
-export class FamilyFormComponent {
+export class FamilyFormComponent extends BaseEditFormComponent<
+  FamilyFormFactoryService,
+  FamilyUpdateDTO,
+  FamilyResponseDTO
+> {
   // dependencies
-  private readonly formFactory = inject(FamilyFormFactoryService);
+  readonly formFactory = inject(FamilyFormFactoryService);
   private readonly staticDataService = inject(StaticDataService);
   private readonly familyService = inject(FamilyService);
-  private readonly loadingService = inject(LoadingService);
 
   // states
-  readonly userId = input.required<string>();
+  override id = input.required<string>();
   readonly familyId = input.required<string>();
-  readonly familyData = input<FamilyDataResponseDTO>();
-  readonly isLoading = toSignal(this.loadingService.loading$, {
-    initialValue: false,
+  override entity = input.required<FamilyResponseDTO>();
+
+  povertyStatusList = toSignal(this.staticDataService.getPovertyStatuses(), {
+    initialValue: [],
   });
-  povertyStatusList = signal<StaticDataDTO[]>([]);
 
   // form
-  readonly formGroup = this.formFactory.updateForm(
-    this.familyData() ?? {},
-    this.isLoading()
-  );
-
-  ngOnInit() {
-    this.loadStaticData();
-  }
+  readonly form = this.formFactory.updateForm(this.entity() ?? {});
 
   // getters
-  public get steps() {
-    return { ...this.formGroup.controls };
+  override get steps() {
+    return {
+      ...this.form.controls,
+    };
   }
-
-  // logic
-  onSubmit() {
-    if (this.formGroup.invalid) {
-      this.formGroup.markAllAsTouched();
-      return;
-    }
-    this.familyService.update(this.familyId(), this.prepareUpdateFormData());
-  }
-
-  // Helper Methods
-  private loadStaticData() {
-    this.staticDataService
-      .getPovertyStatuses()
-      .subscribe((status) => this.povertyStatusList.set(status));
-  }
-
-  private getRawValues() {
+  override get rawValues() {
     return {
       ...this.steps.familyDetails.getRawValue(),
     };
   }
-  public prepareUpdateFormData(): FamilyUpdateDTO {
-    const data = this.getRawValues();
+  // logic
+  protected override update(): void {
+    this.familyService.update(this.familyId(), this.prepareUpdateData());
+  }
+
+  // Helper Methods
+  protected override prepareUpdateData(): FamilyUpdateDTO {
+    const data = this.rawValues;
 
     return {
-      ashaId: this.userId(),
-      headMemberId: this.familyData()?.headMemberId ?? '',
+      ashaId: this.id(),
+      headMemberId: this.entity()?.headMemberId ?? '',
       povertyStatus: data.povertyStatus,
-      houseId: data.houseId as number
+      houseId: data.houseId as number,
     };
   }
 }

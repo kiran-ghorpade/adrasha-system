@@ -65,7 +65,7 @@ export class ReportsService {
     return this.http.get<TData>(
       `http://localhost:8080/reports/member`,{
     ...options,
-        params: {ashaId : params.ashaId, ...options?.params},}
+        params: {ashaId: params.ashaId, ...options?.params},}
     );
   }
  generateHealthRecordsReport<TData = Blob>(
@@ -82,7 +82,7 @@ export class ReportsService {
     return this.http.get<TData>(
       `http://localhost:8080/reports/health`,{
     ...options,
-        params: {ashaId : params.ashaId, ...options?.params},}
+        params: {ashaId: params.ashaId, ...options?.params},}
     );
   }
  generateFamilyReport<TData = Blob>(
@@ -99,7 +99,7 @@ export class ReportsService {
     return this.http.get<TData>(
       `http://localhost:8080/reports/family`,{
     ...options,
-        params: {ashaId : params.ashaId, ...options?.params},}
+        params: {ashaId: params.ashaId, ...options?.params},}
     );
   }
 };

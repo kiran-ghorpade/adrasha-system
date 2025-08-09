@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { FamilyDataService } from '@core/api/family-data/family-data.service';
-import { FamilyDataResponseDTO } from '@core/model/dataService';
+import { FamilyResponseDTO } from '@core/model/dataService';
 import { AuthService } from '@core/services';
 import { TranslatePipe } from '@ngx-translate/core';
 import { PageHeaderComponent } from '@shared/components';
@@ -17,9 +17,9 @@ import { FamilyFormComponent } from '../../components/family-form/family-edit-fo
       [title]="'registry.family.updateFamilyTitle' | translate"
     />
     <app-family-edit-form
-      [userId]="userId() ?? ''"
+      [id]="userId() ?? ''"
       [familyId]="id() ?? ''"
-      [familyData]="data() ?? {}"
+      [entity]="data() ?? {}"
     />
   </div>`,
 })
@@ -36,7 +36,7 @@ export class FamilyEditPageComponent {
   );
 
   id = signal<string | null>(null);
-  data = signal<FamilyDataResponseDTO | null>(null);
+  data = signal<FamilyResponseDTO | null>(null);
 
   // initilize states
   ngOnInit() {

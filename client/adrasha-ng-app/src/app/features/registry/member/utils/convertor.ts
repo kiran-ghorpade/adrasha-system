@@ -1,7 +1,7 @@
-import { MemberDataResponseDTO } from '@core/model/dataService';
+import { MemberResponseDTO } from '@core/model/dataService';
 import { DataLabelType } from '@shared/components';
 
-export function memberToData(member: MemberDataResponseDTO): DataLabelType[] {
+export function memberToData(member: MemberResponseDTO): DataLabelType[] {
   return [
     {
       label: 'Name',

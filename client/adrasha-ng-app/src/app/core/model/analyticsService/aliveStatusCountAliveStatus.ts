@@ -10,7 +10,7 @@ export type AliveStatusCountAliveStatus = typeof AliveStatusCountAliveStatus[key
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AliveStatusCountAliveStatus = {
-  aliveStatus: 'ALIVE',
+  ALIVE: 'ALIVE',
   DECEASED: 'DECEASED',
   UNKNOWN: 'UNKNOWN',
 } as const;

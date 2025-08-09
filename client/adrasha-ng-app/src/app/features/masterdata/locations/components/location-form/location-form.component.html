@@ -106,7 +106,7 @@
       <button matButton (click)="stepper.reset()">
         {{ "masterdata.location.resetButton" | translate }}
       </button>
-      <button matButton="filled" (click)="onSubmit()">
+      <button matButton="filled" (click)="onSubmit()" [disabled]="isLoading()">
         {{ "masterdata.location.submitButton" | translate }}
       </button>
     </div>

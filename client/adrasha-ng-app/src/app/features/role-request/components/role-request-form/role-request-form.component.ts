@@ -1,4 +1,10 @@
-import { Component, inject, input, signal, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  SimpleChanges
+} from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -8,14 +14,9 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { HealthCenterService } from '@core/api/health-center/health-center.service';
 import { StaticDataService } from '@core/api/static-data/static-data.service';
 import {
-  HealthCenterResponseDTO,
-  StaticDataDTO,
-} from '@core/model/masterdataService';
-import {
   RoleRequestCreateDTO,
-  RoleRequestCreateDTORole,
   RoleRequestResponseDTO,
-  RoleRequestUpdateDTO,
+  RoleRequestUpdateDTO
 } from '@core/model/userService';
 import { RoleRequestFormFactoryService } from '@features/role-request/services/role-request-form-factory.service';
 import { RoleRequestService } from '@features/role-request/services/role-request.service';
@@ -57,10 +58,20 @@ export class RoleRequestFormComponent extends BaseFormComponent<
 
   // states
   readonly userId = input.required<string>();
-  readonly roleList = signal<StaticDataDTO[]>([]);
-  healthCenterList = signal<HealthCenterResponseDTO[]>([]);
+  readonly roleList = toSignal(this.staticDataService.getRoles(), {
+    initialValue: [],
+  });
+  healthCenterList = toSignal(
+    this.healthCenterService
+      .getAllHealthCenters({
+        filterDTO: {},
+        pageable: {},
+      })
+      .pipe(map((response) => response.content)),
+    { initialValue: [] }
+  );
 
-  readonly form = this.formFactory.createForm(this.entity(), this.isLoading());
+  readonly form = this.formFactory.createForm(this.entity());
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['entity'] && changes['entity'].currentValue) {
@@ -70,11 +81,11 @@ export class RoleRequestFormComponent extends BaseFormComponent<
 
   // form data handling
 
-  public get steps() {
+  override get steps() {
     return { ...this.form.controls };
   }
 
-  private getRawValues() {
+  override get rawValues() {
     return {
       ...this.steps.personalDetails.getRawValue(),
       ...this.steps.roleDetails.getRawValue(),
@@ -92,22 +103,8 @@ export class RoleRequestFormComponent extends BaseFormComponent<
   }
 
   // Helper Methods
-  override loadStaticData() {
-    this.staticDataService
-      .getRoles()
-      .subscribe((roles) => this.roleList.set(roles));
-
-    this.healthCenterService
-      .getAllHealthCenters({
-        filterDTO: {},
-        pageable: {},
-      })
-      .pipe(map((response) => response.content))
-      .subscribe((centers) => this.healthCenterList.set(centers ?? []));
-  }
-
   override prepareCreateData(): RoleRequestCreateDTO {
-    const data = this.getRawValues();
+    const data = this.rawValues
     return {
       userId: this.userId() ?? '',
       ...this.prepareCommonData(),
@@ -115,14 +112,14 @@ export class RoleRequestFormComponent extends BaseFormComponent<
   }
 
   override prepareUpdateData(): RoleRequestUpdateDTO {
-    const data = this.getRawValues();
+    const data = this.rawValues
     return {
       ...this.prepareCommonData(),
     };
   }
 
   private prepareCommonData() {
-    const data = this.getRawValues();
+    const data = this.rawValues
     return {
       name: {
         firstname: data.firstname,

@@ -14,9 +14,9 @@ export class LocationFormFactoryService
   extends BaseFormFactory
   implements CreateFormOnly<LocationResponseDTO>
 {
-  createForm(initialData: LocationResponseDTO, isLoading: boolean) {
-    const locationDetails = this.step1(initialData, isLoading);
-    const otherDetails = this.step2(initialData, isLoading);
+  createForm(initialData: LocationResponseDTO) {
+    const locationDetails = this.step1(initialData);
+    const otherDetails = this.step2(initialData);
 
     return this.fb.group({
       locationDetails,
@@ -25,47 +25,40 @@ export class LocationFormFactoryService
   }
 
   // form steps
-  private step1(initialData: LocationResponseDTO, isLoading: boolean) {
+  private step1(initialData: LocationResponseDTO) {
     return this.fb.group({
       name: this.createControl(
         initialData.name || '',
         [Validators.required],
-        isLoading
       ),
       type: this.createControl(
-        initialData.type || LocationResponseDTOType.HAMLET,
+        initialData.type || LocationResponseDTOType.VILLAGE,
         [Validators.required],
-        isLoading
       ),
       pincode: this.createControl(
         initialData.pincode || '',
         [Validators.required],
-        isLoading
       ),
     });
   }
 
-  private step2(initialData: LocationResponseDTO, isLoading: boolean) {
+  private step2(initialData: LocationResponseDTO) {
     return this.fb.group({
       subdistrict: this.createControl(
         initialData.subdistrict || '',
         [Validators.required],
-        isLoading
       ),
       district: this.createControl(
         initialData.district || '',
         [Validators.required],
-        isLoading
       ),
       state: this.createControl(
         initialData.state || '',
         [Validators.required],
-        isLoading
       ),
       country: this.createControl(
         initialData.country || '',
         [Validators.required],
-        isLoading
       ),
     });
   }

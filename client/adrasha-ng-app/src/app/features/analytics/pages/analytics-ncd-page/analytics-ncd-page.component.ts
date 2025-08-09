@@ -17,8 +17,8 @@ import { PageHeaderComponent, PageWrapperComponent } from '@shared/components';
     MatFormFieldModule,
     DatePipe,
     AnalyticsHealthNCDChartComponent,
-    AnalyticsHealthNCDLineChartComponent
-],
+    AnalyticsHealthNCDLineChartComponent,
+  ],
   templateUrl: './analytics-ncd-page.component.html',
 })
 export class AnalyticsNCDPageComponent {

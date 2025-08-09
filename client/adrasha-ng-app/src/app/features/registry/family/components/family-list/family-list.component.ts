@@ -2,7 +2,7 @@ import { Component, input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
-import { MemberDataResponseDTO, Name } from '@core/model/dataService';
+import { MemberResponseDTO, Name } from '@core/model/dataService';
 
 export type FamilyHeadItem = { name: Name; age: number; id: string };
 
@@ -18,7 +18,7 @@ export type FamilyHeadItem = { name: Name; age: number; id: string };
     }@else {
 
     <!-- Family List -->
-    <mat-action-list> 
+    <mat-action-list>
       <div class=" overflow-scroll">
         @for (head of familyHeadList(); track $index) {
         <a mat-list-item [routerLink]="[head.id]">
@@ -37,7 +37,7 @@ export type FamilyHeadItem = { name: Name; age: number; id: string };
   `,
 })
 export class FamilyListComponent {
-  familyHeadList = input.required<MemberDataResponseDTO[]>();
+  familyHeadList = input.required<MemberResponseDTO[]>();
 
   getFullName(name: Name | null) {
     if (name) {

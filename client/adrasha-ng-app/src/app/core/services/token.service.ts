@@ -17,6 +17,14 @@ export class TokenService {
 
   private _token?: Token;
 
+  constructor() {
+    this._token = this.loadFromStorage();
+  }
+
+  private loadFromStorage(): Token | undefined {
+      return this.store.get(this.TOKEN_KEY);
+  }
+
   // Getters
   get accessToken() {
     return this._token?.accessToken;
@@ -46,11 +54,12 @@ export class TokenService {
   set(token?: Token) {
     if (token) {
       const expiresAt = Date.now() + (token.expiresIn ?? 0) * 1000;
-      const value = {
+      const value: Token = {
         ...token,
         expiresIn: expiresAt,
       };
 
+      this._token = value;
       this.store.set(this.TOKEN_KEY, value);
     } else {
       this.clear();
@@ -76,6 +85,7 @@ export class TokenService {
   }
 
   clear() {
+    this._token = undefined;
     this.store.remove(this.TOKEN_KEY);
   }
 }

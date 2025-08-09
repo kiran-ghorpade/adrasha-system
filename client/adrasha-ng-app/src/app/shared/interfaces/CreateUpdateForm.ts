@@ -6,6 +6,6 @@ export enum FormMode {
 }
 
 export interface CreateUpdateForm<TResponse> {
-  createForm(isLoading: boolean): FormGroup;
-  updateForm(initialData: TResponse, isLoading: boolean): FormGroup;
+  createForm(): FormGroup;
+  updateForm(initialData: TResponse): FormGroup;
 }

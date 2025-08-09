@@ -2,7 +2,7 @@ import { Component, input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
-import { MemberDataResponseDTO } from '@core/model/dataService';
+import { MemberResponseDTO } from '@core/model/dataService';
 
 @Component({
   selector: 'app-health-record-list',
@@ -29,6 +29,6 @@ import { MemberDataResponseDTO } from '@core/model/dataService';
   `,
 })
 export class HealthRecordListComponent {
-  healthRecordList = input.required<MemberDataResponseDTO[]>();
+  healthRecordList = input.required<MemberResponseDTO[]>();
   route = input.required<string>();
 }

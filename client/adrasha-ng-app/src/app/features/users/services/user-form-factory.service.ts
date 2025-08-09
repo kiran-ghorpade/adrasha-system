@@ -15,11 +15,11 @@ export class RoleRequestFormFactoryService
   extends BaseFormFactory
   implements CreateFormOnly<RoleRequestResponseDTO>
 {
-  createForm(initialData: RoleRequestResponseDTO, isLoading: boolean) {
+  createForm(initialData: RoleRequestResponseDTO) {
     // form groups
-    const personalDetails = this.step1(initialData, isLoading);
-    const roleDetails = this.step2(initialData, isLoading);
-    const healthCenterDetails = this.step3(initialData, isLoading);
+    const personalDetails = this.step1(initialData);
+    const roleDetails = this.step2(initialData);
+    const healthCenterDetails = this.step3(initialData);
 
     return this.fb.group({
       personalDetails,
@@ -45,42 +45,37 @@ export class RoleRequestFormFactoryService
   }
 
   // form steps
-  private step1(initialData: RoleRequestResponseDTO, isLoading: boolean) {
+  private step1(initialData: RoleRequestResponseDTO) {
     return this.fb.group({
       firstname: this.createControl(
         initialData.name?.firstname || '',
         [Validators.required],
-        isLoading
       ),
       middlename: this.createControl(
         initialData.name?.middlename || '',
         [Validators.required],
-        isLoading
       ),
       lastname: this.createControl(
         initialData.name?.lastname || '',
         [Validators.required],
-        isLoading
       ),
     });
   }
 
-  private step2(initialData: RoleRequestResponseDTO, isLoading: boolean) {
+  private step2(initialData: RoleRequestResponseDTO) {
     return this.fb.group({
       role: this.createControl(
         initialData.role || RoleRequestCreateDTORole.ASHA,
         [Validators.required],
-        isLoading
       ),
     });
   }
 
-  private step3(initialData: RoleRequestResponseDTO, isLoading: boolean) {
+  private step3(initialData: RoleRequestResponseDTO) {
     return this.fb.group({
       healthCenterId: this.createControl(
         initialData.healthCenterId || '',
         [Validators.required],
-        isLoading
       ),
     });
   }

@@ -97,7 +97,7 @@
       <button matButton (click)="stepper.reset()">
         {{ "roleRequest.resetButton" | translate }}
       </button>
-      <button matButton="filled" (click)="onSubmit()">
+      <button matButton="filled" (click)="onSubmit()" [disabled]="isLoading()">
         {{ "roleRequest.submitButton" | translate }}
       </button>
     </div>

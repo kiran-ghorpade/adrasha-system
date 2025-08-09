@@ -28,11 +28,12 @@ import { map, of, switchMap } from 'rxjs';
   </ng-container>`,
 })
 export class AnalyticsFamilyPovertyLineChartComponent {
-  searchStartDate = input.required<Date>();
-  searchEndDate = input.required<Date>();
-
   private readonly authService = inject(AuthService);
   private readonly analyticsService = inject(AnalyticsService);
+
+  today = new Date();
+  searchStartDate = input<Date>(this.today);
+  searchEndDate = input<Date>(this.today);
 
   labels = signal<string[]>([]);
   data = signal<ChartDataset[]>([]);

@@ -11,7 +11,7 @@ import { FamilyFormComponent } from '../../components';
   imports: [PageHeaderComponent, FamilyFormComponent, TranslatePipe],
   template: ` <div class="flex flex-col gap-5">
     <app-page-header [title]="'registry.family.addFamilyTitle' | translate" />
-    <app-family-create-form [userId]="userId() ?? ''" />
+    <app-family-create-form [id]="userId() ?? ''" />
   </div>`,
 })
 export class FamilyCreatePageComponent {

@@ -10,7 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { MemberDataService } from '@core/api/member-data/member-data.service';
-import { MemberDataResponseDTO } from '@core/model/dataService';
+import { MemberResponseDTO } from '@core/model/dataService';
 import { AuthService } from '@core/services';
 import { MemberListComponent } from '@features/registry/member/components';
 import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs';
@@ -38,7 +38,7 @@ export class SearchPageComponent {
     }
   );
 
-  memberList = signal<MemberDataResponseDTO[]>([]);
+  memberList = signal<MemberResponseDTO[]>([]);
   searchControl = new FormControl('');
 
   // paginated metadata

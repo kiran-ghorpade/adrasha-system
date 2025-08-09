@@ -5,12 +5,22 @@ import { Injectable } from '@angular/core';
 })
 export class LocalStorageService {
   get(key: string) {
-    return JSON.parse(localStorage.getItem(key) || '{}') || {};
+    const item = localStorage.getItem(key);
+    if (!item) return undefined;
+
+    try {
+      return JSON.parse(item);
+    } catch (error) {
+      console.error(
+        `Error parsing JSON for key "${key}" in localStorage:`,
+        error
+      );
+      return undefined;
+    }
   }
 
   set(key: string, value: any): boolean {
     localStorage.setItem(key, JSON.stringify(value));
-
     return true;
   }
 

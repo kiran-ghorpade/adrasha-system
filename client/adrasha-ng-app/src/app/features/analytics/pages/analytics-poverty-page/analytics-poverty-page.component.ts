@@ -18,7 +18,7 @@ import { PageHeaderComponent, PageWrapperComponent } from '@shared/components';
     MatFormFieldModule,
     AnalyticsFamilyPovertyPieChartComponent,
     AnalyticsFamilyPovertyLineChartComponent,
-    DatePipe
+    DatePipe,
   ],
   templateUrl: './analytics-poverty-page.component.html',
 })

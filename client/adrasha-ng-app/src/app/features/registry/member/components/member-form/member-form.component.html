@@ -170,7 +170,7 @@
       <button matButton (click)="stepper.reset()">
         {{ "registry.member.resetButton" | translate }}
       </button>
-      <button matButton="filled" (click)="onSubmit()">
+      <button matButton="filled" (click)="onSubmit()" [disabled]="isLoading()">
         {{ "registry.member.submitButton" | translate }}
       </button>
     </div>

@@ -1,4 +1,5 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -10,7 +11,6 @@ import {
   LocationCreateDTO,
   LocationResponseDTO,
   LocationUpdateDTO,
-  StaticDataDTO,
 } from '@core/model/masterdataService';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ValidationErrorComponent } from '@shared/components';
@@ -48,16 +48,18 @@ export class LocationFormComponent extends BaseFormComponent<
   protected readonly locationService = inject(LocationService);
 
   // states
-  locationTypes = signal<StaticDataDTO[]>([]);
+  locationTypes = toSignal(this.staticDataService.getLocationTypes(), {
+    initialValue: [],
+  });
 
   // form data handling
-  readonly form = this.formFactory.createForm(this.entity(), this.isLoading());
+  readonly form = this.formFactory.createForm(this.entity());
 
-  public get steps() {
+  override get steps() {
     return { ...this.form.controls };
   }
 
-  private getRawValues() {
+  override get rawValues() {
     return {
       ...this.steps.locationDetails.getRawValue(),
       ...this.steps.otherDetails.getRawValue(),
@@ -74,12 +76,6 @@ export class LocationFormComponent extends BaseFormComponent<
   }
 
   // helpers
-  protected override loadStaticData(): void {
-    this.staticDataService
-      .getLocationTypes()
-      .subscribe((types) => this.locationTypes.set(types));
-  }
-
   protected override prepareCreateData(): LocationCreateDTO {
     return {
       ...this.prepareUpdateData(),
@@ -87,7 +83,7 @@ export class LocationFormComponent extends BaseFormComponent<
   }
 
   protected override prepareUpdateData(): LocationUpdateDTO {
-    const data = this.getRawValues();
+    const data = this.rawValues;
     return {
       name: data.name,
       type: data.type,

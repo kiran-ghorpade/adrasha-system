@@ -29,9 +29,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-	private UserRepository userRepository;
-	private AuthService authService;
-	private ModelMapper mapper;
+	private final UserRepository userRepository;
+	private final AuthService authService;
+	private final ModelMapper mapper;
 
 	@Override
 	public Page<UserResponseDTO> getUserPage(UserFilterDTO filterDTO , Pageable pageable) {

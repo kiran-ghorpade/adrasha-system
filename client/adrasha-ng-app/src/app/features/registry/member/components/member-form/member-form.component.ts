@@ -2,11 +2,10 @@ import {
   Component,
   inject,
   input,
-  InputSignal,
-  OnInit,
-  signal,
+  InputSignal
 } from '@angular/core';
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -16,15 +15,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { StaticDataService } from '@core/api/static-data/static-data.service';
 import {
   MemberCreateDTO,
-  MemberCreateDTOGender,
-  MemberDataResponseDTO,
-  MemberUpdateDTO,
+  MemberResponseDTO,
+  MemberUpdateDTO
 } from '@core/model/dataService';
-import { StaticDataDTO } from '@core/model/masterdataService';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ValidationErrorComponent } from '@shared/components';
-import { MemberFormFactoryService, MemberService } from '../../services';
 import { BaseFormComponent } from '@shared/directives';
+import { MemberFormFactoryService, MemberService } from '../../services';
 
 @Component({
   selector: 'app-member-form',
@@ -46,14 +43,14 @@ export class MemberFormComponent extends BaseFormComponent<
   MemberFormFactoryService,
   MemberCreateDTO,
   MemberUpdateDTO,
-  MemberDataResponseDTO
+  MemberResponseDTO
 > {
   // overrides
   override formFactory = inject(MemberFormFactoryService);
   override id = input.required<string>();
-  override entity = input<MemberDataResponseDTO>({});
+  override entity = input<MemberResponseDTO>({});
   override isUpdate = input.required<boolean>();
-  override form = this.formFactory.createForm(this.entity(), this.isLoading());
+  override form = this.formFactory.createForm(this.entity());
 
   // dependencies
   private readonly staticDataService = inject(StaticDataService);
@@ -64,15 +61,19 @@ export class MemberFormComponent extends BaseFormComponent<
   familyId: InputSignal<string> = input.required();
 
   // default static data and states
-  genderList = signal<StaticDataDTO[]>([]);
-  aliveStatusOptions = signal<StaticDataDTO[]>([]);
+  genderList = toSignal(this.staticDataService.getGenders(), {
+    initialValue: [],
+  });
+  aliveStatusOptions = toSignal(this.staticDataService.getAliveStatuses(), {
+    initialValue: [],
+  });
 
   // form data handling
-  public get steps() {
+  override get steps() {
     return { ...this.form.controls };
   }
 
-  private getRawValues() {
+  override get rawValues() {
     return {
       ...this.steps.personalDetails.getRawValue(),
       ...this.steps.birthDetails.getRawValue(),
@@ -90,18 +91,8 @@ export class MemberFormComponent extends BaseFormComponent<
   }
 
   // helpers
-  override loadStaticData() {
-    this.staticDataService
-      .getGenders()
-      .subscribe((genders) => this.genderList.set(genders));
-
-    this.staticDataService
-      .getAliveStatuses()
-      .subscribe((list) => this.aliveStatusOptions.set(list));
-  }
-
   protected override prepareCreateData(): MemberCreateDTO {
-    const data = this.getRawValues();
+    const data = this.rawValues
     return {
       ashaId: this.userId() || '',
       ...this.prepareCommonData(),
@@ -115,7 +106,7 @@ export class MemberFormComponent extends BaseFormComponent<
   }
 
   private prepareCommonData() {
-    const data = this.getRawValues();
+    const data = this.rawValues
     return {
       familyId: this.familyId(),
       name: {

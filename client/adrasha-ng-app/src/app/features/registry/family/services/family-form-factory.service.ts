@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Validators } from '@angular/forms';
 import {
   FamilyCreateDTOPovertyStatus,
-  FamilyDataResponseDTO,
+  FamilyResponseDTO,
 } from '@core/model/dataService';
 import { MemberFormFactoryService } from '@features/registry/member/services';
 import { BaseFormFactory } from '@shared/directives';
@@ -13,20 +13,17 @@ import { CreateUpdateForm } from '@shared/interfaces';
 })
 export class FamilyFormFactoryService
   extends BaseFormFactory
-  implements CreateUpdateForm<FamilyDataResponseDTO>
+  implements CreateUpdateForm<FamilyResponseDTO>
 {
   private readonly memberFormFactory = inject(MemberFormFactoryService);
 
-  createForm(isLoading: boolean) {
+  createForm() {
     // form groups
-    const familyDetails = this.step1(null, isLoading);
-    const headPersonalDetails = this.memberFormFactory.step1({}, isLoading);
-    const headBirthDetails = this.memberFormFactory.step2({}, isLoading);
-    const headIdentificationDetails = this.memberFormFactory.step3(
-      {},
-      isLoading
-    );
-    const headContactDetails = this.memberFormFactory.step4({}, isLoading);
+    const familyDetails = this.step1(null);
+    const headPersonalDetails = this.memberFormFactory.step1({});
+    const headBirthDetails = this.memberFormFactory.step2({});
+    const headIdentificationDetails = this.memberFormFactory.step3({});
+    const headContactDetails = this.memberFormFactory.step4({});
 
     return this.fb.group({
       familyDetails,
@@ -37,9 +34,9 @@ export class FamilyFormFactoryService
     });
   }
 
-  updateForm(initialData: FamilyDataResponseDTO, isLoading: boolean) {
+  updateForm(initialData: FamilyResponseDTO) {
     // form groups
-    const familyDetails = this.step1(initialData, isLoading);
+    const familyDetails = this.step1(initialData);
 
     return this.fb.group({
       familyDetails,
@@ -47,51 +44,46 @@ export class FamilyFormFactoryService
   }
 
   // steps
-  private step1(data: FamilyDataResponseDTO | null, isLoading: boolean) {
+  private step1(data: FamilyResponseDTO | null) {
     return this.fb.group({
       povertyStatus: this.createControl(
         data?.povertyStatus ?? FamilyCreateDTOPovertyStatus.APL,
-        [Validators.required],
-        isLoading
+        [Validators.required]
       ),
-      houseId: this.createControl(
-        data?.houseId ?? '',
-        [Validators.required],
-        isLoading
-      ),
+      houseId: this.createControl(data?.houseId ?? '', [Validators.required]),
     });
   }
 }
 
-// private step2(isLoading: boolean) {
+// private step2(: boolean) {
 //   return this.fb.group({
-//     firstname: this.createControl('', [Validators.required], isLoading),
-//     middlename: this.createControl('', [Validators.required], isLoading),
-//     lastname: this.createControl('', [Validators.required], isLoading),
+//     firstname: this.createControl('', [Validators.required], ),
+//     middlename: this.createControl('', [Validators.required], ),
+//     lastname: this.createControl('', [Validators.required], ),
 //     gender: this.createControl(
-//       MemberDataResponseDTOGender.MALE,
+//       MemberResponseDTOGender.MALE,
 //       [Validators.required],
-//       isLoading
+//
 //     ),
 //   });
 // }
 
-// private step3(isLoading: boolean) {
+// private step3(: boolean) {
 //   return this.fb.group({
-//     dateOfBirth: this.createControl('', [Validators.required], isLoading),
-//     birthPlace: this.createControl('', [], isLoading),
+//     dateOfBirth: this.createControl('', [Validators.required], ),
+//     birthPlace: this.createControl('', [], ),
 //   });
 // }
 
-// private step4(isLoading: boolean) {
+// private step4(: boolean) {
 //   return this.fb.group({
-//     adharNumber: this.createControl('', adharNumberValidation, isLoading),
-//     abhaNumber: this.createControl('', abhaNumberValidation, isLoading),
+//     adharNumber: this.createControl('', adharNumberValidation, ),
+//     abhaNumber: this.createControl('', abhaNumberValidation, ),
 //   });
 // }
 
-// private step5(isLoading: boolean) {
+// private step5(: boolean) {
 //   return this.fb.group({
-//     mobileNumber: this.createControl('', mobileNumberValidation, isLoading),
+//     mobileNumber: this.createControl('', mobileNumberValidation, ),
 //   });
 // }

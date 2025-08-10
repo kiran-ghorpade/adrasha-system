@@ -98,7 +98,7 @@ public class RoleRequestController {
 	@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = RoleRequestResponseDTO.class)))
 	@ApiResponse(responseCode = "400", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class)))
 	@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
-	@PreAuthorize("#id.toString() == authentication.principal.toString()")
+	@PreAuthorize("#id.toString() == authentication.principal.id")
 	public RoleRequestResponseDTO updateRoleRequest(
 			@Parameter(description = "ID of the user to be updated", required = true) @PathVariable UUID id,
 			@Valid @RequestBody RoleRequestUpdateDTO updatedRequest) {
@@ -109,7 +109,7 @@ public class RoleRequestController {
 	@DeleteMapping("/{id}")
 	@ApiResponse(responseCode = "204", content = @Content())
 	@ApiResponse(responseCode = "404", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
-	@PreAuthorize("#id.toString() == authentication.principal.toString() or hasAnyRole('ADMIN')")
+	@PreAuthorize("#id.toString() == authentication.principal.id or hasAnyRole('ADMIN')")
 	public ResponseEntity<Void> deleteRoleRequest(@PathVariable UUID id) {
 
 		roleRequestService.deleteRoleRequest(id);

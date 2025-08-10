@@ -60,7 +60,7 @@ export class RoleRequestPageComponent {
     this.roleRequestService
       .getAllRoleRequests({
         filterDTO: {
-          userId: this.userId,
+          userId: this.isAdmin()? '': this.userId,
         },
         pageable: {
           page: this.pageIndex(),

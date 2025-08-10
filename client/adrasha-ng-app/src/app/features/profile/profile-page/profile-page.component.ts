@@ -42,7 +42,7 @@ export class ProfilePageComponent {
           tap((user) => this.userDetails.set(user)),
           switchMap((user) => {
             if (!user.healthCenterId) {
-              return of(null);
+              return of({});
             }
 
             return this.healthCenterService
@@ -53,7 +53,7 @@ export class ProfilePageComponent {
                 ),
                 switchMap((healthCenter) => {
                   if (!healthCenter?.locationId) {
-                    return of(null);
+                    return of({});
                   }
 
                   return this.locationService
@@ -64,7 +64,7 @@ export class ProfilePageComponent {
           }),
           catchError((err) => {
             console.error('Error loading profile data:', err);
-            return of(null);
+            return of({});
           })
         )
         .subscribe(() => {

@@ -26,7 +26,6 @@ import { map, of, switchMap } from 'rxjs';
   template: ` <app-line-chart [labels]="labels()" [data]="data()" /> `,
 })
 export class AnalyticsHealthNCDLineChartComponent {
-
   private readonly authService = inject(AuthService);
   private readonly analyticsService = inject(AnalyticsService);
 
@@ -37,61 +36,73 @@ export class AnalyticsHealthNCDLineChartComponent {
   labels = signal<string[]>([]);
   data = signal<ChartDataset[]>([]);
 
-  trends = toSignal<GetNCDTrends200>(
-    this.authService.currentUser.pipe(
-      map((user) => user?.id),
-      switchMap((id) => {
-        if (!id) return of({});
-
-        return this.analyticsService.getNCDTrends({
-          analyticsFilterDTO: {
-            start: this.searchStartDate().toISOString(),
-            end: this.searchEndDate().toISOString(),
-            userId: id,
-          },
-        });
-      })
-    )
-  );
-
   constructor() {
     effect(() => {
-      const roleTrends = this.trends();
+      const start = this.searchStartDate();
+      const end = this.searchEndDate();
 
-      // Generate last 10 days in yyyy-MM-dd format
-      const days = Array.from({ length: 10 }, (_, i) => {
-        const date = new Date(Date.now() - (9 - i) * 24 * 60 * 60 * 1000);
-        return {
-          key: date.toISOString().slice(0, 10), // 'YYYY-MM-DD'
-          label: new Date(date).toLocaleString(), // Optional: 'Aug 1'
-        };
-      });
+      this.authService.currentUser
+        .pipe(
+          map((user) => user?.id ?? ''),
+          map((userId) => {
+            if (!userId || !start || !end) {
+              this.labels.set([]);
+              this.data.set([]);
+              return;
+            }
 
-      // Initialize counts
-      const dailyCountMap: Record<string, number> = {};
-      for (const day of days) {
-        dailyCountMap[day.key] = 0;
-      }
+            return this.analyticsService.getNCDTrends({
+              analyticsFilterDTO: {
+                start: start.toISOString(),
+                end: end.toISOString(),
+                userId,
+              },
+            });
+          })
+        )
+        .pipe(
+          map((trends) => {
+            const dateRange: string[] = [];
+            const current = new Date(start);
+            const endDate = new Date(end);
 
-      // Aggregate counts by createdAt date
-      for (const statusCount of Object.values(roleTrends ?? [])) {
-        for (const entry of statusCount) {
-          if (!entry.createdAt) continue;
-          const dateKey = entry.createdAt.slice(0, 10);
-          if (dailyCountMap[dateKey] !== undefined) {
-            dailyCountMap[dateKey] += entry.count ?? 0;
-          }
-        }
-      }
+            while (current <= endDate) {
+              dateRange.push(current.toISOString().slice(0, 10));
+              current.setDate(current.getDate() + 1);
+            }
 
-      // Update chart
-      this.labels.set(days.map((d) => d.label));
-      this.data.set([
-        {
-          label: 'poverty status',
-          data: days.map((d) => dailyCountMap[d.key]),
-        },
-      ]);
+            const labelMap = dateRange.reduce<Record<string, string>>(
+              (acc, dateStr) => {
+                acc[dateStr] = new Date(dateStr).toLocaleDateString();
+                return acc;
+              },
+              {}
+            );
+
+            const dailyCountMap: Record<string, number> = {};
+            dateRange.forEach((date) => (dailyCountMap[date] = 0));
+
+            for (const statusCount of Object.values(trends ?? [])) {
+              for (const entry of statusCount) {
+                const dateKey = entry.createdAt?.slice(0, 10);
+                if (dateKey && dailyCountMap[dateKey] !== undefined) {
+                  dailyCountMap[dateKey] += entry.count ?? 0;
+                }
+              }
+            }
+
+            this.labels.set(dateRange.map((date) => labelMap[date]));
+            this.data.set([
+              {
+                label: 'Age Status',
+                data: dateRange.map((date) => dailyCountMap[date]),
+                borderColor: '#3b82f6',
+                backgroundColor: 'rgba(59, 130, 246, 0.5)',
+                fill: true,
+              },
+            ]);
+          })
+        );
     });
   }
 }

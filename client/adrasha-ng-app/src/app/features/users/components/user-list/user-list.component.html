@@ -15,9 +15,11 @@
     </h3>
     <p matListItemLine>
       <em>
-        [@for(role of user.roles; track $index){
-        <strong> {{role}}, </strong>
-        }]
+        @if(user.roles?.length){
+          [@for(role of user.roles; track $index){
+          <strong> {{role}}, </strong>
+          }]
+        }@else {Roles Not Found}
       </em>
     </p>
 

@@ -1,16 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, effect, inject, input, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { AnalyticsService } from '@core/api';
-import { GetAgeTrends200 } from '@core/model/analyticsService';
 import { AuthService } from '@core/services';
 import { LineChartComponent } from '@shared/components/line-chart/line-chart.component';
 import { ChartDataset } from 'chart.js';
-import { map, of, switchMap } from 'rxjs';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-anlaytics-member-age-line-chart',

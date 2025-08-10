@@ -61,6 +61,7 @@ export class RoleRequestFormComponent extends BaseFormComponent<
   readonly roleList = toSignal(this.staticDataService.getRoles(), {
     initialValue: [],
   });
+
   healthCenterList = toSignal(
     this.healthCenterService
       .getAllHealthCenters({

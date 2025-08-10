@@ -52,7 +52,7 @@ export class AuthService {
       // tap((value) => console.log('init status : ' + value)),
       switchMap(() => this.isLoggedIn$),
       // tap((value) => console.log('check status : ' + value)),
-      map((loggedIn) => loggedIn && this.tokenService.valid())
+      map((loggedIn) => loggedIn && this.tokenService.valid()),
     );
   }
 

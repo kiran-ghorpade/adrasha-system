@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { CanActivateChildFn, Router } from '@angular/router';
 import { UserDTO, UserDTORolesItem } from '@core/model/authService';
 import { AuthService } from '@core/services';
-import { map, of, switchMap, take } from 'rxjs';
+import { catchError, map, of, switchMap, take, throwError } from 'rxjs';
 
 export const roleGuard: CanActivateChildFn = (childRoute, state) => {
   const auth = inject(AuthService);
@@ -31,6 +31,10 @@ export const roleGuard: CanActivateChildFn = (childRoute, state) => {
         return of(false);
       }
       return of(true);
+    }),
+    catchError((error) => {
+      console.error('Error caught:', error);
+      return of(false); // default empty array or another fallback value
     })
   );
 };

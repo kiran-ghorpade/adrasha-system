@@ -76,7 +76,6 @@ public class RoleRequestServiceImpl implements RoleRequestService {
 
 	@Override
 	public RoleRequestResponseDTO createRoleRequest(RoleRequestCreateDTO createDTO) {
-				
 	  	if(requestRepository.existsByUserIdAndStatus(createDTO.getUserId(), RequestStatus.PENDING)) {
 	  		throw new AlreadyExistsException("error.roleRequest.alreadyExists");
 	  	}

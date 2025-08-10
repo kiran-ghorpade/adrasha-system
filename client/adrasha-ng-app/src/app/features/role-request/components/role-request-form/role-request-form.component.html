@@ -27,7 +27,6 @@
         </mat-form-field>
       </div>
       <div>
-        <button matButton matStepperPrevious>Back</button>
         <button matButton matStepperNext>Next</button>
       </div>
     </form>
@@ -70,7 +69,7 @@
           }}</mat-label>
           <mat-select required formControlName="healthCenterId">
             @for (center of healthCenterList(); track $index) {
-            <mat-option [value]="`${center.id}`">{{ center.id }}</mat-option>
+            <mat-option [value]="`${center.id}`">{{ center.name }}</mat-option>
             }
           </mat-select>
           <app-validation-error

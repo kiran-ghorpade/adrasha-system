@@ -14,7 +14,7 @@ export interface DataLabelType {
   template: ` <mat-list-item>
     <mat-icon matListItemIcon>{{ icon() }}</mat-icon>
     <h4 matListItemTitle>
-      {{ value() }}
+      {{ value() ?? 'Not Found' }}
     </h4>
     <div matListItemLine>{{ label() }}</div>
   </mat-list-item>`,

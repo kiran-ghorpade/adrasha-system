@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -6,16 +6,22 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { ActivatedRoute, RouterModule } from '@angular/router';
+import { HealthCenterService, LocationService } from '@core/api';
 import { UserService as UserApiService } from '@core/api/user/user.service';
+import {
+  HealthCenterResponseDTO,
+  LocationResponseDTO,
+} from '@core/model/masterdataService';
 import { UserResponseDTO } from '@core/model/userService';
 import { AuthService } from '@core/services';
-import { UserDetailsComponent } from "@features/users/components";
+import { UserDetailsComponent } from '@features/users/components';
 import {
   DataLabelType,
   PageHeaderComponent,
-  PageWrapperComponent
+  PageWrapperComponent,
 } from '@shared/components';
 import { getFullName } from '@shared/utils/fullName';
+import { catchError, map, of, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-role-request-details-page',
@@ -27,8 +33,8 @@ import { getFullName } from '@shared/utils/fullName';
     MatMenuModule,
     MatIconModule,
     RouterModule,
-    UserDetailsComponent
-],
+    UserDetailsComponent,
+  ],
   templateUrl: './user-details-page.component.html',
 })
 export class UserDetailsPageComponent {
@@ -36,38 +42,74 @@ export class UserDetailsPageComponent {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly userApiService = inject(UserApiService);
   private readonly authService = inject(AuthService);
+  private readonly healthCenterService = inject(HealthCenterService);
+  private readonly locationService = inject(LocationService);
 
-  data = signal<DataLabelType[]>([]);
-  userDetails = signal<UserResponseDTO | null>(null);
-  userId: string = '';
+  userDetails = signal<UserResponseDTO>({});
+  userId = toSignal(this.activatedRoute.paramMap.pipe(map((p) => p.get('id'))));
 
   isAdmin = toSignal(this.authService.isAdmin(), { initialValue: false });
 
-  ngOnInit(): void {
-    this.userId = this.activatedRoute.snapshot.paramMap.get('id') || '';
-    if (this.userId) this.loadData();
-  }
+  healthCenterDetails = signal<HealthCenterResponseDTO>({});
+  addressDetails = signal<LocationResponseDTO>({});
+  data = signal<DataLabelType[]>([]);
 
-  loadData() {
-    this.userApiService
-      .getUser(this.userId)
-      .subscribe((member) => {
-        this.data.set(userResponseToData(member));
-        this.userDetails.set(member);
-      });
+  constructor() {
+    effect(() => {
+      this.userApiService
+        .getUser(this.userId() ?? ' ')
+        .pipe(
+          tap((user) => this.userDetails.set(user)),
+          switchMap((user) => {
+            if (!user.healthCenterId) {
+              return of({});
+            }
+
+            return this.healthCenterService
+              .getHealthCenter(user.healthCenterId ?? '')
+              .pipe(
+                tap((healthCenter) =>
+                  this.healthCenterDetails.set(healthCenter)
+                ),
+                switchMap((healthCenter) => {
+                  if (!healthCenter?.locationId) {
+                    return of({});
+                  }
+
+                  return this.locationService
+                    .getLocation(healthCenter.locationId ?? '')
+                    .pipe(tap((location) => this.addressDetails.set(location)));
+                })
+              );
+          }),
+          catchError((err) => {
+            console.error('Error loading profile data:', err);
+            return of({});
+          })
+        )
+        .subscribe(() => {
+          this.data.set(
+            userResponseToData(
+              this.userDetails(),
+              this.healthCenterDetails(),
+              this.addressDetails()
+            )
+          );
+
+          console.log(this.data());
+        });
+    });
   }
 }
 
-
-function userResponseToData(user: UserResponseDTO): DataLabelType[] {
+function userResponseToData(
+  user: UserResponseDTO,
+  healthCenter: HealthCenterResponseDTO,
+  location: LocationResponseDTO
+): DataLabelType[] {
   return [
     { label: 'User ID', value: user.id, icon: 'badge' },
     { label: 'Name', value: getFullName(user.name), icon: 'person' },
-    {
-      label: 'Health Center ID',
-      value: user.healthCenterId,
-      icon: 'first_aid',
-    },
     {
       label: 'Adhar Number',
       value: user.adharNumber,
@@ -75,18 +117,30 @@ function userResponseToData(user: UserResponseDTO): DataLabelType[] {
     },
     {
       label: 'Roles',
-      value: user.roles?.map((role) => role).join(', ') ?? '',
+      value: user.roles?.length ? user.roles.join(', ') : 'Not Found',
       icon: 'group',
     },
+
+    {
+      label: 'Health Center',
+      value: healthCenter.name,
+      icon: 'local_hospital',
+    },
+    { label: 'Center Type', value: healthCenter?.centerType, icon: 'business' },
+
+    // Address Info
+    { label: 'District', value: location?.district, icon: 'location_city' },
+    { label: 'Subdistrict', value: location?.subdistrict, icon: 'apartment' },
+    { label: 'Pincode', value: location?.pincode, icon: 'pin_drop' },
+    { label: 'State', value: location?.state, icon: 'map' },
+    { label: 'Country', value: location?.country, icon: 'public' },
+
+    // Timestamps
     {
       label: 'Created At',
       value: user.createdAt,
       icon: 'calendar_today',
     },
-    {
-      label: 'Last Update',
-      value: user.updatedAt,
-      icon: 'update',
-    },
+    { label: 'Last Update', value: user.updatedAt, icon: 'update' },
   ];
 }

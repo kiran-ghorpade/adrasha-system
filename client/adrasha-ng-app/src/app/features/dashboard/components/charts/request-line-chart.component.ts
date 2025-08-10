@@ -1,14 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, effect, inject, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
-import {
-  AnalyticsService
-} from '@core/api';
+import { AnalyticsService } from '@core/api';
 import { LineChartComponent } from '@shared/components/line-chart/line-chart.component';
+import { ChartDataset } from 'chart.js';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-admin-dashboard-line-chart',
@@ -23,74 +22,77 @@ import { LineChartComponent } from '@shared/components/line-chart/line-chart.com
   ],
   template: `
     <app-line-chart
-      [labels]="lineChartData().labels"
-      [data]="lineChartData().datasets"
+      [labels]="labels()"
+      [data]="data()"
     />
   `,
 })
 export class AdminDashboardLineChartComponent {
   private readonly analyticsService = inject(AnalyticsService);
 
-  requestTrends = toSignal(
-    this.analyticsService.getRequestTrends({
-      analyticsFilterDTO: {
-        // End is now
-        end: new Date().toISOString(),
-        // Start is 10 days ago
-        start: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
-        userId: '',
-      },
-    })
-  );
+  today = new Date();
+  searchStartDate = new Date(Date.now() - 10 * 24 * 60 * 60 * 1000);
+  searchEndDate = new Date();
 
-  lineChartData = signal({
-    labels: [] as string[],
-    datasets: [
-      {
-        label: 'Requests Added',
-        data: [] as number[],
-      },
-    ],
-  });
+  labels = signal<string[]>([]);
+  data = signal<ChartDataset[]>([]);
 
-  updateLineChartData = effect(() => {
-    const roleDist = this.requestTrends() ?? {};
+  constructor() {
+    effect(() => {
+      const start = this.searchStartDate;
+      const end = this.searchEndDate;
 
-    // Generate last 10 days in yyyy-MM-dd format
-    const days = Array.from({ length: 10 }, (_, i) => {
-      const date = new Date(Date.now() - (9 - i) * 24 * 60 * 60 * 1000);
-      return {
-        key: date.toISOString().slice(0, 10), // 'YYYY-MM-DD'
-        label: new Date(date).toLocaleString(), // Optional: 'Aug 1'
-      };
+      this.analyticsService
+        .getRequestTrends({
+          analyticsFilterDTO: {
+            start: start.toISOString(),
+            end: end.toISOString(),
+            userId:'',
+          },
+        })
+        .pipe(
+          map((trends) => {
+            const dateRange: string[] = [];
+            const current = new Date(start);
+            const endDate = new Date(end);
+
+            while (current <= endDate) {
+              dateRange.push(current.toISOString().slice(0, 10));
+              current.setDate(current.getDate() + 1);
+            }
+
+            const labelMap = dateRange.reduce<Record<string, string>>(
+              (acc, dateStr) => {
+                acc[dateStr] = new Date(dateStr).toLocaleDateString();
+                return acc;
+              },
+              {}
+            );
+
+            const dailyCountMap: Record<string, number> = {};
+            dateRange.forEach((date) => (dailyCountMap[date] = 0));
+
+            for (const statusCount of Object.values(trends ?? [])) {
+              for (const entry of statusCount) {
+                const dateKey = entry.createdAt?.slice(0, 10);
+                if (dateKey && dailyCountMap[dateKey] !== undefined) {
+                  dailyCountMap[dateKey] += entry.count ?? 0;
+                }
+              }
+            }
+
+            this.labels.set(dateRange.map((date) => labelMap[date]));
+            this.data.set([
+              {
+                label: 'Age Status',
+                data: dateRange.map((date) => dailyCountMap[date]),
+                borderColor: '#3b82f6',
+                backgroundColor: 'rgba(59, 130, 246, 0.5)',
+                fill: true,
+              },
+            ]);
+          })
+        );
     });
-
-    // Initialize counts
-    const dailyCountMap: Record<string, number> = {};
-    for (const day of days) {
-      dailyCountMap[day.key] = 0;
-    }
-
-    // Aggregate counts by createdAt date
-    for (const statusCounts of Object.values(roleDist)) {
-      for (const entry of statusCounts) {
-        if (!entry.createdAt) continue;
-        const dateKey = entry.createdAt.slice(0, 10);
-        if (dailyCountMap[dateKey] !== undefined) {
-          dailyCountMap[dateKey] += entry.count ?? 0;
-        }
-      }
-    }
-
-    // Update chart
-    this.lineChartData.set({
-      labels: days.map((d) => d.label),
-      datasets: [
-        {
-          label: 'Requests Added',
-          data: days.map((d) => dailyCountMap[d.key]),
-        },
-      ],
-    });
-  });
+  }
 }

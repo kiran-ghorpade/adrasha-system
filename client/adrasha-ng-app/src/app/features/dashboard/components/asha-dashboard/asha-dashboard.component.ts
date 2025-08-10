@@ -34,7 +34,7 @@ import {
     MatListModule,
     DataCardLabelComponent,
     CommonModule,
-    LineChartComponent,
+    // LineChartComponent,
     PreviousVisitsListComponent,
     AshaDashboardPovertyChartComponent,
     AshaDashboardGenderChartComponent,

@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { AnalyticsService } from '@core/api';
 import { AuthService } from '@core/services';
 import { LineChartComponent } from '@shared/components/line-chart/line-chart.component';
+import { TranslateService } from '@ngx-translate/core';
 import { ChartDataset } from 'chart.js';
 import { map } from 'rxjs';
 
@@ -28,6 +29,7 @@ import { map } from 'rxjs';
 export class AnalyticsMemberAgeLineChartComponent {
   private readonly authService = inject(AuthService);
   private readonly analyticsService = inject(AnalyticsService);
+  private readonly translateService = inject(TranslateService);
 
   today = new Date();
   searchStartDate = input<Date>(this.today);
@@ -94,7 +96,9 @@ export class AnalyticsMemberAgeLineChartComponent {
             this.labels.set(dateRange.map((date) => labelMap[date]));
             this.data.set([
               {
-                label: 'Age Status',
+                label: this.translateService.instant(
+                  'app.features.analytics.page.age.chartLabel'
+                ),
                 data: dateRange.map((date) => dailyCountMap[date]),
                 borderColor: '#3b82f6',
                 backgroundColor: 'rgba(59, 130, 246, 0.5)',

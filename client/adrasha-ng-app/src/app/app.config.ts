@@ -48,6 +48,8 @@ export const appConfig: ApplicationConfig = {
         useFactory: httpLoaderFactory,
         deps: [HttpClient],
       },
+      isolate:true,
+      defaultLanguage:'en',
     }),
     provideAnimationsAsync(),
     provideHttpClient(withInterceptors(interceptors)),

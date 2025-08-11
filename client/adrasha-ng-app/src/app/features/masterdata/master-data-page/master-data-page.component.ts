@@ -4,6 +4,7 @@ import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { PageHeaderComponent } from '@shared/components';
 import { PageWrapperComponent } from '@shared/components/page-wrapper/page-wrapper.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-master-data-page',
@@ -13,13 +14,26 @@ import { PageWrapperComponent } from '@shared/components/page-wrapper/page-wrapp
     PageHeaderComponent,
     MatListModule,
     MatIconModule,
+    TranslateModule,
   ],
   templateUrl: './master-data-page.component.html',
 })
 export class MasterDataPageComponent {
   masterdataTypes = [
-    { label: 'Locations', icon: 'location_on', route:'locations' },
-    { label: 'Health Centers', icon: 'local_hospital', route:'healthCenters' },
-    { label: 'Non-Communicable Disease', icon: 'health_and_safety', route:'ncd' },
+    {
+      label: 'app.features.masterdata.locations',
+      icon: 'location_on',
+      route: 'locations',
+    },
+    {
+      label: 'app.features.masterdata.healthCenters',
+      icon: 'local_hospital',
+      route: 'healthCenters',
+    },
+    {
+      label: 'app.features.masterdata.ncd',
+      icon: 'health_and_safety',
+      route: 'ncd',
+    },
   ];
 }

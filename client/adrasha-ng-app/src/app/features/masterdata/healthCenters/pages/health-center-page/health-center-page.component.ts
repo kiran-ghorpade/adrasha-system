@@ -9,6 +9,7 @@ import { LocationListComponent } from '@features/masterdata/locations/components
 import { PageWrapperComponent, PageHeaderComponent } from '@shared/components';
 import { HealthCenterListComponent } from '../../components';
 import { tap } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-health-center-page',
@@ -20,6 +21,7 @@ import { tap } from 'rxjs';
     MatIconModule,
     RouterModule,
     HealthCenterListComponent,
+    TranslateModule
   ],
   templateUrl: './health-center-page.component.html',
 })

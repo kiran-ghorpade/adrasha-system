@@ -6,7 +6,7 @@
   <div class="row-span-2 col-span-12 p-3">
     @if(!isAdmin() && !isAsha()){
     <app-dashboard-header
-      message="You don't have enough permission to access application."
+      [message]="'app.features.dashboard.main.permissionError' | translate"
     />
     } @else {
     <app-dashboard-header />
@@ -17,7 +17,7 @@
     @if (isAdmin()) {
     <app-admin-dashboard />
     } @else if(isAsha()){
-    <app-asha-dashboard greetings="Hello, Asha" />
+    <app-asha-dashboard/>
     } @else if(isUser()){
     <app-user-dashboard />
     }

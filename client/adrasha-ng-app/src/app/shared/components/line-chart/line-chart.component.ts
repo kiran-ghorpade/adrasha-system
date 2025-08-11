@@ -5,19 +5,12 @@ import { BaseChartDirective } from 'ng2-charts';
 @Component({
   selector: 'app-line-chart',
   standalone: true,
-  imports: [BaseChartDirective],
+  imports: [],
   template: `
-      <canvas
-        baseChart
-        [data]="lineChartData()"
-        [type]="lineChartType"
-        [options]="lineChartOptions"
-      ></canvas>
+    <app-line-chart [labels]="labels()" [data]="data()"></app-line-chart>
   `,
 })
 export class LineChartComponent {
-  @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
-
   // Input signals
   labels = input<string[]>();
   data = input<ChartDataset[]>();
@@ -43,37 +36,4 @@ export class LineChartComponent {
           ],
     };
   });
-
-  lineChartType: ChartType = 'line';
-
-  lineChartOptions: ChartConfiguration['options'] = {
-    responsive: true,
-    maintainAspectRatio: false,
-    interaction: {
-      mode: 'index',
-      intersect: false,
-    },
-    plugins: {
-      legend: { display: true },
-      tooltip: {
-        callbacks: {
-          label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y}`,
-        },
-      },
-    },
-    scales: {
-      x: {
-        ticks: {
-          color: '#6b7280', // optional styling
-        },
-      },
-      y: {
-        beginAtZero: true,
-        ticks: {
-          callback: (value) => `${value}`,
-          color: '#6b7280', // optional styling
-        },
-      },
-    },
-  };
 }

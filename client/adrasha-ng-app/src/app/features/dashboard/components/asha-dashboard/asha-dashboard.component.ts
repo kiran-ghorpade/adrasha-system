@@ -2,28 +2,24 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   computed,
-  effect,
-  inject,
-  signal,
-  WritableSignal,
+  inject
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
-import { FamilyDataService } from '@core/api';
-import { HealthRecordsService } from '@core/api';
+import { FamilyDataService, HealthRecordsService } from '@core/api';
 import { MemberDataService } from '@core/api/member-data/member-data.service';
 import { AuthService } from '@core/services';
+import { TranslatePipe } from '@ngx-translate/core';
 import { DataCardLabelComponent } from '@shared/components';
-import { LineChartComponent } from '@shared/components/line-chart/line-chart.component';
 import { combineLatest, map, of, switchMap } from 'rxjs';
-import { PreviousVisitsListComponent } from '../previous-visits-list/previous-visits-list.component';
 import {
   AshaDashboardGenderChartComponent,
   AshaDashboardPovertyChartComponent,
 } from '../charts';
+import { PreviousVisitsListComponent } from '../previous-visits-list/previous-visits-list.component';
 
 @Component({
   selector: 'app-asha-dashboard',
@@ -34,6 +30,7 @@ import {
     MatListModule,
     DataCardLabelComponent,
     CommonModule,
+    TranslatePipe,
     // LineChartComponent,
     PreviousVisitsListComponent,
     AshaDashboardPovertyChartComponent,

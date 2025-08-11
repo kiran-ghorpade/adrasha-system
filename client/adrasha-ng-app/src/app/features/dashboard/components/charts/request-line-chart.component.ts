@@ -6,6 +6,7 @@ import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { AnalyticsService } from '@core/api';
 import { LineChartComponent } from '@shared/components/line-chart/line-chart.component';
+import { TranslateService } from '@ngx-translate/core';
 import { ChartDataset } from 'chart.js';
 import { map } from 'rxjs';
 
@@ -20,15 +21,11 @@ import { map } from 'rxjs';
     CommonModule,
     LineChartComponent,
   ],
-  template: `
-    <app-line-chart
-      [labels]="labels()"
-      [data]="data()"
-    />
-  `,
+  template: ` <app-line-chart [labels]="labels()" [data]="data()" /> `,
 })
 export class AdminDashboardLineChartComponent {
   private readonly analyticsService = inject(AnalyticsService);
+  private readonly translateService = inject(TranslateService);
 
   today = new Date();
   searchStartDate = new Date(Date.now() - 10 * 24 * 60 * 60 * 1000);
@@ -47,7 +44,7 @@ export class AdminDashboardLineChartComponent {
           analyticsFilterDTO: {
             start: start.toISOString(),
             end: end.toISOString(),
-            userId:'',
+            userId: '',
           },
         })
         .pipe(
@@ -84,7 +81,9 @@ export class AdminDashboardLineChartComponent {
             this.labels.set(dateRange.map((date) => labelMap[date]));
             this.data.set([
               {
-                label: 'Age Status',
+                label: this.translateService.instant(
+                  'app.features.analytics.page.request.chartLabel'
+                ),
                 data: dateRange.map((date) => dailyCountMap[date]),
                 borderColor: '#3b82f6',
                 backgroundColor: 'rgba(59, 130, 246, 0.5)',

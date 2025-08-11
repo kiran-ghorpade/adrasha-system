@@ -1,22 +1,22 @@
 <div class="h-full w-full grid md:grid-rows-10 grid-cols-12 gap-2">
   <!-- Values -->
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-4">
-    <app-data-card-label [value]="totalUsers()" [label]="`Users`" />
+    <app-data-card-label [value]="totalUsers()" [label]="'app.features.dashboard.admin.users' | translate" />
   </div>
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-5">
     <app-data-card-label
       [value]="pendingRequestsCount()"
-      [label]="`Pending Requests`"
+      [label]="'app.features.dashboard.admin.pendingRequests' | translate"
     />
   </div>
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-6">
     <app-data-card-label
       [value]="totalHealthCenters()"
-      [label]="`Health Centers`"
+      [label]="'app.features.dashboard.admin.healthCenters' | translate"
     />
   </div>
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-4">
-    <app-data-card-label [value]="totalLocations()" [label]="`Locations`" />
+    <app-data-card-label [value]="totalLocations()" [label]="'app.features.dashboard.admin.locations' | translate" />
   </div>
 
   <!-- Charts -->

@@ -1,16 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, effect, inject, input, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { AnalyticsService } from '@core/api';
-import { GetNCDTrends200 } from '@core/model/analyticsService';
 import { AuthService } from '@core/services';
 import { LineChartComponent } from '@shared/components/line-chart/line-chart.component';
+import { TranslateService } from '@ngx-translate/core';
 import { ChartDataset } from 'chart.js';
-import { map, of, switchMap } from 'rxjs';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-anlaytics-health-ncd-line-chart',
@@ -28,6 +27,7 @@ import { map, of, switchMap } from 'rxjs';
 export class AnalyticsHealthNCDLineChartComponent {
   private readonly authService = inject(AuthService);
   private readonly analyticsService = inject(AnalyticsService);
+  private readonly translateService = inject(TranslateService);
 
   today = new Date();
   searchStartDate = input<Date>(this.today);
@@ -94,7 +94,9 @@ export class AnalyticsHealthNCDLineChartComponent {
             this.labels.set(dateRange.map((date) => labelMap[date]));
             this.data.set([
               {
-                label: 'Age Status',
+                label: this.translateService.instant(
+                  'app.features.analytics.page.ncd.chartLabel'
+                ),
                 data: dateRange.map((date) => dailyCountMap[date]),
                 borderColor: '#3b82f6',
                 backgroundColor: 'rgba(59, 130, 246, 0.5)',

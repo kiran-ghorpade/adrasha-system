@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { HealthCenterService as HealthCenterApiService } from '@core/api';
 import { HealthCenterService } from '../../services';
 import { HealthCenterResponseDTO } from '@core/model/masterdataService';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-health-center-details-page',
@@ -27,6 +28,7 @@ import { HealthCenterResponseDTO } from '@core/model/masterdataService';
     MatIconModule,
     RouterModule,
     HealthCenterDetailsComponent,
+    TranslateModule,
   ],
   templateUrl: './health-center-details-page.component.html',
 })
@@ -35,6 +37,7 @@ export class HealthCenterDetailsPageComponent {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly healthCenterApiService = inject(HealthCenterApiService);
   private readonly healthCenterService = inject(HealthCenterService);
+  private readonly translateService = inject(TranslateService);
 
   data = signal<DataLabelType[]>([]);
   healthCenterDetails = signal<HealthCenterResponseDTO | null>(null);
@@ -57,8 +60,10 @@ export class HealthCenterDetailsPageComponent {
   handleDeleteClick() {
     const dialogRef = this.dialog.open(ConfirmationComponent, {
       data: {
-        title: 'Do you want to delete this member?',
-        message: 'Member and his healthrecords will be deleted',
+        title: this.translateService.instant('app.dialog.deleteMember.title'),
+        message: this.translateService.instant(
+          'app.dialog.deleteMember.message'
+        ),
       },
     });
 
@@ -75,36 +80,40 @@ function healthCenterToData(
 ): DataLabelType[] {
   return [
     {
-      label: 'Health Center ID',
+      label: 'app.features.masterdata.healthCenter.labels.id',
       value: healthCenter.id,
       icon: 'local_hospital',
     },
-    { label: 'Name', value: healthCenter.name, icon: 'badge' },
+    { label: 'app.common.name', value: healthCenter.name, icon: 'badge' },
     {
-      label: 'Center Type',
+      label: 'app.features.masterdata.healthCenter.labels.centerType',
       value: healthCenter.centerType || 'Not Available',
       icon: 'business',
     },
     {
-      label: 'Location ID',
+      label: 'app.features.masterdata.healthCenter.labels.locationId',
       value: healthCenter.locationId,
       icon: 'location_on',
     },
     {
-      label: 'Total Families',
+      label: 'app.features.masterdata.healthCenter.labels.totalFamilies',
       value: healthCenter.totalFamilies?.toString(),
       icon: 'groups',
     },
     {
-      label: 'Total Population',
+      label: 'app.features.masterdata.healthCenter.labels.totalPopulation',
       value: healthCenter.totalPopulation?.toString(),
       icon: 'people',
     },
     {
-      label: 'Created At',
+      label: 'app.common.createdAt',
       value: healthCenter.createdAt,
       icon: 'calendar_today',
     },
-    { label: 'Updated At', value: healthCenter.updatedAt, icon: 'update' },
+    {
+      label: 'app.common.updatedAt',
+      value: healthCenter.updatedAt,
+      icon: 'update',
+    },
   ];
 }

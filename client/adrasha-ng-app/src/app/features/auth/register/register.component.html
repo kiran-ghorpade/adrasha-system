@@ -1,6 +1,6 @@
 <div class="flex flex-col gap-3 items-center w-72">
   <div class="w-full text-center px-5">
-    <h3 class="font-normal">{{ "registration.title" | translate }}</h3>
+    <h3 class="font-normal">{{ "app.features.auth.registration.title" | translate }}</h3>
   </div>
 
   <form
@@ -10,17 +10,17 @@
     class="flex justify-center items-center w-full flex-col gap-3"
   >
     <mat-form-field class="w-full">
-      <mat-label>{{ "registration.username" | translate }}</mat-label>
+      <mat-label>{{ "app.features.auth.registration.username" | translate }}</mat-label>
       <input type="text" matInput required formControlName="username" />
       <app-validation-error [control]="this.registerForm.controls.username" />
     </mat-form-field>
     <mat-form-field class="w-full">
-      <mat-label>{{ "registration.password" | translate }}</mat-label>
+      <mat-label>{{ "app.features.auth.registration.password" | translate }}</mat-label>
       <input matInput type="password" required formControlName="password" />
       <app-validation-error [control]="this.registerForm.controls.password" />
     </mat-form-field>
     <mat-form-field class="w-full">
-      <mat-label>{{ "registration.confirmPassword" | translate }}</mat-label>
+      <mat-label>{{ "app.features.auth.registration.confirmPassword" | translate }}</mat-label>
       <input matInput type="password" required formControlName="confirmPassword">
       <app-validation-error [control]="this.registerForm.controls.confirmPassword" componentName="password"/>
     </mat-form-field>
@@ -33,11 +33,11 @@
       @if (isLoading()) {
       <mat-spinner diameter="20"></mat-spinner>
       } @else {
-      {{ "registration.submitButton" | translate }}
+      {{ "app.features.auth.registration.submitButton" | translate }}
       }
     </button>
     <button matButton="text" class="w-full" routerLink="/auth/login">
-      {{ "registration.backtToLogin" | translate }}
+      {{ "app.features.auth.registration.backtToLogin" | translate }}
     </button>
   </form>
 </div>

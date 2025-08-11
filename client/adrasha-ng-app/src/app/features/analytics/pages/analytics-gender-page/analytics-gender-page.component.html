@@ -1,13 +1,13 @@
 <app-page-wrapper>
   <div top>
-    <app-page-header title="Gender Analytics"> </app-page-header>
+    <app-page-header [title]="'app.features.analytics.page.gender.title' | translate"> </app-page-header>
   </div>
 
   <div content class="h-full flex flex-col">
     <!-- Date Filters -->
     <form [formGroup]="dateForm" class="flex justify-center gap-4">
       <mat-form-field class="md:w-1/3">
-        <mat-label>From</mat-label>
+        <mat-label>{{ 'app.common.fromLabel' | translate }}</mat-label>
         <input
           matInput
           type="date"
@@ -17,7 +17,7 @@
       </mat-form-field>
 
       <mat-form-field class="md:w-1/3">
-        <mat-label>To</mat-label>
+        <mat-label>{{ 'app.common.toLabel' | translate }}</mat-label>
         <input
           matInput
           type="date"

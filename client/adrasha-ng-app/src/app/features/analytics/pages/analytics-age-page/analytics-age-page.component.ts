@@ -6,6 +6,7 @@ import { MatGridListModule } from "@angular/material/grid-list";
 import { MatInputModule } from '@angular/material/input';
 import { AnalyticsMemberAgeChartComponent } from "@features/analytics/components/member/member-age-dist.component";
 import { AnalyticsMemberAgeLineChartComponent } from "@features/analytics/components/member/member-age-line.component";
+import { TranslatePipe } from '@ngx-translate/core';
 import { PageHeaderComponent, PageWrapperComponent } from '@shared/components';
 
 @Component({
@@ -20,6 +21,7 @@ import { PageHeaderComponent, PageWrapperComponent } from '@shared/components';
     MatFormFieldModule,
     DatePipe,
     MatGridListModule,
+    TranslatePipe
 ],
   templateUrl: './analytics-age-page.component.html',
 })

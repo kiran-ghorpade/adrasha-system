@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AnalyticsMemberAliveStatusChartComponent } from "@features/analytics/components/member/member-alive-status-dist.component";
 import { AnalyticsMemberAliveStatusLineChartComponent } from "@features/analytics/components/member/member-alive-status-line.component";
+import { TranslateModule } from '@ngx-translate/core';
 import { PageHeaderComponent, PageWrapperComponent } from '@shared/components';
 
 @Component({
@@ -18,6 +19,7 @@ import { PageHeaderComponent, PageWrapperComponent } from '@shared/components';
     MatInputModule,
     MatFormFieldModule,
     DatePipe,
+    TranslateModule
   ],
   templateUrl: './analytics-alive-status-page.component.html',
 })

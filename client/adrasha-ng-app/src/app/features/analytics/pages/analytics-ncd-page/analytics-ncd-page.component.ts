@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AnalyticsHealthNCDChartComponent } from "@features/analytics/components/health/health-ncd-dist.component";
 import { AnalyticsHealthNCDLineChartComponent } from "@features/analytics/components/health/health-ncd-line.component";
+import { TranslatePipe } from '@ngx-translate/core';
 import { PageHeaderComponent, PageWrapperComponent } from '@shared/components';
 
 @Component({
@@ -18,6 +19,7 @@ import { PageHeaderComponent, PageWrapperComponent } from '@shared/components';
     DatePipe,
     AnalyticsHealthNCDChartComponent,
     AnalyticsHealthNCDLineChartComponent,
+    TranslatePipe
   ],
   templateUrl: './analytics-ncd-page.component.html',
 })

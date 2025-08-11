@@ -17,6 +17,7 @@ import {
   AdminDashboardLineChartComponent,
   AdminDashboardPieChartComponent,
 } from '../charts';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -28,6 +29,7 @@ import {
     MatListModule,
     DataCardLabelComponent,
     CommonModule,
+    TranslatePipe,
     AdminDashboardPieChartComponent,
     AdminDashboardLineChartComponent,
   ],

@@ -1,10 +1,10 @@
 <div class="h-full w-full grid md:grid-rows-10 grid-cols-12 gap-2">
   <!-- Values -->
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-4">
-    <app-data-card-label [value]="`${familyCount()}`" [label]="`Families`" />
+    <app-data-card-label [value]="`${familyCount()}`" [label]="'app.features.dashboard.asha.families' | translate" />
   </div>
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-5">
-    <app-data-card-label [value]="`${memberCount()}`" [label]="`Population`" />
+    <app-data-card-label [value]="`${memberCount()}`" [label]="'app.features.dashboard.asha.population' | translate" />
   </div>
   <mat-card
     class="row-span-5 col-span-12 md:col-span-3 paper md:order-none order-8 flex justify-center items-center"
@@ -17,12 +17,12 @@
     <app-asha-dashboard-poverty-chart></app-asha-dashboard-poverty-chart>
   </mat-card>
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-6">
-    <app-data-card-label [value]="childrenCount()" [label]="`Childrens`" />
+    <app-data-card-label [value]="childrenCount()" [label]="'app.features.dashboard.asha.children' | translate" />
   </div>
   <div class="row-span-2 col-span-6 md:col-span-3 md:p-2 md:order-none order-7">
     <app-data-card-label
       [value]="pregnancyCount()"
-      [label]="`Pregnant Women`"
+      [label]="'app.features.dashboard.asha.pregnantWomen' | translate"
     />
   </div>
 
@@ -36,7 +36,7 @@
   <mat-card
     class="row-span-5 col-span-12 md:col-span-6 md:order-none order-10 paper p-2"
   >
-    <mat-card-header>Last Visits</mat-card-header>
+    <mat-card-header>{{ 'app.features.dashboard.asha.lastVisits' | translate }}</mat-card-header>
     <mat-card-content>
       <app-previous-visits-list [ashaId]="ashaId() ?? ''"/>
     </mat-card-content>

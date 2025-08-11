@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AnalyticsFamilyPovertyPieChartComponent } from '@features/analytics/components/family/family-poverty-dist.component';
 import { AnalyticsFamilyPovertyLineChartComponent } from '@features/analytics/components/family/family-povery-line.component';
+import { TranslatePipe } from '@ngx-translate/core';
 import { PageHeaderComponent, PageWrapperComponent } from '@shared/components';
 
 @Component({
@@ -19,6 +20,7 @@ import { PageHeaderComponent, PageWrapperComponent } from '@shared/components';
     AnalyticsFamilyPovertyPieChartComponent,
     AnalyticsFamilyPovertyLineChartComponent,
     DatePipe,
+    TranslatePipe
   ],
   templateUrl: './analytics-poverty-page.component.html',
 })

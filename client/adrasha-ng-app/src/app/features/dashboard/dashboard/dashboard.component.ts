@@ -1,10 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  inject,
-  signal,
-  WritableSignal
-} from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { RouterModule } from '@angular/router';
@@ -15,6 +10,7 @@ import { DashboardHeaderComponent } from '../../../shared/components/dashboard-h
 import { AdminDashboardComponent } from '../components/admin-dashboard/admin-dashboard.component';
 import { AshaDashboardComponent } from '../components/asha-dashboard/asha-dashboard.component';
 import { UserDashboardComponent } from '../components/user-dashboard/user-dashboard.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,6 +22,7 @@ import { UserDashboardComponent } from '../components/user-dashboard/user-dashbo
     AdminDashboardComponent,
     UserDashboardComponent,
     MatProgressBar,
+    TranslateModule,
   ],
   templateUrl: './dashboard.component.html',
 })
@@ -45,15 +42,12 @@ export class DashboardComponent {
       this.currentTime.set(new Date());
     }, 1000);
 
-    this.authService
-      .currentUser
-      .pipe(map((user) => user?.roles))
-      .subscribe({
-        next: (roles) => {
-          this.getCurrentRole(roles);
-        },
-        error: () => {},
-      });
+    this.authService.currentUser.pipe(map((user) => user?.roles)).subscribe({
+      next: (roles) => {
+        this.getCurrentRole(roles);
+      },
+      error: () => {},
+    });
   }
 
   private getCurrentRole(roles: string[] = []) {

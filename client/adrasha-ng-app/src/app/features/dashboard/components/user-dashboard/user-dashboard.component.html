@@ -6,18 +6,18 @@
       [routerLink]="['/role-requests/update', latestRoleRequest()?.id]"
     >
       <mat-icon>edit</mat-icon>
-      Update Role Request
+      {{ 'app.features.dashboard.user.updateRoleRequest' | translate }}
     </button>
     }@else {
     <button matButton="outlined" [routerLink]="'/role-requests/new'">
       <mat-icon>add</mat-icon>
-      Make Role Request
+      {{ 'app.features.dashboard.user.makeRoleRequest' | translate }}
     </button>
     }
 
     <button matButton="outlined" extended [routerLink]="'/role-requests'">
       <mat-icon>visibility</mat-icon>
-      View History
+      {{ 'app.features.dashboard.user.viewHistory' | translate }}
     </button>
   </div>
 
@@ -25,14 +25,14 @@
   <div class="row-span-2 col-span-12 p-2">
     <app-data-card-label
       [value]="latestRoleRequest()?.status"
-      label="Profile Status"
+      [label]="'app.features.dashboard.user.profileStatus' | translate"
     />
   </div>
 
   <div class="row-span-2 col-span-12 p-2">
     <app-data-card-label
       [value]="latestRoleRequest()?.role"
-      label="Requested Role"
+      [label]="'app.features.dashboard.user.requestedRole' | translate"
     />
   </div>
 
@@ -40,12 +40,12 @@
   <div class="row-span-2 col-span-12 p-2">
     <app-data-card-label
       [value]="latestRoleRequest()?.remark"
-      label="Remark"
+      [label]="'app.features.dashboard.user.remark' | translate"
     />
   </div>
   } }@else {
   <div class="row-span-2 col-span-12 p-2">
-    <app-data-card-label value="No Request Found" label="Message" />
+    <app-data-card-label [value]="'app.features.dashboard.user.noRequestFound' | translate" [label]="'app.features.dashboard.user.message' | translate" />
   </div>
   }
 </div>

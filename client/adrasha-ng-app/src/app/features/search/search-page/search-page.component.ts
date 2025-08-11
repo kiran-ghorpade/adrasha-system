@@ -12,7 +12,6 @@ import { RouterModule } from '@angular/router';
 import { MemberDataService } from '@core/api/member-data/member-data.service';
 import { MemberResponseDTO } from '@core/model/dataService';
 import { AuthService } from '@core/services';
-import { MemberListComponent } from '@features/registry/member/components';
 import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs';
 
 @Component({

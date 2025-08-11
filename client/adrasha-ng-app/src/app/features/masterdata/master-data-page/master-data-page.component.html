@@ -1,6 +1,6 @@
 <app-page-wrapper>
   <div top>
-    <app-page-header title="Master Data"> </app-page-header>
+    <app-page-header [title]="'app.features.masterdata.title' | translate"> </app-page-header>
   </div>
 
   <div content class="h-full flex flex-col">
@@ -13,7 +13,7 @@
           <mat-icon>{{ data.icon }}</mat-icon>
         </div>
         <h3 matListItemTitle>
-          <strong> {{ data.label }} </strong>
+          <strong> {{ data.label | translate }} </strong>
         </h3>
         <p matListItemLine></p>
         <p matListItemMeta>

@@ -5,22 +5,29 @@ import {
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
+import { TranslatePipe } from '@ngx-translate/core';
 
 export interface Confirmation {
   title: string;
   message: string;
+  confirmButton: string;
+  cancelButton: string;
 }
 
 @Component({
   selector: 'app-confirmation',
-  imports: [MatDialogModule, MatButtonModule],
-  template: `<h2 mat-dialog-title>{{ data.title }}</h2>
+  imports: [MatDialogModule, MatButtonModule, TranslatePipe],
+  template: `<h2 mat-dialog-title>{{ data.title | translate }}</h2>
     <mat-dialog-content>
-      {{ data.message }}
+      {{ data.message | translate }}
     </mat-dialog-content>
     <mat-dialog-actions>
-      <button matButton mat-dialog-close>No</button>
-      <button matButton (click)="onConfirm()" cdkFocusInitial>Ok</button>
+      <button matButton mat-dialog-close>
+        {{ data.confirmButton | translate }}
+      </button>
+      <button matButton (click)="onConfirm()" cdkFocusInitial>
+        {{ data.cancelButton | translate }}
+      </button>
     </mat-dialog-actions> `,
 })
 export class ConfirmationComponent {

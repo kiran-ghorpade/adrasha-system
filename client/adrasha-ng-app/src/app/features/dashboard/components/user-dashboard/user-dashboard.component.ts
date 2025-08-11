@@ -5,12 +5,19 @@ import { RouterLink } from '@angular/router';
 import { RoleRequestService } from '@core/api/role-request/role-request.service';
 import { RoleRequestResponseDTO } from '@core/model/userService';
 import { AuthService } from '@core/services';
+import { TranslatePipe } from '@ngx-translate/core';
 import { DataCardLabelComponent } from '@shared/components';
 import { map, take, tap } from 'rxjs';
 
 @Component({
   selector: 'app-user-dashboard',
-  imports: [RouterLink, DataCardLabelComponent, MatButtonModule, MatIconModule],
+  imports: [
+    RouterLink,
+    DataCardLabelComponent,
+    MatButtonModule,
+    MatIconModule,
+    TranslatePipe,
+  ],
   templateUrl: './user-dashboard.component.html',
 })
 export class UserDashboardComponent {

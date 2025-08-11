@@ -1,260 +1,580 @@
 {
-  "login": {
-    "title": "Login",
-    "username": "Username",
-    "password": "Password",
-    "submitButton": "Login",
-    "newRegistration": "New Registration",
-    "success": "Login successful",
-    "failed": "Login failed"
-  },
-  "logout": {
-    "success": "Logout successful",
-    "failed": "Logout failed"
-  },
-  "registration": {
-    "title": "User Registration",
-    "username": "Username",
-    "password": "Password",
-    "confirmPassword": "Confirm Password",
-    "submitButton": "Register",
-    "backtToLogin": "Back to Login",
-    "success": "Registration successful",
-    "failed": "Registration failed"
-  },
-  "validation": {
-    "required": "This field is required.",
-    "minLength": "Minimum length is {{minLength}} characters.",
-    "maxLength": "Maximum length is {{maxLength}} characters.",
-    "pattern": "The input format is invalid.",
-    "email": "Please enter a valid email address.",
-    "min": "Minimum value allowed is {{minValue}}.",
-    "max": "Maximum value allowed is {{maxValue}}.",
-    "inconsistent": "The value is inconsistent with {{fieldName}}."
-  },
-  "registry": {
-    "family": {
-      "addFamilyTitle": "Add New Family",
-      "updateFamilyTitle": "Update Family",
-      "step1Title": "Family Details",
-      "step2Title": "Head Member's Personal Details",
-      "step3Title": "Head Member's Other Details",
-      "step4Title": "Head Member's Identification Details",
-      "step5Title": "Head Member's Contact Details",
-      "doneTitle": "Done",
-      "doneMessage": "You are now done.",
+  "app": {
+    "common": {
+      "fromLabel": "From",
+      "toLabel": "To",
+      "name": "Name",
+      "status": "Status",
+      "createdAt": "Created At",
+      "updatedAt": "Last Update",
+      "yes": "Yes",
+      "no": "No",
+      "none": "None",
+      "unknown": "Unknown",
+      "update": "Update",
+      "delete": "Delete",
       "submitButton": "Submit",
       "resetButton": "Reset",
-
-      "povertyStatusLabel": "Select Poverty Status",
-      "houseIdLabel": "House Id",
-      "firstnameLabel": "Firstname",
-      "middlenameLabel": "Middlename",
-      "lastnameLabel": "Lastname",
-      "genderLabel": "Gender",
-      "dobLabel": "Date of Birth",
-      "birthPlaceLabel": "Birth Place",
-      "adharNumberLabel": "Adhar Number",
-      "abhaNumberLabel": "Abha Number",
-      "mobileNumberLabel": "Mobile Number",
-
-      "registration": {
-        "success": "Family Registration successful",
-        "failed": "Family Registration failed"
-      },
-      "update": {
-        "success": "Family Update successful",
-        "failed": "Family Update failed"
-      },
-      "deletion": {
-        "success": "Family Deletion successful",
-        "failed": "Family Deletion failed"
+      "doneTitle": "Done",
+      "doneMessage": "You are now done.",
+      "notFound": "Not Found",
+      "dataNotFound": "Data Not Found!",
+      "noDetailsAvailable": "No details available.",
+      "somethingWentWrong": "Something went wrong"
+    },
+    "navigation": {
+      "sidebar": {
+        "dashboard": "Dashboard",
+        "registry": "Registry",
+        "masterdata": "Master Data",
+        "reports": "Reports",
+        "settings": "Settings"
       }
     },
-
-    "member": {
-      "addMemberTitle": "Add New Member",
-      "updateMemberTitle": "Update Member",
-      "step1Title": "Personal Details",
-      "step2Title": "Birth Details",
-      "step3Title": "Identification Details",
-      "step4Title": "Contact Details",
-      "doneTitle": "Done",
-      "doneMessage": "You are now done.",
-      "submitButton": "Submit",
-      "resetButton": "Reset",
-
-      "firstnameLabel": "Firstname",
-      "middlenameLabel": "Middlename",
-      "lastnameLabel": "Lastname",
-      "genderLabel": "Gender",
-      "dobLabel": "Date of Birth",
-      "birthPlaceLabel": "Birth Place",
-      "adharNumberLabel": "Aadhar Number",
-      "abhaNumberLabel": "ABHA Number",
-      "mobileNumberLabel": "Mobile Number",
-      "aliveStatusLabel": "Alive Status",
-
-      "registration": {
-        "success": "Member Registration successful",
-        "failed": "Member Registration failed"
+    "errorPages": {
+      "404": {
+        "title": "Page Not Found",
+        "message": "Sorry, we couldn't find the page you're looking for.",
+        "goHomeButton": "Go to Dashboard"
       },
-      "update": {
-        "success": "Member Update successful",
-        "failed": "Member Update failed"
-      },
-      "deletion": {
-        "success": "Member Deletion successful",
-        "failed": "Member Deletion failed"
+      "500": {
+        "title": "Server Error",
+        "message": "Something went wrong on our end. Please try again in a few moments.",
+        "goHomeButton": "Go to Dashboard"
       }
     },
-
-    "healthRecord": {
-      "addhealthRecordTitle": "Add Health Record",
-      "step1Title": "Basic Details",
-      "step2Title": "Health Status",
-      "step3Title": "Pregnancy Status",
-      "step4Title": "NCD (Non-Communicable Diseases)",
-      "doneTitle": "Done",
-      "doneMessage": "You are now done.",
-      "submitButton": "Submit",
-      "resetButton": "Reset",
-
-      "dateLabel": "Date",
-      "heightLabel": "Height (cm)",
-      "weightLabel": "Weight (kg)",
-      "pregnantLabel": "Pregnant",
-      "ncdlistLabel": "Select NCDs",
-
-      "registration": {
-        "success": "Health Record Registration successful",
-        "failed": "Health Record Registration failed"
-      },
-      "update": {
-        "success": "Role Request Update successful",
-        "failed": "Role Request Update failed"
-      },
-      "deletion": {
-        "success": "Role Request Deletion successful",
-        "failed": "Role Request Deletion failed"
-      }
-    }
-  },
-  "roleRequest": {
-    "addRoleRequestTitle": "Add Role Request",
-    "updateRoleRequestTitle": "Update Role Request",
-    "step1Title": "Personal Details",
-    "step2Title": "Role Details",
-    "step3Title": "Health Center Details",
-    "doneTitle": "Done",
-    "doneMessage": "You are now done.",
-    "submitButton": "Submit",
-    "resetButton": "Reset",
-
-    "firstnameLabel": "Firstname",
-    "middlenameLabel": "Middlename",
-    "lastnameLabel": "Lastname",
-    "roleLabel": "Select Role",
-    "healthCenterLabel": "Health Center",
-
-    "registration": {
-      "success": "Role Request Added successful",
-      "failed": "Role Request Creation failed"
+    "validation": {
+      "required": "This field is required.",
+      "minLength": "Minimum length is {{minLength}} characters.",
+      "maxLength": "Maximum length is {{maxLength}} characters.",
+      "pattern": "The input format is invalid.",
+      "email": "Please enter a valid email address.",
+      "min": "Minimum value allowed is {{minValue}}.",
+      "max": "Maximum value allowed is {{maxValue}}.",
+      "inconsistent": "The value is inconsistent with {{fieldName}}."
     },
-    "update": {
-      "success": "Role Request Update successful",
-      "failed": "Role Request Update failed"
-    },
-    "deletion": {
-      "success": "Role Request Deletion successful",
-      "failed": "Role Request Deletion failed"
-    }
-  },
-  "masterdata": {
-    "healthCenter": {
-      "addHealthCenterTitle": "Add Health Center",
-      "updateHealthCenterTitle": "Update Health Center",
-      "step1Title": "Health Center Details",
-      "step3Title": "Address Details",
-      "doneTitle": "Done",
-      "doneMessage": "You are now done.",
-      "submitButton": "Submit",
-      "resetButton": "Reset",
-
-      "nameLabel": "Health Center Name",
-      "roleLabel": "Health Center Type",
-      "totalFamiliesLabel": "Total Families",
-      "totalPopulationLabel": "Total Population",
-      "healthCenterLabel": "Health Center",
-      "locationLabel":"City/Village",
-
-      "registration": {
-        "success": "Health Center Addition successful",
-        "failed": "Health Center Addition failed"
+    "features": {
+      "analytics": {
+        "page": {
+          "title": "Analytics",
+          "age": {
+            "title": "Age Analytics",
+            "chartLabel": "Age Status"
+          },
+          "aliveStatus": {
+            "title": "Alive Status Analytics",
+            "chartLabel": "Alive Status"
+          },
+          "gender": {
+            "title": "Gender Analytics",
+            "chartLabel": "Gender Count"
+          },
+          "ncd": {
+            "title": "NCD Analytics",
+            "chartLabel": "NCD Count"
+          },
+          "poverty": {
+            "title": "Poverty Analytics",
+            "chartLabel": "Poverty Status"
+          },
+          "request": {
+            "chartLabel": "Request Trends"
+          }
+        },
+        "common": {
+          "age": "Age",
+          "gender": "Gender",
+          "poverty": "Poverty",
+          "aliveStatus": "Alive Status",
+          "ncd": "NCD"
+        }
       },
-      "update": {
-        "success": "Health Center Update successful",
-        "failed": "Health Center Update failed"
+      "auth": {
+        "login": {
+          "title": "Login",
+          "username": "Username",
+          "password": "Password",
+          "submitButton": "Login",
+          "newRegistration": "New Registration"
+        },
+        "registration": {
+          "title": "User Registration",
+          "username": "Username",
+          "password": "Password",
+          "confirmPassword": "Confirm Password",
+          "submitButton": "Register",
+          "backToLogin": "Back to Login"
+        },
+        "actions": {
+          "login": {
+            "success": "Login successful",
+            "failed": "Login failed"
+          },
+          "logout": {
+            "success": "Logout successful",
+            "failed": "Logout failed"
+          },
+          "registration": {
+            "success": "Registration successful",
+            "failed": "Registration failed"
+          }
+        }
       },
-      "deletion": {
-        "success": "Health Center Deletion successful",
-        "failed": "Health Center Deletion failed"
-      }
-    },
-    "location": {
-      "addLocationTitle": "Add Location",
-      "updateLocationTitle": "Update Location",
-      "step1Title": "Location Details",
-      "step2Title": "Address Details",
-      "doneTitle": "Done",
-      "doneMessage": "You are now done.",
-      "submitButton": "Submit",
-      "resetButton": "Reset",
-
-      "nameLabel": "Location Name",
-      "typeLabel": "Location Type",
-      "pincodeLabel": "Pincode",
-      "subdistrictLabel": "Subdistrict",
-      "districtLabel": "District",
-      "stateLabel": "State",
-      "countryLabel": "Country",
-
-      "registration": {
-        "success": "Location Addition successful",
-        "failed": "Location Addition failed"
+      "dashboard": {
+        "common": {
+          "greetings": "Hello {name}",
+          "currentDate": "Current Date",
+          "currentTime": "Current Time",
+          "headerMessage": "Welcome Back"
+        },
+        "admin": {
+          "users": "Users",
+          "pendingRequests": "Pending Requests",
+          "healthCenters": "Health Centers",
+          "locations": "Locations"
+        },
+        "asha": {
+          "families": "Families",
+          "population": "Population",
+          "children": "Children",
+          "pregnantWomen": "Pregnant Women",
+          "lastVisits": "Last Visits"
+        },
+        "user": {
+          "updateRoleRequest": "Update Role Request",
+          "makeRoleRequest": "Make Role Request",
+          "viewHistory": "View History",
+          "profileStatus": "Profile Status",
+          "requestedRole": "Requested Role",
+          "remark": "Remark",
+          "noRequestFound": "No Request Found",
+          "message": "Message"
+        },
+        "main": {
+          "permissionError": "You don't have enough permission to access this application."
+        }
       },
-      "update": {
-        "success": "Location Update successful",
-        "failed": "Location Update failed"
+      "masterdata": {
+        "page": {
+          "title": "Master Data",
+          "tabs": {
+            "locations": "Locations",
+            "healthCenters": "Health Centers",
+            "ncd": "Non-Communicable Diseases"
+          }
+        },
+        "healthCenter": {
+          "page": {
+            "title": "Health Centers",
+            "addNew": "Add New Health Center",
+            "detailsTitle": "Health Center Details",
+            "noData": "No Health Centers found. Try adding a new one!"
+          },
+          "table": {
+            "id": "Health Center ID",
+            "name": "Name",
+            "centerType": "Center Type",
+            "locationId": "Location ID"
+          },
+          "forms": {
+            "addTitle": "Add Health Center",
+            "updateTitle": "Update Health Center",
+            "steps": {
+              "step1": "Health Center Details",
+              "step2": "Address Details"
+            },
+            "labels": {
+              "name": "Health Center Name",
+              "type": "Health Center Type",
+              "totalFamilies": "Total Families",
+              "totalPopulation": "Total Population",
+              "parentHealthCenter": "Parent Health Center",
+              "location": "City/Village"
+            }
+          },
+          "actions": {
+            "registration": {
+              "success": "Health Center addition successful",
+              "failed": "Health Center addition failed"
+            },
+            "update": {
+              "success": "Health Center update successful",
+              "failed": "Health Center update failed"
+            },
+            "deletion": {
+              "success": "Health Center deletion successful",
+              "failed": "Health Center deletion failed"
+            }
+          }
+        },
+        "location": {
+          "page": {
+            "title": "Locations",
+            "addNew": "Add New Location",
+            "detailsTitle": "Location Details",
+            "noData": "No Locations found. Try adding a new one!"
+          },
+          "table": {
+            "id": "Location ID",
+            "type": "Type",
+            "pincode": "Pincode",
+            "subdistrict": "Subdistrict",
+            "district": "District",
+            "state": "State",
+            "country": "Country"
+          },
+          "forms": {
+            "addTitle": "Add Location",
+            "updateTitle": "Update Location",
+            "steps": {
+              "step1": "Location Details",
+              "step2": "Address Details"
+            },
+            "labels": {
+              "name": "Location Name",
+              "type": "Location Type",
+              "pincode": "Pincode",
+              "subdistrict": "Subdistrict",
+              "district": "District",
+              "state": "State",
+              "country": "Country"
+            }
+          },
+          "actions": {
+            "registration": {
+              "success": "Location addition successful",
+              "failed": "Location addition failed"
+            },
+            "update": {
+              "success": "Location update successful",
+              "failed": "Location update failed"
+            },
+            "deletion": {
+              "success": "Location deletion successful",
+              "failed": "Location deletion failed"
+            }
+          }
+        },
+        "ncd": {
+          "page": {
+            "title": "NCDs",
+            "addNew": "Add New Disease",
+            "detailsTitle": "NCD Details",
+            "noData": "No Diseases found. Try adding a new one!"
+          },
+          "table": {
+            "id": "ID",
+            "name": "Name",
+            "description": "Description"
+          },
+          "forms": {
+            "addTitle": "Add NCD",
+            "updateTitle": "Update NCD",
+            "steps": {
+              "step1": "NCD Details"
+            },
+            "labels": {
+              "name": "NCD Name",
+              "description": "Description"
+            }
+          },
+          "actions": {
+            "registration": {
+              "success": "NCD addition successful",
+              "failed": "NCD addition failed"
+            },
+            "update": {
+              "success": "NCD update successful",
+              "failed": "NCD update failed"
+            },
+            "deletion": {
+              "success": "NCD deletion successful",
+              "failed": "NCD deletion failed"
+            }
+          }
+        }
       },
-      "deletion": {
-        "success": "Location Deletion successful",
-        "failed": "Location Deletion failed"
-      }
-    },
-    "ncd": {
-      "addNCDTitle": "Add NCD",
-      "updateNCDTitle": "Update NCD",
-      "step1Title": "NCD Details",
-      "doneTitle": "Done",
-      "doneMessage": "You are now done.",
-      "submitButton": "Submit",
-      "resetButton": "Reset",
-
-      "nameLabel": "NCD Name",
-      "descriptionLabel": "Description",
-
-      "registration": {
-        "success": "NCD Addition successful",
-        "failed": "NCD Addition failed"
+      "profile": {
+        "page": {
+          "title": "Profile"
+        },
+        "labels": {
+          "userId": "User ID",
+          "fullName": "Full Name",
+          "adharNumber": "Aadhar Number",
+          "healthCenter": "Health Center",
+          "centerType": "Center Type",
+          "district": "District",
+          "subdistrict": "Subdistrict",
+          "pincode": "Pincode",
+          "state": "State",
+          "country": "Country"
+        }
       },
-      "update": {
-        "success": "NCD Update successful",
-        "failed": "NCD Update failed"
+      "registry": {
+        "family": {
+          "page": {
+            "title": "Family Registry",
+            "addNew": "Add New Family",
+            "searchLabel": "Search family by house ID",
+            "noData": "No families found. Try adding a new one!",
+            "detailsTitle": "Family Details",
+            "generateQrTooltip": "Generate QR",
+            "moreTooltip": "More"
+          },
+          "table": {
+            "id": "Family ID",
+            "headMember": "Head Member",
+            "ashaId": "ASHA ID",
+            "houseId": "House ID",
+            "povertyStatus": "Poverty Status"
+          },
+          "forms": {
+            "addTitle": "Add New Family",
+            "updateTitle": "Update Family",
+            "steps": {
+              "step1": "Family Details",
+              "step2": "Head Member's Personal Details",
+              "step3": "Head Member's Other Details",
+              "step4": "Head Member's Identification",
+              "step5": "Head Member's Contact Details"
+            },
+            "labels": {
+              "povertyStatus": "Select Poverty Status",
+              "houseId": "House ID",
+              "firstname": "First Name",
+              "middlename": "Middle Name",
+              "lastname": "Last Name",
+              "gender": "Gender",
+              "dob": "Date of Birth",
+              "birthPlace": "Birth Place",
+              "adharNumber": "Aadhar Number",
+              "abhaNumber": "ABHA Number",
+              "mobileNumber": "Mobile Number"
+            }
+          },
+          "dialogs": {
+            "title": "Do you want to delete this family?",
+            "message": "All members and their health records will be permanently deleted. This action cannot be undone.",
+            "confirmButton": "Yes, Delete Family",
+            "cancelButton": "Cancel"
+          },
+          "actions": {
+            "registration": {
+              "success": "Family registration successful",
+              "failed": "Family registration failed"
+            },
+            "update": {
+              "success": "Family update successful",
+              "failed": "Family update failed"
+            },
+            "deletion": {
+              "success": "Family deletion successful",
+              "failed": "Family deletion failed"
+            }
+          }
+        },
+        "member": {
+          "page": {
+            "title": "Member List",
+            "detailsTitle": "Member Details",
+            "noData": "No members found. Try searching with a different term.",
+            "noMembersInFamily": "This family has no members. Try adding one!",
+            "viewHealthRecords": "View Health Records"
+          },
+          "table": {
+            "familyId": "Family ID",
+            "gender": "Gender",
+            "dob": "Date of Birth",
+            "age": "Age",
+            "mobileNumber": "Mobile Number",
+            "adharNumber": "Aadhar Number",
+            "abhaNumber": "ABHA Number",
+            "aliveStatus": "Alive"
+          },
+          "forms": {
+            "addTitle": "Add New Member",
+            "updateTitle": "Update Member",
+            "steps": {
+              "step1": "Personal Details",
+              "step2": "Birth Details",
+              "step3": "Identification Details",
+              "step4": "Contact Details"
+            },
+            "labels": {
+              "firstname": "First Name",
+              "middlename": "Middle Name",
+              "lastname": "Last Name",
+              "gender": "Gender",
+              "dob": "Date of Birth",
+              "birthPlace": "Birth Place",
+              "adharNumber": "Aadhar Number",
+              "abhaNumber": "ABHA Number",
+              "mobileNumber": "Mobile Number",
+              "aliveStatus": "Alive Status"
+            }
+          },
+          "dialogs": {
+            "delete": {
+              "title": "Do you want to delete this member?",
+              "message": "The member and their health records will be deleted."
+            }
+          },
+          "actions": {
+            "registration": {
+              "success": "Member registration successful",
+              "failed": "Member registration failed"
+            },
+            "update": {
+              "success": "Member update successful",
+              "failed": "Member update failed"
+            },
+            "deletion": {
+              "success": "Member deletion successful",
+              "failed": "Member deletion failed"
+            }
+          }
+        },
+        "healthRecord": {
+          "page": {
+            "title": "Health Details",
+            "addNew": "Add New Health Record",
+            "viewProfile": "View Member Profile",
+            "noData": "No health records found. Try adding a new one!"
+          },
+          "table": {
+            "id": "Record ID",
+            "memberId": "Member ID",
+            "ashaId": "ASHA ID",
+            "recordedAt": "Recorded At",
+            "pregnant": "Pregnant",
+            "height": "Height (cm)",
+            "weight": "Weight (kg)",
+            "ncdList": "NCD List"
+          },
+          "forms": {
+            "addTitle": "Add Health Record",
+            "updateTitle": "Update Health Record",
+            "steps": {
+              "step1": "Basic Details",
+              "step2": "Health Status",
+              "step3": "Pregnancy Status",
+              "step4": "NCD (Non-Communicable Diseases)"
+            },
+            "labels": {
+              "date": "Date",
+              "height": "Height (cm)",
+              "weight": "Weight (kg)",
+              "pregnant": "Pregnant",
+              "ncdList": "Select NCDs"
+            }
+          },
+          "actions": {
+            "registration": {
+              "success": "Health Record registration successful",
+              "failed": "Health Record registration failed"
+            },
+            "update": {
+              "success": "Health Record update successful",
+              "failed": "Health Record update failed"
+            },
+            "deletion": {
+              "success": "Health Record deletion successful",
+              "failed": "Health Record deletion failed"
+            }
+          }
+        }
       },
-      "deletion": {
-        "success": "NCD Deletion successful",
-        "failed": "NCD Deletion failed"
+      "reports": {
+        "page": {
+          "title": "Reports",
+          "viewTitle": "Report View",
+          "viewButton": "View Report",
+          "generateFamily": "Generate Family Report",
+          "generateMember": "Generate Member Report",
+          "generateHealth": "Generate Health Report"
+        }
+      },
+      "roleRequest": {
+        "page": {
+          "title": "Previous Requests",
+          "detailsTitle": "Role Request Details",
+          "noData": "No Role Requests found.",
+          "remark": "Remark -"
+        },
+        "table": {
+          "id": "Request ID",
+          "requestedRole": "Requested Role",
+          "userId": "User ID",
+          "healthCenter": "Health Center",
+          "centerType": "Center Type",
+          "district": "District",
+          "subdistrict": "Subdistrict"
+        },
+        "forms": {
+          "addTitle": "Add Role Request",
+          "updateTitle": "Update Role Request",
+          "steps": {
+            "step1": "Personal Details",
+            "step2": "Role Details",
+            "step3": "Health Center Details"
+          },
+          "labels": {
+            "firstname": "First Name",
+            "middlename": "Middle Name",
+            "lastname": "Last Name",
+            "role": "Select Role",
+            "healthCenter": "Health Center"
+          }
+        },
+        "dialogs": {
+          "approve": {
+            "title": "Do you want to approve this request?",
+            "message": "User will get access as {role}."
+          },
+          "reject": {
+            "title": "Do you want to reject this request?",
+            "message": "User will not be allowed with role {role}."
+          }
+        },
+        "actions": {
+          "approve": "Approve",
+          "reject": "Reject",
+          "registration": {
+            "success": "Role Request added successfully",
+            "failed": "Role Request creation failed"
+          },
+          "update": {
+            "success": "Role Request update successful",
+            "failed": "Role Request update failed"
+          },
+          "deletion": {
+            "success": "Role Request deletion successful",
+            "failed": "Role Request deletion failed"
+          }
+        }
+      },
+      "search": {
+        "label": "Search for a member by name, Aadhar number, or ABHA number"
+      },
+      "settings": {
+        "page": {
+          "title": "Settings",
+          "comingSoon": "Coming soon..."
+        }
+      },
+      "users": {
+        "page": {
+          "title": "Registered Users",
+          "detailsTitle": "User Details",
+          "noData": "No users found!",
+          "noRoles": "Roles not found"
+        },
+        "table": {
+          "id": "User ID",
+          "adharNumber": "Aadhar Number",
+          "roles": "Roles"
+        }
       }
     }
   }

@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AnalyticsMemberGenderChartComponent } from "@features/analytics/components/member/member-gender-dist.component";
 import { AnalyticsMemberGenderLineChartComponent } from "@features/analytics/components/member/member-gender-line.component";
+import { TranslatePipe } from '@ngx-translate/core';
 import { PageHeaderComponent, PageWrapperComponent } from '@shared/components';
 
 @Component({
@@ -18,6 +19,7 @@ import { PageHeaderComponent, PageWrapperComponent } from '@shared/components';
     MatInputModule,
     MatFormFieldModule,
     DatePipe,
+    TranslatePipe
   ],
   templateUrl: './analytics-gender-page.component.html',
 })

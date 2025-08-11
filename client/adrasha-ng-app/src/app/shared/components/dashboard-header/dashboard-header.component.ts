@@ -1,50 +1,63 @@
-import { Component, inject, input, OnInit, signal } from '@angular/core';
-import { DataCardLabelComponent } from '../data-card-label/data-card-label.component';
+import {
+  Component,
+  effect,
+  inject,
+  input,
+  signal
+} from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { AuthService } from '@core/services';
+import { TranslatePipe } from '@ngx-translate/core';
+import { map } from 'rxjs';
+import { DataCardLabelComponent } from '../data-card-label/data-card-label.component';
 
 @Component({
   selector: 'app-dashboard-header',
-  imports: [DataCardLabelComponent],
+  imports: [DataCardLabelComponent, TranslatePipe],
   template: `
     <!-- Greetings -->
     <div class="h-full w-full grid grid-cols-12 grid-rows-4 gap-2">
-      <div class="col-span-12 row-span-4 md:col-span-6 p-3 md:order-none order-1">
-        <h1 class="text-pretty">Hello, {{ username() }}</h1>
-        <p>{{ message() }}</p>
+      <div
+        class="col-span-12 row-span-4 md:col-span-6 p-3 md:order-none order-1"
+      >
+        <h1 class="text-pretty">
+          {{ 'Hello, {name}' | translate : { name: username } }}
+        </h1>
+        <p>{{ message() | translate}}</p>
       </div>
       <div class="col-span-6 row-span-4 md:col-span-3 md:order-none order-2">
         <app-data-card-label
           [value]="currentTime().toDateString()"
-          [label]="'Current Date'"
+          [label]="'app.features.dashboard.common.currentDate' | translate"
         />
       </div>
       <div class="col-span-6 row-span-4 md:col-span-3 md:order-none order-3">
         <app-data-card-label
           [value]="currentTime().toLocaleTimeString()"
-          [label]="'Current Time'"
+          [label]="'app.features.dashboard.common.currentDate' | translate"
         />
       </div>
     </div>
   `,
 })
-export class DashboardHeaderComponent implements OnInit {
+export class DashboardHeaderComponent {
   private readonly authService = inject(AuthService);
+
   currentTime = signal(new Date());
-  username = signal('User');
 
-  readonly message = input('Welcome back.');
+  username = toSignal(
+    this.authService.currentUser.pipe(map((user) => user?.username)),
+    { initialValue: 'User' }
+  );
+  readonly message = input('app.features.dashboard.common.headerMessage');
 
-  ngOnInit() {
-    this.loadUsername();
+  constructor() {
+    effect(() => {
+      const intervalId = setInterval(() => {
+        this.currentTime.set(new Date());
+      }, 1000);
 
-    setInterval(() => {
-      this.currentTime.set(new Date());
-    }, 1000);
-  }
-
-  loadUsername() {
-    this.authService.currentUser.subscribe((user) => {
-      this.username.set(user?.username || 'User');
+      return () => clearInterval(intervalId);
     });
   }
 }

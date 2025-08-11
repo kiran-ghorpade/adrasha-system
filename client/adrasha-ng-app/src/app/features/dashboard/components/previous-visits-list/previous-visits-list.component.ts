@@ -7,16 +7,19 @@ import { HealthRecordsService, MemberDataService } from '@core/api';
 import { AuthService } from '@core/services';
 import { forkJoin, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-previous-visits-list',
   standalone: true,
-  imports: [RouterModule, MatListModule, MatIconModule],
+  imports: [RouterModule, MatListModule, MatIconModule, TranslateModule],
   template: `
     @if (recordList().length === 0) {
     <div class="flex justify-center items-center">
       <mat-icon>search_off</mat-icon>
-      <h4 class="ml-4 text-wrap">Data Not Found!</h4>
+      <h4 class="ml-4 text-wrap">
+        {{ 'app.common.dataNotFound' | translate }}
+      </h4>
     </div>
     } @else {
     <mat-action-list>
@@ -25,7 +28,11 @@ import { map, switchMap } from 'rxjs/operators';
         <div matListItemAvatar class="flex items-center justify-center">
           <mat-icon>person</mat-icon>
         </div>
-        <h3 matListItemTitle>{{ data.member.name || 'Unknown' }}</h3>
+        <h3 matListItemTitle>
+          {{
+            data.member.name?.firstname || ('app.common.unknown' | translate)
+          }}
+        </h3>
         <p matListItemLine>{{ data.createdAt }}</p>
       </a>
       }

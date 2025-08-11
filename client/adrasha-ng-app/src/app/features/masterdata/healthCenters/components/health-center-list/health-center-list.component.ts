@@ -3,16 +3,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { HealthCenterResponseDTO } from '@core/model/masterdataService';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-health-center-list',
-  imports: [MatListModule, MatIconModule, RouterModule],
+  imports: [MatListModule, MatIconModule, RouterModule, TranslateModule],
   template: `
     @if(healthCenterList().length == 0){
     <div class="flex justify-center items-center">
       <mat-icon>search_off</mat-icon>
       <h4 class="ml-4 text-wrap">
-        No HealthCenter found. Try adding a new one!
+        {{ 'app.features.masterdata.healthCenter.noData' | translate }}
       </h4>
     </div>
     }@else {
@@ -28,7 +29,8 @@ import { HealthCenterResponseDTO } from '@core/model/masterdataService';
       }
     </mat-action-list>
     }
-  `,})
+  `,
+})
 export class HealthCenterListComponent {
   healthCenterList = input.required<HealthCenterResponseDTO[]>();
 }

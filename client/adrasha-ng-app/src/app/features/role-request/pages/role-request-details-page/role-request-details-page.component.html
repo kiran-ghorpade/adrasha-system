@@ -13,7 +13,7 @@
           mat-menu-item
           [routerLink]="[
             '/role-requests/update',
-            roleRequestDetails()?.id ?? ''
+            roleRequestDetails().id ?? ''
           ]"
         >
           <mat-icon>edit</mat-icon>
@@ -42,14 +42,14 @@
       <button
         matButton="filled"
         (click)="handleApproveClick()"
-        [disabled]="roleRequestDetails()?.status === 'APPROVED'"
+        [disabled]="roleRequestDetails().status === 'APPROVED'"
       >
         Approve
       </button>
       <button
         matButton="outlined"
         (click)="handleRejectClick()"
-        [disabled]="roleRequestDetails()?.status === 'APPROVED'"
+        [disabled]="roleRequestDetails().status === 'APPROVED'"
       >
         Reject
       </button>

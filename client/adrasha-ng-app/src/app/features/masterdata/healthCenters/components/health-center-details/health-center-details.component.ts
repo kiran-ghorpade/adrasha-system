@@ -1,10 +1,11 @@
 import { Component, input } from '@angular/core';
 import { MatList } from '@angular/material/list';
+import { TranslatePipe } from '@ngx-translate/core';
 import { DataLabelComponent, DataLabelType } from '@shared/components';
 
 @Component({
   selector: 'app-health-center-details',
-  imports: [MatList, DataLabelComponent],
+  imports: [MatList, DataLabelComponent, TranslatePipe],
   template: `<ng-container>
     <mat-list style="display:flex;flex-wrap:wrap; gap:8;">
       @if(safeHealthCenterData.length > 0) { @for (data of healthCenterData();
@@ -12,7 +13,7 @@ import { DataLabelComponent, DataLabelType } from '@shared/components';
       <div class="w-full sm:w-1/2 box-border">
         <app-data-label
           [label]="data.label"
-          [value]="data.value"
+          [value]="data.value | translate"
           [icon]="data.icon"
         ></app-data-label>
       </div>

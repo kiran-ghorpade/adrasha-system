@@ -21,17 +21,17 @@ import { TranslateModule } from '@ngx-translate/core';
 export class MasterDataPageComponent {
   masterdataTypes = [
     {
-      label: 'app.features.masterdata.locations',
+      label: 'app.features.masterdata.page.tabs.locations',
       icon: 'location_on',
       route: 'locations',
     },
     {
-      label: 'app.features.masterdata.healthCenters',
+      label: 'app.features.masterdata.page.tabs.healthCenters',
       icon: 'local_hospital',
       route: 'healthCenters',
     },
     {
-      label: 'app.features.masterdata.ncd',
+      label: 'app.features.masterdata.page.tabs.ncd',
       icon: 'health_and_safety',
       route: 'ncd',
     },

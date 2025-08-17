@@ -1,6 +1,6 @@
 <app-page-wrapper>
   <div top>
-    <app-page-header title="Member Details">
+    <app-page-header [title]="'app.features.registry.member.page.detailsTitle' | translate">
       <mat-action-list>
         <a matIconButton [matMenuTriggerFor]="menu">
           <mat-icon class="h-[24px] w-[24px]">more_vert</mat-icon>
@@ -13,12 +13,12 @@
           [routerLink]="['/registry/members/update', memberData()?.id ?? '']"
         >
           <mat-icon>edit</mat-icon>
-          <span>Update Member</span>
+          <span>{{ 'app.common.update' | translate }}</span>
         </button>
         <mat-divider></mat-divider>
         <button mat-menu-item (click)="handleDeleteMember()">
           <mat-icon>delete</mat-icon>
-          <span>Delete Member</span>
+          <span>{{ 'app.common.delete' | translate }}</span>
         </button>
       </mat-menu>
     </app-page-header>
@@ -33,7 +33,7 @@
     }@else {
     <div class="overflow-scroll flex justify-center items-center">
       <mat-icon>search_off</mat-icon>
-      <h4 class="ml-4 text-wrap">member not found</h4>
+      <h4 class="ml-4 text-wrap">{{ 'app.common.notFound' | translate }}</h4>
     </div>
     }
 
@@ -44,10 +44,10 @@
           matFab
           extended
           [routerLink]="[`/registry/health/records/`]"
-          [queryParams]="[{ memberId: memberData()?.id ?? '' }]"
+          [queryParams]="{ memberId: memberData()?.id ?? '' }"
         >
           <mat-icon>fitness_center</mat-icon>
-          View Health Records
+          {{ 'app.features.registry.member.page.viewHealthRecords' | translate }}
         </button>
       </div>
     </div>

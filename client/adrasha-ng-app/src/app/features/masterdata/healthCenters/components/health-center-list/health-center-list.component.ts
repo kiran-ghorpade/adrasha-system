@@ -13,7 +13,7 @@ import { TranslateModule } from '@ngx-translate/core';
     <div class="flex justify-center items-center">
       <mat-icon>search_off</mat-icon>
       <h4 class="ml-4 text-wrap">
-        {{ 'app.features.masterdata.healthCenter.noData' | translate }}
+        {{ 'app.features.masterdata.healthCenter.page.noData' | translate }}
       </h4>
     </div>
     }@else {

@@ -89,7 +89,7 @@ export class RegisterComponent {
       .subscribe({
         next: () => {
           const translatedMsg = this.translateService.instant(
-            'app.features.auth.registration.success'
+            'app.features.auth.actions.registration.success'
           );
           this.alertService.showAlert(translatedMsg, 'success');
           this.registerForm.reset();
@@ -97,7 +97,7 @@ export class RegisterComponent {
         },
         error: () => {
           const translatedMsg = this.translateService.instant(
-            'app.features.auth.registration.failed'
+            'app.features.auth.actions.registration.failed'
           );
           this.alertService.showAlert(translatedMsg, 'error');
         },

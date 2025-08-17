@@ -1,7 +1,7 @@
 @if(roleRequestList().length == 0){
 <div class="flex justify-center items-center">
   <mat-icon>search_off</mat-icon>
-  <h4 class="ml-4 text-wrap">No Role Request found. Try adding a new one!</h4>
+  <h4 class="ml-4 text-wrap">{{ 'app.features.roleRequest.page.noData' | translate }}</h4>
 </div>
 }@else {
 <mat-action-list>
@@ -14,7 +14,7 @@
       <strong> {{ roleRequest.status }} </strong>
     </h3>
     <p matListItemLine>
-      Remark -
+      {{ 'app.features.roleRequest.page.remark' | translate }}
       <em>
         {{ roleRequest.name?.firstname }}
       </em>

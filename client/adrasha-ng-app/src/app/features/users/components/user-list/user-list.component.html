@@ -1,7 +1,7 @@
 @if(userList().length == 0){
 <div class="flex justify-center items-center">
   <mat-icon>search_off</mat-icon>
-  <h4 class="ml-4 text-wrap">No Users found!</h4>
+  <h4 class="ml-4 text-wrap">{{ 'app.features.users.page.noData' | translate }}</h4>
 </div>
 }@else {
 <mat-action-list>
@@ -19,7 +19,7 @@
           [@for(role of user.roles; track $index){
           <strong> {{role}}, </strong>
           }]
-        }@else {Roles Not Found}
+        }@else {{{ 'app.features.users.page.noRoles' | translate }}}
       </em>
     </p>
 

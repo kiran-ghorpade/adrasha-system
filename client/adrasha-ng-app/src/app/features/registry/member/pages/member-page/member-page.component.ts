@@ -6,7 +6,6 @@ import {
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog } from '@angular/material/dialog';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -14,7 +13,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MemberDataService } from '@core/api/member-data/member-data.service';
-import { AlertService, AuthService } from '@core/services';
+import { AuthService } from '@core/services';
+import { TranslatePipe } from '@ngx-translate/core';
 import { PageHeaderComponent, PageWrapperComponent } from '@shared/components';
 import { map, of, switchMap } from 'rxjs';
 import { MemberListComponent } from '../../components';
@@ -33,6 +33,7 @@ import { MemberListComponent } from '../../components';
     PageHeaderComponent,
     PageWrapperComponent,
     MemberListComponent,
+    TranslatePipe
   ],
   templateUrl: './member-page.component.html',
 })

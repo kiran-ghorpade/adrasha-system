@@ -5,10 +5,11 @@ import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { UserResponseDTO } from '@core/model/userService';
 import { getStatusIcon } from '@features/role-request/utils/getIconStatus';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-list',
-  imports: [MatListModule, MatIconModule, RouterModule, DatePipe],
+  imports: [MatListModule, MatIconModule, RouterModule, DatePipe, TranslatePipe],
   templateUrl: './user-list.component.html',
 })
 export class UserListComponent {

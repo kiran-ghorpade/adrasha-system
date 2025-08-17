@@ -3,16 +3,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { LocationResponseDTO } from '@core/model/masterdataService';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-location-list',
-  imports: [MatListModule, MatIconModule, RouterModule],
+  imports: [MatListModule, MatIconModule, RouterModule, TranslateModule],
   template: `
     @if(locationList().length === 0){
     <div class="flex justify-center items-center">
       <mat-icon>search_off</mat-icon>
       <h4 class="ml-4 text-wrap">
-        No Locations found. Try adding a new one!
+        {{ 'app.features.masterdata.location.page.noData' | translate }}
       </h4>
     </div>
     }@else {
@@ -29,7 +30,7 @@ import { LocationResponseDTO } from '@core/model/masterdataService';
     </mat-action-list>
     }
   `,
-  })
+})
 export class LocationListComponent {
   locationList = input.required<LocationResponseDTO[]>();
 }

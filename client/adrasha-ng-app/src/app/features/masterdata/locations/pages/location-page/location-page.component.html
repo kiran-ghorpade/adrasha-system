@@ -1,6 +1,6 @@
 <app-page-wrapper>
   <div top>
-    <app-page-header title="Locations"></app-page-header>
+    <app-page-header [title]="'app.features.masterdata.location.page.title' | translate"></app-page-header>
   </div>
   <div content>
     <div class="h-full flex flex-col items-between">
@@ -8,7 +8,7 @@
       <div class="flex justify-center">
         <button mat-fab extended [routerLink]="['new']">
           <mat-icon>add</mat-icon>
-          Add New Location
+          {{ 'app.features.masterdata.location.page.addNew' | translate }}
         </button>
       </div>
 

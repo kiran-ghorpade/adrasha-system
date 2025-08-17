@@ -3,12 +3,12 @@
   <mat-step [stepControl]="steps.familyDetails">
     <form [formGroup]="steps.familyDetails">
       <ng-template matStepLabel>{{
-        "registry.family.step1Title" | translate
+        "app.features.registry.family.forms.steps.step1" | translate
       }}</ng-template>
       <div class="flex gap-3 flex-wrap md:w-2/3">
         <mat-form-field>
           <mat-label>{{
-            "registry.family.povertyStatusLabel" | translate
+            "app.features.registry.family.forms.labels.povertyStatus" | translate
           }}</mat-label>
           <mat-select required>
             @for (povertyStatus of povertyStatusList(); track
@@ -24,7 +24,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{
-            "registry.family.houseIdLabel" | translate
+            "app.features.registry.family.forms.labels.houseId" | translate
           }}</mat-label>
           <input matInput formControlName="houseId" required />
           <app-validation-error
@@ -33,7 +33,7 @@
         </mat-form-field>
       </div>
       <div>
-        <button matButton matStepperNext>Next</button>
+        <button matButton matStepperNext>{{ 'app.common.next' | translate }}</button>
       </div>
     </form>
   </mat-step>
@@ -42,12 +42,12 @@
   <mat-step [stepControl]="steps.headPersonalDetails">
     <form [formGroup]="steps.headPersonalDetails">
       <ng-template matStepLabel>{{
-        "registry.family.step2Title" | translate
+        "app.features.registry.family.forms.steps.step2" | translate
       }}</ng-template>
       <div class="flex gap-3 flex-wrap md:w-2/3">
         <mat-form-field>
           <mat-label>{{
-            "registry.member.firstnameLabel" | translate
+            "app.features.registry.family.forms.labels.firstname" | translate
           }}</mat-label>
           <input matInput formControlName="firstname" required />
           <app-validation-error
@@ -56,7 +56,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{
-            "registry.member.middlenameLabel" | translate
+            "app.features.registry.family.forms.labels.middlename" | translate
           }}</mat-label>
           <input matInput formControlName="middlename" required />
           <app-validation-error
@@ -65,7 +65,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{
-            "registry.member.lastnameLabel" | translate
+            "app.features.registry.family.forms.labels.lastname" | translate
           }}</mat-label>
           <input matInput formControlName="lastname" required />
           <app-validation-error
@@ -73,7 +73,7 @@
           />
         </mat-form-field>
         <mat-form-field>
-          <mat-label>{{ "registry.member.genderLabel" | translate }}</mat-label>
+          <mat-label>{{ "app.features.registry.family.forms.labels.gender" | translate }}</mat-label>
           <mat-select required>
             @for (gender of genderList(); track gender.code) {
             <mat-option [value]="`${gender.code}`">{{
@@ -87,8 +87,8 @@
         </mat-form-field>
       </div>
       <div>
-        <button matButton matStepperPrevious>Back</button>
-        <button matButton matStepperNext>Next</button>
+        <button matButton matStepperPrevious>{{ 'app.common.back' | translate }}</button>
+        <button matButton matStepperNext>{{ 'app.common.next' | translate }}</button>
       </div>
     </form>
   </mat-step>
@@ -97,11 +97,11 @@
   <mat-step [stepControl]="steps.headBirthDetails">
     <form [formGroup]="steps.headBirthDetails">
       <ng-template matStepLabel>{{
-        "registry.family.step3Title" | translate
+        "app.features.registry.family.forms.steps.step3" | translate
       }}</ng-template>
       <div class="flex gap-3 flex-wrap md:w-2/3">
         <mat-form-field>
-          <mat-label>{{ "registry.member.dobLabel" | translate }}</mat-label>
+          <mat-label>{{ "app.features.registry.family.forms.labels.dob" | translate }}</mat-label>
           <input
             matInput
             [matDatepicker]="picker"
@@ -120,7 +120,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{
-            "registry.member.birthPlaceLabel" | translate
+            "app.features.registry.family.forms.labels.birthPlace" | translate
           }}</mat-label>
           <input matInput formControlName="birthPlace" />
           <app-validation-error
@@ -129,8 +129,8 @@
         </mat-form-field>
       </div>
       <div>
-        <button matButton matStepperPrevious>Back</button>
-        <button matButton matStepperNext>Next</button>
+        <button matButton matStepperPrevious>{{ 'app.common.back' | translate }}</button>
+        <button matButton matStepperNext>{{ 'app.common.next' | translate }}</button>
       </div>
     </form>
   </mat-step>
@@ -139,12 +139,12 @@
   <mat-step [stepControl]="steps.headIdentificationDetails">
     <form [formGroup]="steps.headIdentificationDetails">
       <ng-template matStepLabel>{{
-        "registry.family.step4Title" | translate
+        "app.features.registry.family.forms.steps.step4" | translate
       }}</ng-template>
       <div class="flex gap-3 flex-wrap md:w-2/3">
         <mat-form-field>
           <mat-label>{{
-            "registry.member.adharNumberLabel" | translate
+            "app.features.registry.family.forms.labels.adharNumber" | translate
           }}</mat-label>
           <input matInput formControlName="adharNumber" required />
           <app-validation-error
@@ -153,7 +153,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{
-            "registry.member.abhaNumberLabel" | translate
+            "app.features.registry.family.forms.labels.abhaNumber" | translate
           }}</mat-label>
           <input matInput formControlName="abhaNumber" />
           <app-validation-error
@@ -163,8 +163,8 @@
       </div>
 
       <div>
-        <button matButton matStepperPrevious>Back</button>
-        <button matButton matStepperNext>Next</button>
+        <button matButton matStepperPrevious>{{ 'app.common.back' | translate }}</button>
+        <button matButton matStepperNext>{{ 'app.common.next' | translate }}</button>
       </div>
     </form>
   </mat-step>
@@ -173,12 +173,12 @@
   <mat-step [stepControl]="steps.headContactDetails">
     <form [formGroup]="steps.headContactDetails">
       <ng-template matStepLabel>{{
-        "registry.family.step5Title" | translate
+        "app.features.registry.family.forms.steps.step5" | translate
       }}</ng-template>
       <div class="flex gap-3 flex-wrap md:w-2/3">
         <mat-form-field>
           <mat-label>{{
-            "registry.member.mobileNumberLabel" | translate
+            "app.features.registry.family.forms.labels.mobileNumber" | translate
           }}</mat-label>
           <input matInput formControlName="mobileNumber" />
           <app-validation-error
@@ -188,8 +188,8 @@
       </div>
 
       <div>
-        <button matButton matStepperPrevious>Back</button>
-        <button matButton matStepperNext>Next</button>
+        <button matButton matStepperPrevious>{{ 'app.common.back' | translate }}</button>
+        <button matButton matStepperNext>{{ 'app.common.next' | translate }}</button>
       </div>
     </form>
   </mat-step>
@@ -197,16 +197,16 @@
   <!-- Done -->
   <mat-step>
     <ng-template matStepLabel>{{
-      "registry.family.doneTitle" | translate
+      "app.common.doneTitle" | translate
     }}</ng-template>
-    <p>{{ "registry.family.doneMessage" | translate }}</p>
+    <p>{{ "app.common.doneMessage" | translate }}</p>
     <div>
-      <button matButton matStepperPrevious>Back</button>
+      <button matButton matStepperPrevious>{{ 'app.common.back' | translate }}</button>
       <button matButton (click)="stepper.reset()">
-        {{ "registry.family.resetButton" | translate }}
+        {{ "app.common.resetButton" | translate }}
       </button>
       <button matButton="filled" (click)="onSubmit()" [disabled]="isLoading()">
-        {{ "registry.family.submitButton" | translate }}
+        {{ "app.common.submitButton" | translate }}
       </button>
     </div>
   </mat-step>

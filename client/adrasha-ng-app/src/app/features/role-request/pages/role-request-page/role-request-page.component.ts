@@ -8,6 +8,7 @@ import { RoleRequestService } from '@core/api/role-request/role-request.service'
 import { RoleRequestResponseDTO } from '@core/model/userService';
 import { AuthService } from '@core/services';
 import { RoleRequestListComponent } from '@features/role-request/components';
+import { TranslatePipe } from '@ngx-translate/core';
 import { PageHeaderComponent, PageWrapperComponent } from '@shared/components';
 import { tap } from 'rxjs';
 
@@ -20,6 +21,7 @@ import { tap } from 'rxjs';
     PageHeaderComponent,
     MatFormFieldModule,
     MatPaginatorModule,
+    TranslatePipe
   ],
   templateUrl: './role-request-page.component.html',
 })

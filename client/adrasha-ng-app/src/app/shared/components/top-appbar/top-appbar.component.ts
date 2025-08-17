@@ -12,6 +12,7 @@ import { Router, RouterModule } from '@angular/router';
 import { AuthService, ThemeService } from '@core/services';
 import { AppLogoComponent } from '../../widgets/logo.component';
 import { AlertComponent } from '../alert/alert.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-top-appbar',
@@ -27,6 +28,7 @@ import { AlertComponent } from '../alert/alert.component';
     RouterModule,
     CommonModule,
     AlertComponent,
+    TranslateModule,
   ],
   styles: `
      .iconShadow{
@@ -49,9 +51,9 @@ export class TopAppBarComponent {
   }
 
   readonly settings = computed(() => {
-    const base = [{ label: 'Settings', toLink: '/settings', icon: 'settings' }];
+    const base = [{ label: 'app.navigation.sidebar.settings', toLink: '/settings', icon: 'settings' }];
     if (!this.isAdmin()) {
-      base.unshift({ label: 'Profile', toLink: '/profile', icon: 'person' });
+      base.unshift({ label: 'app.features.profile.page.title', toLink: '/profile', icon: 'person' });
     }
     return base;
   });

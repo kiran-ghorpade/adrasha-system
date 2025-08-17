@@ -8,6 +8,7 @@ import { UserService } from '@core/api/user/user.service';
 import { UserResponseDTO } from '@core/model/userService';
 import { AuthService } from '@core/services';
 import { UserListComponent } from '@features/users/components';
+import { TranslatePipe } from '@ngx-translate/core';
 import { PageHeaderComponent, PageWrapperComponent } from '@shared/components';
 import { tap } from 'rxjs';
 
@@ -20,6 +21,7 @@ import { tap } from 'rxjs';
     MatFormFieldModule,
     MatPaginatorModule,
     UserListComponent,
+    TranslatePipe
   ],
   templateUrl: './user-page.component.html',
 })

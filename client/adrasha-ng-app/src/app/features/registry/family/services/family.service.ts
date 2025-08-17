@@ -8,22 +8,6 @@ import {
 import { AlertService } from '@core/services';
 import { TranslateService } from '@ngx-translate/core';
 
-interface FamilyForm {
-  familyFormGroup: {
-    povertyStatus: string;
-  };
-  headMemberFormGroup: {
-    firstname: string;
-    middlename: string;
-    lastname: string;
-    gender: string;
-    dateOfBirth: string;
-    birthPlace: string;
-    adharNumber: string;
-    mobileNumber: string;
-  };
-}
-
 @Injectable({
   providedIn: 'root',
 })
@@ -38,7 +22,7 @@ export class FamilyService {
       next: (result) => {
         if (result.id) {
           const translatedMsg = this.translateService.instant(
-            'registry.family.registration.success'
+            'app.features.registry.family.actions.registration.success'
           );
           this.alertService.showAlert(translatedMsg, 'success');
           this.router.navigateByUrl(`/registry/families/${result.id}`, {
@@ -51,7 +35,7 @@ export class FamilyService {
           console.log(err);
         }
         const translatedMsg = this.translateService.instant(
-          'registry.family.registration.failed'
+          'app.features.registry.family.actions.registration.failed'
         );
         this.alertService.showAlert(translatedMsg, 'error');
       },
@@ -63,7 +47,7 @@ export class FamilyService {
       next: (result) => {
         if (result.id) {
           const translatedMsg = this.translateService.instant(
-            'registry.family.update.success'
+            'app.features.registry.family.actions.update.success'
           );
           this.alertService.showAlert(translatedMsg, 'success');
           this.router.navigateByUrl(`/registry/families/${result.id}`, {
@@ -76,7 +60,7 @@ export class FamilyService {
           console.log(err);
         }
         const translatedMsg = this.translateService.instant(
-          'registry.family.update.failed'
+          'app.features.registry.family.actions.update.failed'
         );
         this.alertService.showAlert(translatedMsg, 'error');
       },
@@ -87,7 +71,7 @@ export class FamilyService {
     this.familyService.deleteFamily(familyId).subscribe({
       next: () => {
         const translatedMsg = this.translateService.instant(
-          'registry.family.deletion.success'
+          'app.features.registry.family.actions.deletion.success'
         );
         this.alertService.showAlert(translatedMsg, 'success');
         this.router.navigateByUrl(`/registry`, {
@@ -97,7 +81,7 @@ export class FamilyService {
       error: (err) => {
         console.log(err);
         const translatedMsg = this.translateService.instant(
-          'registry.family.deletion.failed'
+          'app.features.registry.family.actions.deletion.failed'
         );
         this.alertService.showAlert(translatedMsg, 'error');
       },

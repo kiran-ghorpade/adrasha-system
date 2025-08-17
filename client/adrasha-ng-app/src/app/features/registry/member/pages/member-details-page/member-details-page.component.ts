@@ -16,6 +16,7 @@ import { MemberDetailsComponent } from '../../components';
 import { MemberService } from '../../services';
 import { memberToData } from '../../utils/convertor';
 import { MatButtonModule } from '@angular/material/button';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-member-details-page',
@@ -28,6 +29,7 @@ import { MatButtonModule } from '@angular/material/button';
     PageHeaderComponent,
     MatIconModule,
     MemberDetailsComponent,
+    TranslatePipe
   ],
   templateUrl: './member-details-page.component.html',
 })
@@ -36,6 +38,7 @@ export class MemberDetailsPageComponent {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly memberApiService = inject(MemberDataService);
   private readonly memberService = inject(MemberService);
+  private readonly translateService = inject(TranslateService);
 
   data = signal<DataLabelType[]>([]);
   memberData = signal<MemberResponseDTO | null>(null);
@@ -56,8 +59,8 @@ export class MemberDetailsPageComponent {
   handleDeleteMember() {
     const dialogRef = this.dialog.open(ConfirmationComponent, {
       data: {
-        title: 'Do you want to delete this member?',
-        message: 'Member and his healthrecords will be deleted',
+        title: this.translateService.instant('app.features.registry.member.dialogs.delete.title'),
+        message: this.translateService.instant('app.features.registry.member.dialogs.delete.message'),
       },
     });
 

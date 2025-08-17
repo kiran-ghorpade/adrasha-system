@@ -49,7 +49,7 @@ export const appConfig: ApplicationConfig = {
         deps: [HttpClient],
       },
       isolate:true,
-      defaultLanguage:'en',
+      defaultLanguage:'mr',
     }),
     provideAnimationsAsync(),
     provideHttpClient(withInterceptors(interceptors)),

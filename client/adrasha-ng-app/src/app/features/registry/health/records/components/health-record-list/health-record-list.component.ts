@@ -3,15 +3,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { MemberResponseDTO } from '@core/model/dataService';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-health-record-list',
-  imports: [RouterModule, MatListModule, MatIconModule],
+  imports: [RouterModule, MatListModule, MatIconModule, TranslateModule],
   template: `
     @if(healthRecordList().length == 0){
     <div class="flex justify-center items-center">
       <mat-icon>search_off</mat-icon>
-      <h4 class="ml-4 text-wrap">No Record found. Try adding a new one!</h4>
+      <h4 class="ml-4 text-wrap">
+        {{ 'app.features.registry.healthRecord.page.noData' | translate }}
+      </h4>
     </div>
     }@else {
     <mat-action-list>

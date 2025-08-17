@@ -3,31 +3,31 @@
   <mat-step [stepControl]="steps.personalDetails">
     <form [formGroup]="steps.personalDetails">
       <ng-template matStepLabel>{{
-        "roleRequest.step1Title" | translate
+        "app.features.roleRequest.forms.steps.step1" | translate
       }}</ng-template>
       <div class="flex gap-3 flex-wrap md:w-2/3">
         <mat-form-field>
-          <mat-label>{{ "roleRequest.firstnameLabel" | translate }}</mat-label>
+          <mat-label>{{ "app.features.roleRequest.forms.labels.firstname" | translate }}</mat-label>
           <input matInput formControlName="firstname" required />
           <app-validation-error
             [control]="steps.personalDetails.controls.firstname"
           />
         </mat-form-field>
         <mat-form-field>
-          <mat-label>{{ "roleRequest.middlenameLabel" | translate }}</mat-label>
+          <mat-label>{{ "app.features.roleRequest.forms.labels.middlename" | translate }}</mat-label>
           <input matInput formControlName="middlename" required />
           <app-validation-error
             [control]="steps.personalDetails.controls.middlename"
           />
         </mat-form-field>
         <mat-form-field>
-          <mat-label>{{ "roleRequest.lastnameLabel" | translate }}</mat-label>
+          <mat-label>{{ "app.features.roleRequest.forms.labels.lastname" | translate }}</mat-label>
           <input matInput formControlName="lastname" required />
           <app-validation-error [control]="steps.personalDetails.controls.lastname" />
         </mat-form-field>
       </div>
       <div>
-        <button matButton matStepperNext>Next</button>
+        <button matButton matStepperNext>{{ 'app.common.next' | translate }}</button>
       </div>
     </form>
   </mat-step>
@@ -36,11 +36,11 @@
   <mat-step [stepControl]="steps.roleDetails">
     <form [formGroup]="steps.roleDetails">
       <ng-template matStepLabel>{{
-        "roleRequest.step2Title" | translate
+        "app.features.roleRequest.forms.steps.step2" | translate
       }}</ng-template>
       <div class="flex gap-3 flex-wrap md:w-2/3">
         <mat-form-field>
-          <mat-label>{{ "roleRequest.roleLabel" | translate }}</mat-label>
+          <mat-label>{{ "app.features.roleRequest.forms.labels.role" | translate }}</mat-label>
           <mat-select required formControlName="role">
             @for (role of roleList(); track $index) {
             <mat-option [value]="`${role.code}`">{{ role.label }}</mat-option>
@@ -50,8 +50,8 @@
         </mat-form-field>
       </div>
       <div>
-        <button matButton matStepperPrevious>Back</button>
-        <button matButton matStepperNext>Next</button>
+        <button matButton matStepperPrevious>{{ 'app.common.back' | translate }}</button>
+        <button matButton matStepperNext>{{ 'app.common.next' | translate }}</button>
       </div>
     </form>
   </mat-step>
@@ -60,12 +60,12 @@
   <mat-step [stepControl]="steps.healthCenterDetails">
     <form [formGroup]="steps.healthCenterDetails">
       <ng-template matStepLabel>{{
-        "roleRequest.step3Title" | translate
+        "app.features.roleRequest.forms.steps.step3" | translate
       }}</ng-template>
       <div class="flex gap-3 flex-wrap md:w-2/3">
         <mat-form-field>
           <mat-label>{{
-            "roleRequest.healthCenterLabel" | translate
+            "app.features.roleRequest.forms.labels.healthCenter" | translate
           }}</mat-label>
           <mat-select required formControlName="healthCenterId">
             @for (center of healthCenterList(); track $index) {
@@ -79,8 +79,8 @@
       </div>
 
       <div>
-        <button matButton matStepperPrevious>Back</button>
-        <button matButton matStepperNext>Next</button>
+        <button matButton matStepperPrevious>{{ 'app.common.back' | translate }}</button>
+        <button matButton matStepperNext>{{ 'app.common.next' | translate }}</button>
       </div>
     </form>
   </mat-step>
@@ -88,16 +88,16 @@
   <!-- Done -->
   <mat-step>
     <ng-template matStepLabel>{{
-      "roleRequest.doneTitle" | translate
+      "app.common.doneTitle" | translate
     }}</ng-template>
-    <p>{{ "roleRequest.doneMessage" | translate }}</p>
+    <p>{{ "app.common.doneMessage" | translate }}</p>
     <div>
-      <button matButton matStepperPrevious>Back</button>
+      <button matButton matStepperPrevious>{{ 'app.common.back' | translate }}</button>
       <button matButton (click)="stepper.reset()">
-        {{ "roleRequest.resetButton" | translate }}
+        {{ "app.common.resetButton" | translate }}
       </button>
       <button matButton="filled" (click)="onSubmit()" [disabled]="isLoading()">
-        {{ "roleRequest.submitButton" | translate }}
+        {{ "app.common.submitButton" | translate }}
       </button>
     </div>
   </mat-step>

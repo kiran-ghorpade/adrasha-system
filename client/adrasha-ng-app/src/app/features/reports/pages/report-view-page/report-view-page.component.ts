@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute } from '@angular/router';
 import { ReportsService } from '@core/api';
 import { AuthService } from '@core/services';
+import { TranslatePipe } from '@ngx-translate/core';
 import { PageHeaderComponent, PageWrapperComponent } from '@shared/components';
 import { map, of, switchMap } from 'rxjs';
 
@@ -16,6 +17,7 @@ import { map, of, switchMap } from 'rxjs';
     MatIconModule,
     PageWrapperComponent,
     PageHeaderComponent,
+    TranslatePipe
   ],
   templateUrl: './report-view-page.component.html',
 })

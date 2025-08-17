@@ -1,19 +1,13 @@
-import {
-  Component,
-  effect,
-  inject,
-  input,
-  signal
-} from '@angular/core';
+import { Component, effect, inject, input, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AuthService } from '@core/services';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateModule } from '@ngx-translate/core';
 import { map } from 'rxjs';
 import { DataCardLabelComponent } from '../data-card-label/data-card-label.component';
 
 @Component({
   selector: 'app-dashboard-header',
-  imports: [DataCardLabelComponent, TranslatePipe],
+  imports: [DataCardLabelComponent, TranslatePipe, TranslateModule],
   template: `
     <!-- Greetings -->
     <div class="h-full w-full grid grid-cols-12 grid-rows-4 gap-2">
@@ -21,9 +15,12 @@ import { DataCardLabelComponent } from '../data-card-label/data-card-label.compo
         class="col-span-12 row-span-4 md:col-span-6 p-3 md:order-none order-1"
       >
         <h1 class="text-pretty">
-          {{ 'Hello, {name}' | translate : { name: username } }}
+          {{
+            'app.features.dashboard.common.greetings'
+              | translate : { name: username }
+          }}
         </h1>
-        <p>{{ message() | translate}}</p>
+        <p>{{ message() | translate }}</p>
       </div>
       <div class="col-span-6 row-span-4 md:col-span-3 md:order-none order-2">
         <app-data-card-label
@@ -34,7 +31,7 @@ import { DataCardLabelComponent } from '../data-card-label/data-card-label.compo
       <div class="col-span-6 row-span-4 md:col-span-3 md:order-none order-3">
         <app-data-card-label
           [value]="currentTime().toLocaleTimeString()"
-          [label]="'app.features.dashboard.common.currentDate' | translate"
+          [label]="'app.features.dashboard.common.currentTime' | translate"
         />
       </div>
     </div>

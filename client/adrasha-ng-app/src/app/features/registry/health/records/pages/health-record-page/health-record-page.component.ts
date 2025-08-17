@@ -17,6 +17,7 @@ import { map, of, switchMap } from 'rxjs';
 import {
   HealthRecordListComponent
 } from '../../components';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-health-record-page',
@@ -32,6 +33,7 @@ import {
     PageHeaderComponent,
     PageWrapperComponent,
     HealthRecordListComponent,
+    TranslatePipe
   ],
   templateUrl: './health-record-page.component.html',
 })

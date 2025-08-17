@@ -5,33 +5,41 @@ export type Menu = {
 };
 
 const user: Menu[] = [
-  { label: 'Dashboard', route: '/dashboard', icon: 'dashboard' },
-  { label: 'History', route: '/role-requests/', icon: 'history' },
+  {
+    label: 'app.navigation.sidebar.dashboard',
+    route: '/dashboard',
+    icon: 'dashboard',
+  },
+  {
+    label: 'app.features.dashboard.user.viewHistory',
+    route: '/role-requests/',
+    icon: 'history',
+  },
 ];
 
 const asha: Menu[] = [
   {
-    label: 'Dashboard',
+    label: 'app.navigation.sidebar.dashboard',
     icon: 'dashboard',
     route: '/dashboard',
   },
   {
-    label: 'Registry',
+    label: 'app.navigation.sidebar.registry',
     icon: 'app_registration',
     route: '/registry/families',
   },
   {
-    label: 'Search',
+    label: 'app.features.search.title',
     icon: 'search',
     route: '/search',
   },
   {
-    label: 'Analytics',
+    label: 'app.features.analytics.page.title',
     icon: 'show_chart',
     route: '/analytics',
   },
   {
-    label: 'Reports',
+    label: 'app.navigation.sidebar.reports',
     icon: 'picture_as_pdf',
     route: '/reports',
   },
@@ -39,22 +47,22 @@ const asha: Menu[] = [
 
 const admin: Menu[] = [
   {
-    label: 'Dashboard',
+    label: 'app.navigation.sidebar.dashboard',
     route: '/dashboard',
     icon: 'dashboard',
   },
   {
-    label: 'Users',
+    label: 'app.features.users.page.title',
     route: '/users',
     icon: 'group',
   },
   {
-    label: 'RoleRequests',
+    label: 'app.features.roleRequest.page.title',
     route: '/role-requests',
     icon: 'person_add',
   },
   {
-    label: 'MasterData',
+    label: 'app.navigation.sidebar.masterdata',
     route: '/masterdata',
     icon: 'storage',
   },

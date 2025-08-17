@@ -13,6 +13,7 @@ import { getFullName } from '@shared/utils/fullName';
 import { catchError, of, switchMap, tap } from 'rxjs';
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 import { LocationDetailsComponent } from '../profile-details/profile-details.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-profile-page',
@@ -21,6 +22,7 @@ import { LocationDetailsComponent } from '../profile-details/profile-details.com
     PageHeaderComponent,
     PageWrapperComponent,
     LocationDetailsComponent,
+    TranslateModule
   ],
   templateUrl: './profile-page.component.html',
 })
@@ -89,27 +91,27 @@ function profileToData(
 ): DataLabelType[] {
   return [
     // User Info
-    { label: 'User ID', value: user?.id, icon: 'badge' },
-    { label: 'Full Name', value: getFullName(user?.name), icon: 'person' },
-    { label: 'Aadhar Number', value: user?.adharNumber, icon: 'fingerprint' },
+    { label: 'app.features.profile.labels.userId', value: user?.id, icon: 'badge' },
+    { label: 'app.features.profile.labels.fullName', value: getFullName(user?.name), icon: 'person' },
+    { label: 'app.features.profile.labels.adharNumber', value: user?.adharNumber, icon: 'fingerprint' },
 
     // Health Center Info
     {
-      label: 'Health Center',
+      label: 'app.features.profile.labels.healthCenter',
       value: healthCenter.name,
       icon: 'local_hospital',
     },
-    { label: 'Center Type', value: healthCenter?.centerType, icon: 'business' },
+    { label: 'app.features.profile.labels.centerType', value: healthCenter?.centerType, icon: 'business' },
 
     // Address Info
-    { label: 'District', value: location?.district, icon: 'location_city' },
-    { label: 'Subdistrict', value: location?.subdistrict, icon: 'apartment' },
-    { label: 'Pincode', value: location?.pincode, icon: 'pin_drop' },
-    { label: 'State', value: location?.state, icon: 'map' },
-    { label: 'Country', value: location?.country, icon: 'public' },
+    { label: 'app.features.profile.labels.district', value: location?.district, icon: 'location_city' },
+    { label: 'app.features.profile.labels.subdistrict', value: location?.subdistrict, icon: 'apartment' },
+    { label: 'app.features.profile.labels.pincode', value: location?.pincode, icon: 'pin_drop' },
+    { label: 'app.features.profile.labels.state', value: location?.state, icon: 'map' },
+    { label: 'app.features.profile.labels.country', value: location?.country, icon: 'public' },
 
     // Timestamps
-    { label: 'Created At', value: user?.createdAt, icon: 'calendar_today' },
-    { label: 'Updated At', value: user?.updatedAt, icon: 'update' },
+    { label: 'app.common.createdAt', value: user?.createdAt, icon: 'calendar_today' },
+    { label: 'app.common.updatedAt', value: user?.updatedAt, icon: 'update' },
   ];
 }

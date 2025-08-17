@@ -5,10 +5,11 @@ import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { RoleRequestResponseDTO } from '@core/model/userService';
 import { getStatusIcon } from '@features/role-request/utils/getIconStatus';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-role-request-list',
-  imports: [MatListModule, MatIconModule, RouterModule, DatePipe],
+  imports: [MatListModule, MatIconModule, RouterModule, DatePipe, TranslatePipe],
   templateUrl: './role-request-list.component.html',
 })
 export class RoleRequestListComponent {

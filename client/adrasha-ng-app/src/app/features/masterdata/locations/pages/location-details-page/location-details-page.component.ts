@@ -1,5 +1,4 @@
 import { Component, inject, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { LocationService as LocationApiService } from '@core/api';
@@ -16,6 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { LocationDetailsComponent } from '../../components';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-location-details-page',
@@ -28,6 +28,7 @@ import { LocationDetailsComponent } from '../../components';
     MatIconModule,
     RouterModule,
     LocationDetailsComponent,
+    TranslateModule
   ],
   templateUrl: './location-details-page.component.html',
 })
@@ -36,6 +37,7 @@ export class LocationDetailsPageComponent {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly locationApiService = inject(LocationApiService);
   private readonly locationService = inject(LocationService);
+  private readonly translateService = inject(TranslateService);
 
   data = signal<DataLabelType[]>([]);
   locationDetails = signal<LocationResponseDTO | null>(null);
@@ -63,8 +65,8 @@ export class LocationDetailsPageComponent {
   handleDeleteClick() {
     const dialogRef = this.dialog.open(ConfirmationComponent, {
       data: {
-        title: 'Do you want to delete this member?',
-        message: 'Member and his healthrecords will be deleted',
+        title: this.translateService.instant('app.features.registry.family.dialogs.title'),
+        message: this.translateService.instant('app.features.registry.family.dialogs.message'),
       },
     });
 
@@ -78,16 +80,15 @@ export class LocationDetailsPageComponent {
 
 function locationToData(location: LocationResponseDTO): DataLabelType[] {
   return [
-    { label: 'Location ID', value: location.id, icon: 'label' },
-    { label: 'Name', value: location.name, icon: 'place' },
-    { label: 'Type', value: location.type || 'Not Available', icon: 'category' },
-    { label: 'Pincode', value: location.pincode, icon: 'pin' },
-    { label: 'Subdistrict', value: location.subdistrict, icon: 'location_city' },
-    { label: 'District', value: location.district, icon: 'map' },
-    { label: 'State', value: location.state, icon: 'public' },
-    { label: 'Country', value: location.country, icon: 'flag' },
-    { label: 'Created At', value: location.createdAt, icon: 'calendar_today' },
-    { label: 'Updated At', value: location.updatedAt, icon: 'update' },
+    { label: 'app.features.masterdata.location.table.id', value: location.id, icon: 'label' },
+    { label: 'app.common.name', value: location.name, icon: 'place' },
+    { label: 'app.features.masterdata.location.table.type', value: location.type || 'Not Available', icon: 'category' },
+    { label: 'app.features.masterdata.location.table.pincode', value: location.pincode, icon: 'pin' },
+    { label: 'app.features.masterdata.location.table.subdistrict', value: location.subdistrict, icon: 'location_city' },
+    { label: 'app.features.masterdata.location.table.district', value: location.district, icon: 'map' },
+    { label: 'app.features.masterdata.location.table.state', value: location.state, icon: 'public' },
+    { label: 'app.features.masterdata.location.table.country', value: location.country, icon: 'flag' },
+    { label: 'app.common.createdAt', value: location.createdAt, icon: 'calendar_today' },
+    { label: 'app.common.updatedAt', value: location.updatedAt, icon: 'update' },
   ];
 }
-

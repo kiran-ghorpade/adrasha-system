@@ -3,14 +3,14 @@
   <mat-step [stepControl]="steps.familyDetails">
     <form [formGroup]="steps.familyDetails">
       <ng-template matStepLabel>{{
-        "registry.family.step1Title" | translate
+        "app.features.registry.family.forms.steps.step1" | translate
       }}</ng-template>
       <div class="flex gap-3 flex-wrap md:w-2/3">
         <mat-form-field>
           <mat-label>{{
-            "registry.family.povertyStatusLabel" | translate
+            "app.features.registry.family.forms.labels.povertyStatus" | translate
           }}</mat-label>
-          <mat-select required>
+          <mat-select required formControlName="povertyStatus">
             @for (povertyStatus of povertyStatusList(); track
             povertyStatus.code) {
             <mat-option [value]="`${povertyStatus.code}`">{{
@@ -24,7 +24,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{
-            "registry.family.houseIdLabel" | translate
+            "app.features.registry.family.forms.labels.houseId" | translate
           }}</mat-label>
           <input matInput formControlName="houseId" required />
           <app-validation-error
@@ -33,23 +33,23 @@
         </mat-form-field>
       </div>
       <div>
-        <button matButton matStepperNext>Next</button>
+        <button matButton matStepperNext>{{ 'app.common.next' | translate }}</button>
       </div>
     </form>
   </mat-step>
   <!-- Done -->
   <mat-step>
     <ng-template matStepLabel>{{
-      "registry.family.doneTitle" | translate
+      "app.common.doneTitle" | translate
     }}</ng-template>
-    <p>{{ "registry.family.doneMessage" | translate }}</p>
+    <p>{{ "app.common.doneMessage" | translate }}</p>
     <div>
-      <button matButton matStepperPrevious>Back</button>
+      <button matButton matStepperPrevious>{{ 'app.common.back' | translate }}</button>
       <button matButton (click)="stepper.reset()">
-        {{ "registry.family.resetButton" | translate }}
+        {{ "app.common.resetButton" | translate }}
       </button>
       <button matButton="filled" (click)="onSubmit()" [disabled]="isLoading()">
-        {{ "registry.family.submitButton" | translate }}
+        {{ "app.common.submitButton" | translate }}
       </button>
     </div>
   </mat-step>

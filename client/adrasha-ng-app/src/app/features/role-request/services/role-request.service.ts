@@ -22,7 +22,7 @@ export class RoleRequestService {
       next: (result) => {
         if (result.id) {
           const translatedMsg = this.translateService.instant(
-            'roleRequest.registration.success'
+            'app.features.roleRequest.actions.registration.success'
           );
           this.alertService.showAlert(translatedMsg, 'success');
           this.router.navigateByUrl(`/role-requests/${result.id}`, {
@@ -35,7 +35,7 @@ export class RoleRequestService {
           console.log(err);
         }
         const translatedMsg = this.translateService.instant(
-          'roleRequest.registration.failed'
+          'app.features.roleRequest.actions.registration.failed'
         );
         this.alertService.showAlert(translatedMsg, 'error');
       },
@@ -47,7 +47,7 @@ export class RoleRequestService {
       next: (result) => {
         if (result.id) {
           const translatedMsg = this.translateService.instant(
-            'roleRequest.update.success'
+            'app.features.roleRequest.actions.update.success'
           );
           this.alertService.showAlert(translatedMsg, 'success');
           this.router.navigateByUrl(`/role-requests/${result.id}`, {
@@ -60,7 +60,7 @@ export class RoleRequestService {
           console.log(err);
         }
         const translatedMsg = this.translateService.instant(
-          'roleRequest.update.failed'
+          'app.features.roleRequest.actions.update.failed'
         );
         this.alertService.showAlert(translatedMsg, 'error');
       },
@@ -71,7 +71,7 @@ export class RoleRequestService {
     this.roleRequestService.deleteRoleRequest(roleRequestId).subscribe({
       next: () => {
         const translatedMsg = this.translateService.instant(
-          'roleRequest.deletion.success'
+          'app.features.roleRequest.actions.deletion.success'
         );
         this.alertService.showAlert(translatedMsg, 'success');
         this.router.navigateByUrl(`/role-requests`, {
@@ -81,7 +81,7 @@ export class RoleRequestService {
       error: (err) => {
         console.log(err);
         const translatedMsg = this.translateService.instant(
-          'roleRequest.deletion.failed'
+          'app.features.roleRequest.actions.deletion.failed'
         );
         this.alertService.showAlert(translatedMsg, 'error');
       },
@@ -92,7 +92,7 @@ export class RoleRequestService {
     this.roleRequestService.approveUserRequest(roleRequestId).subscribe({
       next: () => {
         const translatedMsg = this.translateService.instant(
-          'roleRequest.approve.success'
+          'app.features.roleRequest.actions.approve.success' // Assumed key
         );
         this.alertService.showAlert(translatedMsg, 'success');
 
@@ -105,7 +105,7 @@ export class RoleRequestService {
       error: (err) => {
         console.log(err);
         const translatedMsg = this.translateService.instant(
-          'roleRequest.approve.failed'
+          'app.features.roleRequest.actions.approve.failed' // Assumed key
         );
         this.alertService.showAlert(translatedMsg, 'error');
       },
@@ -116,7 +116,7 @@ export class RoleRequestService {
     this.roleRequestService.rejectUserRequest(roleRequestId).subscribe({
       next: () => {
         const translatedMsg = this.translateService.instant(
-          'roleRequest.reject.success'
+          'app.features.roleRequest.actions.reject.success' // Assumed key
         );
         this.alertService.showAlert(translatedMsg, 'success');
 
@@ -129,7 +129,7 @@ export class RoleRequestService {
       error: (err) => {
         console.log(err);
         const translatedMsg = this.translateService.instant(
-          'roleRequest.reject.failed'
+          'app.features.roleRequest.actions.reject.failed' // Assumed key
         );
         this.alertService.showAlert(translatedMsg, 'error');
       },

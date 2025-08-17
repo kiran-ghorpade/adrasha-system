@@ -1,6 +1,6 @@
 <app-page-wrapper>
   <div top>
-    <app-page-header title="User Details">
+    <app-page-header [title]="'app.features.users.page.detailsTitle' | translate">
       <!-- @if(isAdmin()) {
       <mat-action-list>
         <a matIconButton [matMenuTriggerFor]="menu">
@@ -14,7 +14,7 @@
           [routerLink]="['/users/update', userDetails()?.id ?? '']"
         >
           <mat-icon>edit</mat-icon>
-          <span>Update Request</span>
+          <span>{{ 'app.common.update' | translate }}</span>
         </button>
         <mat-divider></mat-divider>
       </mat-menu>
@@ -28,6 +28,11 @@
     <div class="paper flex flex-wrap">
       <app-user-details [userData]="data()"></app-user-details>
     </div>
+    } @else {
+      <div class="overflow-scroll flex justify-center items-center">
+        <mat-icon>search_off</mat-icon>
+        <h4 class="ml-4 text-wrap">{{ 'app.common.notFound' | translate }}</h4>
+      </div>
     }
   </div>
 </app-page-wrapper>

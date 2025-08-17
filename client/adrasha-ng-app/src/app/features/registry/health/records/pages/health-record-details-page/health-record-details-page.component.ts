@@ -15,39 +15,39 @@ function healthRecordToData(
   healthRecord: HealthRecordResponseDTO
 ): DataLabelType[] {
   return [
-    { label: 'Record ID', value: healthRecord.id, icon: 'assignment' },
-    { label: 'Member ID', value: healthRecord.memberId, icon: 'badge' },
-    { label: 'ASHA ID', value: healthRecord.ashaId, icon: 'groups' },
+    { label: 'app.features.registry.healthRecord.table.id', value: healthRecord.id, icon: 'assignment' },
+    { label: 'app.features.registry.healthRecord.table.memberId', value: healthRecord.memberId, icon: 'badge' },
+    { label: 'app.features.registry.healthRecord.table.ashaId', value: healthRecord.ashaId, icon: 'groups' },
     {
-      label: 'Recorded At',
+      label: 'app.features.registry.healthRecord.table.recordedAt',
       value: healthRecord.recordedAt,
       icon: 'calendar_month',
     },
     {
-      label: 'Pregnant',
-      value: healthRecord.pregnant ? 'Yes' : 'No',
+      label: 'app.features.registry.healthRecord.table.pregnant',
+      value: healthRecord.pregnant ? 'app.common.yes' : 'app.common.no',
       icon: 'pregnant_woman',
     },
     {
-      label: 'Height (cm)',
+      label: 'app.features.registry.healthRecord.table.height',
       value: healthRecord.height?.toString(),
       icon: 'height',
     },
     {
-      label: 'Weight (kg)',
+      label: 'app.features.registry.healthRecord.table.weight',
       value: healthRecord.weight?.toString(),
       icon: 'monitor_weight',
     },
     {
-      label: 'NCD List',
-      value: healthRecord.ncdlist?.join(', ') || 'None',
+      label: 'app.features.registry.healthRecord.table.ncdList',
+      value: healthRecord.ncdlist?.join(', ') || 'app.common.none',
       icon: 'medical_services',
     },
     {
-      label: 'Created At',
+      label: 'app.common.createdAt',
       value: healthRecord.createdAt,
       icon: 'calendar_today',
     },
-    { label: 'Updated At', value: healthRecord.updatedAt, icon: 'update' },
+    { label: 'app.common.updatedAt', value: healthRecord.updatedAt, icon: 'update' },
   ];
 }

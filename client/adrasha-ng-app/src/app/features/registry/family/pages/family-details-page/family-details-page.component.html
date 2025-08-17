@@ -1,16 +1,16 @@
 <app-page-wrapper>
   <div top>
-    <app-page-header title="Family Details">
+    <app-page-header [title]="'app.features.registry.family.page.detailsTitle' | translate">
       <mat-action-list>
         <div class="flex gap-2">
           <button
             matIconButton
             (click)="handleQrClick()"
-            matTooltip="Generate Qr"
+            [matTooltip]="'app.features.registry.family.page.generateQrTooltip' | translate"
           >
             <mat-icon>qr_code</mat-icon>
           </button>
-          <a matIconButton [matMenuTriggerFor]="menu" matTooltip="More">
+          <a matIconButton [matMenuTriggerFor]="menu" [matTooltip]="'app.features.registry.family.page.moreTooltip' | translate">
             <mat-icon class="h-[24px] w-[24px]">more_vert</mat-icon>
           </a>
         </div>
@@ -22,12 +22,12 @@
           [routerLink]="['/registry/family/update', familyDetails().id ?? '']"
         >
           <mat-icon>edit</mat-icon>
-          <span>Update Family</span>
+          <span>{{ 'app.common.update' | translate }}</span>
         </button>
         <mat-divider></mat-divider>
         <button mat-menu-item (click)="handleDeleteFamily()">
           <mat-icon>delete</mat-icon>
-          <span>Delete Family</span>
+          <span>{{ 'app.common.delete' | translate }}</span>
         </button>
       </mat-menu>
     </app-page-header>
@@ -44,7 +44,7 @@
       }@else {
       <div class="overflow-scroll flex justify-center items-center">
         <mat-icon>search_off</mat-icon>
-        <h4 class="ml-4 text-wrap">Something went wrong</h4>
+        <h4 class="ml-4 text-wrap">{{ 'app.common.somethingWentWrong' | translate }}</h4>
       </div>
       }
     </mat-card>
@@ -62,7 +62,7 @@
           [queryParams]="{familyId}"
         >
           <mat-icon>add</mat-icon>
-          Add New Member
+          {{ 'app.features.registry.member.page.addNew' | translate }}
         </button>
       </div>
 

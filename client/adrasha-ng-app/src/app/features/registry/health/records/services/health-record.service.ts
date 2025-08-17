@@ -1,7 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HealthRecordsService as HealthApiService } from '@core/api';
-import { HealthRecordCreateDTO, HealthRecordUpdateDTO } from '@core/model/dataService';
+import {
+  HealthRecordCreateDTO,
+  HealthRecordUpdateDTO,
+} from '@core/model/dataService';
 import { AlertService } from '@core/services';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -19,7 +22,7 @@ export class HealthRecordService {
       next: (result) => {
         if (result.id) {
           const translatedMsg = this.translateService.instant(
-            'registry.member.registration.success'
+            'app.features.registry.healthRecord.actions.registration.success'
           );
           this.alertService.showAlert(translatedMsg, 'success');
           this.router.navigateByUrl(`/registry/members/${result.id}`, {
@@ -32,7 +35,7 @@ export class HealthRecordService {
           console.log(err);
         }
         const translatedMsg = this.translateService.instant(
-          'registry.member.registration.failed'
+          'app.features.registry.healthRecord.actions.registration.failed'
         );
         this.alertService.showAlert(translatedMsg, 'error');
       },
@@ -44,7 +47,7 @@ export class HealthRecordService {
       next: (result) => {
         if (result.id) {
           const translatedMsg = this.translateService.instant(
-            'registry.member.update.success'
+            'app.features.registry.healthRecord.actions.update.success'
           );
           this.alertService.showAlert(translatedMsg, 'success');
           this.router.navigateByUrl(`/registry/members/${result.id}`, {
@@ -57,28 +60,28 @@ export class HealthRecordService {
           console.log(err);
         }
         const translatedMsg = this.translateService.instant(
-          'registry.member.update.failed'
+          'app.features.registry.healthRecord.actions.update.failed'
         );
         this.alertService.showAlert(translatedMsg, 'error');
       },
     });
   }
 
-  delete(id: string, familyId: string) {
+  delete(id: string, memberId: string) {
     this.memberService.deleteHealthRecord(id).subscribe({
       next: () => {
         const translatedMsg = this.translateService.instant(
-          'registry.member.deletion.success'
+          'app.features.registry.healthRecord.actions.deletion.success'
         );
         this.alertService.showAlert(translatedMsg, 'success');
-        this.router.navigateByUrl(`/registry/health`, {
+        this.router.navigateByUrl(`/registry/health/${memberId}`, {
           replaceUrl: true,
         });
       },
       error: (err) => {
         console.log(err);
         const translatedMsg = this.translateService.instant(
-          'registry.member.deletion.failed'
+          'app.features.registry.healthRecord.actions.deletion.failed'
         );
         this.alertService.showAlert(translatedMsg, 'error');
       },

@@ -3,17 +3,20 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { MemberResponseDTO, Name } from '@core/model/dataService';
+import { TranslateModule } from '@ngx-translate/core';
 
 export type FamilyHeadItem = { name: Name; age: number; id: string };
 
 @Component({
   selector: 'app-family-list',
-  imports: [MatListModule, MatIconModule, RouterModule],
+  imports: [MatListModule, MatIconModule, RouterModule, TranslateModule],
   template: `
     @if( familyHeadList().length == 0){
     <div class="overflow-scroll flex justify-center items-center">
       <mat-icon>search_off</mat-icon>
-      <h4 class="ml-4 text-wrap">No families found. Try adding a new one!</h4>
+      <h4 class="ml-4 text-wrap">
+        {{ 'app.features.registry.family.page.noData' | translate }}
+      </h4>
     </div>
     }@else {
 

@@ -52,7 +52,7 @@ export class AuthService {
       // tap((value) => console.log('init status : ' + value)),
       switchMap(() => this.isLoggedIn$),
       // tap((value) => console.log('check status : ' + value)),
-      map((loggedIn) => loggedIn && this.tokenService.valid()),
+      map((loggedIn) => loggedIn && this.tokenService.valid())
     );
   }
 
@@ -89,11 +89,13 @@ export class AuthService {
     return this.authenticationService.getCurrentUser().pipe(
       tap((user) => {
         this.currentUser$.next(user || null);
+        this.initialized$.next(true);
       }),
       catchError((error) => {
         console.error('Failed to load current user:', error);
         this.currentUser$.next(null);
-        return of(null);
+        this.initialized$.next(true);
+        return of(null); // Ensure a null value is emitted on error
       })
     );
   }

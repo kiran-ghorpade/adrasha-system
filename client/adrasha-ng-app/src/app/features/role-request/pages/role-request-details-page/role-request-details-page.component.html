@@ -1,6 +1,6 @@
 <app-page-wrapper>
   <div top>
-    <app-page-header title="Role Request Details">
+    <app-page-header [title]="'app.features.roleRequest.page.detailsTitle' | translate">
       @if(!isAdmin()) {
       <mat-action-list>
         <a matIconButton [matMenuTriggerFor]="menu">
@@ -17,12 +17,12 @@
           ]"
         >
           <mat-icon>edit</mat-icon>
-          <span>Update Request</span>
+          <span>{{ 'app.common.update' | translate }}</span>
         </button>
         <mat-divider></mat-divider>
         <button mat-menu-item (click)="handleDeleteClick()">
           <mat-icon>delete</mat-icon>
-          <span>Delete Request</span>
+          <span>{{ 'app.common.delete' | translate }}</span>
         </button>
       </mat-menu>
       }
@@ -44,20 +44,20 @@
         (click)="handleApproveClick()"
         [disabled]="roleRequestDetails().status === 'APPROVED'"
       >
-        Approve
+        {{ 'app.features.roleRequest.actions.approve' | translate }}
       </button>
       <button
         matButton="outlined"
         (click)="handleRejectClick()"
         [disabled]="roleRequestDetails().status === 'APPROVED'"
       >
-        Reject
+        {{ 'app.features.roleRequest.actions.reject' | translate }}
       </button>
     </div>
     } }@else {
     <div class="overflow-scroll flex justify-center items-center">
       <mat-icon>search_off</mat-icon>
-      <h4 class="ml-4 text-wrap">something went wrong</h4>
+      <h4 class="ml-4 text-wrap">{{ 'app.common.somethingWentWrong' | translate }}</h4>
     </div>
     }
   </div>

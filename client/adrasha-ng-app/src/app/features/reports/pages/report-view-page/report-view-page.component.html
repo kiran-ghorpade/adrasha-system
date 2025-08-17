@@ -1,6 +1,6 @@
 <app-page-wrapper>
   <div top>
-    <app-page-header title="Report View"> </app-page-header>
+    <app-page-header [title]="'app.features.reports.page.viewTitle' | translate"> </app-page-header>
   </div>
 
   <div content class="h-full flex justify-center items-center">
@@ -8,13 +8,13 @@
     <div class="flex justify-center items-center">
       <mat-icon>search_off</mat-icon>
       <h4 class="ml-4 text-wrap">
-        Something went wrong , please try again later !
+        {{ 'app.common.somethingWentWrong' | translate }}
       </h4>
     </div>
     }@else{
     <a matButton="filled" [href]="pdfUrl()" target="_blank">
       <mat-icon>picture_as_pdf</mat-icon>
-      <span>View Report</span>
+      <span>{{ 'app.features.reports.page.viewButton' | translate }}</span>
     </a>
     }
   </div>

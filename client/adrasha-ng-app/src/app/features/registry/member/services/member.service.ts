@@ -19,7 +19,7 @@ export class MemberService {
       next: (result) => {
         if (result.id) {
           const translatedMsg = this.translateService.instant(
-            'registry.member.registration.success'
+            'app.features.registry.member.actions.registration.success'
           );
           this.alertService.showAlert(translatedMsg, 'success');
           this.router.navigateByUrl(`/registry/members/${result.id}`, {
@@ -32,7 +32,7 @@ export class MemberService {
           console.log(err);
         }
         const translatedMsg = this.translateService.instant(
-          'registry.member.registration.failed'
+          'app.features.registry.member.actions.registration.failed'
         );
         this.alertService.showAlert(translatedMsg, 'error');
       },
@@ -44,7 +44,7 @@ export class MemberService {
       next: (result) => {
         if (result.id) {
           const translatedMsg = this.translateService.instant(
-            'registry.member.update.success'
+            'app.features.registry.member.actions.update.success'
           );
           this.alertService.showAlert(translatedMsg, 'success');
           this.router.navigateByUrl(`/registry/members/${result.id}`, {
@@ -57,7 +57,7 @@ export class MemberService {
           console.log(err);
         }
         const translatedMsg = this.translateService.instant(
-          'registry.member.update.failed'
+          'app.features.registry.member.actions.update.failed'
         );
         this.alertService.showAlert(translatedMsg, 'error');
       },
@@ -68,7 +68,7 @@ export class MemberService {
     this.memberService.deleteMember(memberId).subscribe({
       next: () => {
         const translatedMsg = this.translateService.instant(
-          'registry.member.deletion.success'
+          'app.features.registry.member.actions.deletion.success'
         );
         this.alertService.showAlert(translatedMsg, 'success');
         this.router.navigateByUrl(`/registry/family/${familyId}`, {
@@ -78,7 +78,7 @@ export class MemberService {
       error: (err) => {
         console.log(err);
         const translatedMsg = this.translateService.instant(
-          'registry.member.deletion.failed'
+          'app.features.registry.member.actions.deletion.failed'
         );
         this.alertService.showAlert(translatedMsg, 'error');
       },

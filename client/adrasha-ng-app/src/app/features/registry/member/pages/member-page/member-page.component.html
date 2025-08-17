@@ -1,6 +1,6 @@
 <app-page-wrapper>
   <div top>
-    <app-page-header title="Member List"> </app-page-header>
+    <app-page-header [title]="'app.features.registry.member.page.title' | translate"> </app-page-header>
   </div>
 
   <div content class="paper flex flex-wrap">
@@ -9,7 +9,7 @@
     }@else{
     <div class="overflow-scroll flex justify-center items-center">
       <mat-icon>search_off</mat-icon>
-      <h4 class="ml-4 text-wrap">No Members found. Try adding a new one!</h4>
+      <h4 class="ml-4 text-wrap">{{ 'app.features.registry.member.page.noData' | translate }}</h4>
     </div>
     }
   </div>

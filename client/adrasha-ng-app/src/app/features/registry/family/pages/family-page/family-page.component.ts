@@ -30,6 +30,7 @@ import {
 } from 'rxjs';
 import { FamilyHeadItem, FamilyListComponent } from '../../components';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-family-page',
@@ -45,6 +46,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
     PageWrapperComponent,
     PageHeaderComponent,
     FamilyListComponent,
+    TranslateModule
   ],
   templateUrl: './family-page.component.html',
 })

@@ -7,6 +7,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterModule } from '@angular/router';
 import { Menu } from '@core/constants';
 import { MenuService } from '@core/services/menu.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-bottom-navbar',
@@ -17,6 +18,7 @@ import { MenuService } from '@core/services/menu.service';
     MatIconModule,
     RouterModule,
     CommonModule,
+    TranslateModule
   ],
   templateUrl: './bottom-nav-bar.component.html',
   styles: `

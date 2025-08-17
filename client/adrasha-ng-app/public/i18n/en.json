@@ -20,7 +20,8 @@
       "notFound": "Not Found",
       "dataNotFound": "Data Not Found!",
       "noDetailsAvailable": "No details available.",
-      "somethingWentWrong": "Something went wrong"
+      "somethingWentWrong": "Something went wrong",
+      "futureFetureComingSoon": "Coming soon"
     },
     "navigation": {
       "sidebar": {
@@ -169,12 +170,6 @@
             "addNew": "Add New Health Center",
             "detailsTitle": "Health Center Details",
             "noData": "No Health Centers found. Try adding a new one!"
-          },
-          "table": {
-            "id": "Health Center ID",
-            "name": "Name",
-            "centerType": "Center Type",
-            "locationId": "Location ID"
           },
           "forms": {
             "addTitle": "Add Health Center",

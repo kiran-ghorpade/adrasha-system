@@ -2,17 +2,17 @@
   <!-- HealthCenter Details -->
   <mat-step [stepControl]="steps.healthCenterDetails">
     <form [formGroup]="steps.healthCenterDetails">
-      <ng-template matStepLabel>{{
-        "masterdata.healthCenter.step1Title" | translate
-      }}</ng-template>
+      <ng-template matStepLabel>
+        {{ "app.features.masterdata.healthCenter.forms.steps.step1" | translate }}
+      </ng-template>
       <div class="flex gap-3 flex-wrap md:w-2/3">
         <mat-form-field>
-          <mat-label>{{ "masterdata.healthCenter.nameLabel" | translate }}</mat-label>
+          <mat-label>{{ "app.features.masterdata.healthCenter.forms.labels.name" | translate }}</mat-label>
           <input matInput formControlName="name" required />
           <app-validation-error [control]="steps.healthCenterDetails.controls.name" />
         </mat-form-field>
         <mat-form-field>
-          <mat-label>{{ "masterdata.healthCenter.roleLabel" | translate }}</mat-label>
+          <mat-label>{{ "app.features.masterdata.healthCenter.forms.labels.type" | translate }}</mat-label>
           <mat-select required formControlName="centerType">
             @for (type of healthCenterTypeList(); track $index) {
             <mat-option [value]="`${type.code}`">{{ type.label }}</mat-option>
@@ -23,18 +23,14 @@
           />
         </mat-form-field>
         <mat-form-field>
-          <mat-label>{{
-            "masterdata.healthCenter.totalFamiliesLabel" | translate
-          }}</mat-label>
+          <mat-label>{{ "app.features.masterdata.healthCenter.forms.labels.totalFamilies" | translate }}</mat-label>
           <input matInput formControlName="totalFamilies" required />
           <app-validation-error
             [control]="steps.healthCenterDetails.controls.totalFamilies"
           />
         </mat-form-field>
         <mat-form-field>
-          <mat-label>{{
-            "masterdata.healthCenter.totalPopulationLabel" | translate
-          }}</mat-label>
+          <mat-label>{{ "app.features.masterdata.healthCenter.forms.labels.totalPopulation" | translate }}</mat-label>
           <input matInput formControlName="totalPopulation" required />
           <app-validation-error
             [control]="steps.healthCenterDetails.controls.totalPopulation"
@@ -50,14 +46,12 @@
   <!-- Address Details -->
   <mat-step [stepControl]="steps.addressDetails">
     <form [formGroup]="steps.addressDetails">
-      <ng-template matStepLabel>{{
-        "masterdata.healthCenter.step3Title" | translate
-      }}</ng-template>
+      <ng-template matStepLabel>
+        {{ "app.features.masterdata.healthCenter.forms.steps.step2" | translate }}
+      </ng-template>
       <div class="flex gap-3 flex-wrap md:w-2/3">
         <mat-form-field>
-          <mat-label>{{
-            "masterdata.healthCenter.locationLabel" | translate
-          }}</mat-label>
+          <mat-label>{{ "app.features.masterdata.healthCenter.forms.labels.location" | translate }}</mat-label>
           <mat-select required formControlName="locationId">
             @for (location of locationList(); track $index) {
             <mat-option [value]="`${location.id}`">{{ location.name }}</mat-option>
@@ -78,17 +72,17 @@
 
   <!-- Done -->
   <mat-step>
-    <ng-template matStepLabel>{{
-      "masterdata.healthCenter.doneTitle" | translate
-    }}</ng-template>
-    <p>{{ "masterdata.healthCenter.doneMessage" | translate }}</p>
+    <ng-template matStepLabel>
+      {{ "app.common.doneTitle" | translate }}
+    </ng-template>
+    <p>{{ "app.common.doneMessage" | translate }}</p>
     <div>
       <button matButton matStepperPrevious>Back</button>
       <button matButton (click)="stepper.reset()">
-        {{ "masterdata.healthCenter.resetButton" | translate }}
+        {{ "app.common.resetButton" | translate }}
       </button>
       <button matButton="filled" (click)="onSubmit()" [disabled]="isLoading()">
-        {{ "masterdata.healthCenter.submitButton" | translate }}
+        {{ "app.common.submitButton" | translate }}
       </button>
     </div>
   </mat-step>

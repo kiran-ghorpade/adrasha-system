@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { tap } from 'rxjs';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-location-page',
@@ -18,6 +19,7 @@ import { tap } from 'rxjs';
     MatPaginatorModule,
     MatButtonModule,
     MatIconModule,
+    TranslatePipe,
     RouterModule,
   ],
   templateUrl: './location-page.component.html',

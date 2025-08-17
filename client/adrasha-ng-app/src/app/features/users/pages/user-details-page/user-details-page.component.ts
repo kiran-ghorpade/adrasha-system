@@ -22,6 +22,7 @@ import {
 } from '@shared/components';
 import { getFullName } from '@shared/utils/fullName';
 import { catchError, map, of, switchMap, tap } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-role-request-details-page',
@@ -34,6 +35,7 @@ import { catchError, map, of, switchMap, tap } from 'rxjs';
     MatIconModule,
     RouterModule,
     UserDetailsComponent,
+    TranslateModule
   ],
   templateUrl: './user-details-page.component.html',
 })
@@ -108,39 +110,39 @@ function userResponseToData(
   location: LocationResponseDTO
 ): DataLabelType[] {
   return [
-    { label: 'User ID', value: user.id, icon: 'badge' },
-    { label: 'Name', value: getFullName(user.name), icon: 'person' },
+    { label: 'app.features.users.table.id', value: user.id, icon: 'badge' },
+    { label: 'app.common.name', value: getFullName(user.name), icon: 'person' },
     {
-      label: 'Adhar Number',
+      label: 'app.features.users.table.adharNumber',
       value: user.adharNumber,
       icon: 'credit_card',
     },
     {
-      label: 'Roles',
+      label: 'app.features.users.table.roles',
       value: user.roles?.length ? user.roles.join(', ') : 'Not Found',
       icon: 'group',
     },
 
     {
-      label: 'Health Center',
+      label: 'app.features.profile.labels.healthCenter',
       value: healthCenter.name,
       icon: 'local_hospital',
     },
-    { label: 'Center Type', value: healthCenter?.centerType, icon: 'business' },
+    { label: 'app.features.profile.labels.centerType', value: healthCenter?.centerType, icon: 'business' },
 
     // Address Info
-    { label: 'District', value: location?.district, icon: 'location_city' },
-    { label: 'Subdistrict', value: location?.subdistrict, icon: 'apartment' },
-    { label: 'Pincode', value: location?.pincode, icon: 'pin_drop' },
-    { label: 'State', value: location?.state, icon: 'map' },
-    { label: 'Country', value: location?.country, icon: 'public' },
+    { label: 'app.features.profile.labels.district', value: location?.district, icon: 'location_city' },
+    { label: 'app.features.profile.labels.subdistrict', value: location?.subdistrict, icon: 'apartment' },
+    { label: 'app.features.profile.labels.pincode', value: location?.pincode, icon: 'pin_drop' },
+    { label: 'app.features.profile.labels.state', value: location?.state, icon: 'map' },
+    { label: 'app.features.profile.labels.country', value: location?.country, icon: 'public' },
 
     // Timestamps
     {
-      label: 'Created At',
+      label: 'app.common.createdAt',
       value: user.createdAt,
       icon: 'calendar_today',
     },
-    { label: 'Last Update', value: user.updatedAt, icon: 'update' },
+    { label: 'app.common.updatedAt', value: user.updatedAt, icon: 'update' },
   ];
 }

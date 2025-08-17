@@ -3,16 +3,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { MemberResponseDTO } from '@core/model/dataService';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-member-list',
-  imports: [RouterModule, MatListModule, MatIconModule],
+  imports: [RouterModule, MatListModule, MatIconModule, TranslateModule],
   template: `
     @if(memberList().length == 0){
     <div class="flex justify-center items-center">
       <mat-icon>search_off</mat-icon>
       <h4 class="ml-4 text-wrap">
-        No Member found. Search with something else!
+        {{ 'app.features.registry.member.page.noData' | translate }}
       </h4>
     </div>
     }@else {

@@ -3,12 +3,12 @@
   <mat-step [stepControl]="steps.personalDetails">
     <form [formGroup]="steps.personalDetails">
       <ng-template matStepLabel>{{
-        "registry.member.step1Title" | translate
+        "app.features.registry.member.forms.steps.step1" | translate
       }}</ng-template>
       <div class="flex gap-3 flex-wrap md:w-2/3">
         <mat-form-field>
           <mat-label>{{
-            "registry.member.firstnameLabel" | translate
+            "app.features.registry.member.forms.labels.firstname" | translate
           }}</mat-label>
           <input matInput formControlName="firstname" required />
           <app-validation-error
@@ -17,7 +17,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{
-            "registry.member.middlenameLabel" | translate
+            "app.features.registry.member.forms.labels.middlename" | translate
           }}</mat-label>
           <input matInput formControlName="middlename" required />
           <app-validation-error
@@ -26,7 +26,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{
-            "registry.member.lastnameLabel" | translate
+            "app.features.registry.member.forms.labels.lastname" | translate
           }}</mat-label>
           <input matInput formControlName="lastname" required />
           <app-validation-error
@@ -34,7 +34,7 @@
           />
         </mat-form-field>
         <mat-form-field>
-          <mat-label>{{ "registry.member.genderLabel" | translate }}</mat-label>
+          <mat-label>{{ "app.features.registry.member.forms.labels.gender" | translate }}</mat-label>
           <mat-select required>
             @for (gender of genderList(); track gender.code) {
             <mat-option [value]="`${gender.code}`">{{
@@ -48,7 +48,7 @@
         </mat-form-field>
         @if(isUpdate()){
         <mat-form-field>
-          <mat-label>{{ "registry.member.aliveStatusLabel" | translate }}</mat-label>
+          <mat-label>{{ "app.features.registry.member.forms.labels.aliveStatus" | translate }}</mat-label>
           <mat-select required>
             @for (aliveStatuse of aliveStatusOptions(); track aliveStatuse .code) {
             <mat-option [value]="`${aliveStatuse .code}`">{{
@@ -63,7 +63,7 @@
         }
       </div>
       <div>
-        <button matButton matStepperNext>Next</button>
+        <button matButton matStepperNext>{{ 'app.common.next' | translate }}</button>
       </div>
     </form>
   </mat-step>
@@ -72,11 +72,11 @@
   <mat-step [stepControl]="steps.birthDetails">
     <form [formGroup]="steps.birthDetails">
       <ng-template matStepLabel>{{
-        "registry.member.step2Title" | translate
+        "app.features.registry.member.forms.steps.step2" | translate
       }}</ng-template>
       <div class="flex gap-3 flex-wrap md:w-2/3">
         <mat-form-field>
-          <mat-label>{{ "registry.member.dobLabel" | translate }}</mat-label>
+          <mat-label>{{ "app.features.registry.member.forms.labels.dob" | translate }}</mat-label>
           <input matInput type="date" formControlName="dateOfBirth" required />
           <app-validation-error
             [control]="steps.birthDetails.controls.dateOfBirth"
@@ -84,7 +84,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{
-            "registry.member.birthPlaceLabel" | translate
+            "app.features.registry.member.forms.labels.birthPlace" | translate
           }}</mat-label>
           <input matInput formControlName="birthPlace" />
           <app-validation-error
@@ -93,8 +93,8 @@
         </mat-form-field>
       </div>
       <div>
-        <button matButton matStepperPrevious>Back</button>
-        <button matButton matStepperNext>Next</button>
+        <button matButton matStepperPrevious>{{ 'app.common.back' | translate }}</button>
+        <button matButton matStepperNext>{{ 'app.common.next' | translate }}</button>
       </div>
     </form>
   </mat-step>
@@ -103,12 +103,12 @@
   <mat-step [stepControl]="steps.identificationDetails">
     <form [formGroup]="steps.identificationDetails">
       <ng-template matStepLabel>{{
-        "registry.member.step3Title" | translate
+        "app.features.registry.member.forms.steps.step3" | translate
       }}</ng-template>
       <div class="flex gap-3 flex-wrap md:w-2/3">
         <mat-form-field>
           <mat-label>{{
-            "registry.member.adharNumberLabel" | translate
+            "app.features.registry.member.forms.labels.adharNumber" | translate
           }}</mat-label>
           <input matInput formControlName="adharNumber" required />
           <app-validation-error
@@ -117,7 +117,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{
-            "registry.member.abhaNumberLabel" | translate
+            "app.features.registry.member.forms.labels.abhaNumber" | translate
           }}</mat-label>
           <input matInput formControlName="abhaNumber" />
           <app-validation-error
@@ -127,8 +127,8 @@
       </div>
 
       <div>
-        <button matButton matStepperPrevious>Back</button>
-        <button matButton matStepperNext>Next</button>
+        <button matButton matStepperPrevious>{{ 'app.common.back' | translate }}</button>
+        <button matButton matStepperNext>{{ 'app.common.next' | translate }}</button>
       </div>
     </form>
   </mat-step>
@@ -137,12 +137,12 @@
   <mat-step [stepControl]="steps.contactDetails">
     <form [formGroup]="steps.contactDetails">
       <ng-template matStepLabel>{{
-        "registry.member.step4Title" | translate
+        "app.features.registry.member.forms.steps.step4" | translate
       }}</ng-template>
       <div class="flex gap-3 flex-wrap md:w-2/3">
         <mat-form-field>
           <mat-label>{{
-            "registry.member.mobileNumberLabel" | translate
+            "app.features.registry.member.forms.labels.mobileNumber" | translate
           }}</mat-label>
           <input matInput formControlName="mobileNumber" />
           <app-validation-error
@@ -152,8 +152,8 @@
       </div>
 
       <div>
-        <button matButton matStepperPrevious>Back</button>
-        <button matButton matStepperNext>Next</button>
+        <button matButton matStepperPrevious>{{ 'app.common.back' | translate }}</button>
+        <button matButton matStepperNext>{{ 'app.common.next' | translate }}</button>
       </div>
     </form>
   </mat-step>
@@ -161,16 +161,16 @@
   <!-- Done -->
   <mat-step>
     <ng-template matStepLabel>{{
-      "registry.member.doneTitle" | translate
+      "app.common.doneTitle" | translate
     }}</ng-template>
-    <p>{{ "registry.member.doneMessage" | translate }}</p>
+    <p>{{ "app.common.doneMessage" | translate }}</p>
     <div>
-      <button matButton matStepperPrevious>Back</button>
+      <button matButton matStepperPrevious>{{ 'app.common.back' | translate }}</button>
       <button matButton (click)="stepper.reset()">
-        {{ "registry.member.resetButton" | translate }}
+        {{ "app.common.resetButton" | translate }}
       </button>
       <button matButton="filled" (click)="onSubmit()" [disabled]="isLoading()">
-        {{ "registry.member.submitButton" | translate }}
+        {{ "app.common.submitButton" | translate }}
       </button>
     </div>
   </mat-step>

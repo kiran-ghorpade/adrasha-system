@@ -21,16 +21,15 @@ export const errorInterceptor: HttpInterceptorFn = (
         alertService.showAlert(
           'Cannot reach the server. Please check your connection.'
         );
-        return EMPTY;
       } else if (error.status >= 500) {
         // Server error (Internal server, bad gateway, etc.)
         alertService.showAlert(
           'Server error occurred. Please try again later.'
         );
-        return EMPTY;
-      }else {
+      } else {
         // add other errors.
       }
+      // Always propagate the error to be handled by the service's catchError.
       return throwError(() => error);
     })
   );

@@ -1,90 +1,90 @@
 <div class="flex flex-col gap-5">
   <app-page-header
-    title="{{ 'registry.healthRecord.addhealthRecordTitle' | translate }}"
+    [title]="(isUpdate() ? 'app.features.registry.healthRecord.forms.updateTitle' : 'app.features.registry.healthRecord.forms.addTitle') | translate"
   />
   <mat-stepper orientation="vertical" [linear]="true" #stepper>
-    <!-- Birth Details -->
+    <!-- Basic Details -->
     <mat-step [stepControl]="steps.basicDetails">
       <form [formGroup]="steps.basicDetails">
         <ng-template matStepLabel>{{
-          "registry.healthRecord.step1Title" | translate
+          "app.features.registry.healthRecord.forms.steps.step1" | translate
         }}</ng-template>
         <div class="flex gap-3 flex-wrap md:w-2/3">
           <mat-form-field>
             <mat-label>{{
-              "registry.healthRecord.dateLabel" | translate
+              "app.features.registry.healthRecord.forms.labels.date" | translate
             }}</mat-label>
             <input matInput type="date" formControlName="date" required />
             <app-validation-error [control]="steps.basicDetails.controls.date" />
           </mat-form-field>
         </div>
         <div>
-          <button matButton matStepperNext>Next</button>
+          <button matButton matStepperNext>{{ 'app.common.next' | translate }}</button>
         </div>
       </form>
     </mat-step>
 
-    <!-- Birth Details -->
+    <!-- Health Status -->
     <mat-step [stepControl]="steps.healthStatus">
       <form [formGroup]="steps.healthStatus">
         <ng-template matStepLabel>{{
-          "registry.healthRecord.step2Title" | translate
+          "app.features.registry.healthRecord.forms.steps.step2" | translate
         }}</ng-template>
         <div class="flex gap-3 flex-wrap md:w-2/3">
           <mat-form-field>
             <mat-label>{{
-              "registry.healthRecord.heightLabel" | translate
+              "app.features.registry.healthRecord.forms.labels.height" | translate
             }}</mat-label>
             <input matInput type="number" formControlName="height" required />
             <app-validation-error [control]="steps.healthStatus.controls.height" />
           </mat-form-field>
           <mat-form-field>
             <mat-label>{{
-              "registry.healthRecord.weightLabel" | translate
+              "app.features.registry.healthRecord.forms.labels.weight" | translate
             }}</mat-label>
             <input matInput type="number" formControlName="weight" />
             <app-validation-error [control]="steps.healthStatus.controls.weight" />
           </mat-form-field>
         </div>
         <div>
-          <button matButton matStepperPrevious>Back</button>
-          <button matButton matStepperNext>Next</button>
+          <button matButton matStepperPrevious>{{ 'app.common.back' | translate }}</button>
+          <button matButton matStepperNext>{{ 'app.common.next' | translate }}</button>
         </div>
       </form>
     </mat-step>
 
-    <!-- Identification Details -->
+    <!-- Pregnancy Status -->
     <mat-step [stepControl]="steps.pregnancyStatus">
       <form [formGroup]="steps.pregnancyStatus">
         <ng-template matStepLabel>{{
-          "registry.healthRecord.step3Title" | translate
+          "app.features.registry.healthRecord.forms.steps.step3" | translate
         }}</ng-template>
         <div class="flex gap-3 flex-wrap md:w-2/3">
           <mat-checkbox formControlName="pregnant">
             <mat-label>{{
-              "registry.healthRecord.pregnantLabel" | translate
+              "app.features.registry.healthRecord.forms.labels.pregnant" | translate
             }}</mat-label>
           </mat-checkbox>
           <app-validation-error [control]="steps.pregnancyStatus.controls.pregnant" />
         </div>
 
         <div>
-          <button matButton matStepperPrevious>Back</button>
-          <button matButton matStepperNext>Next</button>
+          <button matButton matStepperPrevious>{{ 'app.common.back' | translate }}</button>
+          <button matButton matStepperNext>{{ 'app.common.next' | translate }}</button>
         </div>
       </form>
     </mat-step>
 
-    <!-- Contact Details -->
+    <!-- NCD Status -->
     <mat-step [stepControl]="steps.ncdStatus">
       <form [formGroup]="steps.ncdStatus">
         <ng-template matStepLabel>{{
-          "registry.healthRecord.step4Title" | translate
+          "app.features.registry.healthRecord.forms.steps.step4" | translate
         }}</ng-template>
         <div class="flex gap-3 flex-wrap md:w-2/3">
           @for(ncd of ncdOptions() ; track $index){
           <div>
-            <mat-checkbox formControlName="ncdlist" value="ncd.id">{{
+            <mat-checkbox formControlName="ncdlist" [value]="ncd.id ?? ''">{{
               ncd.name
             }}</mat-checkbox>
           </div>
@@ -93,8 +93,8 @@
         </div>
 
         <div>
-          <button matButton matStepperPrevious>Back</button>
-          <button matButton matStepperNext>Next</button>
+          <button matButton matStepperPrevious>{{ 'app.common.back' | translate }}</button>
+          <button matButton matStepperNext>{{ 'app.common.next' | translate }}</button>
         </div>
       </form>
     </mat-step>
@@ -102,16 +102,16 @@
     <!-- Done -->
     <mat-step>
       <ng-template matStepLabel>{{
-        "registry.healthRecord.doneTitle" | translate
+        "app.common.doneTitle" | translate
       }}</ng-template>
-      <p>{{ "registry.healthRecord.doneMessage" | translate }}</p>
+      <p>{{ "app.common.doneMessage" | translate }}</p>
       <div>
-        <button matButton matStepperPrevious>Back</button>
+        <button matButton matStepperPrevious>{{ 'app.common.back' | translate }}</button>
         <button matButton (click)="stepper.reset()">
-          {{ "registry.healthRecord.resetButton" | translate }}
+          {{ "app.common.resetButton" | translate }}
         </button>
         <button matButton="filled" (click)="onSubmit()" [disabled]="isLoading()">
-          {{ "registry.healthRecord.submitButton" | translate }}
+          {{ "app.common.submitButton" | translate }}
         </button>
       </div>
     </mat-step>

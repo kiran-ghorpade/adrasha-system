@@ -96,12 +96,12 @@ export class LoginComponent {
     this.authService.login(loginRequest).subscribe({
       next: (loginStatus) => {
         if (!loginStatus) {
-          const translatedMsg = this.translateService.instant('app.features.auth.login.failed');
+          const translatedMsg = this.translateService.instant('app.features.auth.actions.login.failed');
           this.alertService.showAlert(translatedMsg, 'error');
           return;
         }
 
-        const translatedMsg = this.translateService.instant('app.features.auth.login.success');
+        const translatedMsg = this.translateService.instant('app.features.auth.actions.login.success');
         this.alertService.showAlert(translatedMsg, 'success');
         this.router.navigateByUrl('/dashboard', { replaceUrl: true });
         this.loginForm.reset({
@@ -113,7 +113,7 @@ export class LoginComponent {
         this.loginForm.markAsUntouched();
       },
       error: () => {
-        const translatedMsg = this.translateService.instant('app.features.auth.login.failed');
+        const translatedMsg = this.translateService.instant('app.features.auth.actions.login.failed');
         this.alertService.showAlert(translatedMsg, 'error');
       },
     });

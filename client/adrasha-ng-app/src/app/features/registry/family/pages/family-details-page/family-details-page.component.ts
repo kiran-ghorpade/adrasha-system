@@ -28,6 +28,7 @@ import {
 import { map } from 'rxjs';
 import { FamilyService } from '../../services';
 import { FamilyDetailsComponent } from "../../components";
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-family-details-page',
@@ -44,6 +45,7 @@ import { FamilyDetailsComponent } from "../../components";
     PageWrapperComponent,
     MatTooltipModule,
     MatMenuModule,
+    TranslatePipe,
     FamilyDetailsComponent
 ],
   templateUrl: './family-details-page.component.html',
@@ -54,6 +56,7 @@ export class FamilyDetailsPageComponent {
   private readonly familyService = inject(FamilyService);
   private readonly memberService = inject(MemberDataService);
   private readonly dialog = inject(MatDialog);
+  private readonly translateService = inject(TranslateService);
 
   familyDetails = signal<FamilyResponseDTO>({});
   memberList = signal<MemberResponseDTO[]>([]);
@@ -112,8 +115,8 @@ export class FamilyDetailsPageComponent {
   handleDeleteFamily() {
     const dialogRef = this.dialog.open(ConfirmationComponent, {
       data: {
-        title: 'Do you want to delete this family?',
-        message: 'All Member and his healthrecords will be deleted',
+        title: this.translateService.instant('app.features.registry.family.dialogs.title'),
+        message: this.translateService.instant('app.features.registry.family.dialogs.message'),
       },
     });
 
@@ -144,16 +147,16 @@ function familyToData(
     : 'NOT FOUND';
 
   return [
-    { label: 'Family ID', value: family.id, icon: 'group' },
-    { label: 'Head Member', value: headMemberName, icon: 'person' },
-    { label: 'ASHA ID', value: family.ashaId, icon: 'badge' },
-    { label: 'House ID', value: family.houseId?.toString(), icon: 'home' },
+    { label: 'app.features.registry.family.table.id', value: family.id, icon: 'group' },
+    { label: 'app.features.registry.family.table.headMember', value: headMemberName, icon: 'person' },
+    { label: 'app.features.registry.family.table.ashaId', value: family.ashaId, icon: 'badge' },
+    { label: 'app.features.registry.family.table.houseId', value: family.houseId?.toString(), icon: 'home' },
     {
-      label: 'Poverty Status',
+      label: 'app.features.registry.family.table.povertyStatus',
       value: family.povertyStatus || 'Not Available',
       icon: 'money_off',
     },
-    { label: 'Created At', value: family.createdAt, icon: 'calendar_today' },
-    { label: 'Updated At', value: family.updatedAt, icon: 'update' },
+    { label: 'app.common.createdAt', value: family.createdAt, icon: 'calendar_today' },
+    { label: 'app.common.updatedAt', value: family.updatedAt, icon: 'update' },
   ];
 }

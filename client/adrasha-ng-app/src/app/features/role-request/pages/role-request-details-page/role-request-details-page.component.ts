@@ -24,6 +24,7 @@ import {
   PageWrapperComponent,
 } from '@shared/components';
 import { catchError, map, of, switchMap, tap } from 'rxjs';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-role-request-details-page',
@@ -36,6 +37,7 @@ import { catchError, map, of, switchMap, tap } from 'rxjs';
     MatIconModule,
     RouterModule,
     RoleRequestDetailsComponent,
+    TranslatePipe
   ],
   templateUrl: './role-request-details-page.component.html',
 })
@@ -47,6 +49,7 @@ export class RoleRequestDetailsPageComponent {
   private readonly healthCenterService = inject(HealthCenterService);
   private readonly locationService = inject(LocationService);
   private readonly authService = inject(AuthService);
+  private readonly translateService = inject(TranslateService);
 
   roleRequestDetails = signal<RoleRequestResponseDTO>({});
   roleRequestId = toSignal(
@@ -99,8 +102,6 @@ export class RoleRequestDetailsPageComponent {
               this.addressDetails()
             )
           );
-
-          console.log(this.data());
         });
     });
   }
@@ -108,8 +109,12 @@ export class RoleRequestDetailsPageComponent {
   handleDeleteClick() {
     const dialogRef = this.dialog.open(ConfirmationComponent, {
       data: {
-        title: 'Do you want to delete this member?',
-        message: 'Member and his healthrecords will be deleted',
+        title: this.translateService.instant(
+          'app.features.roleRequest.dialogs.delete.title'
+        ),
+        message: this.translateService.instant(
+          'app.features.roleRequest.dialogs.delete.message'
+        ),
       },
     });
 
@@ -123,8 +128,13 @@ export class RoleRequestDetailsPageComponent {
   handleApproveClick() {
     const dialogRef = this.dialog.open(ConfirmationComponent, {
       data: {
-        title: 'Do you want to approve this request?',
-        message: `user will get access as ${this.roleRequestDetails()?.role}`,
+        title: this.translateService.instant(
+          'app.features.roleRequest.dialogs.approve.title'
+        ),
+        message: this.translateService.instant(
+          'app.features.roleRequest.dialogs.approve.message',
+          { role: this.roleRequestDetails()?.role }
+        ),
       },
     });
 
@@ -138,10 +148,13 @@ export class RoleRequestDetailsPageComponent {
   handleRejectClick() {
     const dialogRef = this.dialog.open(ConfirmationComponent, {
       data: {
-        title: 'Do you want to reject this request?',
-        message: `user will not be allowed with role ${
-          this.roleRequestDetails()?.role
-        }`,
+        title: this.translateService.instant(
+          'app.features.roleRequest.dialogs.reject.title'
+        ),
+        message: this.translateService.instant(
+          'app.features.roleRequest.dialogs.reject.message',
+          { role: this.roleRequestDetails()?.role }
+        ),
       },
     });
 

@@ -9,6 +9,7 @@
       mat-icon-button
       [mat-menu-trigger-for]="themeMenu"
       class="iconShadow"
+      [matTooltip]="'app.navigation.topbar.themeTooltip' | translate"
     >
       <mat-icon>{{ themeService.selectedTheme()?.icon }}</mat-icon>
     </button>
@@ -32,7 +33,7 @@
     <button
       matIconButton
       [matMenuTriggerFor]="menu"
-      matTooltip="Open settings"
+      [matTooltip]="'app.navigation.topbar.settingsTooltip' | translate"
       class="iconShadow"
     >
       <mat-icon>account_circle</mat-icon>
@@ -43,13 +44,13 @@
       @for(setting of settings(); track $index){
       <button mat-menu-item [routerLink]="[setting.toLink]">
         <mat-icon>{{ setting.icon }}</mat-icon>
-        <span>{{ setting.label }}</span>
+        <span>{{ setting.label | translate }}</span>
       </button>
       }
       <mat-divider></mat-divider>
       <button mat-menu-item (click)="logout()">
         <mat-icon>logout</mat-icon>
-        <span>Logout</span>
+        <span>{{ 'app.features.auth.actions.logout.button' | translate }}</span>
       </button>
     </mat-menu>
     }
@@ -58,7 +59,7 @@
 @if (!isOnline()) {
 <app-alert
   icon="info"
-  message="You are offline. Check your internet connection."
+  message="'app.common.offlineMessage' | translate"
 />
 
 }

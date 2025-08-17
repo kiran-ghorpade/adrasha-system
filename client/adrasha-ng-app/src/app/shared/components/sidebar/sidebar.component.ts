@@ -8,6 +8,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterModule } from '@angular/router';
 import { Menu } from '@core/constants';
 import { MenuService } from '@core/services/menu.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-side-navbar',
@@ -19,6 +20,7 @@ import { MenuService } from '@core/services/menu.service';
     RouterModule,
     MatButtonModule,
     CommonModule,
+    TranslatePipe
   ],
   templateUrl: './sidebar.component.html',
   styles: `

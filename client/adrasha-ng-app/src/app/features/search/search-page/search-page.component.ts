@@ -12,6 +12,8 @@ import { RouterModule } from '@angular/router';
 import { MemberDataService } from '@core/api/member-data/member-data.service';
 import { MemberResponseDTO } from '@core/model/dataService';
 import { AuthService } from '@core/services';
+import { MemberListComponent } from '@features/registry/member/components';
+import { TranslatePipe } from '@ngx-translate/core';
 import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs';
 
 @Component({
@@ -23,6 +25,7 @@ import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs';
     RouterModule,
     MatListModule,
     MemberListComponent,
+    TranslatePipe
   ],
   templateUrl: './search-page.component.html',
 })

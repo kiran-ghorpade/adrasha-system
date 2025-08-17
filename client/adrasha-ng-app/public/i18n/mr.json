@@ -1,0 +1,576 @@
+{
+  "app": {
+    "common": {
+      "fromLabel": "पासून",
+      "toLabel": "पर्यंत",
+      "name": "नाव",
+      "status": "स्थिती",
+      "createdAt": "तयार केल्याची तारीख",
+      "updatedAt": "शेवटचे अपडेट",
+      "yes": "होय",
+      "no": "नाही",
+      "none": "काहीही नाही",
+      "unknown": "अज्ञात",
+      "update": "अपडेट करा",
+      "delete": "हटवा",
+      "submitButton": "सादर करा",
+      "resetButton": "रीसेट करा",
+      "doneTitle": "पूर्ण झाले",
+      "doneMessage": "आपले काम आता पूर्ण झाले आहे.",
+      "notFound": "सापडले नाही",
+      "dataNotFound": "माहिती सापडली नाही!",
+      "noDetailsAvailable": "कोणतेही तपशील उपलब्ध नाहीत.",
+      "somethingWentWrong": "काहीतरी चूक झाली आहे",
+      "futureFetureComingSoon": "लवकरच येत आहे"
+    },
+    "navigation": {
+      "sidebar": {
+        "dashboard": "डॅशबोर्ड",
+        "registry": "नोंदणी",
+        "masterdata": "मास्टर डेटा",
+        "reports": "अहवाल",
+        "settings": "सेटिंग्ज"
+      }
+    },
+    "errorPages": {
+      "404": {
+        "title": "पान सापडले नाही",
+        "message": "क्षमस्व, आपण शोधत असलेले पान आम्हाला सापडले नाही.",
+        "goHomeButton": "डॅशबोर्डवर जा"
+      },
+      "500": {
+        "title": "सर्व्हर त्रुटी",
+        "message": "आमच्या बाजूने काहीतरी चूक झाली आहे. कृपया थोड्या वेळाने प्रयत्न करा.",
+        "goHomeButton": "डॅशबोर्डवर जा"
+      }
+    },
+    "validation": {
+      "required": "हे फील्ड आवश्यक आहे.",
+      "minLength": "किमान लांबी {{minLength}} अक्षरे आहे.",
+      "maxLength": "कमाल लांबी {{maxLength}} अक्षरे आहे.",
+      "pattern": "इनपुट स्वरूप अवैध आहे.",
+      "email": "कृपया वैध ईमेल पत्ता प्रविष्ट करा.",
+      "min": "किमान अनुमत मूल्य {{minValue}} आहे.",
+      "max": "कमाल अनुमत मूल्य {{maxValue}} आहे.",
+      "inconsistent": "मूल्य {{fieldName}} शी विसंगत आहे."
+    },
+    "features": {
+      "analytics": {
+        "page": {
+          "title": "विश्लेषण",
+          "age": {
+            "title": "वय विश्लेषण",
+            "chartLabel": "वय स्थिती"
+          },
+          "aliveStatus": {
+            "title": "जीवन स्थिती विश्लेषण",
+            "chartLabel": "जीवन स्थिती"
+          },
+          "gender": {
+            "title": "लिंग विश्लेषण",
+            "chartLabel": "लिंग संख्या"
+          },
+          "ncd": {
+            "title": "NCD विश्लेषण",
+            "chartLabel": "NCD संख्या"
+          },
+          "poverty": {
+            "title": "दारिद्र्य विश्लेषण",
+            "chartLabel": "दारिद्र्य स्थिती"
+          },
+          "request": {
+            "chartLabel": "विनंती ट्रेंड"
+          }
+        },
+        "common": {
+          "age": "वय",
+          "gender": "लिंग",
+          "poverty": "दारिद्र्य",
+          "aliveStatus": "जीवन स्थिती",
+          "ncd": "NCD"
+        }
+      },
+      "auth": {
+        "login": {
+          "title": "लॉगिन",
+          "username": "वापरकर्तानाव",
+          "password": "पासवर्ड",
+          "submitButton": "लॉगिन करा",
+          "newRegistration": "नवीन नोंदणी"
+        },
+        "registration": {
+          "title": "वापरकर्ता नोंदणी",
+          "username": "वापरकर्तानाव",
+          "password": "पासवर्ड",
+          "confirmPassword": "पासवर्डची पुष्टी करा",
+          "submitButton": "नोंदणी करा",
+          "backToLogin": "लॉगिनवर परत जा"
+        },
+        "actions": {
+          "login": {
+            "success": "लॉगिन यशस्वी",
+            "failed": "लॉगिन अयशस्वी"
+          },
+          "logout": {
+            "success": "लॉगआउट यशस्वी",
+            "failed": "लॉगआउट अयशस्वी"
+          },
+          "registration": {
+            "success": "नोंदणी यशस्वी",
+            "failed": "नोंदणी अयशस्वी"
+          }
+        }
+      },
+      "dashboard": {
+        "common": {
+          "greetings": "नमस्कार {name}",
+          "currentDate": "सध्याची तारीख",
+          "currentTime": "सध्याची वेळ",
+          "headerMessage": "पुन्हा स्वागत आहे"
+        },
+        "admin": {
+          "users": "वापरकर्ते",
+          "pendingRequests": "प्रलंबित विनंत्या",
+          "healthCenters": "आरोग्य केंद्रे",
+          "locations": "ठिकाणे"
+        },
+        "asha": {
+          "families": "कुटुंबे",
+          "population": "लोकसंख्या",
+          "children": "मुले",
+          "pregnantWomen": "गर्भवती महिला",
+          "lastVisits": "शेवटच्या भेटी"
+        },
+        "user": {
+          "updateRoleRequest": "भूमिकेची विनंती अद्यतनित करा",
+          "makeRoleRequest": "भूमिकेसाठी विनंती करा",
+          "viewHistory": "इतिहास पहा",
+          "profileStatus": "प्रोफाइल स्थिती",
+          "requestedRole": "विनंती केलेली भूमिका",
+          "remark": "शेरा",
+          "noRequestFound": "कोणतीही विनंती आढळली नाही",
+          "message": "संदेश"
+        },
+        "main": {
+          "permissionError": "या ऍप्लिकेशनमध्ये प्रवेश करण्यासाठी आपल्याकडे पुरेशी परवानगी नाही."
+        }
+      },
+      "masterdata": {
+        "page": {
+          "title": "मास्टर डेटा",
+          "tabs": {
+            "locations": "ठिकाणे",
+            "healthCenters": "आरोग्य केंद्रे",
+            "ncd": "असंक्रामक रोग (NCD)"
+          }
+        },
+        "healthCenter": {
+          "page": {
+            "title": "आरोग्य केंद्रे",
+            "addNew": "नवीन आरोग्य केंद्र जोडा",
+            "detailsTitle": "आरोग्य केंद्राचे तपशील",
+            "noData": "कोणतेही आरोग्य केंद्र आढळले नाही. नवीन जोडण्याचा प्रयत्न करा!"
+          },
+          "forms": {
+            "addTitle": "आरोग्य केंद्र जोडा",
+            "updateTitle": "आरोग्य केंद्र अद्यतनित करा",
+            "steps": {
+              "step1": "आरोग्य केंद्राचे तपशील",
+              "step2": "पत्याचे तपशील"
+            },
+            "labels": {
+              "name": "आरोग्य केंद्राचे नाव",
+              "type": "आरोग्य केंद्राचा प्रकार",
+              "totalFamilies": "एकूण कुटुंबे",
+              "totalPopulation": "एकूण लोकसंख्या",
+              "parentHealthCenter": "मूळ आरोग्य केंद्र",
+              "location": "शहर/गाव"
+            }
+          },
+          "actions": {
+            "registration": {
+              "success": "आरोग्य केंद्र यशस्वीरित्या जोडले",
+              "failed": "आरोग्य केंद्र जोडण्यात अयशस्वी"
+            },
+            "update": {
+              "success": "आरोग्य केंद्र यशस्वीरित्या अद्यतनित केले",
+              "failed": "आरोग्य केंद्र अद्यतनित करण्यात अयशस्वी"
+            },
+            "deletion": {
+              "success": "आरोग्य केंद्र यशस्वीरित्या हटवले",
+              "failed": "आरोग्य केंद्र हटवण्यात अयशस्वी"
+            }
+          }
+        },
+        "location": {
+          "page": {
+            "title": "ठिकाणे",
+            "addNew": "नवीन ठिकाण जोडा",
+            "detailsTitle": "ठिकाणाचे तपशील",
+            "noData": "कोणतेही ठिकाण आढळले नाही. नवीन जोडण्याचा प्रयत्न करा!"
+          },
+          "table": {
+            "id": "ठिकाण आयडी",
+            "type": "प्रकार",
+            "pincode": "पिनकोड",
+            "subdistrict": "उपजिल्हा",
+            "district": "जिल्हा",
+            "state": "राज्य",
+            "country": "देश"
+          },
+          "forms": {
+            "addTitle": "ठिकाण जोडा",
+            "updateTitle": "ठिकाण अद्यतनित करा",
+            "steps": {
+              "step1": "ठिकाणाचे तपशील",
+              "step2": "पत्याचे तपशील"
+            },
+            "labels": {
+              "name": "ठिकाणाचे नाव",
+              "type": "ठिकाणाचा प्रकार",
+              "pincode": "पिनकोड",
+              "subdistrict": "उपजिल्हा",
+              "district": "जिल्हा",
+              "state": "राज्य",
+              "country": "देश"
+            }
+          },
+          "actions": {
+            "registration": {
+              "success": "ठिकाण यशस्वीरित्या जोडले",
+              "failed": "ठिकाण जोडण्यात अयशस्वी"
+            },
+            "update": {
+              "success": "ठिकाण यशस्वीरित्या अद्यतनित केले",
+              "failed": "ठिकाण अद्यतनित करण्यात अयशस्वी"
+            },
+            "deletion": {
+              "success": "ठिकाण यशस्वीरित्या हटवले",
+              "failed": "ठिकाण हटवण्यात अयशस्वी"
+            }
+          }
+        },
+        "ncd": {
+          "page": {
+            "title": "NCDs",
+            "addNew": "नवीन आजार जोडा",
+            "detailsTitle": "NCD तपशील",
+            "noData": "कोणतेही आजार आढळले नाही. नवीन जोडण्याचा प्रयत्न करा!"
+          },
+          "table": {
+            "id": "आयडी",
+            "name": "नाव",
+            "description": "वर्णन"
+          },
+          "forms": {
+            "addTitle": "NCD जोडा",
+            "updateTitle": "NCD अद्यतनित करा",
+            "steps": {
+              "step1": "NCD तपशील"
+            },
+            "labels": {
+              "name": "NCD चे नाव",
+              "description": "वर्णन"
+            }
+          },
+          "actions": {
+            "registration": {
+              "success": "NCD यशस्वीरित्या जोडले",
+              "failed": "NCD जोडण्यात अयशस्वी"
+            },
+            "update": {
+              "success": "NCD यशस्वीरित्या अद्यतनित केले",
+              "failed": "NCD अद्यतनित करण्यात अयशस्वी"
+            },
+            "deletion": {
+              "success": "NCD यशस्वीरित्या हटवले",
+              "failed": "NCD हटवण्यात अयशस्वी"
+            }
+          }
+        }
+      },
+      "profile": {
+        "page": {
+          "title": "प्रोफाइल"
+        },
+        "labels": {
+          "userId": "वापरकर्ता आयडी",
+          "fullName": "पूर्ण नाव",
+          "adharNumber": "आधार क्रमांक",
+          "healthCenter": "आरोग्य केंद्र",
+          "centerType": "केंद्राचा प्रकार",
+          "district": "जिल्हा",
+          "subdistrict": "उपजिल्हा",
+          "pincode": "पिनकोड",
+          "state": "राज्य",
+          "country": "देश"
+        }
+      },
+      "registry": {
+        "family": {
+          "page": {
+            "title": "कुटुंब नोंदणी",
+            "addNew": "नवीन कुटुंब जोडा",
+            "searchLabel": "घर क्रमांकाने कुटुंब शोधा",
+            "noData": "कोणतेही कुटुंब आढळले नाही. नवीन जोडण्याचा प्रयत्न करा!",
+            "detailsTitle": "कुटुंबाचे तपशील",
+            "generateQrTooltip": "QR कोड तयार करा",
+            "moreTooltip": "अधिक"
+          },
+          "table": {
+            "id": "कुटुंब आयडी",
+            "headMember": "कुटुंब प्रमुख",
+            "ashaId": "आशा आयडी",
+            "houseId": "घर क्रमांक",
+            "povertyStatus": "दारिद्र्य स्थिती"
+          },
+          "forms": {
+            "addTitle": "नवीन कुटुंब जोडा",
+            "updateTitle": "कुटुंब अद्यतनित करा",
+            "steps": {
+              "step1": "कुटुंबाचे तपशील",
+              "step2": "कुटुंब प्रमुखाचे वैयक्तिक तपशील",
+              "step3": "कुटुंब प्रमुखाचे इतर तपशील",
+              "step4": "कुटुंब प्रमुखाची ओळख",
+              "step5": "कुटुंब प्रमुखाचे संपर्क तपशील"
+            },
+            "labels": {
+              "povertyStatus": "दारिद्र्य स्थिती निवडा",
+              "houseId": "घर क्रमांक",
+              "firstname": "पहिले नाव",
+              "middlename": "मधले नाव",
+              "lastname": "आडनाव",
+              "gender": "लिंग",
+              "dob": "जन्मतारीख",
+              "birthPlace": "जन्मस्थान",
+              "adharNumber": "आधार क्रमांक",
+              "abhaNumber": "ABHA क्रमांक",
+              "mobileNumber": "मोबाईल नंबर"
+            }
+          },
+          "dialogs": {
+            "title": "तुम्हाला हे कुटुंब हटवायचे आहे का?",
+            "message": "सर्व सदस्य आणि त्यांचे आरोग्य रेकॉर्ड कायमचे हटवले जातील. ही क्रिया पूर्ववत केली जाऊ शकत नाही.",
+            "confirmButton": "होय, कुटुंब हटवा",
+            "cancelButton": "रद्द करा"
+          },
+          "actions": {
+            "registration": {
+              "success": "कुटुंब नोंदणी यशस्वी",
+              "failed": "कुटुंब नोंदणी अयशस्वी"
+            },
+            "update": {
+              "success": "कुटुंब अद्यतन यशस्वी",
+              "failed": "कुटुंब अद्यतन अयशस्वी"
+            },
+            "deletion": {
+              "success": "कुटुंब हटवणे यशस्वी",
+              "failed": "कुटुंब हटवणे अयशस्वी"
+            }
+          }
+        },
+        "member": {
+          "page": {
+            "title": "सदस्य सूची",
+            "detailsTitle": "सदस्याचे तपशील",
+            "noData": "कोणतेही सदस्य आढळले नाहीत. वेगळ्या शब्दाने शोधण्याचा प्रयत्न करा.",
+            "noMembersInFamily": "या कुटुंबात सदस्य नाहीत. एक जोडण्याचा प्रयत्न करा!",
+            "viewHealthRecords": "आरोग्य रेकॉर्ड पहा"
+          },
+          "table": {
+            "familyId": "कुटुंब आयडी",
+            "gender": "लिंग",
+            "dob": "जन्मतारीख",
+            "age": "वय",
+            "mobileNumber": "मोबाईल नंबर",
+            "adharNumber": "आधार क्रमांक",
+            "abhaNumber": "ABHA क्रमांक",
+            "aliveStatus": "हयात"
+          },
+          "forms": {
+            "addTitle": "नवीन सदस्य जोडा",
+            "updateTitle": "सदस्य अद्यतनित करा",
+            "steps": {
+              "step1": "वैयक्तिक तपशील",
+              "step2": "जन्माचे तपशील",
+              "step3": "ओळखीचे तपशील",
+              "step4": "संपर्क तपशील"
+            },
+            "labels": {
+              "firstname": "पहिले नाव",
+              "middlename": "मधले नाव",
+              "lastname": "आडनाव",
+              "gender": "लिंग",
+              "dob": "जन्मतारीख",
+              "birthPlace": "जन्मस्थान",
+              "adharNumber": "आधार क्रमांक",
+              "abhaNumber": "ABHA क्रमांक",
+              "mobileNumber": "मोबाईल नंबर",
+              "aliveStatus": "जीवन स्थिती"
+            }
+          },
+          "dialogs": {
+            "delete": {
+              "title": "तुम्हाला हा सदस्य हटवायचा आहे का?",
+              "message": "सदस्य आणि त्यांचे आरोग्य रेकॉर्ड हटवले जातील."
+            }
+          },
+          "actions": {
+            "registration": {
+              "success": "सदस्य नोंदणी यशस्वी",
+              "failed": "सदस्य नोंदणी अयशस्वी"
+            },
+            "update": {
+              "success": "सदस्य अद्यतन यशस्वी",
+              "failed": "सदस्य अद्यतन अयशस्वी"
+            },
+            "deletion": {
+              "success": "सदस्य हटवणे यशस्वी",
+              "failed": "सदस्य हटवणे अयशस्वी"
+            }
+          }
+        },
+        "healthRecord": {
+          "page": {
+            "title": "आरोग्य तपशील",
+            "addNew": "नवीन आरोग्य रेकॉर्ड जोडा",
+            "viewProfile": "सदस्य प्रोफाइल पहा",
+            "noData": "कोणतेही आरोग्य रेकॉर्ड आढळले नाही. नवीन जोडण्याचा प्रयत्न करा!"
+          },
+          "table": {
+            "id": "रेकॉर्ड आयडी",
+            "memberId": "सदस्य आयडी",
+            "ashaId": "आशा आयडी",
+            "recordedAt": "नोंदणीची तारीख",
+            "pregnant": "गर्भवती",
+            "height": "उंची (सेमी)",
+            "weight": "वजन (किलो)",
+            "ncdList": "NCD सूची"
+          },
+          "forms": {
+            "addTitle": "आरोग्य रेकॉर्ड जोडा",
+            "updateTitle": "आरोग्य रेकॉर्ड अद्यतनित करा",
+            "steps": {
+              "step1": "मूलभूत तपशील",
+              "step2": "आरोग्य स्थिती",
+              "step3": "गर्भधारणा स्थिती",
+              "step4": "NCD (असंक्रामक रोग)"
+            },
+            "labels": {
+              "date": "तारीख",
+              "height": "उंची (सेमी)",
+              "weight": "वजन (किलो)",
+              "pregnant": "गर्भवती",
+              "ncdList": "NCD निवडा"
+            }
+          },
+          "actions": {
+            "registration": {
+              "success": "आरोग्य रेकॉर्ड नोंदणी यशस्वी",
+              "failed": "आरोग्य रेकॉर्ड नोंदणी अयशस्वी"
+            },
+            "update": {
+              "success": "आरोग्य रेकॉर्ड अद्यतन यशस्वी",
+              "failed": "आरोग्य रेकॉर्ड अद्यतन अयशस्वी"
+            },
+            "deletion": {
+              "success": "आरोग्य रेकॉर्ड हटवणे यशस्वी",
+              "failed": "आरोग्य रेकॉर्ड हटवणे अयशस्वी"
+            }
+          }
+        }
+      },
+      "reports": {
+        "page": {
+          "title": "अहवाल",
+          "viewTitle": "अहवाल पहा",
+          "viewButton": "अहवाल पहा",
+          "generateFamily": "कुटुंब अहवाल तयार करा",
+          "generateMember": "सदस्य अहवाल तयार करा",
+          "generateHealth": "आरोग्य अहवाल तयार करा"
+        }
+      },
+      "roleRequest": {
+        "page": {
+          "title": "मागील विनंत्या",
+          "detailsTitle": "भूमिकेच्या विनंतीचे तपशील",
+          "noData": "कोणत्याही भूमिकेची विनंती आढळली नाही.",
+          "remark": "शेरा -"
+        },
+        "table": {
+          "id": "विनंती आयडी",
+          "requestedRole": "विनंती केलेली भूमिका",
+          "userId": "वापरकर्ता आयडी",
+          "healthCenter": "आरोग्य केंद्र",
+          "centerType": "केंद्राचा प्रकार",
+          "district": "जिल्हा",
+          "subdistrict": "उपजिल्हा"
+        },
+        "forms": {
+          "addTitle": "भूमिकेची विनंती जोडा",
+          "updateTitle": "भूमिकेची विनंती अद्यतनित करा",
+          "steps": {
+            "step1": "वैयक्तिक तपशील",
+            "step2": "भूमिकेचे तपशील",
+            "step3": "आरोग्य केंद्राचे तपशील"
+          },
+          "labels": {
+            "firstname": "पहिले नाव",
+            "middlename": "मधले नाव",
+            "lastname": "आडनाव",
+            "role": "भूमिका निवडा",
+            "healthCenter": "आरोग्य केंद्र"
+          }
+        },
+        "dialogs": {
+          "approve": {
+            "title": "तुम्हाला ही विनंती मंजूर करायची आहे का?",
+            "message": "वापरकर्त्याला {role} म्हणून प्रवेश मिळेल."
+          },
+          "reject": {
+            "title": "तुम्हाला ही विनंती नाकारायची आहे का?",
+            "message": "वापरकर्त्याला {role} भूमिकेसह परवानगी दिली जाणार नाही."
+          }
+        },
+        "actions": {
+          "approve": "मंजूर करा",
+          "reject": "नाकारा",
+          "registration": {
+            "success": "भूमिकेची विनंती यशस्वीरित्या जोडली",
+            "failed": "भूमिकेची विनंती तयार करण्यात अयशस्वी"
+          },
+          "update": {
+            "success": "भूमिकेची विनंती यशस्वीरित्या अद्यतनित केली",
+            "failed": "भूमिकेची विनंती अद्यतनित करण्यात अयशस्वी"
+          },
+          "deletion": {
+            "success": "भूमिकेची विनंती यशस्वीरित्या हटवली",
+            "failed": "भूमिकेची विनंती हटवण्यात अयशस्वी"
+          }
+        }
+      },
+      "search": {
+        "label": "नाव, आधार क्रमांक किंवा ABHA क्रमांकाने सदस्य शोधा"
+      },
+      "settings": {
+        "page": {
+          "title": "सेटिंग्ज",
+          "comingSoon": "लवकरच येत आहे..."
+        }
+      },
+      "users": {
+        "page": {
+          "title": "नोंदणीकृत वापरकर्ते",
+          "detailsTitle": "वापरकर्त्याचे तपशील",
+          "noData": "कोणतेही वापरकर्ते आढळले नाहीत!",
+          "noRoles": "भूमिका आढळल्या नाहीत"
+        },
+        "table": {
+          "id": "वापरकर्ता आयडी",
+          "adharNumber": "आधार क्रमांक",
+          "roles": "भूमिका"
+        }
+      }
+    }
+  }
+}

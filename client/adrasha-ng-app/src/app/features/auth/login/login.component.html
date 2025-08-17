@@ -1,6 +1,6 @@
 <div class="flex flex-col gap-3 items-center w-72">
   <div class="w-full text-center px-5">
-    <h3 class="font-normal">{{ "app.feature.auth.login.title" | translate }}</h3>
+    <h3 class="font-normal">{{ "app.features.auth.login.title" | translate }}</h3>
   </div>
 
   <form
@@ -10,12 +10,12 @@
     class="flex justify-center items-center w-full flex-col gap-3"
   >
     <mat-form-field class="w-full">
-      <mat-label>{{ "app.feature.auth.login.username" | translate }}</mat-label>
+      <mat-label>{{ "app.features.auth.login.username" | translate }}</mat-label>
       <input type="text" matInput required formControlName="username" />
       <app-validation-error [control]="this.loginForm.controls.username" />
     </mat-form-field>
     <mat-form-field class="w-full">
-      <mat-label>{{ "app.feature.auth.login.password" | translate }}</mat-label>
+      <mat-label>{{ "app.features.auth.login.password" | translate }}</mat-label>
       <input
         matInput
         [type]="hide() ? 'password' : 'text'"
@@ -42,11 +42,11 @@
       @if (isLoading()) {
       <mat-spinner diameter="20"></mat-spinner>
       } @else {
-      {{ "app.feature.auth.login.submitButton" | translate }}
+      {{ "app.features.auth.login.submitButton" | translate }}
       }
     </button>
     <button matButton="text" class="w-full" routerLink="/auth/register">
-      {{ "app.feature.auth.login.newRegistration" | translate }}
+      {{ "app.features.auth.login.newRegistration" | translate }}
     </button>
   </form>
 </div>

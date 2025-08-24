@@ -15,11 +15,11 @@ import { HealthRecordFormComponent } from '../../components';
     <div class="flex flex-col gap-5">
       @if(isUpdate()){
       <app-page-header
-        title="{{ 'registry.healthRecord.updateMemberTitle' | translate }}"
+        title="{{ 'app.features.registry.healthRecord.forms.updateTitle' | translate }}"
       />
       } @else {
       <app-page-header
-        title="{{ 'registry.healthRecord.addMemberTitle' | translate }}"
+        title="{{ 'app.features.registry.healthRecord.forms.addTitle' | translate }}"
       />
       }
       <app-health-record-form

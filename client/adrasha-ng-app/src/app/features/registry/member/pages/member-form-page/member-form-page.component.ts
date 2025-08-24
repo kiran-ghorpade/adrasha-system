@@ -16,11 +16,11 @@ import { MemberFormComponent } from '../../components';
     <div class="flex flex-col gap-5">
       @if(isUpdate()){
       <app-page-header
-        title="{{ 'registry.member.updateMemberTitle' | translate }}"
+        title="{{ 'app.features.registry.member.forms.updateTitle' | translate }}"
       />
       } @else {
       <app-page-header
-        title="{{ 'registry.member.addMemberTitle' | translate }}"
+        title="{{ 'app.features.registry.member.forms.addTitle' | translate }}"
       />
       }
       <app-member-form

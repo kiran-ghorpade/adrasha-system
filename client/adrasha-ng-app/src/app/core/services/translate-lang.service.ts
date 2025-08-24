@@ -10,7 +10,7 @@ export class TranslateLangService {
 
   load(): Promise<void> {
     // const defaultLang = this.settings.getTranslateLang() || 'en';
-    const defaultLang = 'mr';
+    const defaultLang = 'en';
 
     this.translate.setDefaultLang(defaultLang);
     return new Promise((resolve) => {

@@ -14,7 +14,7 @@ import { FamilyFormComponent } from '../../components/family-form/family-edit-fo
   imports: [FamilyFormComponent, PageHeaderComponent, TranslatePipe],
   template: ` <div class="flex flex-col gap-5">
     <app-page-header
-      [title]="'registry.family.updateFamilyTitle' | translate"
+      [title]="'app.features.registry.family.forms.updateTitle' | translate"
     />
     <app-family-edit-form
       [id]="userId() ?? ''"

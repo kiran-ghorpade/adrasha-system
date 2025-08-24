@@ -21,7 +21,9 @@
       "dataNotFound": "Data Not Found!",
       "noDetailsAvailable": "No details available.",
       "somethingWentWrong": "Something went wrong",
-      "futureFetureComingSoon": "Coming soon"
+      "futureFetureComingSoon": "Coming soon",
+      "next":"next",
+      "back":"back"
     },
     "navigation": {
       "sidebar": {
@@ -123,7 +125,7 @@
       },
       "dashboard": {
         "common": {
-          "greetings": "Hello {name}",
+          "greetings": "Hello {{name}}",
           "currentDate": "Current Date",
           "currentTime": "Current Time",
           "headerMessage": "Welcome Back"
@@ -550,6 +552,7 @@
         }
       },
       "search": {
+        "title":"Search",
         "label": "Search for a member by name, Aadhar number, or ABHA number"
       },
       "settings": {

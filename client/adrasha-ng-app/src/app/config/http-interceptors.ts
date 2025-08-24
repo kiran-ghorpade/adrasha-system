@@ -8,7 +8,7 @@ import {
 
 export const interceptors = [
   tokenInterceptor,
-  errorInterceptor, 
+  errorInterceptor,
   loggingInterceptor,
   loadingInterceptor,
 ];

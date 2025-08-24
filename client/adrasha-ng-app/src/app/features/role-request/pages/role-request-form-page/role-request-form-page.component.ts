@@ -17,8 +17,8 @@ import { map } from 'rxjs';
       <app-page-header
         [title]="
           (isUpdate()
-            ? 'roleRequest.updateRoleRequestTitle'
-            : 'roleRequest.addRoleRequestTitle'
+            ? 'roleRequest.forms.updateTitle'
+            : 'roleRequest.forms.addTitle'
           ) | translate
         "
       />

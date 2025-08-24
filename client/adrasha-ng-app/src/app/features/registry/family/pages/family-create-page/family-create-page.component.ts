@@ -10,7 +10,7 @@ import { FamilyFormComponent } from '../../components';
   selector: 'app-family-create-page',
   imports: [PageHeaderComponent, FamilyFormComponent, TranslatePipe],
   template: ` <div class="flex flex-col gap-5">
-    <app-page-header [title]="'registry.family.addFamilyTitle' | translate" />
+    <app-page-header [title]="'app.features.registry.family.forms.addTitle' | translate" />
     <app-family-create-form [id]="userId() ?? ''" />
   </div>`,
 })

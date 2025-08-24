@@ -123,7 +123,7 @@
       },
       "dashboard": {
         "common": {
-          "greetings": "नमस्कार {name}",
+          "greetings": "नमस्कार {{name}}",
           "currentDate": "सध्याची तारीख",
           "currentTime": "सध्याची वेळ",
           "headerMessage": "पुन्हा स्वागत आहे"
